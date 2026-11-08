@@ -2,7 +2,7 @@
   "schema_version": 1,
   "publisher": "fortran-gams-catalog-independent-reviews",
   "source_url": "https://beliavsky.github.io/fortran-gams-catalog/reviewed-metadata.json",
-  "source_snapshot_id": "sha256:5ad543407d3478b6864c29d39fc27433b451ee7465e1c24a4c50c4e7fe1b8ea2",
+  "source_snapshot_id": "sha256:25b91ef0a67a2848d80a2284c3b521d201a84a7e8d9b67f66bde3fe8587aae9d",
   "packages": {
     "test-drive": {
       "id": "github:fortran-lang/test-drive",
@@ -6953,6 +6953,142 @@
         }
       ]
     },
+    "fortran-astrodynamics-toolkit": {
+      "id": "github:jacobwilliams/fortran-astrodynamics-toolkit",
+      "repository": {
+        "owner": "jacobwilliams",
+        "name": "Fortran-Astrodynamics-Toolkit",
+        "url": "https://github.com/jacobwilliams/Fortran-Astrodynamics-Toolkit"
+      },
+      "license": {
+        "label": "BSD-3-Clause",
+        "spdx_expression": "BSD-3-Clause",
+        "revision": "3cf0a0a8ba2abf8bc4995c6da5b6abae07b45a0a",
+        "reviewed_on": "2026-11-08",
+        "notes": "Root LICENSE supplies Jacob Williams three-clause redistribution terms for the toolkit. This source review scopes the vector module and does not audit all separately attributed ephemeris/solver components.",
+        "evidence": [
+          {
+            "path": "LICENSE",
+            "url": "https://github.com/jacobwilliams/Fortran-Astrodynamics-Toolkit/blob/3cf0a0a8ba2abf8bc4995c6da5b6abae07b45a0a/LICENSE",
+            "sha256": "e8930764c915f6813c84e982b92be82130d8530a742b8fa0a9aade4ad1c08419"
+          },
+          {
+            "path": "README.md",
+            "url": "https://github.com/jacobwilliams/Fortran-Astrodynamics-Toolkit/blob/3cf0a0a8ba2abf8bc4995c6da5b6abae07b45a0a/README.md",
+            "sha256": "4c560d2ccaaf971233d794ff8db91a49e02c1f100ce2788a19acb80ef60753bf"
+          },
+          {
+            "path": "src/vector_module.f90",
+            "url": "https://github.com/jacobwilliams/Fortran-Astrodynamics-Toolkit/blob/3cf0a0a8ba2abf8bc4995c6da5b6abae07b45a0a/src/vector_module.f90",
+            "sha256": "ca09d2b486ac87d4ad562dceb5c3609bc397cc31e9dada051db9c129479aa73e"
+          }
+        ]
+      },
+      "classifications": [
+        {
+          "code": "P",
+          "level": "source-reviewed",
+          "revision": "3cf0a0a8ba2abf8bc4995c6da5b6abae07b45a0a",
+          "reviewed_on": "2026-11-08",
+          "notes": "Public vector cross product, normalization and axis-angle rotation document precision selection, frames and the nonzero-axis precondition. This is a pinned public-interface/source review, not a new numerical execution check or complete API audit. Existing hosted drivers and their verified problem scope are recorded separately.",
+          "evidence": [
+            {
+              "path": "src/vector_module.f90",
+              "url": "https://github.com/jacobwilliams/Fortran-Astrodynamics-Toolkit/blob/3cf0a0a8ba2abf8bc4995c6da5b6abae07b45a0a/src/vector_module.f90",
+              "sha256": "ca09d2b486ac87d4ad562dceb5c3609bc397cc31e9dada051db9c129479aa73e"
+            },
+            {
+              "path": "src/kind_module.F90",
+              "url": "https://github.com/jacobwilliams/Fortran-Astrodynamics-Toolkit/blob/3cf0a0a8ba2abf8bc4995c6da5b6abae07b45a0a/src/kind_module.F90",
+              "sha256": "21eea052da05a570ee2c7db3cfb4860d2fd9aaca7204a4548e51977ab52c57a1"
+            }
+          ],
+          "procedures": [
+            {
+              "procedure": "cross",
+              "role": "public-entry-point",
+              "module": "vector_module",
+              "summary": "Return the right-handed cross product of REAL(WP) R(3) and V(3). Import WP from KIND_MODULE, whose default is REAL64 but which has build-time precision alternatives. Both vectors must use the same coordinate frame and consistent units; no physical units or frame conversion is inferred. This is a pure fixed-three-vector function with no status result, not an arbitrary-rank MATMUL replacement.",
+              "signature": "VALUE = cross(R,V)",
+              "path": "src/vector_module.f90",
+              "line_start": 62,
+              "line_end": 74,
+              "declarations": [
+                {
+                  "path": "src/vector_module.f90",
+                  "line_start": 66,
+                  "line_end": 68
+                },
+                {
+                  "path": "src/vector_module.f90",
+                  "line_start": 6,
+                  "line_end": 38
+                },
+                {
+                  "path": "src/kind_module.F90",
+                  "line_start": 6,
+                  "line_end": 24
+                }
+              ]
+            },
+            {
+              "procedure": "unit",
+              "role": "public-entry-point",
+              "module": "vector_module",
+              "summary": "Normalize a rank-one REAL(WP) vector using NORM2. The result has SIZE(R); a zero norm produces a zero vector rather than a status or an arbitrary unit direction. Callers needing a nonzero direction must reject zero inputs themselves. No allocation/status actual is exposed and this scoped interface does not establish behavior for nonfinite vector data.",
+              "signature": "VALUE = unit(R)",
+              "path": "src/vector_module.f90",
+              "line_start": 82,
+              "line_end": 99,
+              "declarations": [
+                {
+                  "path": "src/vector_module.f90",
+                  "line_start": 86,
+                  "line_end": 87
+                },
+                {
+                  "path": "src/vector_module.f90",
+                  "line_start": 6,
+                  "line_end": 38
+                },
+                {
+                  "path": "src/kind_module.F90",
+                  "line_start": 6,
+                  "line_end": 24
+                }
+              ]
+            },
+            {
+              "procedure": "axis_angle_rotation",
+              "role": "public-entry-point",
+              "module": "vector_module",
+              "summary": "Rotate V(3) about axis K(3) through radian THETA using the right-handed Rodrigues formula, returning VROT(3), all REAL(WP). The routine normalizes K internally, so its magnitude is irrelevant for a nonzero axis. Require K nonzero: UNIT returns zeros for a zero axis and the resulting expression is not a valid general rotation. There is no status flag or automatic degrees conversion.",
+              "signature": "CALL axis_angle_rotation(V,K,THETA,VROT)",
+              "path": "src/vector_module.f90",
+              "line_start": 157,
+              "line_end": 175,
+              "declarations": [
+                {
+                  "path": "src/vector_module.f90",
+                  "line_start": 161,
+                  "line_end": 164
+                },
+                {
+                  "path": "src/vector_module.f90",
+                  "line_start": 6,
+                  "line_end": 38
+                },
+                {
+                  "path": "src/kind_module.F90",
+                  "line_start": 6,
+                  "line_end": 24
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
     "forgex": {
       "id": "github:shinobuamasaki/forgex",
       "repository": {
@@ -12267,6 +12403,122 @@
         }
       ]
     },
+    "astro-fortran": {
+      "id": "github:jacobwilliams/astro-fortran",
+      "repository": {
+        "owner": "jacobwilliams",
+        "name": "astro-fortran",
+        "url": "https://github.com/jacobwilliams/astro-fortran"
+      },
+      "license": {
+        "label": "BSD-style port terms plus SOFA original license",
+        "spdx_expression": null,
+        "revision": "9d61091d225a1b314ff8170153b06a8691aba283",
+        "reviewed_on": "2026-11-08",
+        "notes": "Root LICENSE.txt contains Jacob Williams three-clause port terms and the original IAU SOFA license, including derived-work marking, naming and attribution restrictions. Preserve both; do not label the complete derived library as an unqualified BSD package or as endorsed by SOFA.",
+        "evidence": [
+          {
+            "path": "LICENSE.txt",
+            "url": "https://github.com/jacobwilliams/astro-fortran/blob/9d61091d225a1b314ff8170153b06a8691aba283/LICENSE.txt",
+            "sha256": "701112517c30402baf19e30e5b3dd98d63adeab860bd57341317b0685abf2d60"
+          },
+          {
+            "path": "README.md",
+            "url": "https://github.com/jacobwilliams/astro-fortran/blob/9d61091d225a1b314ff8170153b06a8691aba283/README.md",
+            "sha256": "ac3f052a30903f47a5c3a4b1edc394d54ef0cf6b74a36beec91c33fd82e62faf"
+          },
+          {
+            "path": "src/astro_module.f90",
+            "url": "https://github.com/jacobwilliams/astro-fortran/blob/9d61091d225a1b314ff8170153b06a8691aba283/src/astro_module.f90",
+            "sha256": "91f48eb9a00257d59ead888d7ac6d1ba1d48529aeb19089b97d68d6d5328c6fb"
+          }
+        ]
+      },
+      "classifications": [
+        {
+          "code": "P",
+          "level": "source-reviewed",
+          "revision": "9d61091d225a1b314ff8170153b06a8691aba283",
+          "reviewed_on": "2026-11-08",
+          "notes": "Spherical direction conversion and angle normalization document radians, precision, zero/pole conventions and renamed SOFA-derived interfaces. This is a pinned public-interface/source review, not a new numerical execution check or complete API audit. Existing hosted drivers and their verified problem scope are recorded separately.",
+          "evidence": [
+            {
+              "path": "src/astro_module.f90",
+              "url": "https://github.com/jacobwilliams/astro-fortran/blob/9d61091d225a1b314ff8170153b06a8691aba283/src/astro_module.f90",
+              "sha256": "91f48eb9a00257d59ead888d7ac6d1ba1d48529aeb19089b97d68d6d5328c6fb"
+            }
+          ],
+          "procedures": [
+            {
+              "procedure": "S2C",
+              "role": "public-entry-point",
+              "module": "astro_module",
+              "summary": "Convert spherical longitude THETA and latitude PHI in radians to direction cosines C(3). Use REAL(WP), with WP=REAL64 exported by ASTRO_MODULE. The output is a unit direction, not a vector scaled by a radius; supply finite angles with the intended latitude/longitude convention. This modernized SOFA-derived name has no IAU_ prefix. No numerical status or physical frame/date transformation is performed.",
+              "signature": "CALL S2C(THETA,PHI,C)",
+              "path": "src/astro_module.f90",
+              "line_start": 24174,
+              "line_end": 24189,
+              "declarations": [
+                {
+                  "path": "src/astro_module.f90",
+                  "line_start": 24178,
+                  "line_end": 24180
+                },
+                {
+                  "path": "src/astro_module.f90",
+                  "line_start": 124,
+                  "line_end": 142
+                }
+              ]
+            },
+            {
+              "procedure": "C2S",
+              "role": "public-entry-point",
+              "module": "astro_module",
+              "summary": "Convert a REAL(WP) Cartesian vector P(3) to longitude THETA and latitude PHI in radians; the magnitude is not returned. At a pole the implementation sets longitude to zero, and the all-zero vector returns both angles zero by convention rather than signaling an invalid direction. Use ANP separately if longitude should be in [0,2*pi). This is geometric coordinate conversion, not a celestial reference-frame model or a date-dependent astrometry calculation.",
+              "signature": "CALL C2S(P,THETA,PHI)",
+              "path": "src/astro_module.f90",
+              "line_start": 4640,
+              "line_end": 4667,
+              "declarations": [
+                {
+                  "path": "src/astro_module.f90",
+                  "line_start": 4644,
+                  "line_end": 4646
+                },
+                {
+                  "path": "src/astro_module.f90",
+                  "line_start": 124,
+                  "line_end": 142
+                }
+              ]
+            },
+            {
+              "procedure": "ANP",
+              "role": "public-entry-point",
+              "module": "astro_module",
+              "summary": "Normalize a finite REAL(WP) radian angle into [0,2*pi) using MOD and a negative-result correction. It returns a scalar of the same working kind, not a status flag; there is no degrees-to-radians conversion or automatic array-elemental interface in this declaration. Very large arguments remain subject to floating-point argument-reduction precision.",
+              "signature": "VALUE = ANP(A)",
+              "path": "src/astro_module.f90",
+              "line_start": 484,
+              "line_end": 494,
+              "declarations": [
+                {
+                  "path": "src/astro_module.f90",
+                  "line_start": 488,
+                  "line_end": 489
+                },
+                {
+                  "path": "src/astro_module.f90",
+                  "line_start": 124,
+                  "line_end": 142
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
     "nlopt-f": {
       "id": "github:awvwgk/nlopt-f",
       "repository": {
@@ -17148,6 +17400,287 @@
                   "path": "src/image.f90",
                   "line_start": 1,
                   "line_end": 37
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "cairo-fortran": {
+      "id": "github:vmagnin/cairo-fortran",
+      "repository": {
+        "owner": "vmagnin",
+        "name": "cairo-fortran",
+        "url": "https://github.com/vmagnin/cairo-fortran"
+      },
+      "license": {
+        "label": "GPL-3.0 with GCC runtime library exception 3.1",
+        "spdx_expression": null,
+        "revision": "89c31edd87ac1a5ad37db71165965a30cc9b7d61",
+        "reviewed_on": "2026-11-08",
+        "notes": "Selected generated headers identify GPL version 3 with GCC Runtime Library Exception 3.1; root LICENSE and LICENSE_EXCEPTION supply both texts. Preserve the exception and eligibility terms rather than reduce the binding to an unqualified GPL label. Native Cairo is separately licensed.",
+        "evidence": [
+          {
+            "path": "LICENSE",
+            "url": "https://github.com/vmagnin/cairo-fortran/blob/89c31edd87ac1a5ad37db71165965a30cc9b7d61/LICENSE",
+            "sha256": "8ceb4b9ee5adedde47b31e975c1d90c73ad27b6b165a1dcd80c7c545eb65b903"
+          },
+          {
+            "path": "README.md",
+            "url": "https://github.com/vmagnin/cairo-fortran/blob/89c31edd87ac1a5ad37db71165965a30cc9b7d61/README.md",
+            "sha256": "b8dd3dbc52ef907c25a18504244b8d40a242ef304c51ce523b7007d121b9c42f"
+          },
+          {
+            "path": "src/cairo-auto.f90",
+            "url": "https://github.com/vmagnin/cairo-fortran/blob/89c31edd87ac1a5ad37db71165965a30cc9b7d61/src/cairo-auto.f90",
+            "sha256": "d3139daac9355760be7c24af9feda86492be971ae53a87744f82edb0a6fb6855"
+          },
+          {
+            "path": "LICENSE_EXCEPTION",
+            "url": "https://github.com/vmagnin/cairo-fortran/blob/89c31edd87ac1a5ad37db71165965a30cc9b7d61/LICENSE_EXCEPTION",
+            "sha256": "9d6b43ce4d8de0c878bf16b54d8e7a10d9bd42b75178153e3af6a815bdc90f74"
+          }
+        ]
+      },
+      "classifications": [
+        {
+          "code": "Q",
+          "level": "source-reviewed",
+          "revision": "89c31edd87ac1a5ad37db71165965a30cc9b7d61",
+          "reviewed_on": "2026-11-08",
+          "notes": "Headless image-surface/context lifecycle, RGB painting, status and PNG output document C kinds, terminated paths and native reference ownership. This is a pinned public-interface/source review, not a new numerical execution check or complete API audit. Existing hosted drivers and their verified problem scope are recorded separately.",
+          "evidence": [
+            {
+              "path": "src/cairo-auto.f90",
+              "url": "https://github.com/vmagnin/cairo-fortran/blob/89c31edd87ac1a5ad37db71165965a30cc9b7d61/src/cairo-auto.f90",
+              "sha256": "d3139daac9355760be7c24af9feda86492be971ae53a87744f82edb0a6fb6855"
+            },
+            {
+              "path": "src/cairo-enums.f90",
+              "url": "https://github.com/vmagnin/cairo-fortran/blob/89c31edd87ac1a5ad37db71165965a30cc9b7d61/src/cairo-enums.f90",
+              "sha256": "3938d5fd1c765eb13230b539e329236d20035683d0734ec5501bc41706b51dc2"
+            },
+            {
+              "path": "LICENSE_EXCEPTION",
+              "url": "https://github.com/vmagnin/cairo-fortran/blob/89c31edd87ac1a5ad37db71165965a30cc9b7d61/LICENSE_EXCEPTION",
+              "sha256": "9d6b43ce4d8de0c878bf16b54d8e7a10d9bd42b75178153e3af6a815bdc90f74"
+            }
+          ],
+          "procedures": [
+            {
+              "procedure": "cairo_image_surface_create",
+              "role": "public-entry-point",
+              "module": "cairo",
+              "summary": "Allocate a native image surface using INTEGER(C_INT) format/width/height; choose a suitable CAIRO_FORMAT_* from CAIRO_ENUMS and positive dimensions. The TYPE(C_PTR) result must be checked with native CAIRO_SURFACE_STATUS: an error surface can be nonnull, so C_ASSOCIATED alone is not a success test. This creates a headless pixel buffer, not a window or browser image. Release the surface after contexts using it are destroyed.",
+              "signature": "VALUE = cairo_image_surface_create(FORMAT,WIDTH,HEIGHT)",
+              "path": "src/cairo-auto.f90",
+              "line_start": 2867,
+              "line_end": 2874,
+              "declarations": [
+                {
+                  "path": "src/cairo-auto.f90",
+                  "line_start": 2868,
+                  "line_end": 2873
+                },
+                {
+                  "path": "src/cairo-auto.f90",
+                  "line_start": 1,
+                  "line_end": 9
+                },
+                {
+                  "path": "src/cairo-enums.f90",
+                  "line_start": 1,
+                  "line_end": 8
+                }
+              ]
+            },
+            {
+              "procedure": "cairo_create",
+              "role": "public-entry-point",
+              "module": "cairo",
+              "summary": "Create a drawing context for a live surface TARGET. Check CAIRO_STATUS on the returned TYPE(C_PTR), since a nonnull native context may carry an error. The context retains a reference to the target; manage the original surface and context references separately. This is a C binding with pointer actuals passed by VALUE and no automatic Fortran finalization.",
+              "signature": "VALUE = cairo_create(TARGET)",
+              "path": "src/cairo-auto.f90",
+              "line_start": 526,
+              "line_end": 531,
+              "declarations": [
+                {
+                  "path": "src/cairo-auto.f90",
+                  "line_start": 527,
+                  "line_end": 530
+                },
+                {
+                  "path": "src/cairo-auto.f90",
+                  "line_start": 1,
+                  "line_end": 9
+                },
+                {
+                  "path": "src/cairo-enums.f90",
+                  "line_start": 1,
+                  "line_end": 8
+                }
+              ]
+            },
+            {
+              "procedure": "cairo_set_source_rgb",
+              "role": "public-entry-point",
+              "module": "cairo",
+              "summary": "Set the current context source color from REAL(C_DOUBLE) red/green/blue components, conventionally in [0,1]. This changes drawing state only; it does not fill pixels until a painting operation. Native Cairo error state is sticky and no status dummy is returned by this subroutine; query CAIRO_STATUS after drawing as needed.",
+              "signature": "CALL cairo_set_source_rgb(CR,RED,GREEN,BLUE)",
+              "path": "src/cairo-auto.f90",
+              "line_start": 651,
+              "line_end": 658,
+              "declarations": [
+                {
+                  "path": "src/cairo-auto.f90",
+                  "line_start": 652,
+                  "line_end": 657
+                },
+                {
+                  "path": "src/cairo-auto.f90",
+                  "line_start": 1,
+                  "line_end": 9
+                },
+                {
+                  "path": "src/cairo-enums.f90",
+                  "line_start": 1,
+                  "line_end": 8
+                }
+              ]
+            },
+            {
+              "procedure": "cairo_paint",
+              "role": "public-entry-point",
+              "module": "cairo",
+              "summary": "Paint the current source over the context clip using the current compositing operator. For a fresh image/context with an RGB source this can fill the canvas; it is not a graph plotting, display or PNG-writing call. The context must still be live and valid; inspect CAIRO_STATUS for accumulated drawing errors.",
+              "signature": "CALL cairo_paint(CR)",
+              "path": "src/cairo-auto.f90",
+              "line_start": 1005,
+              "line_end": 1009,
+              "declarations": [
+                {
+                  "path": "src/cairo-auto.f90",
+                  "line_start": 1006,
+                  "line_end": 1008
+                },
+                {
+                  "path": "src/cairo-auto.f90",
+                  "line_start": 1,
+                  "line_end": 9
+                },
+                {
+                  "path": "src/cairo-enums.f90",
+                  "line_start": 1,
+                  "line_end": 8
+                }
+              ]
+            },
+            {
+              "procedure": "cairo_status",
+              "role": "public-entry-point",
+              "module": "cairo",
+              "summary": "Return INTEGER(C_INT) drawing-context status, with CAIRO_STATUS_SUCCESS indicating no error. A TYPE(C_PTR) can point to an error object, so status complements rather than replaces pointer/lifetime discipline. This queries a context; CAIRO_SURFACE_STATUS is the separate surface query and PNG writing returns its own status.",
+              "signature": "VALUE = cairo_status(CR)",
+              "path": "src/cairo-auto.f90",
+              "line_start": 2237,
+              "line_end": 2242,
+              "declarations": [
+                {
+                  "path": "src/cairo-auto.f90",
+                  "line_start": 2238,
+                  "line_end": 2241
+                },
+                {
+                  "path": "src/cairo-auto.f90",
+                  "line_start": 1,
+                  "line_end": 9
+                },
+                {
+                  "path": "src/cairo-enums.f90",
+                  "line_start": 1,
+                  "line_end": 8
+                }
+              ]
+            },
+            {
+              "procedure": "cairo_surface_write_to_png",
+              "role": "public-entry-point",
+              "module": "cairo",
+              "summary": "Write a live surface to a PNG path and check returned INTEGER(C_INT) status. FILENAME is a raw C-character array: pass a properly terminated CHARACTER(KIND=C_CHAR) string with C_NULL_CHAR appended; this binding does not trim or terminate a Fortran path automatically. The function saves a file; browser presentation depends on playground artifact handling and is not performed by Cairo. The native library must include PNG support.",
+              "signature": "VALUE = cairo_surface_write_to_png(SURFACE,FILENAME)",
+              "path": "src/cairo-auto.f90",
+              "line_start": 2661,
+              "line_end": 2667,
+              "declarations": [
+                {
+                  "path": "src/cairo-auto.f90",
+                  "line_start": 2662,
+                  "line_end": 2666
+                },
+                {
+                  "path": "src/cairo-auto.f90",
+                  "line_start": 1,
+                  "line_end": 9
+                },
+                {
+                  "path": "src/cairo-enums.f90",
+                  "line_start": 1,
+                  "line_end": 8
+                }
+              ]
+            },
+            {
+              "procedure": "cairo_destroy",
+              "role": "public-entry-point",
+              "module": "cairo",
+              "summary": "Release this owned context reference once after drawing/output operations are finished. The C_PTR actual is passed by VALUE and is not nullified in the caller; invalidate the caller handle explicitly if retained. This releases the context reference but does not substitute for releasing the separately owned original surface reference. Avoid double destruction through aliases.",
+              "signature": "CALL cairo_destroy(CR)",
+              "path": "src/cairo-auto.f90",
+              "line_start": 544,
+              "line_end": 548,
+              "declarations": [
+                {
+                  "path": "src/cairo-auto.f90",
+                  "line_start": 545,
+                  "line_end": 547
+                },
+                {
+                  "path": "src/cairo-auto.f90",
+                  "line_start": 1,
+                  "line_end": 9
+                },
+                {
+                  "path": "src/cairo-enums.f90",
+                  "line_start": 1,
+                  "line_end": 8
+                }
+              ]
+            },
+            {
+              "procedure": "cairo_surface_destroy",
+              "role": "public-entry-point",
+              "module": "cairo",
+              "summary": "Release the owned surface reference after its uses finish, normally after destroying the drawing context and writing output. Native references may postpone actual deallocation, but aliases are not independently owned without a matching reference operation. The binding takes C_PTR by VALUE and does not nullify the caller; scope exit does not automatically invoke this cleanup.",
+              "signature": "CALL cairo_surface_destroy(SURFACE)",
+              "path": "src/cairo-auto.f90",
+              "line_start": 2608,
+              "line_end": 2612,
+              "declarations": [
+                {
+                  "path": "src/cairo-auto.f90",
+                  "line_start": 2609,
+                  "line_end": 2611
+                },
+                {
+                  "path": "src/cairo-auto.f90",
+                  "line_start": 1,
+                  "line_end": 9
+                },
+                {
+                  "path": "src/cairo-enums.f90",
+                  "line_start": 1,
+                  "line_end": 8
                 }
               ]
             }
@@ -29924,6 +30457,102 @@
         }
       ]
     },
+    "fmm2d": {
+      "id": "github:flatironinstitute/fmm2d",
+      "repository": {
+        "owner": "flatironinstitute",
+        "name": "fmm2d",
+        "url": "https://github.com/flatironinstitute/fmm2d"
+      },
+      "license": {
+        "label": "Apache-2.0 root; GPL-2.0-or-later selected source notices",
+        "spdx_expression": null,
+        "revision": "7e7509ecd6ebe31b9292cb00825410b478f44808",
+        "reviewed_on": "2026-11-08",
+        "notes": "Root LICENSE supplies Apache License 2.0 text, but the selected RFMM2D wrapper/implementation headers carry explicit GPL version 2 or later grants. This review records the conflicting scope rather than assuming the root text supersedes those source notices. Retain all notices and resolve the intended terms with upstream before relying on a single package-wide SPDX expression.",
+        "evidence": [
+          {
+            "path": "LICENSE",
+            "url": "https://github.com/flatironinstitute/fmm2d/blob/7e7509ecd6ebe31b9292cb00825410b478f44808/LICENSE",
+            "sha256": "c71d239df91726fc519c6eb72d318ec65820627232b2f796219e87dcf35d0ab4"
+          },
+          {
+            "path": "README.md",
+            "url": "https://github.com/flatironinstitute/fmm2d/blob/7e7509ecd6ebe31b9292cb00825410b478f44808/README.md",
+            "sha256": "1cb0f07f83dcd326d3636ac753b2f9050e6b4a5672c80136980089455a8f54c8"
+          },
+          {
+            "path": "src/laplace/rfmm2dwrap.f",
+            "url": "https://github.com/flatironinstitute/fmm2d/blob/7e7509ecd6ebe31b9292cb00825410b478f44808/src/laplace/rfmm2dwrap.f",
+            "sha256": "f7097a9bd31f6e30e3d8d2335d1093b0a2ba279fa5c7b871d51454dba00d4fe2"
+          },
+          {
+            "path": "src/laplace/rfmm2d.f",
+            "url": "https://github.com/flatironinstitute/fmm2d/blob/7e7509ecd6ebe31b9292cb00825410b478f44808/src/laplace/rfmm2d.f",
+            "sha256": "9c4e92d6c4ef528cbac3738dd2b544d13eeb924e64b74d574d97876011dd0c2c"
+          }
+        ]
+      },
+      "classifications": [
+        {
+          "code": "D1",
+          "level": "source-reviewed",
+          "revision": "7e7509ecd6ebe31b9292cb00825410b478f44808",
+          "reviewed_on": "2026-11-08",
+          "notes": "Charge-only real Laplace kernel application at separate targets documents fixed-form arrays, tolerance/status and the limited solver scope. This is a pinned public-interface/source review, not a new numerical execution check or complete API audit. Existing hosted drivers and their verified problem scope are recorded separately.",
+          "evidence": [
+            {
+              "path": "src/laplace/rfmm2dwrap.f",
+              "url": "https://github.com/flatironinstitute/fmm2d/blob/7e7509ecd6ebe31b9292cb00825410b478f44808/src/laplace/rfmm2dwrap.f",
+              "sha256": "f7097a9bd31f6e30e3d8d2335d1093b0a2ba279fa5c7b871d51454dba00d4fe2"
+            },
+            {
+              "path": "src/laplace/rfmm2d.f",
+              "url": "https://github.com/flatironinstitute/fmm2d/blob/7e7509ecd6ebe31b9292cb00825410b478f44808/src/laplace/rfmm2d.f",
+              "sha256": "9c4e92d6c4ef528cbac3738dd2b544d13eeb924e64b74d574d97876011dd0c2c"
+            },
+            {
+              "path": "src/laplace/rlapkernels2d.f",
+              "url": "https://github.com/flatironinstitute/fmm2d/blob/7e7509ecd6ebe31b9292cb00825410b478f44808/src/laplace/rlapkernels2d.f",
+              "sha256": "0a11195b5625b44e423624c63d091c474d187d3541a24897c6b136102d47ab79"
+            }
+          ],
+          "procedures": [
+            {
+              "procedure": "rfmm2d_t_c_p",
+              "role": "public-entry-point",
+              "summary": "External real-double Laplace charge-only target-potential wrapper. Supply EPS>0, positive default-integer NS/NT, SOURCES(2,NS), CHARGE(NS), TARG(2,NT) and output POTTARG(NT). It approximates the charge-weighted log-distance kernel sum, not a 1/r kernel or a complete PDE boundary-value solution; do not place target points on singular charged sources. Check IER=0 before using output; EPS is a requested FMM tolerance rather than an independent residual/error certificate. This wrapper neither returns source potentials nor gradients/dipoles. The hosted recipe applies documented zero-work compatibility guards below this public entry; empty sets and all alternate kernels are outside this scoped call.",
+              "signature": "CALL rfmm2d_t_c_p(EPS,NS,SOURCES,CHARGE,NT,TARG,POTTARG,IER)",
+              "path": "src/laplace/rfmm2dwrap.f",
+              "line_start": 599,
+              "line_end": 655,
+              "declarations": [
+                {
+                  "path": "src/laplace/rfmm2dwrap.f",
+                  "line_start": 622,
+                  "line_end": 627
+                },
+                {
+                  "path": "src/laplace/rfmm2dwrap.f",
+                  "line_start": 599,
+                  "line_end": 615
+                },
+                {
+                  "path": "src/laplace/rfmm2d.f",
+                  "line_start": 1,
+                  "line_end": 110
+                },
+                {
+                  "path": "src/laplace/rlapkernels2d.f",
+                  "line_start": 1,
+                  "line_end": 43
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
     "fortran-utils": {
       "id": "github:certik/fortran-utils",
       "repository": {
@@ -30762,6 +31391,147 @@
         }
       ]
     },
+    "aotus": {
+      "id": "github:apes-suite/aotus",
+      "repository": {
+        "owner": "apes-suite",
+        "name": "aotus",
+        "url": "https://github.com/apes-suite/aotus"
+      },
+      "license": {
+        "label": "MIT",
+        "spdx_expression": "MIT",
+        "revision": "2c1ec4d4629a4915929e82e873ceebf623648877",
+        "reviewed_on": "2026-11-08",
+        "notes": "Root LICENSE supplies MIT terms with per-file contributor notices. Bundled Lua and other components retain separate notices. The scoped interfaces do not establish safe arbitrary scripting or every scalar/vector numeric specialization.",
+        "evidence": [
+          {
+            "path": "LICENSE",
+            "url": "https://github.com/apes-suite/aotus/blob/2c1ec4d4629a4915929e82e873ceebf623648877/LICENSE",
+            "sha256": "7d35f05289290f04efa862abcc198c3371fb5a4d7f6ef7cb75cfb1cb1885de00"
+          },
+          {
+            "path": "README.md",
+            "url": "https://github.com/apes-suite/aotus/blob/2c1ec4d4629a4915929e82e873ceebf623648877/README.md",
+            "sha256": "420cb58c79868dcd662acc2ccdd2ed6b4106b1c79a2379b24f9c0a7dd4bdbd26"
+          },
+          {
+            "path": "source/aotus_module.f90",
+            "url": "https://github.com/apes-suite/aotus/blob/2c1ec4d4629a4915929e82e873ceebf623648877/source/aotus_module.f90",
+            "sha256": "64a474175b092ca4df3c0edf5dd7f9a3cf29bd769cb3446852d9d1152fee2e00"
+          }
+        ]
+      },
+      "classifications": [
+        {
+          "code": "N1",
+          "level": "source-reviewed",
+          "revision": "2c1ec4d4629a4915929e82e873ceebf623648877",
+          "reviewed_on": "2026-11-08",
+          "notes": "Lua configuration open, double scalar lookup and close document executable configuration, selector/default error bits and state lifetime. This is a pinned public-interface/source review, not a new numerical execution check or complete API audit. Existing hosted drivers and their verified problem scope are recorded separately.",
+          "evidence": [
+            {
+              "path": "source/aotus_module.f90",
+              "url": "https://github.com/apes-suite/aotus/blob/2c1ec4d4629a4915929e82e873ceebf623648877/source/aotus_module.f90",
+              "sha256": "64a474175b092ca4df3c0edf5dd7f9a3cf29bd769cb3446852d9d1152fee2e00"
+            },
+            {
+              "path": "source/aot_table_module.f90",
+              "url": "https://github.com/apes-suite/aotus/blob/2c1ec4d4629a4915929e82e873ceebf623648877/source/aot_table_module.f90",
+              "sha256": "76c53070a7b631d6ff484b2f70d492214a4ca8547ef58e0455b9572dd5bb5edf"
+            },
+            {
+              "path": "LuaFortran/flu_kinds_module.f90",
+              "url": "https://github.com/apes-suite/aotus/blob/2c1ec4d4629a4915929e82e873ceebf623648877/LuaFortran/flu_kinds_module.f90",
+              "sha256": "0259c0d3dcdc7fda8e4b0fb76cc09bacc655befc05fa78010566942e4c5eb9b3"
+            }
+          ],
+          "procedures": [
+            {
+              "procedure": "open_config_file",
+              "role": "public-entry-point",
+              "module": "aotus_module",
+              "summary": "Load and execute a Lua configuration into TYPE(FLU_STATE), exported by AOTUS_MODULE. Supply ErrCode and an adequately sized ErrString to inspect load/execution errors; omitting both can STOP with a diagnostic. This executes Lua code and opens standard libraries rather than parsing inert assignments. A state already open is reused; ownership and previous globals therefore persist until CLOSE_CONFIG. Optional BUFFER returns a compiled buffer with additional ownership requirements outside this basic file-only usage. Sandbox filesystem/network limits still apply.",
+              "signature": "CALL open_config_file(L,FILENAME,[ERRCODE],[ERRSTRING],[BUFFER])",
+              "path": "source/aotus_module.f90",
+              "line_start": 80,
+              "line_end": 132,
+              "declarations": [
+                {
+                  "path": "source/aotus_module.f90",
+                  "line_start": 81,
+                  "line_end": 110
+                },
+                {
+                  "path": "source/aotus_module.f90",
+                  "line_start": 41,
+                  "line_end": 69
+                },
+                {
+                  "path": "source/aot_table_module.f90",
+                  "line_start": 47,
+                  "line_end": 80
+                }
+              ]
+            },
+            {
+              "procedure": "aot_get_val",
+              "role": "public-entry-point",
+              "module": "aotus_module",
+              "summary": "REAL(DOUBLE_K) overload of AOT_GET_VAL; import DOUBLE_K from FLU_KINDS_MODULE. VAL and integer ErrCode are required. For a global scalar supply KEY; for a table entry supply a valid THANDLE with KEY or POS, with KEY taking precedence. Formally optional selectors do not make an absent selector meaningful. DEFAULT supplies a fallback on lookup failure but does not erase error bits: inspect BTEST with AOTERR_* bit positions rather than treating every nonzero code as one enumeration. Table handle lifetime and Lua state must remain valid.",
+              "signature": "CALL aot_get_val(VAL,ERRCODE,L,[THANDLE],[KEY],[POS],[DEFAULT])",
+              "path": "source/aot_table_module.f90",
+              "line_start": 265,
+              "line_end": 315,
+              "declarations": [
+                {
+                  "path": "source/aot_table_module.f90",
+                  "line_start": 267,
+                  "line_end": 292
+                },
+                {
+                  "path": "source/aotus_module.f90",
+                  "line_start": 41,
+                  "line_end": 69
+                },
+                {
+                  "path": "source/aot_table_module.f90",
+                  "line_start": 47,
+                  "line_end": 80
+                }
+              ]
+            },
+            {
+              "procedure": "close_config",
+              "role": "public-entry-point",
+              "module": "aotus_module",
+              "summary": "Close the live FLU_STATE after all global/table/function accesses and borrowed references finish. This is separate from Fortran scope exit and invalidates Lua-backed handles. Keep a single state owner; do not close copied aliases or depend on an uninitialized or already closed state being accepted. Optional compiled-buffer ownership is separate from closing the interpreter.",
+              "signature": "CALL close_config(L)",
+              "path": "source/aotus_module.f90",
+              "line_start": 224,
+              "line_end": 229,
+              "declarations": [
+                {
+                  "path": "source/aotus_module.f90",
+                  "line_start": 225,
+                  "line_end": 225
+                },
+                {
+                  "path": "source/aotus_module.f90",
+                  "line_start": 41,
+                  "line_end": 69
+                },
+                {
+                  "path": "source/aot_table_module.f90",
+                  "line_start": 47,
+                  "line_end": 80
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
     "propack": {
       "id": "github:scipy/propack",
       "repository": {
@@ -30826,6 +31596,148 @@
                   "path": "double/dlansvd.F",
                   "line_start": 10,
                   "line_end": 85
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "qcontainers": {
+      "id": "github:darmar-lt/qcontainers",
+      "repository": {
+        "owner": "darmar-lt",
+        "name": "qcontainers",
+        "url": "https://github.com/darmar-lt/qcontainers"
+      },
+      "license": {
+        "label": "BSD-2-Clause qLibc terms and ISC component",
+        "spdx_expression": "BSD-2-Clause AND ISC",
+        "revision": "bb1423dded02588898530c3ac7aa709e3f4eb5c3",
+        "reviewed_on": "2026-11-08",
+        "notes": "Root LICENSE.txt states qcontainers uses qLibc terms and includes its two-clause BSD notice plus an ISC c-algorithms notice. Preserve both component notices. The service string-helper rename does not alter these selected vector interfaces.",
+        "evidence": [
+          {
+            "path": "LICENSE.txt",
+            "url": "https://github.com/darmar-lt/qcontainers/blob/bb1423dded02588898530c3ac7aa709e3f4eb5c3/LICENSE.txt",
+            "sha256": "e780a1c36f149ce8ab6d7712a1d75249ded7eadc8654a96f7e99220cd0a1cf92"
+          },
+          {
+            "path": "README.md",
+            "url": "https://github.com/darmar-lt/qcontainers/blob/bb1423dded02588898530c3ac7aa709e3f4eb5c3/README.md",
+            "sha256": "e467365875ffa5628ccf72f14fed37c80c818038289bf4f0bb5cb035bf97ae5f"
+          },
+          {
+            "path": "qcontainers_f/qvector.F90",
+            "url": "https://github.com/darmar-lt/qcontainers/blob/bb1423dded02588898530c3ac7aa709e3f4eb5c3/qcontainers_f/qvector.F90",
+            "sha256": "1bc22efc30a1665e7d1303bb97efa443544048d8b9e08f60f33b5c8d467f188b"
+          }
+        ]
+      },
+      "classifications": [
+        {
+          "code": "N4",
+          "level": "source-reviewed",
+          "revision": "bb1423dded02588898530c3ac7aa709e3f4eb5c3",
+          "reviewed_on": "2026-11-08",
+          "notes": "Native byte-vector initialization, append, one-based retrieval and clear document payload sizing, status and automatic finalization. This is a pinned public-interface/source review, not a new numerical execution check or complete API audit. Existing hosted drivers and their verified problem scope are recorded separately.",
+          "evidence": [
+            {
+              "path": "qcontainers_f/qvector.F90",
+              "url": "https://github.com/darmar-lt/qcontainers/blob/bb1423dded02588898530c3ac7aa709e3f4eb5c3/qcontainers_f/qvector.F90",
+              "sha256": "1bc22efc30a1665e7d1303bb97efa443544048d8b9e08f60f33b5c8d467f188b"
+            }
+          ],
+          "procedures": [
+            {
+              "procedure": "new",
+              "role": "public-entry-point",
+              "module": "qvector_m",
+              "derived_type": "qvector_t",
+              "summary": "Declare TYPE(qvector_t) :: solver from qvector_m. Initialize a vector with positive default-integer IMAX, SIZE_DATA in BYTES for each payload and required RESIZE_OPT such as QVECTOR_RESIZE_DOUBLE. Use fixed-size C-interoperable payloads, for example INTEGER(C_INT) and its C_SIZEOF converted to the required default integer. This byte-copy API stores no Fortran type/rank metadata and NEW returns no allocation status. Do not re-NEW an owned live vector without releasing its old storage; use block scope to invoke the declared finalizer. The passed object SELF is implicit in solver%; do not pass it again. Optional actuals shown in brackets can be supplied by keyword.",
+              "signature": "CALL solver%new(IMAX,SIZE_DATA,RESIZE_OPT)",
+              "path": "qcontainers_f/qvector.F90",
+              "line_start": 236,
+              "line_end": 246,
+              "declarations": [
+                {
+                  "path": "qcontainers_f/qvector.F90",
+                  "line_start": 237,
+                  "line_end": 240
+                },
+                {
+                  "path": "qcontainers_f/qvector.F90",
+                  "line_start": 166,
+                  "line_end": 207
+                }
+              ]
+            },
+            {
+              "procedure": "addlast",
+              "role": "public-entry-point",
+              "module": "qvector_m",
+              "derived_type": "qvector_t",
+              "summary": "Declare TYPE(qvector_t) :: solver from qvector_m. Append one payload through an assumed-type TARGET actual, copying exactly the SIZE_DATA configured by NEW. The actual must have adequate contiguous interoperable storage of that size; mismatched types/sizes are not diagnosed by this wrapper. Request optional SUCCESS and check it before assuming insertion. Pointer-containing Fortran derived objects are not thereby deep-copied or safely owned. The hosted check scopes integer values. The passed object SELF is implicit in solver%; do not pass it again. Optional actuals shown in brackets can be supplied by keyword.",
+              "signature": "CALL solver%addlast(VAL_DATA,[SUCCESS])",
+              "path": "qcontainers_f/qvector.F90",
+              "line_start": 278,
+              "line_end": 291,
+              "declarations": [
+                {
+                  "path": "qcontainers_f/qvector.F90",
+                  "line_start": 279,
+                  "line_end": 285
+                },
+                {
+                  "path": "qcontainers_f/qvector.F90",
+                  "line_start": 166,
+                  "line_end": 207
+                }
+              ]
+            },
+            {
+              "procedure": "getat",
+              "role": "public-entry-point",
+              "module": "qvector_m",
+              "derived_type": "qvector_t",
+              "summary": "Declare TYPE(qvector_t) :: solver from qvector_m. Copy an indexed stored payload into a compatible writable TARGET buffer and request SUCCESS before reading it. Positive indices are one based in this wrapper; zero returns failure, while negative indices are forwarded to native conventions. This scope uses indices 1:SIZE only. On lookup failure the buffer is not supplied with a replacement value. The byte count is the configured SIZE_DATA, not inferred from the destination type, so capacity/type matching is caller responsibility. The passed object SELF is implicit in solver%; do not pass it again. Optional actuals shown in brackets can be supplied by keyword.",
+              "signature": "CALL solver%getat(IDX,VAL_DATA,[SUCCESS])",
+              "path": "qcontainers_f/qvector.F90",
+              "line_start": 368,
+              "line_end": 397,
+              "declarations": [
+                {
+                  "path": "qcontainers_f/qvector.F90",
+                  "line_start": 369,
+                  "line_end": 376
+                },
+                {
+                  "path": "qcontainers_f/qvector.F90",
+                  "line_start": 166,
+                  "line_end": 207
+                }
+              ]
+            },
+            {
+              "procedure": "clear",
+              "role": "public-entry-point",
+              "module": "qvector_m",
+              "derived_type": "qvector_t",
+              "summary": "Declare TYPE(qvector_t) :: solver from qvector_m. Remove all elements from an initialized vector while retaining the container for reuse. This is a public binding; final resource cleanup is the TYPE(QVECTOR_T) FINAL procedure at block/scope exit, not a public FREE binding. Do not call cleanup again through shallow/native pointer aliases or assume clearing a container deep-frees arbitrary pointed-to user payloads. The passed object SELF is implicit in solver%; do not pass it again. Optional actuals shown in brackets can be supplied by keyword.",
+              "signature": "CALL solver%clear()",
+              "path": "qcontainers_f/qvector.F90",
+              "line_start": 623,
+              "line_end": 627,
+              "declarations": [
+                {
+                  "path": "qcontainers_f/qvector.F90",
+                  "line_start": 624,
+                  "line_end": 624
+                },
+                {
+                  "path": "qcontainers_f/qvector.F90",
+                  "line_start": 166,
+                  "line_end": 207
                 }
               ]
             }
@@ -31278,6 +32190,556 @@
                   "path": "src/SF_INTEGRATE/SF_INTEGRATE.f90",
                   "line_start": 158,
                   "line_end": 194
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "forpy": {
+      "id": "github:ylikx/forpy",
+      "repository": {
+        "owner": "ylikx",
+        "name": "forpy",
+        "url": "https://github.com/ylikx/forpy"
+      },
+      "license": {
+        "label": "LGPL-3.0-or-later",
+        "spdx_expression": "LGPL-3.0-or-later",
+        "revision": "b4fc550c7282ed0751d6559c4d867a60af3718a7",
+        "reviewed_on": "2026-11-08",
+        "notes": "Selected source headers expressly grant LGPL version 3 or later; COPYING.LESSER and COPYING supply the corresponding texts. Native Python/NumPy and loaded modules retain separate terms. Source links target the checked-in generated F90 used by the service.",
+        "evidence": [
+          {
+            "path": "COPYING.LESSER",
+            "url": "https://github.com/ylikx/forpy/blob/b4fc550c7282ed0751d6559c4d867a60af3718a7/COPYING.LESSER",
+            "sha256": "da7eabb7bafdf7d3ae5e9f223aa5bdc1eece45ac569dc21b3b037520b4464768"
+          },
+          {
+            "path": "README.md",
+            "url": "https://github.com/ylikx/forpy/blob/b4fc550c7282ed0751d6559c4d867a60af3718a7/README.md",
+            "sha256": "5ed77874875b55074a785b4389a43b4dd0dd6a49fa24107915aeb5f2f4e57852"
+          },
+          {
+            "path": "forpy_mod.F90",
+            "url": "https://github.com/ylikx/forpy/blob/b4fc550c7282ed0751d6559c4d867a60af3718a7/forpy_mod.F90",
+            "sha256": "742b3ac5c934d124a071dc01d60263e9ec2556467349b4ddec242b662dbcf666"
+          }
+        ]
+      },
+      "classifications": [
+        {
+          "code": "S",
+          "level": "source-reviewed",
+          "revision": "b4fc550c7282ed0751d6559c4d867a60af3718a7",
+          "reviewed_on": "2026-11-08",
+          "notes": "Embedded Python setup, copied NumPy matrix creation, module import and explicit reference/interpreter cleanup document ABI and lifetime requirements. This is a pinned public-interface/source review, not a new numerical execution check or complete API audit. Existing hosted drivers and their verified problem scope are recorded separately.",
+          "evidence": [
+            {
+              "path": "forpy_mod.F90",
+              "url": "https://github.com/ylikx/forpy/blob/b4fc550c7282ed0751d6559c4d867a60af3718a7/forpy_mod.F90",
+              "sha256": "742b3ac5c934d124a071dc01d60263e9ec2556467349b4ddec242b662dbcf666"
+            },
+            {
+              "path": "COPYING",
+              "url": "https://github.com/ylikx/forpy/blob/b4fc550c7282ed0751d6559c4d867a60af3718a7/COPYING",
+              "sha256": "8ceb4b9ee5adedde47b31e975c1d90c73ad27b6b165a1dcd80c7c545eb65b903"
+            }
+          ],
+          "procedures": [
+            {
+              "procedure": "forpy_initialize",
+              "role": "public-entry-point",
+              "module": "forpy_mod",
+              "summary": "Initialize embedded Python/Forpy before object operations. Optional USE_NUMPY defaults true; pass false only when ndarray features are not needed. Check the INTEGER(C_INT) function result for zero and use a matching native Python ABI/runtime and embedding linker configuration. This modifies process-wide interpreter/global state, not a private interpreter object; coordinate initialization/finalization with any embedding host.",
+              "signature": "VALUE = forpy_initialize([USE_NUMPY])",
+              "path": "forpy_mod.F90",
+              "line_start": 1980,
+              "line_end": 2010,
+              "declarations": [
+                {
+                  "path": "forpy_mod.F90",
+                  "line_start": 1982,
+                  "line_end": 1983
+                },
+                {
+                  "path": "forpy_mod.F90",
+                  "line_start": 39,
+                  "line_end": 62
+                },
+                {
+                  "path": "forpy_mod.F90",
+                  "line_start": 856,
+                  "line_end": 880
+                }
+              ]
+            },
+            {
+              "procedure": "ndarray_create",
+              "role": "public-entry-point",
+              "module": "forpy_mod",
+              "summary": "Rank-two REAL(REAL64) overload of NDARRAY_CREATE copies ARRAY into an owned TYPE(NDARRAY) in Fortran storage order. Initialize NumPy support first and check INTEGER(C_INT) status before using RES. This is the copying generic, not NDARRAY_CREATE_NOCOPY: subsequent changes to ARRAY do not automatically update the NumPy result. Destroy the returned Python object before interpreter finalization.",
+              "signature": "VALUE = ndarray_create(RES,ARRAY)",
+              "path": "forpy_mod.F90",
+              "line_start": 8017,
+              "line_end": 8036,
+              "declarations": [
+                {
+                  "path": "forpy_mod.F90",
+                  "line_start": 8019,
+                  "line_end": 8023
+                },
+                {
+                  "path": "forpy_mod.F90",
+                  "line_start": 39,
+                  "line_end": 62
+                },
+                {
+                  "path": "forpy_mod.F90",
+                  "line_start": 856,
+                  "line_end": 880
+                },
+                {
+                  "path": "forpy_mod.F90",
+                  "line_start": 1688,
+                  "line_end": 1705
+                }
+              ]
+            },
+            {
+              "procedure": "import_py",
+              "role": "public-entry-point",
+              "module": "forpy_mod",
+              "summary": "Import a Python module named by CHARACTER(KIND=C_CHAR) MOD_NAME into TYPE(MODULE_PY), returning INTEGER(C_INT) status zero on success. The wrapper trims/adds the terminator. Missing modules raise a Python exception represented by a nonzero wrapper result; check it before attribute calls. Normal Python import can execute module initialization and remains subject to hosting restrictions. Destroy the owned module reference before finalization.",
+              "signature": "VALUE = import_py(MOD_PY,MOD_NAME)",
+              "path": "forpy_mod.F90",
+              "line_start": 7069,
+              "line_end": 7083,
+              "declarations": [
+                {
+                  "path": "forpy_mod.F90",
+                  "line_start": 7071,
+                  "line_end": 7075
+                },
+                {
+                  "path": "forpy_mod.F90",
+                  "line_start": 39,
+                  "line_end": 62
+                },
+                {
+                  "path": "forpy_mod.F90",
+                  "line_start": 856,
+                  "line_end": 880
+                }
+              ]
+            },
+            {
+              "procedure": "destroy",
+              "role": "public-entry-point",
+              "module": "forpy_mod",
+              "derived_type": "object",
+              "summary": "Declare TYPE(object) :: solver from forpy_mod. Decrement the Python reference held by this object (inherited by ndarray/module wrapper types) while Python is still initialized. This pin does not nullify the saved PY_OBJECT pointer after decref, so do not call DESTROY again through this variable or an unmanaged alias. Reference-aware wrapper assignment is a separate operation; this cleanup does not make arbitrary native-handle copying safe. Destroy every owned result/module/argument object before FORPY_FINALIZE. The passed object SELF is implicit in solver%; do not pass it again. Optional actuals shown in brackets can be supplied by keyword.",
+              "signature": "CALL solver%destroy()",
+              "path": "forpy_mod.F90",
+              "line_start": 4474,
+              "line_end": 4477,
+              "declarations": [
+                {
+                  "path": "forpy_mod.F90",
+                  "line_start": 4475,
+                  "line_end": 4475
+                },
+                {
+                  "path": "forpy_mod.F90",
+                  "line_start": 39,
+                  "line_end": 62
+                },
+                {
+                  "path": "forpy_mod.F90",
+                  "line_start": 856,
+                  "line_end": 880
+                }
+              ]
+            },
+            {
+              "procedure": "forpy_finalize",
+              "role": "public-entry-point",
+              "module": "forpy_mod",
+              "summary": "Finalize the process-wide embedded Python interpreter after all owned Forpy references have been released and no callbacks/users remain. There is no status/result or private context argument; this is not a per-object destructor. Do not access or destroy Python-backed objects afterward or assume a repeated initialize/finalize cycle is generally safe. Coordinate shutdown with any other component that initialized Python.",
+              "signature": "CALL forpy_finalize()",
+              "path": "forpy_mod.F90",
+              "line_start": 2425,
+              "line_end": 2433,
+              "declarations": [
+                {
+                  "path": "forpy_mod.F90",
+                  "line_start": 2425,
+                  "line_end": 2425
+                },
+                {
+                  "path": "forpy_mod.F90",
+                  "line_start": 39,
+                  "line_end": 62
+                },
+                {
+                  "path": "forpy_mod.F90",
+                  "line_start": 856,
+                  "line_end": 880
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "mpifx": {
+      "id": "github:dftbplus/mpifx",
+      "repository": {
+        "owner": "dftbplus",
+        "name": "mpifx",
+        "url": "https://github.com/dftbplus/mpifx"
+      },
+      "license": {
+        "label": "BSD-2-Clause",
+        "spdx_expression": "BSD-2-Clause",
+        "revision": "1223bd515bf2ccf39f5575d628ab2867a3d8e155",
+        "reviewed_on": "2026-11-08",
+        "notes": "Root LICENSE supplies DFTB+ developers two-clause BSD terms. MPI is separately supplied and licensed. These are .fpp preprocessing inputs whose linked declaration ranges precede generated line-number changes.",
+        "evidence": [
+          {
+            "path": "LICENSE",
+            "url": "https://github.com/dftbplus/mpifx/blob/1223bd515bf2ccf39f5575d628ab2867a3d8e155/LICENSE",
+            "sha256": "2512b956ad45dadcbfb3687d643ff94f9718931a4ba680469bf681fd049ebf86"
+          },
+          {
+            "path": "lib/mpifx_init.fpp",
+            "url": "https://github.com/dftbplus/mpifx/blob/1223bd515bf2ccf39f5575d628ab2867a3d8e155/lib/mpifx_init.fpp",
+            "sha256": "92cee8ddf86e87d6a0e652fe9e1f5ff3b6567148a652d93bcfd8f58fcc66fa24"
+          }
+        ]
+      },
+      "classifications": [
+        {
+          "code": "R",
+          "level": "source-reviewed",
+          "revision": "1223bd515bf2ccf39f5575d628ab2867a3d8e155",
+          "reviewed_on": "2026-11-08",
+          "notes": "MPI initialization, borrowed communicator metadata, barrier and finalization document process-wide ownership and the hosted single-process scope. This is a pinned public-interface/source review, not a new numerical execution check or complete API audit. Existing hosted drivers and their verified problem scope are recorded separately.",
+          "evidence": [
+            {
+              "path": "lib/mpifx_init.fpp",
+              "url": "https://github.com/dftbplus/mpifx/blob/1223bd515bf2ccf39f5575d628ab2867a3d8e155/lib/mpifx_init.fpp",
+              "sha256": "92cee8ddf86e87d6a0e652fe9e1f5ff3b6567148a652d93bcfd8f58fcc66fa24"
+            },
+            {
+              "path": "lib/mpifx_comm.fpp",
+              "url": "https://github.com/dftbplus/mpifx/blob/1223bd515bf2ccf39f5575d628ab2867a3d8e155/lib/mpifx_comm.fpp",
+              "sha256": "9cb117333688afd92815d728b51327f48cb9f5668dcf653e5b2c075a971797ed"
+            },
+            {
+              "path": "lib/mpifx_barrier.fpp",
+              "url": "https://github.com/dftbplus/mpifx/blob/1223bd515bf2ccf39f5575d628ab2867a3d8e155/lib/mpifx_barrier.fpp",
+              "sha256": "de97c26ce4faec2adfb49720546b89f7da4d8b09f6b2f560db16f92867e70ddb"
+            },
+            {
+              "path": "lib/mpifx_finalize.fpp",
+              "url": "https://github.com/dftbplus/mpifx/blob/1223bd515bf2ccf39f5575d628ab2867a3d8e155/lib/mpifx_finalize.fpp",
+              "sha256": "adc99e056f46b7fc0363954cadd765ca7aafa98d4b5425058297b00290b08ba6"
+            }
+          ],
+          "procedures": [
+            {
+              "procedure": "mpifx_init",
+              "role": "public-entry-point",
+              "module": "mpifx_init_module",
+              "summary": "Initialize the native MPI environment once before communicator or collective operations. Optional ERROR receives a default-integer native code; omitting it invokes wrapper error handling rather than supplying a recoverable status. Do not initialize again after another library already initialized MPI or after finalization. The hosted example runs one MPI process, so this interface does not imply playground multi-process launch support or speedup.",
+              "signature": "CALL mpifx_init([ERROR])",
+              "path": "lib/mpifx_init.fpp",
+              "line_start": 36,
+              "line_end": 44,
+              "declarations": [
+                {
+                  "path": "lib/mpifx_init.fpp",
+                  "line_start": 37,
+                  "line_end": 37
+                },
+                {
+                  "path": "lib/mpifx_comm.fpp",
+                  "line_start": 2,
+                  "line_end": 34
+                }
+              ]
+            },
+            {
+              "procedure": "init",
+              "role": "public-entry-point",
+              "module": "mpifx_comm_module",
+              "derived_type": "mpifx_comm",
+              "summary": "Declare TYPE(mpifx_comm) :: solver from mpifx_comm_module. Initialize communicator metadata after MPI initialization. This overload accepts an optional MPI_F08 TYPE(MPI_COMM); omit COMM to wrap MPI_COMM_WORLD. It copies the handle and queries size/rank, without duplicating the native communicator. Therefore this wrapper is not a separately owned communicator and must not be freed as though it created a duplicate of WORLD. ERROR should be checked before using fields. Integer-handle INIT is a separate overload; code examples in old comments omitting a required integer argument refer to this optional typed overload. The passed object SELF is implicit in solver%; do not pass it again. Optional actuals shown in brackets can be supplied by keyword.",
+              "signature": "CALL solver%init([COMM],[ERROR])",
+              "path": "lib/mpifx_comm.fpp",
+              "line_start": 46,
+              "line_end": 72,
+              "declarations": [
+                {
+                  "path": "lib/mpifx_comm.fpp",
+                  "line_start": 47,
+                  "line_end": 49
+                },
+                {
+                  "path": "lib/mpifx_comm.fpp",
+                  "line_start": 2,
+                  "line_end": 34
+                }
+              ]
+            },
+            {
+              "procedure": "mpifx_barrier",
+              "role": "public-entry-point",
+              "module": "mpifx_barrier_module",
+              "summary": "Blocking collective barrier on an initialized TYPE(MPIFX_COMM). Every process in the communicator must participate in matching order; a barrier does not collect data or make divergent collective control flow safe. Supply ERROR to inspect the native result. In the scoped one-process hosted example this is an API synchronization illustration, not a multi-process performance measurement.",
+              "signature": "CALL mpifx_barrier(MYCOMM,[ERROR])",
+              "path": "lib/mpifx_barrier.fpp",
+              "line_start": 37,
+              "line_end": 46,
+              "declarations": [
+                {
+                  "path": "lib/mpifx_barrier.fpp",
+                  "line_start": 38,
+                  "line_end": 39
+                },
+                {
+                  "path": "lib/mpifx_comm.fpp",
+                  "line_start": 2,
+                  "line_end": 34
+                }
+              ]
+            },
+            {
+              "procedure": "mpifx_finalize",
+              "role": "public-entry-point",
+              "module": "mpifx_finalize_module",
+              "summary": "Finalize MPI once after all communication and dependent objects/operations are finished. Inspect optional ERROR; do not make MPI calls afterward or assume MPI can be reinitialized. This finalizes the process-wide MPI environment, not merely an MPIFX_COMM wrapper. Library callers embedded in an already-managed MPI application must coordinate ownership of initialization/finalization with the host.",
+              "signature": "CALL mpifx_finalize([ERROR])",
+              "path": "lib/mpifx_finalize.fpp",
+              "line_start": 35,
+              "line_end": 43,
+              "declarations": [
+                {
+                  "path": "lib/mpifx_finalize.fpp",
+                  "line_start": 36,
+                  "line_end": 36
+                },
+                {
+                  "path": "lib/mpifx_comm.fpp",
+                  "line_start": 2,
+                  "line_end": 34
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "scalapackfx": {
+      "id": "github:dftbplus/scalapackfx",
+      "repository": {
+        "owner": "dftbplus",
+        "name": "scalapackfx",
+        "url": "https://github.com/dftbplus/scalapackfx"
+      },
+      "license": {
+        "label": "BSD-2-Clause",
+        "spdx_expression": "BSD-2-Clause",
+        "revision": "570cbf45836ed05cf791bc3f404f4f10929e5017",
+        "reviewed_on": "2026-11-08",
+        "notes": "Root LICENSE supplies Balint Aradi two-clause BSD terms. ScaLAPACK, BLACS, MPI and BLAS are native dependencies with their own terms/ABIs. Declaration links are upstream .fpp template sources, not invented generated-file URLs.",
+        "evidence": [
+          {
+            "path": "LICENSE",
+            "url": "https://github.com/dftbplus/scalapackfx/blob/570cbf45836ed05cf791bc3f404f4f10929e5017/LICENSE",
+            "sha256": "41e8053d54fb9343dd8640d4b4a454c83ccac04eb97751c2d81673efe5950cd8"
+          },
+          {
+            "path": "lib/blacsgrid.fpp",
+            "url": "https://github.com/dftbplus/scalapackfx/blob/570cbf45836ed05cf791bc3f404f4f10929e5017/lib/blacsgrid.fpp",
+            "sha256": "e2b1edc5c09e952b47bb29b68f1f40ede287a05c61185bb5cc850703313c143e"
+          }
+        ]
+      },
+      "classifications": [
+        {
+          "code": "D4a1",
+          "level": "source-reviewed",
+          "revision": "570cbf45836ed05cf791bc3f404f4f10929e5017",
+          "reviewed_on": "2026-11-08",
+          "notes": "Real symmetric eigensolver setup, descriptor construction, double-precision generic and grid teardown document template provenance and single-process scope. This is a pinned public-interface/source review, not a new numerical execution check or complete API audit. Existing hosted drivers and their verified problem scope are recorded separately.",
+          "evidence": [
+            {
+              "path": "lib/blacsgrid.fpp",
+              "url": "https://github.com/dftbplus/scalapackfx/blob/570cbf45836ed05cf791bc3f404f4f10929e5017/lib/blacsgrid.fpp",
+              "sha256": "e2b1edc5c09e952b47bb29b68f1f40ede287a05c61185bb5cc850703313c143e"
+            },
+            {
+              "path": "lib/scalapackfx.fpp",
+              "url": "https://github.com/dftbplus/scalapackfx/blob/570cbf45836ed05cf791bc3f404f4f10929e5017/lib/scalapackfx.fpp",
+              "sha256": "0047f2b700d2e9c329062a7f5686c6fd0ff3a7e261131003d026ca8fedbccf8f"
+            },
+            {
+              "path": "lib/scalapackfx.fypp",
+              "url": "https://github.com/dftbplus/scalapackfx/blob/570cbf45836ed05cf791bc3f404f4f10929e5017/lib/scalapackfx.fypp",
+              "sha256": "1f3411e4b62e6013f8008b446a1b048eb301826d5edeb205020c8a323674cc0d"
+            },
+            {
+              "path": "lib/scalapackfx_common.fpp",
+              "url": "https://github.com/dftbplus/scalapackfx/blob/570cbf45836ed05cf791bc3f404f4f10929e5017/lib/scalapackfx_common.fpp",
+              "sha256": "2c5501a1a85e4a45e7ca7dd48a2d6ec2e62d4808da25387eaf39fc0cd542a3af"
+            }
+          ],
+          "procedures": [
+            {
+              "procedure": "initgrid",
+              "role": "public-entry-point",
+              "module": "blacsgrid_module",
+              "derived_type": "blacsgrid",
+              "summary": "Declare TYPE(blacsgrid) :: solver from blacsgrid_module. Initialize a BLACS process grid while the native MPI/BLACS environment is live. For the hosted verified scope use NROW=1, NCOL=1 and one process. Larger grids need a matching collective launch; too many requested processes STOP. Context/lead-row/lead-column actuals are integers, COLMAJOR/REPEATABLE logical. This routine provides no recoverable status argument. Destroy the grid before finalizing the owning MPI environment. Source links target Fypp/preprocessor input, not generated file line numbers. The passed object SELF is implicit in solver%; do not pass it again. Optional actuals shown in brackets can be supplied by keyword.",
+              "signature": "CALL solver%initgrid(NROW,NCOL,[COLMAJOR],[LEADROW],[LEADCOL],[CONTEXT],[REPEATABLE])",
+              "path": "lib/blacsgrid.fpp",
+              "line_start": 86,
+              "line_end": 145,
+              "declarations": [
+                {
+                  "path": "lib/blacsgrid.fpp",
+                  "line_start": 88,
+                  "line_end": 92
+                },
+                {
+                  "path": "lib/blacsgrid.fpp",
+                  "line_start": 1,
+                  "line_end": 44
+                },
+                {
+                  "path": "lib/scalapackfx.fpp",
+                  "line_start": 12,
+                  "line_end": 25
+                },
+                {
+                  "path": "lib/scalapackfx.fpp",
+                  "line_start": 87,
+                  "line_end": 89
+                }
+              ]
+            },
+            {
+              "procedure": "scalafx_getdescriptor",
+              "role": "public-entry-point",
+              "module": "scalapackfx_module",
+              "summary": "Build a default-integer descriptor DESC(DLEN_) from a live TYPE(BLACSGRID), global dimensions MM/NN and positive block sizes MB/NB. Optional RSRC/CSRC are source process coordinates, defaulting to grid leads. INFO is a native ScaLAPACK status; supply and inspect it before using the descriptor. Storage is block-cyclic, not an arbitrary local dense array layout; on the scoped 1-by-1 grid local storage covers the full matrix with leading dimension at least one.",
+              "signature": "CALL scalafx_getdescriptor(MYGRID,MM,NN,MB,NB,DESC,[RSRC],[CSRC],[INFO])",
+              "path": "lib/scalapackfx.fpp",
+              "line_start": 2060,
+              "line_end": 2079,
+              "declarations": [
+                {
+                  "path": "lib/scalapackfx.fpp",
+                  "line_start": 2062,
+                  "line_end": 2066
+                },
+                {
+                  "path": "lib/blacsgrid.fpp",
+                  "line_start": 1,
+                  "line_end": 44
+                },
+                {
+                  "path": "lib/scalapackfx.fpp",
+                  "line_start": 12,
+                  "line_end": 25
+                },
+                {
+                  "path": "lib/scalapackfx.fpp",
+                  "line_start": 87,
+                  "line_end": 89
+                }
+              ]
+            },
+            {
+              "procedure": "scalafx_psyev",
+              "role": "public-entry-point",
+              "module": "scalapackfx_module",
+              "summary": "Real symmetric eigenproblem generic, scoped here to the generated DREAL/DP specialization. AA is destructive INOUT local block-cyclic matrix storage; DESCA/DESCZ describe conforming square input and eigenvector matrices on an initialized grid. WW has capacity for the global order, ZZ for its local eigenvector block. Defaults JOBZ=\"V\", UPLO=\"L\" and one-based submatrix origins; supply INFO and check zero before interpreting output. Optional WORK is an ALLOCATABLE workspace retained for reuse, not an arbitrary fixed array; the wrapper queries/allocates workspace internally. This template link shows ${KIND}$ before Fypp expansion. The public generic is SCALAFX_PSYEV, not the template name. Only the 1-by-1 hosted grid is execution-verified.",
+              "signature": "CALL scalafx_psyev(AA,DESCA,WW,ZZ,DESCZ,[JOBZ],[UPLO],[IA],[JA],[IZ],[JZ],[WORK],[INFO])",
+              "path": "lib/scalapackfx.fpp",
+              "line_start": 525,
+              "line_end": 568,
+              "declarations": [
+                {
+                  "path": "lib/scalapackfx.fpp",
+                  "line_start": 527,
+                  "line_end": 535
+                },
+                {
+                  "path": "lib/blacsgrid.fpp",
+                  "line_start": 1,
+                  "line_end": 44
+                },
+                {
+                  "path": "lib/scalapackfx.fpp",
+                  "line_start": 12,
+                  "line_end": 25
+                },
+                {
+                  "path": "lib/scalapackfx.fpp",
+                  "line_start": 87,
+                  "line_end": 89
+                },
+                {
+                  "path": "lib/scalapackfx.fpp",
+                  "line_start": 2006,
+                  "line_end": 2024
+                },
+                {
+                  "path": "lib/scalapackfx.fypp",
+                  "line_start": 1,
+                  "line_end": 36
+                },
+                {
+                  "path": "lib/scalapackfx_common.fpp",
+                  "line_start": 1,
+                  "line_end": 36
+                }
+              ]
+            },
+            {
+              "procedure": "destruct",
+              "role": "public-entry-point",
+              "module": "blacsgrid_module",
+              "derived_type": "blacsgrid",
+              "summary": "Declare TYPE(blacsgrid) :: solver from blacsgrid_module. Release a valid initialized BLACS grid context and reset this grid record before native MPI shutdown. This is an explicit binding, not an automatic FINAL routine. Do not use descriptors/operations tied to the old context afterward, or destroy copied records as independent owners of the same context. It does not finalize all MPI state or free caller matrix arrays. The passed object SELF is implicit in solver%; do not pass it again. Optional actuals shown in brackets can be supplied by keyword.",
+              "signature": "CALL solver%destruct()",
+              "path": "lib/blacsgrid.fpp",
+              "line_start": 344,
+              "line_end": 352,
+              "declarations": [
+                {
+                  "path": "lib/blacsgrid.fpp",
+                  "line_start": 345,
+                  "line_end": 345
+                },
+                {
+                  "path": "lib/blacsgrid.fpp",
+                  "line_start": 1,
+                  "line_end": 44
+                },
+                {
+                  "path": "lib/scalapackfx.fpp",
+                  "line_start": 12,
+                  "line_end": 25
+                },
+                {
+                  "path": "lib/scalapackfx.fpp",
+                  "line_start": 87,
+                  "line_end": 89
                 }
               ]
             }
@@ -31766,6 +33228,148 @@
                   "path": "test/test_algorithm.F90",
                   "line_start": 188,
                   "line_end": 198
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "tsunami": {
+      "id": "github:modern-fortran/tsunami",
+      "repository": {
+        "owner": "modern-fortran",
+        "name": "tsunami",
+        "url": "https://github.com/modern-fortran/tsunami"
+      },
+      "license": {
+        "label": "MIT",
+        "spdx_expression": "MIT",
+        "revision": "70b5702aed42bbea0733335d50e0eb70cb159e08",
+        "reviewed_on": "2026-11-08",
+        "notes": "Root LICENSE supplies Milan Curcic MIT terms. Only the unchanged serial Chapter 4 MOD_DIFF/MOD_INITIAL modules are selected by the hosted wrapper; later parallel chapters are outside this review.",
+        "evidence": [
+          {
+            "path": "LICENSE",
+            "url": "https://github.com/modern-fortran/tsunami/blob/70b5702aed42bbea0733335d50e0eb70cb159e08/LICENSE",
+            "sha256": "563324f2b3cb633a25b7d03b2f8c4417fd4c7159cd5c6221f8f2a19e0a53f58b"
+          },
+          {
+            "path": "README.md",
+            "url": "https://github.com/modern-fortran/tsunami/blob/70b5702aed42bbea0733335d50e0eb70cb159e08/README.md",
+            "sha256": "1aa1aa234c1e11bfcc430498e95b34e40d1c84f26eb5ce3a2576cf38d8ef135a"
+          },
+          {
+            "path": "src/ch04/mod_diff.f90",
+            "url": "https://github.com/modern-fortran/tsunami/blob/70b5702aed42bbea0733335d50e0eb70cb159e08/src/ch04/mod_diff.f90",
+            "sha256": "70192504a9ba8d9e8a24cf17e7d95b57497236fccfcb9be0df3ae9b040b75c98"
+          }
+        ]
+      },
+      "classifications": [
+        {
+          "code": "H1",
+          "level": "source-reviewed",
+          "revision": "70b5702aed42bbea0733335d50e0eb70cb159e08",
+          "reviewed_on": "2026-11-08",
+          "notes": "Serial periodic centered/backward difference interfaces document array-size requirements and caller-supplied physical spacing. This is a pinned public-interface/source review, not a new numerical execution check or complete API audit. Existing hosted drivers and their verified problem scope are recorded separately.",
+          "evidence": [
+            {
+              "path": "src/ch04/mod_diff.f90",
+              "url": "https://github.com/modern-fortran/tsunami/blob/70b5702aed42bbea0733335d50e0eb70cb159e08/src/ch04/mod_diff.f90",
+              "sha256": "70192504a9ba8d9e8a24cf17e7d95b57497236fccfcb9be0df3ae9b040b75c98"
+            },
+            {
+              "path": "src/ch04/mod_initial.f90",
+              "url": "https://github.com/modern-fortran/tsunami/blob/70b5702aed42bbea0733335d50e0eb70cb159e08/src/ch04/mod_initial.f90",
+              "sha256": "0501430101686d018cb411efd741944e7511106e36b0eb327cbea00553c50c75"
+            }
+          ],
+          "procedures": [
+            {
+              "procedure": "diff_centered",
+              "role": "public-entry-point",
+              "module": "mod_diff",
+              "summary": "Return REAL(REAL32) periodic centered differences of rank-one X, requiring at least two cells for this implementation. The formula is (X(i+1)-X(i-1))/2 with periodic wrap; divide by the physical grid spacing separately when approximating a derivative. This is the unchanged serial Chapter 4 module, not the later coarray versions. No time advance, boundary-condition selector or truncation-error estimate is returned.",
+              "signature": "VALUE = diff_centered(X)",
+              "path": "src/ch04/mod_diff.f90",
+              "line_start": 11,
+              "line_end": 22,
+              "declarations": [
+                {
+                  "path": "src/ch04/mod_diff.f90",
+                  "line_start": 14,
+                  "line_end": 15
+                },
+                {
+                  "path": "src/ch04/mod_diff.f90",
+                  "line_start": 1,
+                  "line_end": 9
+                }
+              ]
+            },
+            {
+              "procedure": "diff_upwind",
+              "role": "public-entry-point",
+              "module": "mod_diff",
+              "summary": "Return the REAL(REAL32) backward difference X(i)-X(i-1), with the last cell wrapping before the first. Supply a nonempty vector and divide by grid spacing yourself for a derivative. The routine has no velocity argument: it does not automatically reverse the stencil for a negative transport speed. This is a periodic difference helper, not a complete upwind PDE solver or a time-step stability check.",
+              "signature": "VALUE = diff_upwind(X)",
+              "path": "src/ch04/mod_diff.f90",
+              "line_start": 25,
+              "line_end": 34,
+              "declarations": [
+                {
+                  "path": "src/ch04/mod_diff.f90",
+                  "line_start": 28,
+                  "line_end": 29
+                },
+                {
+                  "path": "src/ch04/mod_diff.f90",
+                  "line_start": 1,
+                  "line_end": 9
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "code": "C4",
+          "level": "source-reviewed",
+          "revision": "70b5702aed42bbea0733335d50e0eb70cb159e08",
+          "reviewed_on": "2026-11-08",
+          "notes": "Gaussian profile filling documents index coordinates and the absence of normalization/periodization. This is a pinned public-interface/source review, not a new numerical execution check or complete API audit. Existing hosted drivers and their verified problem scope are recorded separately.",
+          "evidence": [
+            {
+              "path": "src/ch04/mod_diff.f90",
+              "url": "https://github.com/modern-fortran/tsunami/blob/70b5702aed42bbea0733335d50e0eb70cb159e08/src/ch04/mod_diff.f90",
+              "sha256": "70192504a9ba8d9e8a24cf17e7d95b57497236fccfcb9be0df3ae9b040b75c98"
+            },
+            {
+              "path": "src/ch04/mod_initial.f90",
+              "url": "https://github.com/modern-fortran/tsunami/blob/70b5702aed42bbea0733335d50e0eb70cb159e08/src/ch04/mod_initial.f90",
+              "sha256": "0501430101686d018cb411efd741944e7511106e36b0eb327cbea00553c50c75"
+            }
+          ],
+          "procedures": [
+            {
+              "procedure": "set_gaussian",
+              "role": "public-entry-point",
+              "module": "mod_initial",
+              "summary": "Fill the existing REAL(REAL32) vector X with EXP(-DECAY*(i-ICENTER)**2), using INTEGER(INT32) index center and a real decay. For a decaying bell use positive DECAY and a grid whose integer square does not overflow. Coordinates are cell indices; no physical spacing or probability-density normalization is applied. This is a nonperiodized initial-profile helper even though the companion differences wrap periodically.",
+              "signature": "CALL set_gaussian(X,ICENTER,DECAY)",
+              "path": "src/ch04/mod_initial.f90",
+              "line_start": 11,
+              "line_end": 21,
+              "declarations": [
+                {
+                  "path": "src/ch04/mod_initial.f90",
+                  "line_start": 14,
+                  "line_end": 16
+                },
+                {
+                  "path": "src/ch04/mod_initial.f90",
+                  "line_start": 1,
+                  "line_end": 9
                 }
               ]
             }
@@ -32308,6 +33912,7 @@
       "specfun",
       "regridpack",
       "splpak",
+      "fortran-astrodynamics-toolkit",
       "forgex",
       "ferror",
       "m_framework",
@@ -32347,6 +33952,7 @@
       "twopnt",
       "specfunc-fullerton",
       "lib_statistics",
+      "astro-fortran",
       "nlopt-f",
       "daskr",
       "ffilesystem",
@@ -32384,6 +33990,7 @@
       "fortsa",
       "fortran-flann",
       "fortran_stb_image",
+      "cairo-fortran",
       "forsudoku",
       "odepack",
       "kiss",
@@ -32477,19 +34084,26 @@
       "arpack-ng",
       "fortran-error-handler",
       "berkeley-assert",
+      "fmm2d",
       "fortran-utils",
       "fortran-tcl86",
       "fortranlib",
       "m-process",
       "nufft1d",
       "nufft2d",
+      "aotus",
       "propack",
+      "qcontainers",
       "stdlib-os",
       "netcdf-fortran",
       "scifortran",
+      "forpy",
+      "mpifx",
+      "scalapackfx",
       "fgsl",
       "fdict",
       "flibcpp",
+      "tsunami",
       "fortran-curl",
       "m_cli",
       "fortran-modbus"
@@ -32499,13 +34113,10 @@
       "fortran-lapack",
       "stdlib",
       "kinds",
-      "fortran-astrodynamics-toolkit",
       "mpfun2020-var1",
       "quaff",
       "neural-fortran",
       "lightkrylov",
-      "astro-fortran",
-      "cairo-fortran",
       "parff",
       "graphstruc",
       "diffstruc",
@@ -32521,21 +34132,15 @@
       "ftl",
       "vtmop",
       "slicot",
-      "fmm2d",
       "formal",
       "dftatom",
       "m-system",
       "fiats",
       "julienne",
-      "aotus",
-      "qcontainers",
       "m_draw",
       "fortran-lua53",
-      "forpy",
       "fkb",
       "ntpoly",
-      "mpifx",
-      "scalapackfx",
       "easy-plplot",
       "gftl",
       "gftl-shared",
@@ -32551,7 +34156,6 @@
       "ddpcm",
       "dftd4",
       "ftorch",
-      "tsunami",
       "pfunit",
       "raffle",
       "m_history",
