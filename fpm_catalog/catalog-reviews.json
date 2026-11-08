@@ -2,8 +2,90 @@
   "schema_version": 1,
   "publisher": "fortran-gams-catalog-independent-reviews",
   "source_url": "https://beliavsky.github.io/fortran-gams-catalog/reviewed-metadata.json",
-  "source_snapshot_id": "sha256:b63e232b5b092aff10a50a7dfac5f9be181a80895b688a0a4a507192666e4443",
+  "source_snapshot_id": "sha256:a0fe9b045c0840991c4947832efd361cd0095625f4eb14488e8e1116b2dd38e2",
   "packages": {
+    "fortran-lapack": {
+      "id": "github:perazz/fortran-lapack",
+      "repository": {
+        "owner": "perazz",
+        "name": "fortran-lapack",
+        "url": "https://github.com/perazz/fortran-lapack"
+      },
+      "license": {
+        "label": "BSD-3-Clause",
+        "spdx_expression": "BSD-3-Clause",
+        "revision": "e5e45fdd5a38bfab06d1f703f12b787937aa33bb",
+        "reviewed_on": "2026-11-08",
+        "notes": "Root LICENSE supplies Federico Perini three-clause BSD terms; bundled BLAS/LAPACK sources retain their notices. This selected wrapper review is intentionally not an exhaustive LAPACK routine survey.",
+        "evidence": [
+          {
+            "path": "LICENSE",
+            "url": "https://github.com/perazz/fortran-lapack/blob/e5e45fdd5a38bfab06d1f703f12b787937aa33bb/LICENSE",
+            "sha256": "aa26993bb8b7d7670dbd049339a4f43af84712feb5a144a440c0a8a3244c8e33"
+          },
+          {
+            "path": "README.md",
+            "url": "https://github.com/perazz/fortran-lapack/blob/e5e45fdd5a38bfab06d1f703f12b787937aa33bb/README.md",
+            "sha256": "cd0ab03263173dd37cfc71b03dabbbe5d3e6d07d16a5d53f9b54695d1d52ad79"
+          },
+          {
+            "path": "src/la_solve.f90",
+            "url": "https://github.com/perazz/fortran-lapack/blob/e5e45fdd5a38bfab06d1f703f12b787937aa33bb/src/la_solve.f90",
+            "sha256": "ca7b0ea399dad6e2e4ab03785c95f47795a2db957a018cb57ad84f50fa5c944b"
+          }
+        ]
+      },
+      "classifications": [
+        {
+          "code": "D2",
+          "level": "source-reviewed",
+          "revision": "e5e45fdd5a38bfab06d1f703f12b787937aa33bb",
+          "reviewed_on": "2026-11-08",
+          "notes": "Allocating double-precision dense solve documents square dimensions, input mutability and explicit error-state handling. This is a pinned public-interface/source review, not a new numerical execution check or complete API audit. Existing hosted drivers and their verified problem scope are recorded separately.",
+          "evidence": [
+            {
+              "path": "src/la_solve.f90",
+              "url": "https://github.com/perazz/fortran-lapack/blob/e5e45fdd5a38bfab06d1f703f12b787937aa33bb/src/la_solve.f90",
+              "sha256": "ca7b0ea399dad6e2e4ab03785c95f47795a2db957a018cb57ad84f50fa5c944b"
+            },
+            {
+              "path": "src/linear_algebra.f90",
+              "url": "https://github.com/perazz/fortran-lapack/blob/e5e45fdd5a38bfab06d1f703f12b787937aa33bb/src/linear_algebra.f90",
+              "sha256": "408544ef358f7d5f651be01d4bc170e39ba9748006fee40812579cc7e5c26518"
+            }
+          ],
+          "procedures": [
+            {
+              "procedure": "solve",
+              "role": "public-entry-point",
+              "module": "linear_algebra",
+              "summary": "REAL(REAL64) vector-RHS overload of SOLVE returns an allocatable vector. A must be a nonempty square variable and B a conforming vector. Although copying is the default, the A dummy is INOUT/TARGET; an expression or constant is not an appropriate actual. OVERWRITE_A=.true. permits destructive LU factorization. Supply TYPE(LA_STATE) ERR and inspect it for recoverable failures; omitting ERR allows the library to stop. This review covers one modern wrapper overload, not the full underlying LAPACK API.",
+              "signature": "VALUE = solve(A,B,[OVERWRITE_A],[ERR])",
+              "path": "src/la_solve.f90",
+              "line_start": 576,
+              "line_end": 641,
+              "declarations": [
+                {
+                  "path": "src/la_solve.f90",
+                  "line_start": 576,
+                  "line_end": 586
+                },
+                {
+                  "path": "src/la_solve.f90",
+                  "line_start": 10,
+                  "line_end": 32
+                },
+                {
+                  "path": "src/linear_algebra.f90",
+                  "line_start": 1,
+                  "line_end": 28
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
     "test-drive": {
       "id": "github:fortran-lang/test-drive",
       "repository": {
@@ -997,6 +1079,141 @@
                   "path": "src/M_strings.F90",
                   "line_start": 505,
                   "line_end": 506
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "stdlib": {
+      "id": "github:fortran-lang/stdlib",
+      "repository": {
+        "owner": "fortran-lang",
+        "name": "stdlib",
+        "url": "https://github.com/fortran-lang/stdlib"
+      },
+      "license": {
+        "label": "MIT",
+        "spdx_expression": "MIT",
+        "revision": "58eb9133966c2797e0593281169ef57c43eccc1d",
+        "reviewed_on": "2026-11-08",
+        "notes": "Root LICENSE supplies stdlib contributor MIT terms. Individual bundled components retain their notices. These are representative statistics/sorting interfaces, not exhaustive coverage of stdlib.",
+        "evidence": [
+          {
+            "path": "LICENSE",
+            "url": "https://github.com/fortran-lang/stdlib/blob/58eb9133966c2797e0593281169ef57c43eccc1d/LICENSE",
+            "sha256": "d04c7ac7af8eb6b9d57f57765560dddc779a7e0f01c96fae178e7a35988b0a68"
+          },
+          {
+            "path": "src/stdlib_stats_mean.f90",
+            "url": "https://github.com/fortran-lang/stdlib/blob/58eb9133966c2797e0593281169ef57c43eccc1d/src/stdlib_stats_mean.f90",
+            "sha256": "75a0e5d6ccbf5ae6d5307bbc2e2944316ec08ce48996f738800c69e354713cc4"
+          }
+        ]
+      },
+      "classifications": [
+        {
+          "code": "L1",
+          "level": "source-reviewed",
+          "revision": "58eb9133966c2797e0593281169ef57c43eccc1d",
+          "reviewed_on": "2026-11-08",
+          "notes": "Scalar-mask double-precision mean documents whole-array masking and nonempty finite-input scope. This is a pinned public-interface/source review, not a new numerical execution check or complete API audit. Existing hosted drivers and their verified problem scope are recorded separately.",
+          "evidence": [
+            {
+              "path": "src/stdlib_stats_mean.f90",
+              "url": "https://github.com/fortran-lang/stdlib/blob/58eb9133966c2797e0593281169ef57c43eccc1d/src/stdlib_stats_mean.f90",
+              "sha256": "75a0e5d6ccbf5ae6d5307bbc2e2944316ec08ce48996f738800c69e354713cc4"
+            },
+            {
+              "path": "src/stdlib_sorting_sort.F90",
+              "url": "https://github.com/fortran-lang/stdlib/blob/58eb9133966c2797e0593281169ef57c43eccc1d/src/stdlib_sorting_sort.F90",
+              "sha256": "6a425b31725d00190e4abd545e85d43c31db3b67de7a0bfb56ced8abcecf251f"
+            },
+            {
+              "path": "src/stdlib_stats.f90",
+              "url": "https://github.com/fortran-lang/stdlib/blob/58eb9133966c2797e0593281169ef57c43eccc1d/src/stdlib_stats.f90",
+              "sha256": "e15ce21ef7f4ae8f3c0df5d99675ad33a5a820167c7565c3b14d3fa2f0acba88"
+            },
+            {
+              "path": "src/stdlib_sorting.F90",
+              "url": "https://github.com/fortran-lang/stdlib/blob/58eb9133966c2797e0593281169ef57c43eccc1d/src/stdlib_sorting.F90",
+              "sha256": "03ba3e6359c063da7aaf4c0e239ff74fff6c2808bee768d05cc54ab9eedd0cf5"
+            }
+          ],
+          "procedures": [
+            {
+              "procedure": "mean",
+              "role": "public-entry-point",
+              "module": "stdlib_stats",
+              "summary": "Rank-one REAL(DP) overload returns a scalar arithmetic mean; DP is the library double-precision kind. This overload has an optional SCALAR logical MASK, which includes/excludes the whole array; elementwise array masks select a different overload. MASK=.false. returns quiet NaN. Supply a nonempty array for ordinary finite averaging and do not infer a numerically compensated sum or finite-value filtering from SUM(X)/SIZE(X).",
+              "signature": "VALUE = mean(X,[MASK])",
+              "path": "src/stdlib_stats_mean.f90",
+              "line_start": 62,
+              "line_end": 74,
+              "declarations": [
+                {
+                  "path": "src/stdlib_stats_mean.f90",
+                  "line_start": 62,
+                  "line_end": 65
+                },
+                {
+                  "path": "src/stdlib_stats.f90",
+                  "line_start": 1,
+                  "line_end": 42
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "code": "N6",
+          "level": "source-reviewed",
+          "revision": "58eb9133966c2797e0593281169ef57c43eccc1d",
+          "reviewed_on": "2026-11-08",
+          "notes": "Double-precision in-place sorting documents reverse order, instability and NaN restrictions. This is a pinned public-interface/source review, not a new numerical execution check or complete API audit. Existing hosted drivers and their verified problem scope are recorded separately.",
+          "evidence": [
+            {
+              "path": "src/stdlib_stats_mean.f90",
+              "url": "https://github.com/fortran-lang/stdlib/blob/58eb9133966c2797e0593281169ef57c43eccc1d/src/stdlib_stats_mean.f90",
+              "sha256": "75a0e5d6ccbf5ae6d5307bbc2e2944316ec08ce48996f738800c69e354713cc4"
+            },
+            {
+              "path": "src/stdlib_sorting_sort.F90",
+              "url": "https://github.com/fortran-lang/stdlib/blob/58eb9133966c2797e0593281169ef57c43eccc1d/src/stdlib_sorting_sort.F90",
+              "sha256": "6a425b31725d00190e4abd545e85d43c31db3b67de7a0bfb56ced8abcecf251f"
+            },
+            {
+              "path": "src/stdlib_stats.f90",
+              "url": "https://github.com/fortran-lang/stdlib/blob/58eb9133966c2797e0593281169ef57c43eccc1d/src/stdlib_stats.f90",
+              "sha256": "e15ce21ef7f4ae8f3c0df5d99675ad33a5a820167c7565c3b14d3fa2f0acba88"
+            },
+            {
+              "path": "src/stdlib_sorting.F90",
+              "url": "https://github.com/fortran-lang/stdlib/blob/58eb9133966c2797e0593281169ef57c43eccc1d/src/stdlib_sorting.F90",
+              "sha256": "03ba3e6359c063da7aaf4c0e239ff74fff6c2808bee768d05cc54ab9eedd0cf5"
+            }
+          ],
+          "procedures": [
+            {
+              "procedure": "sort",
+              "role": "public-entry-point",
+              "module": "stdlib_sorting",
+              "summary": "REAL(DP) rank-one SORT overload reorders ARRAY in place. Omit REVERSE for nondecreasing order, or use REVERSE=.true. for nonincreasing order. The dummy lower bound is zero internally; an ordinary contiguous Fortran vector is still a valid actual. Ordering is unstable and the documented result with NaNs is undefined. It returns neither sorted indices nor a separately allocated vector.",
+              "signature": "CALL sort(ARRAY,[REVERSE])",
+              "path": "src/stdlib_sorting_sort.F90",
+              "line_start": 114,
+              "line_end": 123,
+              "declarations": [
+                {
+                  "path": "src/stdlib_sorting_sort.F90",
+                  "line_start": 114,
+                  "line_end": 116
+                },
+                {
+                  "path": "src/stdlib_sorting.F90",
+                  "line_start": 208,
+                  "line_end": 230
                 }
               ]
             }
@@ -5538,6 +5755,73 @@
         }
       ]
     },
+    "kinds": {
+      "id": "github:gha3mi/kinds",
+      "repository": {
+        "owner": "gha3mi",
+        "name": "kinds",
+        "url": "https://github.com/gha3mi/kinds"
+      },
+      "license": {
+        "label": "BSD-3-Clause",
+        "spdx_expression": "BSD-3-Clause",
+        "revision": "811cfba1a35f09eae9c1cc2d2e730a9f54f03c6f",
+        "reviewed_on": "2026-11-08",
+        "notes": "Root LICENSE supplies Seyed Ali Ghasemi three-clause BSD terms. The reviewed module provides named kinds; arithmetic in its demonstration uses Fortran intrinsics rather than a separate kinds solver.",
+        "evidence": [
+          {
+            "path": "LICENSE",
+            "url": "https://github.com/gha3mi/kinds/blob/811cfba1a35f09eae9c1cc2d2e730a9f54f03c6f/LICENSE",
+            "sha256": "2bed75d5b84af240b433822f9720fd7c2eb269cbc46a721c851df9ae94513210"
+          },
+          {
+            "path": "README.md",
+            "url": "https://github.com/gha3mi/kinds/blob/811cfba1a35f09eae9c1cc2d2e730a9f54f03c6f/README.md",
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          },
+          {
+            "path": "src/kinds.f90",
+            "url": "https://github.com/gha3mi/kinds/blob/811cfba1a35f09eae9c1cc2d2e730a9f54f03c6f/src/kinds.f90",
+            "sha256": "ccf265746d4d207b42b8967bd7f50ddf12425195a47c7e3b16fc571c4d3a409f"
+          }
+        ]
+      },
+      "classifications": [
+        {
+          "code": "R",
+          "level": "source-reviewed",
+          "revision": "811cfba1a35f09eae9c1cc2d2e730a9f54f03c6f",
+          "reviewed_on": "2026-11-08",
+          "notes": "Working and explicitly sized kind parameters are documented as public data instead of invented procedure calls. This is a pinned public-interface/source review, not a new numerical execution check or complete API audit. Existing hosted drivers and their verified problem scope are recorded separately.",
+          "evidence": [
+            {
+              "path": "src/kinds.f90",
+              "url": "https://github.com/gha3mi/kinds/blob/811cfba1a35f09eae9c1cc2d2e730a9f54f03c6f/src/kinds.f90",
+              "sha256": "ccf265746d4d207b42b8967bd7f50ddf12425195a47c7e3b16fc571c4d3a409f"
+            }
+          ],
+          "procedures": [
+            {
+              "procedure": "rk",
+              "role": "public-data",
+              "module": "kinds",
+              "summary": "Compile-time INTEGER parameters, not callable functions. RK defaults to REAL64 and IK to INT32; preprocessing REAL32/REAL64 and INT32/INT64 switches select the working aliases. RK32/RK64/IK32/IK64 explicitly name ISO_FORTRAN_ENV kinds. Build the module with the intended preprocessing configuration; callers cannot change a compiled module alias with their own runtime variable. Kind numbers are compiler identifiers, not byte counts.",
+              "signature": "USE kinds, ONLY: rk, ik, rk32, rk64, ik32, ik64\nREAL(rk) :: x\nINTEGER(ik) :: n",
+              "path": "src/kinds.f90",
+              "line_start": 1,
+              "line_end": 28,
+              "declarations": [
+                {
+                  "path": "src/kinds.f90",
+                  "line_start": 1,
+                  "line_end": 28
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
     "forcolormap": {
       "id": "github:vmagnin/forcolormap",
       "repository": {
@@ -7750,6 +8034,115 @@
                   "path": "src/lsqr.f90",
                   "line_start": 869,
                   "line_end": 873
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "mpfun2020-var1": {
+      "id": "github:jacobwilliams/mpfun2020-var1",
+      "repository": {
+        "owner": "jacobwilliams",
+        "name": "MPFUN2020-var1",
+        "url": "https://github.com/jacobwilliams/MPFUN2020-var1"
+      },
+      "license": {
+        "label": "Bailey limited BSD terms with enhancement provision",
+        "spdx_expression": null,
+        "revision": "f2191ad80d811cd5e309d83ffad9b2607d27aabc",
+        "reviewed_on": "2026-11-08",
+        "notes": "DISCLAIMER.txt supplies redistribution/nonendorsement terms and an additional enhancement license provision. Preserve the complete limited-BSD terms rather than substitute an unqualified standard BSD expression.",
+        "evidence": [
+          {
+            "path": "DISCLAIMER.txt",
+            "url": "https://github.com/jacobwilliams/MPFUN2020-var1/blob/f2191ad80d811cd5e309d83ffad9b2607d27aabc/DISCLAIMER.txt",
+            "sha256": "489ff1793cce61012916bd6a3166f67c64aab6213dedd683847f4eb742818298"
+          },
+          {
+            "path": "README.md",
+            "url": "https://github.com/jacobwilliams/MPFUN2020-var1/blob/f2191ad80d811cd5e309d83ffad9b2607d27aabc/README.md",
+            "sha256": "ad6b17413dbf14fc3e76220c15a26f1894f76fe009b908d051d4400ea60ec3bf"
+          },
+          {
+            "path": "src/mpfung1.f90",
+            "url": "https://github.com/jacobwilliams/MPFUN2020-var1/blob/f2191ad80d811cd5e309d83ffad9b2607d27aabc/src/mpfung1.f90",
+            "sha256": "f39e177daed0e8f3e2b10b01970d17c29526e2d46fbccab08cc98bc5cbd86836"
+          }
+        ]
+      },
+      "classifications": [
+        {
+          "code": "A",
+          "level": "source-reviewed",
+          "revision": "f2191ad80d811cd5e309d83ffad9b2607d27aabc",
+          "reviewed_on": "2026-11-08",
+          "notes": "Multiple-precision construction and decimal output document word precision, source-literal accuracy and explicit I/O. This is a pinned public-interface/source review, not a new numerical execution check or complete API audit. Existing hosted drivers and their verified problem scope are recorded separately.",
+          "evidence": [
+            {
+              "path": "src/mpfung1.f90",
+              "url": "https://github.com/jacobwilliams/MPFUN2020-var1/blob/f2191ad80d811cd5e309d83ffad9b2607d27aabc/src/mpfung1.f90",
+              "sha256": "f39e177daed0e8f3e2b10b01970d17c29526e2d46fbccab08cc98bc5cbd86836"
+            },
+            {
+              "path": "src/mpmodule.f90",
+              "url": "https://github.com/jacobwilliams/MPFUN2020-var1/blob/f2191ad80d811cd5e309d83ffad9b2607d27aabc/src/mpmodule.f90",
+              "sha256": "f03f54aacab55d8ccb997516d5692e0d601055d8c0009b96c7edaf9d02d11e49"
+            }
+          ],
+          "procedures": [
+            {
+              "procedure": "mpreal",
+              "role": "public-entry-point",
+              "module": "mpmodule",
+              "summary": "MPREAL overload converts a machine REAL(MPRKND) value to TYPE(MP_REAL). Optional IPREC is a precision in MP words, bounded by the configured build, not a decimal-digit count. A binary floating literal carries only its original machine precision; increasing IPREC cannot recover decimal digits lost before conversion. Use a character-string constructor for high-precision decimal input. This Variant 1 permits omitting IPREC, then uses the configured default MPWDS.",
+              "signature": "VALUE = mpreal(DA,[IPREC])",
+              "path": "src/mpfung1.f90",
+              "line_start": 3481,
+              "line_end": 3502,
+              "declarations": [
+                {
+                  "path": "src/mpfung1.f90",
+                  "line_start": 3481,
+                  "line_end": 3488
+                },
+                {
+                  "path": "src/mpfung1.f90",
+                  "line_start": 565,
+                  "line_end": 591
+                },
+                {
+                  "path": "src/mpmodule.f90",
+                  "line_start": 1,
+                  "line_end": 42
+                }
+              ]
+            },
+            {
+              "procedure": "mpwrite",
+              "role": "public-entry-point",
+              "module": "mpmodule",
+              "summary": "MPWRITE writes up to five TYPE(MP_REAL) values to an already open Fortran unit IU. LN is output width and LD requested decimal places; choose adequate width/precision for the formatted value. R1 is required, R2-R5 optional. This is an explicit output subroutine, not intrinsic list-directed formatting of the internal representation. Native unit errors and precision limits remain library/runtime concerns.",
+              "signature": "CALL mpwrite(IU,LN,LD,R1,[R2],[R3],[R4],[R5])",
+              "path": "src/mpfung1.f90",
+              "line_start": 4572,
+              "line_end": 4599,
+              "declarations": [
+                {
+                  "path": "src/mpfung1.f90",
+                  "line_start": 4572,
+                  "line_end": 4576
+                },
+                {
+                  "path": "src/mpfung1.f90",
+                  "line_start": 565,
+                  "line_end": 591
+                },
+                {
+                  "path": "src/mpmodule.f90",
+                  "line_start": 1,
+                  "line_end": 42
                 }
               ]
             }
@@ -10244,6 +10637,78 @@
                   "path": "src/nf/nf_network_submodule.f90",
                   "line_start": 297,
                   "line_end": 327
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "lightkrylov": {
+      "id": "github:nekstab/lightkrylov",
+      "repository": {
+        "owner": "nekStab",
+        "name": "LightKrylov",
+        "url": "https://github.com/nekStab/LightKrylov"
+      },
+      "license": {
+        "label": "BSD-3-Clause",
+        "spdx_expression": "BSD-3-Clause",
+        "revision": "849fa1d2f29c14d0181315e76e731bff7f0b2d08",
+        "reviewed_on": "2026-11-08",
+        "notes": "Root LICENSE supplies nekStab three-clause BSD terms. BLAS/LAPACK and other dependencies retain separate notices. This is a selected GMRES interface review rather than every eigen/SVD/exponential solver.",
+        "evidence": [
+          {
+            "path": "LICENSE",
+            "url": "https://github.com/nekStab/LightKrylov/blob/849fa1d2f29c14d0181315e76e731bff7f0b2d08/LICENSE",
+            "sha256": "2f97cd8a70506116e2103a2828b5afc49050dd467ff9c0545140c8e3aeaeecee"
+          },
+          {
+            "path": "README.md",
+            "url": "https://github.com/nekStab/LightKrylov/blob/849fa1d2f29c14d0181315e76e731bff7f0b2d08/README.md",
+            "sha256": "98becca7e41ee5d02021ddfb3d5d4246273cbc0c0e7b782be8d6589d63b00af5"
+          },
+          {
+            "path": "src/IterativeSolvers/IterativeSolvers.f90",
+            "url": "https://github.com/nekStab/LightKrylov/blob/849fa1d2f29c14d0181315e76e731bff7f0b2d08/src/IterativeSolvers/IterativeSolvers.f90",
+            "sha256": "d70d788422278f3dee87f5e4dac7cc143721fdeefe5057a9791af4daa581f726"
+          }
+        ]
+      },
+      "classifications": [
+        {
+          "code": "D2",
+          "level": "source-reviewed",
+          "revision": "849fa1d2f29c14d0181315e76e731bff7f0b2d08",
+          "reviewed_on": "2026-11-08",
+          "notes": "Operator-based double-precision GMRES documents abstract contracts, mutable operator state and explicit residual checking. This is a pinned public-interface/source review, not a new numerical execution check or complete API audit. Existing hosted drivers and their verified problem scope are recorded separately.",
+          "evidence": [
+            {
+              "path": "src/IterativeSolvers/IterativeSolvers.f90",
+              "url": "https://github.com/nekStab/LightKrylov/blob/849fa1d2f29c14d0181315e76e731bff7f0b2d08/src/IterativeSolvers/IterativeSolvers.f90",
+              "sha256": "d70d788422278f3dee87f5e4dac7cc143721fdeefe5057a9791af4daa581f726"
+            }
+          ],
+          "procedures": [
+            {
+              "procedure": "gmres",
+              "role": "public-entry-point",
+              "module": "LightKrylov_IterativeSolvers",
+              "summary": "Real double-precision abstract-vector/operator overload of GMRES. Implement the abstract linear-operator/vector contracts or use the provided dense concrete types, and initialize X as the starting iterate. B and X must represent conforming spaces; A is INOUT because operator work/state can change. Optional RTOL/ATOL, preconditioner, typed options and metadata control/report the iteration. Inspect INFO and an independent residual; an iteration return alone is not proof of the desired accuracy. Dense raw-array overloads have different declarations.",
+              "signature": "CALL gmres(A,B,X,INFO,[RTOL],[ATOL],[PRECONDITIONER],[OPTIONS],[TRANSPOSE],[META])",
+              "path": "src/IterativeSolvers/IterativeSolvers.f90",
+              "line_start": 482,
+              "line_end": 504,
+              "declarations": [
+                {
+                  "path": "src/IterativeSolvers/IterativeSolvers.f90",
+                  "line_start": 482,
+                  "line_end": 502
+                },
+                {
+                  "path": "src/IterativeSolvers/IterativeSolvers.f90",
+                  "line_start": 48,
+                  "line_end": 60
                 }
               ]
             }
@@ -22924,6 +23389,83 @@
         }
       ]
     },
+    "featom": {
+      "id": "github:atomic-solvers/featom",
+      "repository": {
+        "owner": "atomic-solvers",
+        "name": "featom",
+        "url": "https://github.com/atomic-solvers/featom"
+      },
+      "license": {
+        "label": "MIT",
+        "spdx_expression": "MIT",
+        "revision": "87872a3266ceeee61a7244e6ecd134dc3bda790f",
+        "reviewed_on": "2026-11-08",
+        "notes": "Root LICENSE supplies featom developer MIT terms. Selected interface scope follows the supplied Coulomb test; dependencies retain their own notices.",
+        "evidence": [
+          {
+            "path": "LICENSE",
+            "url": "https://github.com/atomic-solvers/featom/blob/87872a3266ceeee61a7244e6ecd134dc3bda790f/LICENSE",
+            "sha256": "10bd9f16b5ec1e5ba2624d4b278d997cdae6d5754717f7b49c1a6feb65e3f1a9"
+          },
+          {
+            "path": "README.md",
+            "url": "https://github.com/atomic-solvers/featom/blob/87872a3266ceeee61a7244e6ecd134dc3bda790f/README.md",
+            "sha256": "6f1efeca7ceaaa55ea9a5f7c689fa7284b5bed5b94b128412f24c822ecb76e8f"
+          },
+          {
+            "path": "src/schroed_dirac_solver.f90",
+            "url": "https://github.com/atomic-solvers/featom/blob/87872a3266ceeee61a7244e6ecd134dc3bda790f/src/schroed_dirac_solver.f90",
+            "sha256": "ff75ec399ea35ce6e695b04a0596655876dbc41085725187f51240a893b77bdb"
+          }
+        ]
+      },
+      "classifications": [
+        {
+          "code": "I",
+          "level": "source-reviewed",
+          "revision": "87872a3266ceeee61a7244e6ecd134dc3bda790f",
+          "reviewed_on": "2026-11-08",
+          "notes": "Radial Schrodinger/Dirac finite-element driver documents mesh/selector inputs and eigenvalue/wavefunction output storage. This is a pinned public-interface/source review, not a new numerical execution check or complete API audit. Existing hosted drivers and their verified problem scope are recorded separately.",
+          "evidence": [
+            {
+              "path": "src/schroed_dirac_solver.f90",
+              "url": "https://github.com/atomic-solvers/featom/blob/87872a3266ceeee61a7244e6ecd134dc3bda790f/src/schroed_dirac_solver.f90",
+              "sha256": "ff75ec399ea35ce6e695b04a0596655876dbc41085725187f51240a893b77bdb"
+            },
+            {
+              "path": "test/test_coulomb_schroed.f90",
+              "url": "https://github.com/atomic-solvers/featom/blob/87872a3266ceeee61a7244e6ecd134dc3bda790f/test/test_coulomb_schroed.f90",
+              "sha256": "1ef8206d00e88d898465104b248b1f120f802e96a7d9175acccb3b1ffcf4ec65"
+            }
+          ],
+          "procedures": [
+            {
+              "procedure": "total_energy",
+              "role": "public-entry-point",
+              "module": "schroed_dirac_solver",
+              "summary": "Radial finite-element spectrum driver, with DP from TYPES. Z, mesh extent RMAX, element count NE, grading A, polynomial order P and quadrature count NQ specify the problem. ALPHA_INT/DIRAC_INT/POTENTIAL_TYPE select formulation; C is the atomic-unit speed of light for relativistic cases. ALPHA_J/ALPHA are arrays with the required angular-index range starting LMIN. LAM and EIGFN are allocatable outputs; XQ is caller-sized (NQ,NE) and DOFS is output. Despite the name, LAM contains a collection of eigenvalues, not one scalar total energy. The hosted Coulomb example scopes flags and angular arrays; do not assume arbitrary potential selectors or mesh/quad settings are interchangeable.",
+              "signature": "CALL total_energy(Z,RMAX,NE,A,P,NQ,DOFS,ALPHA_INT,DIRAC_INT,C,POTENTIAL_TYPE,LMIN,ALPHA_J,ALPHA,LAM,EIGFN,XQ)",
+              "path": "src/schroed_dirac_solver.f90",
+              "line_start": 18,
+              "line_end": 159,
+              "declarations": [
+                {
+                  "path": "src/schroed_dirac_solver.f90",
+                  "line_start": 18,
+                  "line_end": 25
+                },
+                {
+                  "path": "test/test_coulomb_schroed.f90",
+                  "line_start": 1,
+                  "line_end": 65
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
     "econ-toolchain": {
       "id": "github:renatomatz/econ-toolchain",
       "repository": {
@@ -27862,6 +28404,88 @@
         }
       ]
     },
+    "fundamental_constants": {
+      "id": "github:vmagnin/fundamental_constants",
+      "repository": {
+        "owner": "vmagnin",
+        "name": "fundamental_constants",
+        "url": "https://github.com/vmagnin/fundamental_constants"
+      },
+      "license": {
+        "label": "MIT",
+        "spdx_expression": "MIT",
+        "revision": "3e18620ab7813fd9f02e8dcf05c48f0ca13f2ec0",
+        "reviewed_on": "2026-11-08",
+        "notes": "Root LICENSE supplies Vincent Magnin MIT terms. The module identifies its CODATA generation source/date; this is a source-data interface review, not independent metrology verification.",
+        "evidence": [
+          {
+            "path": "LICENSE",
+            "url": "https://github.com/vmagnin/fundamental_constants/blob/3e18620ab7813fd9f02e8dcf05c48f0ca13f2ec0/LICENSE",
+            "sha256": "ea3a64684e9e34c5567e6898c1e0236d9a1d4718c316795f57fc17c5f1771ffb"
+          },
+          {
+            "path": "README.md",
+            "url": "https://github.com/vmagnin/fundamental_constants/blob/3e18620ab7813fd9f02e8dcf05c48f0ca13f2ec0/README.md",
+            "sha256": "c1c543b3aabff8d4d0cfbccd9ca30b2ab34fd08b7ee07df7382f7a56ca58d2ce"
+          },
+          {
+            "path": "src/CODATA_2022_constants.f90",
+            "url": "https://github.com/vmagnin/fundamental_constants/blob/3e18620ab7813fd9f02e8dcf05c48f0ca13f2ec0/src/CODATA_2022_constants.f90",
+            "sha256": "e64197ed448efd752673b980ca3ce137e6cf68c5fa4dc3dfd959214936cbe957"
+          }
+        ]
+      },
+      "classifications": [
+        {
+          "code": "R",
+          "level": "source-reviewed",
+          "revision": "3e18620ab7813fd9f02e8dcf05c48f0ca13f2ec0",
+          "reviewed_on": "2026-11-08",
+          "notes": "Dated CODATA public constants document import syntax, binary kind and SI units rather than procedure signatures. This is a pinned public-interface/source review, not a new numerical execution check or complete API audit. Existing hosted drivers and their verified problem scope are recorded separately.",
+          "evidence": [
+            {
+              "path": "src/CODATA_2022_constants.f90",
+              "url": "https://github.com/vmagnin/fundamental_constants/blob/3e18620ab7813fd9f02e8dcf05c48f0ca13f2ec0/src/CODATA_2022_constants.f90",
+              "sha256": "e64197ed448efd752673b980ca3ce137e6cf68c5fa4dc3dfd959214936cbe957"
+            }
+          ],
+          "procedures": [
+            {
+              "procedure": "Planck_constant",
+              "role": "public-data",
+              "module": "CODATA_2022_constants",
+              "summary": "Named REAL(REAL64) PARAMETER values, not callable routines. Use the explicitly dated CODATA_2022_CONSTANTS module for reproducibility and the documented SI units: h in J s, c in m/s, elementary charge in C. A photon energy is h*c/wavelength with wavelength in meters. Uncertainty/exactness comments describe source constants; the rounded binary representation still has finite precision. Newer dated modules or latest aliases need not contain identical values.",
+              "signature": "USE CODATA_2022_constants, ONLY: Planck_constant, speed_of_light_in_vacuum, elementary_charge",
+              "path": "src/CODATA_2022_constants.f90",
+              "line_start": 271,
+              "line_end": 271,
+              "declarations": [
+                {
+                  "path": "src/CODATA_2022_constants.f90",
+                  "line_start": 271,
+                  "line_end": 271
+                },
+                {
+                  "path": "src/CODATA_2022_constants.f90",
+                  "line_start": 8,
+                  "line_end": 12
+                },
+                {
+                  "path": "src/CODATA_2022_constants.f90",
+                  "line_start": 132,
+                  "line_end": 132
+                },
+                {
+                  "path": "src/CODATA_2022_constants.f90",
+                  "line_start": 330,
+                  "line_end": 330
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
     "array_range": {
       "id": "github:degawa/array_range",
       "repository": {
@@ -28012,6 +28636,105 @@
                   "path": "src/type/array_range_type.f90",
                   "line_start": 1,
                   "line_end": 15
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "kronrod": {
+      "id": "github:jacobwilliams/kronrod",
+      "repository": {
+        "owner": "jacobwilliams",
+        "name": "kronrod",
+        "url": "https://github.com/jacobwilliams/kronrod"
+      },
+      "license": {
+        "label": "LGPL-2.1",
+        "spdx_expression": null,
+        "revision": "312278846b6e403fdea410a823d88ef4fb92a3cc",
+        "reviewed_on": "2026-11-08",
+        "notes": "Root LICENSE contains LGPL 2.1; the project manifest uses the broader label LGPL. Preserve full author/algorithm notices and MPFUN dependency terms. The playground module is a separately recorded repackaging, not an upstream public-module assertion.",
+        "evidence": [
+          {
+            "path": "LICENSE",
+            "url": "https://github.com/jacobwilliams/kronrod/blob/312278846b6e403fdea410a823d88ef4fb92a3cc/LICENSE",
+            "sha256": "20c17d8b8c48a600800dfd14f95d5cb9ff47066a9641ddeab48dc54aec96e331"
+          },
+          {
+            "path": "README.md",
+            "url": "https://github.com/jacobwilliams/kronrod/blob/312278846b6e403fdea410a823d88ef4fb92a3cc/README.md",
+            "sha256": "52e2158e5fc9f6e0fe5d6894ef7572afdfdf6f175b49d79d702065005f23e54c"
+          },
+          {
+            "path": "app/main.f90",
+            "url": "https://github.com/jacobwilliams/kronrod/blob/312278846b6e403fdea410a823d88ef4fb92a3cc/app/main.f90",
+            "sha256": "979e08f29ea88ca0b2d8399e9975279698790d938a0caedcf35fd3214864cce7"
+          }
+        ]
+      },
+      "classifications": [
+        {
+          "code": "H2",
+          "level": "source-reviewed",
+          "revision": "312278846b6e403fdea410a823d88ef4fb92a3cc",
+          "reviewed_on": "2026-11-08",
+          "notes": "Hosted extraction of application-contained initialization and Gauss/Kronrod rule generation is explicitly labeled as an adapter. This is a pinned public-interface/source review, not a new numerical execution check or complete API audit. Existing hosted drivers and their verified problem scope are recorded separately.",
+          "evidence": [
+            {
+              "path": "app/main.f90",
+              "url": "https://github.com/jacobwilliams/kronrod/blob/312278846b6e403fdea410a823d88ef4fb92a3cc/app/main.f90",
+              "sha256": "979e08f29ea88ca0b2d8399e9975279698790d938a0caedcf35fd3214864cce7"
+            }
+          ],
+          "procedures": [
+            {
+              "procedure": "init",
+              "role": "public-adapter",
+              "module": "playground_kronrod",
+              "summary": "Playground-only PLAYGROUND_KRONROD adapter exports the upstream application-contained INIT helper. Call it before generating a rule; it initializes shared multiple-precision constants. The original upstream file is a PROGRAM with contained routines, not an independently USE-able module. Local upstream reuse needs the documented playground repackaging or another explicit extraction, plus MPFUN configured for the required 1000-decimal-digit constants.",
+              "signature": "CALL init()",
+              "path": "app/main.f90",
+              "line_start": 79,
+              "line_end": 99,
+              "declarations": [
+                {
+                  "path": "app/main.f90",
+                  "line_start": 79,
+                  "line_end": 83
+                },
+                {
+                  "path": "app/main.f90",
+                  "line_start": 8,
+                  "line_end": 18
+                }
+              ]
+            },
+            {
+              "procedure": "kronrod",
+              "role": "public-adapter",
+              "module": "playground_kronrod",
+              "summary": "Playground adapter call generating Gauss/Kronrod abscissas and weights on [-1,1]. N is the base Gauss order, EPS a positive MP_REAL accuracy request, and caller-owned MP_REAL X/W1/W2 each have N+1 elements. Only the nonnegative half of the symmetric rule is returned: double contributions for positive nodes and include zero once. W2 is the embedded Gauss rule, with zeros at added nodes. Call INIT first and use the adapter MPFUN word precision NWDS2. This constructs a rule, not an integrand callback/adaptive integrator. Upstream source links show application-contained declarations; module naming comes from the playground recipe.",
+              "signature": "CALL kronrod(N,EPS,X,W1,W2)",
+              "path": "app/main.f90",
+              "line_start": 101,
+              "line_end": 313,
+              "declarations": [
+                {
+                  "path": "app/main.f90",
+                  "line_start": 193,
+                  "line_end": 197
+                },
+                {
+                  "path": "app/main.f90",
+                  "line_start": 8,
+                  "line_end": 18
+                },
+                {
+                  "path": "app/main.f90",
+                  "line_start": 105,
+                  "line_end": 118
                 }
               ]
             }
@@ -30894,6 +31617,150 @@
         }
       ]
     },
+    "ftl": {
+      "id": "github:scm-nv/ftl",
+      "repository": {
+        "owner": "SCM-NV",
+        "name": "ftl",
+        "url": "https://github.com/SCM-NV/ftl"
+      },
+      "license": {
+        "label": "LGPL-3.0-or-later",
+        "spdx_expression": "LGPL-3.0-or-later",
+        "revision": "e6598dae7db68f68544dc1ca0e64f5bce3744c42",
+        "reviewed_on": "2026-11-08",
+        "notes": "Selected template/instantiation headers expressly grant LGPL version 3 or later; LICENSE.lgpl and LICENSE.gpl supply the terms. Preserve template notices when generating concrete modules.",
+        "evidence": [
+          {
+            "path": "LICENSE.lgpl",
+            "url": "https://github.com/SCM-NV/ftl/blob/e6598dae7db68f68544dc1ca0e64f5bce3744c42/LICENSE.lgpl",
+            "sha256": "da7eabb7bafdf7d3ae5e9f223aa5bdc1eece45ac569dc21b3b037520b4464768"
+          },
+          {
+            "path": "src/ftlDynArray.F90_template",
+            "url": "https://github.com/SCM-NV/ftl/blob/e6598dae7db68f68544dc1ca0e64f5bce3744c42/src/ftlDynArray.F90_template",
+            "sha256": "b475cfab7238d2807333604b7c67c96ba435e36e9761f6a29367c1136accd105"
+          },
+          {
+            "path": "LICENSE.gpl",
+            "url": "https://github.com/SCM-NV/ftl/blob/e6598dae7db68f68544dc1ca0e64f5bce3744c42/LICENSE.gpl",
+            "sha256": "8ceb4b9ee5adedde47b31e975c1d90c73ad27b6b165a1dcd80c7c545eb65b903"
+          }
+        ]
+      },
+      "classifications": [
+        {
+          "code": "N4",
+          "level": "source-reviewed",
+          "revision": "e6598dae7db68f68544dc1ca0e64f5bce3744c42",
+          "reviewed_on": "2026-11-08",
+          "notes": "Integer dynamic-array template lifecycle and append/pop interfaces document concrete generation and alias/empty-container restrictions. This is a pinned public-interface/source review, not a new numerical execution check or complete API audit. Existing hosted drivers and their verified problem scope are recorded separately.",
+          "evidence": [
+            {
+              "path": "src/ftlDynArray.F90_template",
+              "url": "https://github.com/SCM-NV/ftl/blob/e6598dae7db68f68544dc1ca0e64f5bce3744c42/src/ftlDynArray.F90_template",
+              "sha256": "b475cfab7238d2807333604b7c67c96ba435e36e9761f6a29367c1136accd105"
+            },
+            {
+              "path": "instantiations/ftlDynArrayInt.F90",
+              "url": "https://github.com/SCM-NV/ftl/blob/e6598dae7db68f68544dc1ca0e64f5bce3744c42/instantiations/ftlDynArrayInt.F90",
+              "sha256": "dd5b5f19a9340a342216fd896e5e10a4f3a79d3a2b89a9bc80709a786335468e"
+            },
+            {
+              "path": "LICENSE.gpl",
+              "url": "https://github.com/SCM-NV/ftl/blob/e6598dae7db68f68544dc1ca0e64f5bce3744c42/LICENSE.gpl",
+              "sha256": "8ceb4b9ee5adedde47b31e975c1d90c73ad27b6b165a1dcd80c7c545eb65b903"
+            }
+          ],
+          "procedures": [
+            {
+              "procedure": "New",
+              "role": "public-entry-point",
+              "module": "ftlDynArrayIntModule",
+              "derived_type": "ftlDynArrayInt",
+              "summary": "Declare TYPE(ftlDynArrayInt) :: solver from ftlDynArrayIntModule. Initialize an empty integer dynamic array using the supplied Int template instantiation. The generated module/type names result from preprocessing FTL_TEMPLATE_TYPE=integer and FTL_TEMPLATE_TYPE_NAME=Int; source links point to the template and its concrete instantiation. This overload creates storage and fixes internal DATA/front/back aliases. Do not retain aliases across growth/reinitialization; use DELETE for explicit cleanup. The passed object SELF is implicit in solver%; do not pass it again. Optional actuals shown in brackets can be supplied by keyword.",
+              "signature": "CALL solver%New()",
+              "path": "src/ftlDynArray.F90_template",
+              "line_start": 235,
+              "line_end": 241,
+              "declarations": [
+                {
+                  "path": "src/ftlDynArray.F90_template",
+                  "line_start": 235,
+                  "line_end": 236
+                },
+                {
+                  "path": "instantiations/ftlDynArrayInt.F90",
+                  "line_start": 19,
+                  "line_end": 22
+                },
+                {
+                  "path": "src/ftlDynArray.F90_template",
+                  "line_start": 58,
+                  "line_end": 100
+                }
+              ]
+            },
+            {
+              "procedure": "PushBack",
+              "role": "public-entry-point",
+              "module": "ftlDynArrayIntModule",
+              "derived_type": "ftlDynArrayInt",
+              "summary": "Declare TYPE(ftlDynArrayInt) :: solver from ftlDynArrayIntModule. Append a default INTEGER VAL to an initialized Int dynamic array, growing storage if needed. Growth can invalidate borrowed DATA/element pointers; reacquire them after mutation. This is the public PUSHBACK generic, not the private implementation name or an insertion at an explicit index. Allocation failure has no recoverable status dummy here. The passed object SELF is implicit in solver%; do not pass it again. Optional actuals shown in brackets can be supplied by keyword.",
+              "signature": "CALL solver%PushBack(VAL)",
+              "path": "src/ftlDynArray.F90_template",
+              "line_start": 461,
+              "line_end": 470,
+              "declarations": [
+                {
+                  "path": "src/ftlDynArray.F90_template",
+                  "line_start": 461,
+                  "line_end": 463
+                },
+                {
+                  "path": "instantiations/ftlDynArrayInt.F90",
+                  "line_start": 19,
+                  "line_end": 22
+                },
+                {
+                  "path": "src/ftlDynArray.F90_template",
+                  "line_start": 58,
+                  "line_end": 100
+                }
+              ]
+            },
+            {
+              "procedure": "PopBack",
+              "role": "public-entry-point",
+              "module": "ftlDynArrayIntModule",
+              "derived_type": "ftlDynArrayInt",
+              "summary": "Declare TYPE(ftlDynArrayInt) :: solver from ftlDynArrayIntModule. Return and remove the final default INTEGER value. Call only on a nonempty initialized array: the template indexes storage at PSIZE without a public empty-container status argument. DATA aliases are updated afterward; this operation changes logical length and does not necessarily shrink capacity. The passed object SELF is implicit in solver%; do not pass it again. Optional actuals shown in brackets can be supplied by keyword.",
+              "signature": "VALUE = solver%PopBack()",
+              "path": "src/ftlDynArray.F90_template",
+              "line_start": 474,
+              "line_end": 486,
+              "declarations": [
+                {
+                  "path": "src/ftlDynArray.F90_template",
+                  "line_start": 474,
+                  "line_end": 475
+                },
+                {
+                  "path": "instantiations/ftlDynArrayInt.F90",
+                  "line_start": 19,
+                  "line_end": 22
+                },
+                {
+                  "path": "src/ftlDynArray.F90_template",
+                  "line_start": 58,
+                  "line_end": 100
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
     "delaunaysparse": {
       "id": "github:vtopt/delaunaysparse",
       "repository": {
@@ -31725,6 +32592,73 @@
         }
       ]
     },
+    "vtmop": {
+      "id": "github:vtopt/vtmop",
+      "repository": {
+        "owner": "vtopt",
+        "name": "VTMOP",
+        "url": "https://github.com/vtopt/VTMOP"
+      },
+      "license": {
+        "label": "MIT",
+        "spdx_expression": "MIT",
+        "revision": "794a1de23801731ef6edd1924b52d69b679af6a0",
+        "reviewed_on": "2026-11-08",
+        "notes": "Root LICENSE supplies VTopt MIT terms. Bundled optimization/triangulation/BLAS/LAPACK components retain their own notices. Source review does not certify Pareto-front completeness.",
+        "evidence": [
+          {
+            "path": "LICENSE",
+            "url": "https://github.com/vtopt/VTMOP/blob/794a1de23801731ef6edd1924b52d69b679af6a0/LICENSE",
+            "sha256": "3b3d0ca1732a517c7182e3fec74e54abf1e26b92216c57e3ec80fd9637afb1f1"
+          },
+          {
+            "path": "src/vtmop.f90",
+            "url": "https://github.com/vtopt/VTMOP/blob/794a1de23801731ef6edd1924b52d69b679af6a0/src/vtmop.f90",
+            "sha256": "4b5db5a56f174a9c46825e8cf76cd98b2c9fc5227440b0a44c171acdbd7bef6c"
+          }
+        ]
+      },
+      "classifications": [
+        {
+          "code": "G",
+          "level": "source-reviewed",
+          "revision": "794a1de23801731ef6edd1924b52d69b679af6a0",
+          "reviewed_on": "2026-11-08",
+          "notes": "Multiobjective driver documents objective callback, allocatable Pareto outputs, bounded work and stopping-code interpretation. This is a pinned public-interface/source review, not a new numerical execution check or complete API audit. Existing hosted drivers and their verified problem scope are recorded separately.",
+          "evidence": [
+            {
+              "path": "src/vtmop.f90",
+              "url": "https://github.com/vtopt/VTMOP/blob/794a1de23801731ef6edd1924b52d69b679af6a0/src/vtmop.f90",
+              "sha256": "4b5db5a56f174a9c46825e8cf76cd98b2c9fc5227440b0a44c171acdbd7bef6c"
+            }
+          ],
+          "procedures": [
+            {
+              "procedure": "VTMOP_SOLVE",
+              "role": "public-entry-point",
+              "module": "vtmop_lib",
+              "summary": "Bound-constrained derivative-free multiobjective solver. D>0 and P>=2, LB/UB must have D elements with strict feasible width, and OBJ_FUNC must implement the linked VTMOP_MOD_OBJ_INT callback returning P objectives plus status. EFFICIENT_X(D,N) and PARETO_F(P,N) are allocatable outputs. Bound BB_BUDGET/MAXITERS/search/local budgets explicitly for interactive use; PFLAG=0 selects the serial hosted scope. Successful stopping codes include exhausted budgets, not a certificate of a globally complete Pareto front. Inspect IERR, feasibility and objective values; checkpoint controls and mutable optional databases have distinct semantics.",
+              "signature": "CALL VTMOP_SOLVE(D,P,LB,UB,OBJ_FUNC,EFFICIENT_X,PARETO_F,IERR,[ADAPTIVE_SEARCH],[BB_BUDGET],[MAXITERS],[SEARCH_BUDGET],[INITIAL_SBUDGET],[LOPT_BUDGET],[DECAY],[DES_TOL],[EPS],[EPSW],[OBJ_TOL],[MIN_RADF],[TRUST_RADF],[DES_PTS],[OBJ_PTS],[OBJ_BOUNDS],[LOCAL_OPT],[FIT_SURROGATES],[EVAL_SURROGATES],[PFLAG],[ICHKPT])",
+              "path": "src/vtmop.f90",
+              "line_start": 3085,
+              "line_end": 4061,
+              "declarations": [
+                {
+                  "path": "src/vtmop.f90",
+                  "line_start": 3379,
+                  "line_end": 3412
+                },
+                {
+                  "path": "src/vtmop.f90",
+                  "line_start": 2990,
+                  "line_end": 3079
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
     "fatode": {
       "id": "github:computationalsciencelaboratory/fatode",
       "repository": {
@@ -31800,6 +32734,82 @@
                   "path": "TLM/ERK_TLM/ERK_TLM_f90_Integrator.F90",
                   "line_start": 450,
                   "line_end": 478
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "slicot": {
+      "id": "github:slicot/slicot-reference",
+      "repository": {
+        "owner": "SLICOT",
+        "name": "SLICOT-Reference",
+        "url": "https://github.com/SLICOT/SLICOT-Reference"
+      },
+      "license": {
+        "label": "BSD-3-Clause",
+        "spdx_expression": "BSD-3-Clause",
+        "revision": "5eeb845d84f5a60f6069754b7819dad468951933",
+        "reviewed_on": "2026-11-08",
+        "notes": "Root LICENSE supplies SLICOT Team three-clause BSD terms. BLAS/LAPACK and other bundled notices remain separate. One SB03MD interface is representative, not an exhaustive systems/control API survey.",
+        "evidence": [
+          {
+            "path": "LICENSE",
+            "url": "https://github.com/SLICOT/SLICOT-Reference/blob/5eeb845d84f5a60f6069754b7819dad468951933/LICENSE",
+            "sha256": "25d73ad49146dbf1ede7e31ca53cbcda4ffc8788fa23295b9495a718c0910a56"
+          },
+          {
+            "path": "README.md",
+            "url": "https://github.com/SLICOT/SLICOT-Reference/blob/5eeb845d84f5a60f6069754b7819dad468951933/README.md",
+            "sha256": "fd197ed77200b502acbf69d731adbebbb2275f751a54ee93aa11a80442e5d54c"
+          },
+          {
+            "path": "src/SB03MD.f",
+            "url": "https://github.com/SLICOT/SLICOT-Reference/blob/5eeb845d84f5a60f6069754b7819dad468951933/src/SB03MD.f",
+            "sha256": "ec56d7ab0490594d9b24953112fa0bae05f9bd9d6714300e7ae7c4f289b4de7d"
+          }
+        ]
+      },
+      "classifications": [
+        {
+          "code": "D",
+          "level": "source-reviewed",
+          "revision": "5eeb845d84f5a60f6069754b7819dad468951933",
+          "reviewed_on": "2026-11-08",
+          "notes": "Dense Lyapunov equation interface documents scaling, destructive Schur storage, work arrays and the external/upstream versus module/adapter distinction. This is a pinned public-interface/source review, not a new numerical execution check or complete API audit. Existing hosted drivers and their verified problem scope are recorded separately.",
+          "evidence": [
+            {
+              "path": "src/SB03MD.f",
+              "url": "https://github.com/SLICOT/SLICOT-Reference/blob/5eeb845d84f5a60f6069754b7819dad468951933/src/SB03MD.f",
+              "sha256": "ec56d7ab0490594d9b24953112fa0bae05f9bd9d6714300e7ae7c4f289b4de7d"
+            }
+          ],
+          "procedures": [
+            {
+              "procedure": "SB03MD",
+              "role": "public-entry-point",
+              "summary": "External DOUBLE PRECISION Lyapunov solver. For the continuous case DICO=\"C\", FACT=\"N\", TRANA=\"N\", solve A^T*X+X*A=SCALE*C; C is overwritten by X and A/U become Schur data. JOB controls solution/separation/error estimates; their work requirements differ. Supply valid leading dimensions, WR/WI and INTEGER/DOUBLE PRECISION work arrays, using the pinned documentation or LDWORK query. Inspect INFO and SCALE and verify the scaled equation; do not silently treat X as solving the unscaled RHS. Upstream routine is external; the playground supplies a separate SLICOT interface module.",
+              "signature": "CALL SB03MD(DICO,JOB,FACT,TRANA,N,A,LDA,U,LDU,C,LDC,SCALE,SEP,FERR,WR,WI,IWORK,DWORK,LDWORK,INFO)",
+              "path": "src/SB03MD.f",
+              "line_start": 4,
+              "line_end": 570,
+              "declarations": [
+                {
+                  "path": "src/SB03MD.f",
+                  "line_start": 334,
+                  "line_end": 340
+                },
+                {
+                  "path": "src/SB03MD.f",
+                  "line_start": 1,
+                  "line_end": 89
+                },
+                {
+                  "path": "src/SB03MD.f",
+                  "line_start": 178,
+                  "line_end": 265
                 }
               ]
             }
@@ -35349,6 +36359,100 @@
         }
       ]
     },
+    "ntpoly": {
+      "id": "github:william-dawson/ntpoly",
+      "repository": {
+        "owner": "william-dawson",
+        "name": "NTPoly",
+        "url": "https://github.com/william-dawson/NTPoly"
+      },
+      "license": {
+        "label": "MIT",
+        "spdx_expression": "MIT",
+        "revision": "7b3d22f76226af1402e9b0a5be18a496e4addc28",
+        "reviewed_on": "2026-11-08",
+        "notes": "Root LICENSE supplies RIKEN MIT terms. Optional MPI/eigensolver/BLAS dependencies retain their notices. Hosted numerical scope is explicitly one process; this source review adds no distributed execution claim.",
+        "evidence": [
+          {
+            "path": "LICENSE",
+            "url": "https://github.com/william-dawson/NTPoly/blob/7b3d22f76226af1402e9b0a5be18a496e4addc28/LICENSE",
+            "sha256": "09c9ef73ffacb9a9f80a8c82941fc40527b683d08c9440160f185e3656a8488a"
+          },
+          {
+            "path": "ReadMe.md",
+            "url": "https://github.com/william-dawson/NTPoly/blob/7b3d22f76226af1402e9b0a5be18a496e4addc28/ReadMe.md",
+            "sha256": "611c8647157292e346c8dd9c47d4b99c7192e08d47cad1d7e6f688f2beb72a9b"
+          },
+          {
+            "path": "Source/Fortran/SquareRootSolversModule.F90",
+            "url": "https://github.com/william-dawson/NTPoly/blob/7b3d22f76226af1402e9b0a5be18a496e4addc28/Source/Fortran/SquareRootSolversModule.F90",
+            "sha256": "50a943931ac1e718efc00df818ff600da71c08f9b298b09d9f0cf08d43b1d93f"
+          }
+        ]
+      },
+      "classifications": [
+        {
+          "code": "D",
+          "level": "source-reviewed",
+          "revision": "7b3d22f76226af1402e9b0a5be18a496e4addc28",
+          "reviewed_on": "2026-11-08",
+          "notes": "Distributed square-root and inverse-square-root interfaces document process-grid lifetime and the selected positive-definite real scope. This is a pinned public-interface/source review, not a new numerical execution check or complete API audit. Existing hosted drivers and their verified problem scope are recorded separately.",
+          "evidence": [
+            {
+              "path": "Source/Fortran/SquareRootSolversModule.F90",
+              "url": "https://github.com/william-dawson/NTPoly/blob/7b3d22f76226af1402e9b0a5be18a496e4addc28/Source/Fortran/SquareRootSolversModule.F90",
+              "sha256": "50a943931ac1e718efc00df818ff600da71c08f9b298b09d9f0cf08d43b1d93f"
+            }
+          ],
+          "procedures": [
+            {
+              "procedure": "SquareRoot",
+              "role": "public-entry-point",
+              "module": "SquareRootSolversModule",
+              "summary": "Compute an iterative square root of a distributed Matrix_ps. Initialize MPI and a compatible process grid, construct/fill INPUTMAT, and provide a separate OUTPUTMAT. Optional SolverParameters_t controls tolerance, sparsification and iteration limits; choose a supported polynomial order when specifying ORDER_IN. The selected hosted example is a symmetric positive-definite real matrix on one process; this is not a promise of an arbitrary complex branch or MPI scaling. Extract/check A_sqrt*A_sqrt against A and destroy matrices/grid before MPI finalization.",
+              "signature": "CALL SquareRoot(INPUTMAT,OUTPUTMAT,[SOLVER_PARAMETERS_IN],[ORDER_IN])",
+              "path": "Source/Fortran/SquareRootSolversModule.F90",
+              "line_start": 30,
+              "line_end": 59,
+              "declarations": [
+                {
+                  "path": "Source/Fortran/SquareRootSolversModule.F90",
+                  "line_start": 30,
+                  "line_end": 38
+                },
+                {
+                  "path": "Source/Fortran/SquareRootSolversModule.F90",
+                  "line_start": 3,
+                  "line_end": 27
+                }
+              ]
+            },
+            {
+              "procedure": "InverseSquareRoot",
+              "role": "public-entry-point",
+              "module": "SquareRootSolversModule",
+              "summary": "Compute the iterative inverse square root with the same initialized MPI/process-grid and Matrix_ps contracts. Use a nonsingular positive-definite matrix for this reviewed real path; convergence and sparsification are parameter-dependent and no separate INFO dummy is exposed. Verify X*A*X against identity and inspect configured iteration/log diagnostics. Output is a matrix object, not a raw dense array or elementwise inverse square root.",
+              "signature": "CALL InverseSquareRoot(INPUTMAT,OUTPUTMAT,[SOLVER_PARAMETERS_IN],[ORDER_IN])",
+              "path": "Source/Fortran/SquareRootSolversModule.F90",
+              "line_start": 97,
+              "line_end": 127,
+              "declarations": [
+                {
+                  "path": "Source/Fortran/SquareRootSolversModule.F90",
+                  "line_start": 97,
+                  "line_end": 106
+                },
+                {
+                  "path": "Source/Fortran/SquareRootSolversModule.F90",
+                  "line_start": 3,
+                  "line_end": 27
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
     "mpifx": {
       "id": "github:dftbplus/mpifx",
       "repository": {
@@ -35824,6 +36928,371 @@
                   "path": "src/easy_plplot.f90",
                   "line_start": 1406,
                   "line_end": 1406
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "gftl": {
+      "id": "github:goddard-fortran-ecosystem/gftl",
+      "repository": {
+        "owner": "Goddard-Fortran-Ecosystem",
+        "name": "gFTL",
+        "url": "https://github.com/Goddard-Fortran-Ecosystem/gFTL"
+      },
+      "license": {
+        "label": "Apache-2.0",
+        "spdx_expression": "Apache-2.0",
+        "revision": "4af86210b6cc6ac46d3298b6861571aa26bd6acc",
+        "reviewed_on": "2026-11-08",
+        "notes": "Root License.txt supplies Apache 2.0 terms; preserve accompanying copyright notices in generated code. Template expansion and supported instantiation options depend on the chosen API version.",
+        "evidence": [
+          {
+            "path": "License.txt",
+            "url": "https://github.com/Goddard-Fortran-Ecosystem/gFTL/blob/4af86210b6cc6ac46d3298b6861571aa26bd6acc/License.txt",
+            "sha256": "50b04bb46125fbd284c368ca9e737f1925700a13f61491deefbdc7d8387bdb6b"
+          },
+          {
+            "path": "README.md",
+            "url": "https://github.com/Goddard-Fortran-Ecosystem/gFTL/blob/4af86210b6cc6ac46d3298b6861571aa26bd6acc/README.md",
+            "sha256": "202eb3c46e3ffde95b2896cbb7545af705d440d8789f7c12f56d5fdd5c6a0877"
+          },
+          {
+            "path": "examples/v1/Vector/VecIntAndReal.F90",
+            "url": "https://github.com/Goddard-Fortran-Ecosystem/gFTL/blob/4af86210b6cc6ac46d3298b6861571aa26bd6acc/examples/v1/Vector/VecIntAndReal.F90",
+            "sha256": "1ebc145c6e54730139ab1bf0e3cffe72174db480bcdd9c6025a5b610e80fa3b9"
+          }
+        ]
+      },
+      "classifications": [
+        {
+          "code": "N4",
+          "level": "source-reviewed",
+          "revision": "4af86210b6cc6ac46d3298b6861571aa26bd6acc",
+          "reviewed_on": "2026-11-08",
+          "notes": "Integer vector template inclusion and consumer usage distinguish author instantiation from playground-generated module names. This is a pinned public-interface/source review, not a new numerical execution check or complete API audit. Existing hosted drivers and their verified problem scope are recorded separately.",
+          "evidence": [
+            {
+              "path": "examples/v1/Vector/VecIntAndReal.F90",
+              "url": "https://github.com/Goddard-Fortran-Ecosystem/gFTL/blob/4af86210b6cc6ac46d3298b6861571aa26bd6acc/examples/v1/Vector/VecIntAndReal.F90",
+              "sha256": "1ebc145c6e54730139ab1bf0e3cffe72174db480bcdd9c6025a5b610e80fa3b9"
+            },
+            {
+              "path": "include/v1/templates/vector.inc",
+              "url": "https://github.com/Goddard-Fortran-Ecosystem/gFTL/blob/4af86210b6cc6ac46d3298b6861571aa26bd6acc/include/v1/templates/vector.inc",
+              "sha256": "179a36ce0a3b77cc2ebed72e6685ec85aa775fa7481f2738140f9a77a6417e73"
+            }
+          ],
+          "procedures": [
+            {
+              "procedure": "Vector",
+              "role": "public-template",
+              "module": "IntegerVec_mod",
+              "summary": "gFTL supplies preprocessing templates, not an upstream module named PLAYGROUND_GFTL. The author example instantiates an integer Vector in IntegerVec_mod; compile with preprocessing and the gFTL v1 include paths. In a consumer USE IntegerVec_mod, declare TYPE(Vector), initialize with Vector(), then CALL values%push_back(i) and query values%at(one_based_index). Borrowed element aliases can be invalidated by mutation. The playground separately supplies its own PLAYGROUND_GFTL/IntegerVector instantiation; module/type names must match the selected instantiation. This is an instantiation recipe and author usage, not argument declarations for a fictitious generated upstream source file.",
+              "signature": "MODULE IntegerVec_mod\n#include \"types/integer.inc\"\n#include \"templates/vector.inc\"\nEND MODULE IntegerVec_mod",
+              "path": "examples/v1/Vector/VecIntAndReal.F90",
+              "line_start": 6,
+              "line_end": 9,
+              "declarations": [
+                {
+                  "path": "examples/v1/Vector/VecIntAndReal.F90",
+                  "line_start": 6,
+                  "line_end": 9
+                },
+                {
+                  "path": "examples/v1/Vector/VecIntAndReal.F90",
+                  "line_start": 17,
+                  "line_end": 34
+                },
+                {
+                  "path": "examples/v1/Vector/VecIntAndReal.F90",
+                  "line_start": 38,
+                  "line_end": 45
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "gftl-shared": {
+      "id": "github:goddard-fortran-ecosystem/gftl-shared",
+      "repository": {
+        "owner": "Goddard-Fortran-Ecosystem",
+        "name": "gFTL-shared",
+        "url": "https://github.com/Goddard-Fortran-Ecosystem/gFTL-shared"
+      },
+      "license": {
+        "label": "Apache-2.0",
+        "spdx_expression": "Apache-2.0",
+        "revision": "8009755e846560fbb389c01d76e013ddf14a7f98",
+        "reviewed_on": "2026-11-08",
+        "notes": "Root LICENSE supplies Apache 2.0 terms. gFTL templates are a separately pinned dependency; this review covers this checked-in specialization definition, not an independently reviewed expansion of every container.",
+        "evidence": [
+          {
+            "path": "LICENSE",
+            "url": "https://github.com/Goddard-Fortran-Ecosystem/gFTL-shared/blob/8009755e846560fbb389c01d76e013ddf14a7f98/LICENSE",
+            "sha256": "c71d239df91726fc519c6eb72d318ec65820627232b2f796219e87dcf35d0ab4"
+          },
+          {
+            "path": "README.md",
+            "url": "https://github.com/Goddard-Fortran-Ecosystem/gFTL-shared/blob/8009755e846560fbb389c01d76e013ddf14a7f98/README.md",
+            "sha256": "ef9f44e657e1bb354f32a81a31f4d3c63bbb427396fb4dd1cf35146144ed77ca"
+          },
+          {
+            "path": "src/v1/Integer32Vector.F90",
+            "url": "https://github.com/Goddard-Fortran-Ecosystem/gFTL-shared/blob/8009755e846560fbb389c01d76e013ddf14a7f98/src/v1/Integer32Vector.F90",
+            "sha256": "e7b9c1352112e36055ecf870bf01262a73c8656b30cc87e7afd2c89fb9974082"
+          }
+        ]
+      },
+      "classifications": [
+        {
+          "code": "N4",
+          "level": "source-reviewed",
+          "revision": "8009755e846560fbb389c01d76e013ddf14a7f98",
+          "reviewed_on": "2026-11-08",
+          "notes": "Concrete integer-vector specialization documents import/construct/append usage and the external template dependency. This is a pinned public-interface/source review, not a new numerical execution check or complete API audit. Existing hosted drivers and their verified problem scope are recorded separately.",
+          "evidence": [
+            {
+              "path": "src/v1/Integer32Vector.F90",
+              "url": "https://github.com/Goddard-Fortran-Ecosystem/gFTL-shared/blob/8009755e846560fbb389c01d76e013ddf14a7f98/src/v1/Integer32Vector.F90",
+              "sha256": "e7b9c1352112e36055ecf870bf01262a73c8656b30cc87e7afd2c89fb9974082"
+            },
+            {
+              "path": "src/v1/demo.F90",
+              "url": "https://github.com/Goddard-Fortran-Ecosystem/gFTL-shared/blob/8009755e846560fbb389c01d76e013ddf14a7f98/src/v1/demo.F90",
+              "sha256": "45b5d1677647ed7b1cb01242aae77317c90a96c0daed2bacd5fc2687d77b9239"
+            }
+          ],
+          "procedures": [
+            {
+              "procedure": "Integer32Vector",
+              "role": "public-template",
+              "module": "gFTL1_Integer32Vector",
+              "summary": "Ready-made v1 INTEGER(INT32) vector specialization; import INT32 from ISO_FORTRAN_ENV for the shown literal. The source selects the element/type macros and includes gFTL templates from a separate dependency. After construction, append with PUSH_BACK and read existing one-based positions using AT; do not access missing indices or retain aliases across reallocation. Source links identify specialization inputs, not nonexistent expanded argument declarations. Other shared maps/vectors and v2 modules have separate names/contracts; the hosted selection is not the entire generated type matrix.",
+              "signature": "USE, INTRINSIC :: iso_fortran_env, ONLY: int32\nUSE gFTL1_Integer32Vector, ONLY: Integer32Vector\nTYPE(Integer32Vector) :: values\nvalues = Integer32Vector()\nCALL values%push_back(1_int32)",
+              "path": "src/v1/Integer32Vector.F90",
+              "line_start": 1,
+              "line_end": 13,
+              "declarations": [
+                {
+                  "path": "src/v1/Integer32Vector.F90",
+                  "line_start": 1,
+                  "line_end": 13
+                },
+                {
+                  "path": "src/v1/demo.F90",
+                  "line_start": 1,
+                  "line_end": 16
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "yafyaml": {
+      "id": "github:goddard-fortran-ecosystem/yafyaml",
+      "repository": {
+        "owner": "Goddard-Fortran-Ecosystem",
+        "name": "yaFyaml",
+        "url": "https://github.com/Goddard-Fortran-Ecosystem/yaFyaml"
+      },
+      "license": {
+        "label": "Apache-2.0",
+        "spdx_expression": "Apache-2.0",
+        "revision": "d6005c9f635c02d7be54d09b205b6f16c54f46b5",
+        "reviewed_on": "2026-11-08",
+        "notes": "Root LICENSE supplies Apache 2.0 terms. Container and parsing-support dependencies retain their own notices. This is a selected file-load interface, not all YAML schema/tag semantics.",
+        "evidence": [
+          {
+            "path": "LICENSE",
+            "url": "https://github.com/Goddard-Fortran-Ecosystem/yaFyaml/blob/d6005c9f635c02d7be54d09b205b6f16c54f46b5/LICENSE",
+            "sha256": "c71d239df91726fc519c6eb72d318ec65820627232b2f796219e87dcf35d0ab4"
+          },
+          {
+            "path": "README.md",
+            "url": "https://github.com/Goddard-Fortran-Ecosystem/yaFyaml/blob/d6005c9f635c02d7be54d09b205b6f16c54f46b5/README.md",
+            "sha256": "250bc9f533439be66cb649cf13c5d1cbf9fc577cb5288a6b7a52b1c119152af9"
+          },
+          {
+            "path": "src/Parser.F90",
+            "url": "https://github.com/Goddard-Fortran-Ecosystem/yaFyaml/blob/d6005c9f635c02d7be54d09b205b6f16c54f46b5/src/Parser.F90",
+            "sha256": "db7ea9d8706dcdd7146c140ef2abf99973d84d0af3581fa85b28e03faadd7a7f"
+          }
+        ]
+      },
+      "classifications": [
+        {
+          "code": "N3",
+          "level": "source-reviewed",
+          "revision": "d6005c9f635c02d7be54d09b205b6f16c54f46b5",
+          "reviewed_on": "2026-11-08",
+          "notes": "File parser binding documents schema initialization, allocatable node ownership and keyword status arguments. This is a pinned public-interface/source review, not a new numerical execution check or complete API audit. Existing hosted drivers and their verified problem scope are recorded separately.",
+          "evidence": [
+            {
+              "path": "src/Parser.F90",
+              "url": "https://github.com/Goddard-Fortran-Ecosystem/yaFyaml/blob/d6005c9f635c02d7be54d09b205b6f16c54f46b5/src/Parser.F90",
+              "sha256": "db7ea9d8706dcdd7146c140ef2abf99973d84d0af3581fa85b28e03faadd7a7f"
+            },
+            {
+              "path": "Examples/Simple/simple.F90",
+              "url": "https://github.com/Goddard-Fortran-Ecosystem/yaFyaml/blob/d6005c9f635c02d7be54d09b205b6f16c54f46b5/Examples/Simple/simple.F90",
+              "sha256": "c8bd98431c366fbdea0b7c104b2bf60fcbcf4380ddee11d1fda02653f26c2e02"
+            }
+          ],
+          "procedures": [
+            {
+              "procedure": "load",
+              "role": "public-entry-point",
+              "module": "fy_Parser",
+              "derived_type": "Parser",
+              "summary": "Declare TYPE(Parser) :: solver from fy_Parser. Load a YAML file with an initialized Parser, typically reader=Parser(\"core\"), returning an allocatable polymorphic YAML_Node tree. FNAME is an ordinary Fortran path. Pass RC by keyword and check YAFYAML_SUCCESS; UNUSABLE deliberately enforces keyword optional arguments and should not be supplied as a positional data value. Query/get typed nodes only after successful loading and use a schema matching the intended scalar interpretation. Ownership belongs to the returned allocatable tree, not a borrowed character buffer. The passed object THIS is implicit in solver%; do not pass it again. Optional actuals shown in brackets can be supplied by keyword.",
+              "signature": "VALUE = solver%load(FNAME,[UNUSABLE],[RC])",
+              "path": "src/Parser.F90",
+              "line_start": 173,
+              "line_end": 186,
+              "declarations": [
+                {
+                  "path": "src/Parser.F90",
+                  "line_start": 173,
+                  "line_end": 178
+                },
+                {
+                  "path": "src/Parser.F90",
+                  "line_start": 45,
+                  "line_end": 73
+                },
+                {
+                  "path": "Examples/Simple/simple.F90",
+                  "line_start": 7,
+                  "line_end": 25
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "pflogger": {
+      "id": "github:goddard-fortran-ecosystem/pflogger",
+      "repository": {
+        "owner": "Goddard-Fortran-Ecosystem",
+        "name": "pFlogger",
+        "url": "https://github.com/Goddard-Fortran-Ecosystem/pFlogger"
+      },
+      "license": {
+        "label": "License requires clarification: NASA/Apache transition documents",
+        "spdx_expression": null,
+        "revision": "472c2261d0713c130aa4b2c90bfaf571586dec96",
+        "reviewed_on": "2026-11-08",
+        "notes": "Pinned CONTRIBUTING.md refers to NOSA and an expected Apache transition (and contains a pFUnit naming inconsistency); root ships LICENSE.pdf and NOSA_LICENSE.pdf. This review does not assign an unqualified SPDX expression from those ambiguous text references. Inspect the complete upstream license documents before redistribution; no binary PDF text has been substituted as source evidence.",
+        "evidence": [
+          {
+            "path": "CONTRIBUTING.md",
+            "url": "https://github.com/Goddard-Fortran-Ecosystem/pFlogger/blob/472c2261d0713c130aa4b2c90bfaf571586dec96/CONTRIBUTING.md",
+            "sha256": "11e1bdaea5af138d35c7a823bb7846297c26ed2917c84f582d87942f0b01e8cb"
+          },
+          {
+            "path": "README.md",
+            "url": "https://github.com/Goddard-Fortran-Ecosystem/pFlogger/blob/472c2261d0713c130aa4b2c90bfaf571586dec96/README.md",
+            "sha256": "01ddc1cf9d1416f2ea3d4e683258740690a9fce120ad79e5b02be785b9832a54"
+          },
+          {
+            "path": "src/pflogger.F90",
+            "url": "https://github.com/Goddard-Fortran-Ecosystem/pFlogger/blob/472c2261d0713c130aa4b2c90bfaf571586dec96/src/pflogger.F90",
+            "sha256": "78224e08f070deceb5675d919cc010025faffd699c7ff0229cf95198cbef95da"
+          }
+        ]
+      },
+      "classifications": [
+        {
+          "code": "R",
+          "level": "source-reviewed",
+          "revision": "472c2261d0713c130aa4b2c90bfaf571586dec96",
+          "reviewed_on": "2026-11-08",
+          "notes": "Serial logger initialization, file configuration and borrowed logger lookup document shared ownership and explicit cleanup. This is a pinned public-interface/source review, not a new numerical execution check or complete API audit. Existing hosted drivers and their verified problem scope are recorded separately.",
+          "evidence": [
+            {
+              "path": "src/pflogger.F90",
+              "url": "https://github.com/Goddard-Fortran-Ecosystem/pFlogger/blob/472c2261d0713c130aa4b2c90bfaf571586dec96/src/pflogger.F90",
+              "sha256": "78224e08f070deceb5675d919cc010025faffd699c7ff0229cf95198cbef95da"
+            },
+            {
+              "path": "src/LoggerManager.F90",
+              "url": "https://github.com/Goddard-Fortran-Ecosystem/pFlogger/blob/472c2261d0713c130aa4b2c90bfaf571586dec96/src/LoggerManager.F90",
+              "sha256": "ffd2cae8c25c28d7281e3df2736159ac4965de1eef85971823b374e210af1839"
+            },
+            {
+              "path": "CONTRIBUTING.md",
+              "url": "https://github.com/Goddard-Fortran-Ecosystem/pFlogger/blob/472c2261d0713c130aa4b2c90bfaf571586dec96/CONTRIBUTING.md",
+              "sha256": "11e1bdaea5af138d35c7a823bb7846297c26ed2917c84f582d87942f0b01e8cb"
+            }
+          ],
+          "procedures": [
+            {
+              "procedure": "initialize",
+              "role": "public-entry-point",
+              "module": "pflogger",
+              "summary": "Initialize severity levels and the global logging manager, choosing the default yaFyaml configuration builder unless BUILDER is supplied. This prepares configuration support; it does not itself load a YAML file. Use LOAD_FILE next, send records through a manager-owned logger, then LOGGING%FREE before FINALIZE for handler cleanup. Hosted scope uses serial logging; optional MPI facilities need their own runtime setup.",
+              "signature": "CALL initialize([BUILDER])",
+              "path": "src/pflogger.F90",
+              "line_start": 72,
+              "line_end": 91,
+              "declarations": [
+                {
+                  "path": "src/pflogger.F90",
+                  "line_start": 72,
+                  "line_end": 75
+                }
+              ]
+            },
+            {
+              "procedure": "load_file",
+              "role": "public-entry-point",
+              "module": "PFL_LoggerManager",
+              "derived_type": "LoggerManager",
+              "summary": "Use the initialized shared LOGGING object from PFLOGGER. Load a configuration YAML file and build handlers/loggers after INITIALIZE. Use the shared LOGGING manager re-exported by PFLOGGER for the ordinary application path; pass RC by keyword and inspect it. EXTRA supplies object substitutions and COMM is meaningful only for the matching MPI configuration, not a process launcher. UNUSABLE is a keyword-enforcement placeholder. File handlers perform real I/O and need writable paths. The passed object THIS is implicit in logging%; do not pass it again. Optional actuals shown in brackets can be supplied by keyword.",
+              "signature": "CALL logging%load_file(FILENAME,[UNUSABLE],[EXTRA],[COMM],[RC])",
+              "path": "src/LoggerManager.F90",
+              "line_start": 316,
+              "line_end": 338,
+              "declarations": [
+                {
+                  "path": "src/LoggerManager.F90",
+                  "line_start": 316,
+                  "line_end": 322
+                },
+                {
+                  "path": "src/LoggerManager.F90",
+                  "line_start": 33,
+                  "line_end": 70
+                }
+              ]
+            },
+            {
+              "procedure": "get_logger",
+              "role": "public-entry-point",
+              "module": "PFL_LoggerManager",
+              "derived_type": "LoggerManager",
+              "summary": "Use the initialized shared LOGGING object from PFLOGGER. Obtain a manager-owned CLASS(LOGGER), POINTER by name. Use pointer association (LOG => LOGGING%GET_LOGGER(name,rc=rc)), check status/association, and send severity records through that pointer. Do not deallocate it independently or keep it after LOGGING%FREE; its lifetime is owned by the manager. This is the name overload, not the no-name root overload. The passed object THIS is implicit in logging%; do not pass it again. Optional actuals shown in brackets can be supplied by keyword.",
+              "signature": "VALUE => logging%get_logger(NAME,[RC])",
+              "path": "src/LoggerManager.F90",
+              "line_start": 131,
+              "line_end": 190,
+              "declarations": [
+                {
+                  "path": "src/LoggerManager.F90",
+                  "line_start": 131,
+                  "line_end": 135
+                },
+                {
+                  "path": "src/LoggerManager.F90",
+                  "line_start": 33,
+                  "line_end": 70
                 }
               ]
             }
@@ -36619,6 +38088,145 @@
         }
       ]
     },
+    "libmbd": {
+      "id": "github:libmbd/libmbd",
+      "repository": {
+        "owner": "libmbd",
+        "name": "libmbd",
+        "url": "https://github.com/libmbd/libmbd"
+      },
+      "license": {
+        "label": "MPL-2.0",
+        "spdx_expression": "MPL-2.0",
+        "revision": "77d7ab424d21f43dea9f57734b355ce4ea4d1a42",
+        "reviewed_on": "2026-11-08",
+        "notes": "Root LICENSE supplies Mozilla Public License 2.0 terms. Optional external numerical/MPI components retain separate notices. This interface review concerns the selected molecular dispersion workflow, not all material/domain capabilities.",
+        "evidence": [
+          {
+            "path": "LICENSE",
+            "url": "https://github.com/libmbd/libmbd/blob/77d7ab424d21f43dea9f57734b355ce4ea4d1a42/LICENSE",
+            "sha256": "fab3dd6bdab226f1c08630b1dd917e11fcb4ec5e1e020e2c16f83a0a13863e85"
+          },
+          {
+            "path": "README.md",
+            "url": "https://github.com/libmbd/libmbd/blob/77d7ab424d21f43dea9f57734b355ce4ea4d1a42/README.md",
+            "sha256": "7874b8ca8c5083252da008cc5f65c11610bd56c8d9a5ec22529b079e8e5ecfbd"
+          },
+          {
+            "path": "src/mbd.F90",
+            "url": "https://github.com/libmbd/libmbd/blob/77d7ab424d21f43dea9f57734b355ce4ea4d1a42/src/mbd.F90",
+            "sha256": "774485717852b118cbaf93b1f494f4f3ec31c245d0aa84c2c462d9102f69814a"
+          }
+        ]
+      },
+      "classifications": [
+        {
+          "code": "Z",
+          "level": "source-reviewed",
+          "revision": "77d7ab424d21f43dea9f57734b355ce4ea4d1a42",
+          "reviewed_on": "2026-11-08",
+          "notes": "Many-body dispersion initialization, energy evaluation and exception consumption document atomic units and mutable calculation lifetime. This is a pinned public-interface/source review, not a new numerical execution check or complete API audit. Existing hosted drivers and their verified problem scope are recorded separately.",
+          "evidence": [
+            {
+              "path": "src/mbd.F90",
+              "url": "https://github.com/libmbd/libmbd/blob/77d7ab424d21f43dea9f57734b355ce4ea4d1a42/src/mbd.F90",
+              "sha256": "774485717852b118cbaf93b1f494f4f3ec31c245d0aa84c2c462d9102f69814a"
+            }
+          ],
+          "procedures": [
+            {
+              "procedure": "init",
+              "role": "public-entry-point",
+              "module": "mbd",
+              "derived_type": "mbd_calc_t",
+              "summary": "Declare TYPE(mbd_calc_t) :: solver from mbd. Initialize a fresh calculation from TYPE(MBD_INPUT_T): specify element names, coordinates in atomic units, exchange-correlation/dispersion settings and any requested force calculation. This establishes mutable owned geometry/work state; it is not a scalar energy function. Call GET_EXCEPTION after initialization and subsequent operations before trusting outputs, and DESTROY after use. Reusing an initialized object or copying pointer-owning state needs library lifecycle care. The passed object THIS is implicit in solver%; do not pass it again. Optional actuals shown in brackets can be supplied by keyword.",
+              "signature": "CALL solver%init(INPUT)",
+              "path": "src/mbd.F90",
+              "line_start": 146,
+              "line_end": 223,
+              "declarations": [
+                {
+                  "path": "src/mbd.F90",
+                  "line_start": 146,
+                  "line_end": 150
+                },
+                {
+                  "path": "src/mbd.F90",
+                  "line_start": 27,
+                  "line_end": 63
+                },
+                {
+                  "path": "src/mbd.F90",
+                  "line_start": 111,
+                  "line_end": 141
+                }
+              ]
+            },
+            {
+              "procedure": "evaluate_vdw_method",
+              "role": "public-entry-point",
+              "module": "mbd",
+              "derived_type": "mbd_calc_t",
+              "summary": "Declare TYPE(mbd_calc_t) :: solver from mbd. Evaluate the initialized/configured vdW model and write scalar REAL(DP) energy in atomic units. Atomic polarizabilities/C6/radii must be initialized consistently with the model or set through the supported update methods. Model choice and force settings come from initialization; this is not an all-purpose density-functional total energy. Inspect GET_EXCEPTION after evaluation; existing hosted checks scope a fixed argon dimer/reference. The passed object THIS is implicit in solver%; do not pass it again. Optional actuals shown in brackets can be supplied by keyword.",
+              "signature": "CALL solver%evaluate_vdw_method(ENERGY)",
+              "path": "src/mbd.F90",
+              "line_start": 347,
+              "line_end": 385,
+              "declarations": [
+                {
+                  "path": "src/mbd.F90",
+                  "line_start": 347,
+                  "line_end": 352
+                },
+                {
+                  "path": "src/mbd.F90",
+                  "line_start": 27,
+                  "line_end": 63
+                },
+                {
+                  "path": "src/mbd.F90",
+                  "line_start": 111,
+                  "line_end": 141
+                }
+              ]
+            },
+            {
+              "procedure": "get_exception",
+              "role": "public-entry-point",
+              "module": "mbd",
+              "derived_type": "mbd_calc_t",
+              "summary": "Declare TYPE(mbd_calc_t) :: solver from mbd. Read INTEGER CODE and CHARACTER ORIGIN/MSG into adequately sized caller buffers. CODE=0 means no stored exception and the implementation returns without assigning ORIGIN/MSG, so do not read those outputs on the success path. Retrieving a nonzero exception clears the stored exception. This is explicit polling/consumption, not automatic ERROR STOP. The passed object THIS is implicit in solver%; do not pass it again. Optional actuals shown in brackets can be supplied by keyword.",
+              "signature": "CALL solver%get_exception(CODE,ORIGIN,MSG)",
+              "path": "src/mbd.F90",
+              "line_start": 478,
+              "line_end": 495,
+              "declarations": [
+                {
+                  "path": "src/mbd.F90",
+                  "line_start": 478,
+                  "line_end": 486
+                },
+                {
+                  "path": "src/mbd.F90",
+                  "line_start": 27,
+                  "line_end": 63
+                },
+                {
+                  "path": "src/mbd.F90",
+                  "line_start": 111,
+                  "line_end": 141
+                },
+                {
+                  "path": "src/mbd.F90",
+                  "line_start": 488,
+                  "line_end": 495
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
     "dtfft": {
       "id": "github:shatrovoa/dtfft",
       "repository": {
@@ -36799,6 +38407,105 @@
                   "path": "src/dtfft_plan.F90",
                   "line_start": 300,
                   "line_end": 311
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "dbcsr": {
+      "id": "github:cp2k/dbcsr",
+      "repository": {
+        "owner": "cp2k",
+        "name": "dbcsr",
+        "url": "https://github.com/cp2k/dbcsr"
+      },
+      "license": {
+        "label": "GPL-2.0-or-later",
+        "spdx_expression": "GPL-2.0-or-later",
+        "revision": "cd6f522ec5005da8c59d2883975a89a2da607eac",
+        "reviewed_on": "2026-11-08",
+        "notes": "Selected SPDX headers grant GPL-2.0+ and root LICENSE supplies GPLv2 text. Optional backend/runtime libraries retain separate notices. Hosted sources are deliberately repackaged for serial CPU use; no distributed/accelerator execution is newly asserted.",
+        "evidence": [
+          {
+            "path": "LICENSE",
+            "url": "https://github.com/cp2k/dbcsr/blob/cd6f522ec5005da8c59d2883975a89a2da607eac/LICENSE",
+            "sha256": "5d5b6c13be0a23c635486b73275308e91985d13f5c5096bed4aa447605f87acd"
+          },
+          {
+            "path": "README.md",
+            "url": "https://github.com/cp2k/dbcsr/blob/cd6f522ec5005da8c59d2883975a89a2da607eac/README.md",
+            "sha256": "6d1e6bd2e5cd7f2660239ccd41d5dae4353fd921d15ee263137317461cdf066b"
+          },
+          {
+            "path": "src/mm/dbcsr_multiply_api.F",
+            "url": "https://github.com/cp2k/dbcsr/blob/cd6f522ec5005da8c59d2883975a89a2da607eac/src/mm/dbcsr_multiply_api.F",
+            "sha256": "43891d426eb39e596d5ff933582526c8b198f3a76cd7507a9ac1563c0d6ee175"
+          }
+        ]
+      },
+      "classifications": [
+        {
+          "code": "D",
+          "level": "source-reviewed",
+          "revision": "cd6f522ec5005da8c59d2883975a89a2da607eac",
+          "reviewed_on": "2026-11-08",
+          "notes": "Block-sparse matrix product and release document object lifetime and full-upstream versus serial-hosted scope. This is a pinned public-interface/source review, not a new numerical execution check or complete API audit. Existing hosted drivers and their verified problem scope are recorded separately.",
+          "evidence": [
+            {
+              "path": "src/mm/dbcsr_multiply_api.F",
+              "url": "https://github.com/cp2k/dbcsr/blob/cd6f522ec5005da8c59d2883975a89a2da607eac/src/mm/dbcsr_multiply_api.F",
+              "sha256": "43891d426eb39e596d5ff933582526c8b198f3a76cd7507a9ac1563c0d6ee175"
+            },
+            {
+              "path": "src/dbcsr_api.F",
+              "url": "https://github.com/cp2k/dbcsr/blob/cd6f522ec5005da8c59d2883975a89a2da607eac/src/dbcsr_api.F",
+              "sha256": "f5818508b345def0c719f1355cb2ac68e03828ad3a14280eaea0d2d81d2505dd"
+            }
+          ],
+          "procedures": [
+            {
+              "procedure": "dbcsr_multiply",
+              "role": "public-entry-point",
+              "module": "dbcsr_api",
+              "summary": "Double-real-scalar overload computes C=ALPHA*op(A)*op(B)+BETA*C using initialized compatible DBCSR matrix/distribution objects. TRANS flags, block partitions, matrix symmetry/type and finalized input storage must match the operation. Optional block ranges/sparsity/filter/flop arguments belong to the full upstream API; the hosted repackaging verifies only the serial REAL64 CPU path and supported subset, not every optional/MPI/accelerator configuration. Check results and treat filtered small entries according to the chosen tolerance.",
+              "signature": "CALL dbcsr_multiply(TRANSA,TRANSB,ALPHA,MATRIX_A,MATRIX_B,BETA,MATRIX_C,[FIRST_ROW],[LAST_ROW],[FIRST_COLUMN],[LAST_COLUMN],[FIRST_K],[LAST_K],[RETAIN_SPARSITY],[FILTER_EPS],[FLOP])",
+              "path": "src/mm/dbcsr_multiply_api.F",
+              "line_start": 62,
+              "line_end": 100,
+              "declarations": [
+                {
+                  "path": "src/mm/dbcsr_multiply_api.F",
+                  "line_start": 62,
+                  "line_end": 77
+                },
+                {
+                  "path": "src/dbcsr_api.F",
+                  "line_start": 190,
+                  "line_end": 198
+                },
+                {
+                  "path": "src/dbcsr_api.F",
+                  "line_start": 370,
+                  "line_end": 375
+                }
+              ]
+            },
+            {
+              "procedure": "dbcsr_release",
+              "role": "public-entry-point",
+              "module": "dbcsr_api",
+              "summary": "Release a matrix after all block pointers/iterators using it have finished. Matrix storage owns resources; caller-held block pointers must not outlive release. Release each initialized matrix and distribution before finalizing the DBCSR library/runtime. This public wrapper is not a substitute for global library or MPI cleanup.",
+              "signature": "CALL dbcsr_release(MATRIX)",
+              "path": "src/dbcsr_api.F",
+              "line_start": 785,
+              "line_end": 789,
+              "declarations": [
+                {
+                  "path": "src/dbcsr_api.F",
+                  "line_start": 785,
+                  "line_end": 790
                 }
               ]
             }
@@ -37098,6 +38805,213 @@
                   "path": "src/ennuf/_internal/fortran/neural_net_mod.f90",
                   "line_start": 344,
                   "line_end": 410
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "ddpcm": {
+      "id": "github:filippolipparini/ddpcm",
+      "repository": {
+        "owner": "filippolipparini",
+        "name": "ddPCM",
+        "url": "https://github.com/filippolipparini/ddPCM"
+      },
+      "license": {
+        "label": "LGPL-3.0",
+        "spdx_expression": null,
+        "revision": "36f22feb86c81c6ba1f59c373ef215368d3e3c13",
+        "reviewed_on": "2026-11-08",
+        "notes": "Root LICENSE contains LGPLv3 and source headers identify LGPL without an explicit later-version phrase in these selected declarations. Preserve author/citation notices and separately bundled Lebedev code terms. This source review does not clear every third-party component.",
+        "evidence": [
+          {
+            "path": "LICENSE",
+            "url": "https://github.com/filippolipparini/ddPCM/blob/36f22feb86c81c6ba1f59c373ef215368d3e3c13/LICENSE",
+            "sha256": "da7eabb7bafdf7d3ae5e9f223aa5bdc1eece45ac569dc21b3b037520b4464768"
+          },
+          {
+            "path": "README.md",
+            "url": "https://github.com/filippolipparini/ddPCM/blob/36f22feb86c81c6ba1f59c373ef215368d3e3c13/README.md",
+            "sha256": "672d4f01bb14d3857481cf81a92d68dbdf1ac428cb02d69a12bf46e6f78f9376"
+          },
+          {
+            "path": "jacobi_diis.f90",
+            "url": "https://github.com/filippolipparini/ddPCM/blob/36f22feb86c81c6ba1f59c373ef215368d3e3c13/jacobi_diis.f90",
+            "sha256": "3f70f71f734d0cad4fd0e195c831b96492caa457592f6ba12a865498fa1014c1"
+          }
+        ]
+      },
+      "classifications": [
+        {
+          "code": "D2",
+          "level": "source-reviewed",
+          "revision": "36f22feb86c81c6ba1f59c373ef215368d3e3c13",
+          "reviewed_on": "2026-11-08",
+          "notes": "External Jacobi/DIIS solve and shared cavity initialization distinguish callback contracts from domain-specific global setup. This is a pinned public-interface/source review, not a new numerical execution check or complete API audit. Existing hosted drivers and their verified problem scope are recorded separately.",
+          "evidence": [
+            {
+              "path": "jacobi_diis.f90",
+              "url": "https://github.com/filippolipparini/ddPCM/blob/36f22feb86c81c6ba1f59c373ef215368d3e3c13/jacobi_diis.f90",
+              "sha256": "3f70f71f734d0cad4fd0e195c831b96492caa457592f6ba12a865498fa1014c1"
+            },
+            {
+              "path": "ddcosmo.f90",
+              "url": "https://github.com/filippolipparini/ddPCM/blob/36f22feb86c81c6ba1f59c373ef215368d3e3c13/ddcosmo.f90",
+              "sha256": "f618e3ea45c6d8d3359cc355ada85db1b9efef3310bea81fb6e8285c9b10953f"
+            }
+          ],
+          "procedures": [
+            {
+              "procedure": "jacobi_diis",
+              "role": "public-entry-point",
+              "summary": "External REAL*8 Jacobi solver with optional DIIS extrapolation. N sizes RHS/X; X is the initial guess and is overwritten. N_ITER is input maximum and output iteration count; initialize OK and inspect its returned convergence flag. For (D+O)*X=RHS, MATVEC(N,X,Y) applies the off-diagonal/remainder operator O and DM1VEC(N,X,Y) applies D^-1. Passing a full-system A*X callback in place of O*X changes the iteration and solves a different equation. NORM selects increment-based tests (not automatically a true residual); NORM=4 requires optional REAL*8 U_NORM(N,X). DIIS_MAX=0 disables acceleration. Use compatible explicit interfaces for callback kinds and independently check residuals.",
+              "signature": "CALL jacobi_diis(N,LPRINT,DIIS_MAX,NORM,TOL,RHS,X,N_ITER,OK,MATVEC,DM1VEC,[U_NORM])",
+              "path": "jacobi_diis.f90",
+              "line_start": 43,
+              "line_end": 191,
+              "declarations": [
+                {
+                  "path": "jacobi_diis.f90",
+                  "line_start": 43,
+                  "line_end": 57
+                }
+              ]
+            },
+            {
+              "procedure": "ddinit",
+              "role": "public-entry-point",
+              "module": "ddcosmo",
+              "summary": "Initialize domain-decomposition cavity state from N sphere centers X/Y/Z and van der Waals radii, all REAL*8 arrays of length N in consistent units. Configure module controls such as NGRID/LMAX/ETA and initialize required input state before calling, following the author main program. The routine allocates shared module arrays and chooses a supported Lebedev grid; it is not a reentrant per-instance constructor. Free shared state with MEMFREE after use and do not blindly call DDINIT twice on live allocations. No recoverable status dummy is supplied.",
+              "signature": "CALL ddinit(N,X,Y,Z,RVDW)",
+              "path": "ddcosmo.f90",
+              "line_start": 159,
+              "line_end": 483,
+              "declarations": [
+                {
+                  "path": "ddcosmo.f90",
+                  "line_start": 159,
+                  "line_end": 166
+                },
+                {
+                  "path": "ddcosmo.f90",
+                  "line_start": 91,
+                  "line_end": 126
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "dftd4": {
+      "id": "github:dftd4/dftd4",
+      "repository": {
+        "owner": "dftd4",
+        "name": "dftd4",
+        "url": "https://github.com/dftd4/dftd4"
+      },
+      "license": {
+        "label": "LGPL-3.0-or-later",
+        "spdx_expression": "LGPL-3.0-or-later",
+        "revision": "1107ea7c7c2131719e306fd57a5f4a1579e2577e",
+        "reviewed_on": "2026-11-08",
+        "notes": "Public source headers expressly grant LGPL version 3 or later; COPYING.LESSER and COPYING provide terms. MCTC and model-data/dependency notices remain separate. This is a selected Fortran API review, not the opaque-handle C API.",
+        "evidence": [
+          {
+            "path": "COPYING.LESSER",
+            "url": "https://github.com/dftd4/dftd4/blob/1107ea7c7c2131719e306fd57a5f4a1579e2577e/COPYING.LESSER",
+            "sha256": "e3a994d82e644b03a792a930f574002658412f62407f5fee083f2555c5f23118"
+          },
+          {
+            "path": "README.md",
+            "url": "https://github.com/dftd4/dftd4/blob/1107ea7c7c2131719e306fd57a5f4a1579e2577e/README.md",
+            "sha256": "017434d086f4a273b46bcb80cf127f63cbbcc779bd303274eb5668083e2dcdad"
+          },
+          {
+            "path": "src/dftd4/model/d4.f90",
+            "url": "https://github.com/dftd4/dftd4/blob/1107ea7c7c2131719e306fd57a5f4a1579e2577e/src/dftd4/model/d4.f90",
+            "sha256": "8f88b5080e4d88a281aaca5cadf7dfd94f3777af3d9337f66579e9af1348b8d0"
+          }
+        ]
+      },
+      "classifications": [
+        {
+          "code": "Z",
+          "level": "source-reviewed",
+          "revision": "1107ea7c7c2131719e306fd57a5f4a1579e2577e",
+          "reviewed_on": "2026-11-08",
+          "notes": "D4 model construction and dispersion/derivative evaluation document atomic units, allocated errors and gradient sign conventions. This is a pinned public-interface/source review, not a new numerical execution check or complete API audit. Existing hosted drivers and their verified problem scope are recorded separately.",
+          "evidence": [
+            {
+              "path": "src/dftd4/model/d4.f90",
+              "url": "https://github.com/dftd4/dftd4/blob/1107ea7c7c2131719e306fd57a5f4a1579e2577e/src/dftd4/model/d4.f90",
+              "sha256": "8f88b5080e4d88a281aaca5cadf7dfd94f3777af3d9337f66579e9af1348b8d0"
+            },
+            {
+              "path": "src/dftd4/disp.f90",
+              "url": "https://github.com/dftd4/dftd4/blob/1107ea7c7c2131719e306fd57a5f4a1579e2577e/src/dftd4/disp.f90",
+              "sha256": "6b5e775c20d4fb417feb7002e8189ac435e361e98e0515d31995e66ffad0a771"
+            },
+            {
+              "path": "src/dftd4.f90",
+              "url": "https://github.com/dftd4/dftd4/blob/1107ea7c7c2131719e306fd57a5f4a1579e2577e/src/dftd4.f90",
+              "sha256": "9c6b7fb3c26cc499bc3c59879cf87ce290a031c03fd0830d814ccf1fdfe022b0"
+            },
+            {
+              "path": "COPYING",
+              "url": "https://github.com/dftd4/dftd4/blob/1107ea7c7c2131719e306fd57a5f4a1579e2577e/COPYING",
+              "sha256": "3972dc9744f6499f0f9b2dbf76696f2ae7ad8af9b23dde66d6af86c9dfb36986"
+            }
+          ],
+          "procedures": [
+            {
+              "procedure": "new_d4_model",
+              "role": "public-entry-point",
+              "module": "dftd4",
+              "summary": "Construct TYPE(D4_MODEL) from an already initialized MCTC STRUCTURE_TYPE, including species, coordinates in atomic units, charge and any periodic lattice metadata. ERROR is an allocatable ERROR_TYPE; test ALLOCATED(ERROR) before proceeding. Optional GA/GC/WF/QMOD select charge scaling/model details and are not generic optimization tolerances. Damping parameters are supplied separately for the intended density functional.",
+              "signature": "CALL new_d4_model(ERROR,D4,MOL,[GA],[GC],[WF],[QMOD])",
+              "path": "src/dftd4/model/d4.f90",
+              "line_start": 77,
+              "line_end": 237,
+              "declarations": [
+                {
+                  "path": "src/dftd4/model/d4.f90",
+                  "line_start": 77,
+                  "line_end": 99
+                },
+                {
+                  "path": "src/dftd4.f90",
+                  "line_start": 15,
+                  "line_end": 34
+                }
+              ]
+            },
+            {
+              "procedure": "get_dispersion",
+              "role": "public-entry-point",
+              "module": "dftd4",
+              "summary": "Compute dispersion energy in atomic units from a compatible structure/model, damping parameters and REALSPACE_CUTOFF. Optional contiguous GRADIENT(3,NAT) is the energy derivative, so forces have the opposite sign; SIGMA is the virial tensor, not a force vector. Request ERROR and inspect ALLOCATED(ERROR), then check finite outputs: this pin initializes failed results to NaN. PARTITION is externally supplied work distribution with its own contract, not automatically a new MPI runtime.",
+              "signature": "CALL get_dispersion(MOL,DISP,PARAM,CUTOFF,ENERGY,[GRADIENT],[SIGMA],[PARTITION],[ERROR])",
+              "path": "src/dftd4/disp.f90",
+              "line_start": 44,
+              "line_end": 159,
+              "declarations": [
+                {
+                  "path": "src/dftd4/disp.f90",
+                  "line_start": 44,
+                  "line_end": 72
+                },
+                {
+                  "path": "src/dftd4/disp.f90",
+                  "line_start": 84,
+                  "line_end": 99
+                },
+                {
+                  "path": "src/dftd4.f90",
+                  "line_start": 15,
+                  "line_end": 34
                 }
               ]
             }
@@ -37415,6 +39329,110 @@
                   "path": "src/ch04/mod_initial.f90",
                   "line_start": 1,
                   "line_end": 9
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "pfunit": {
+      "id": "github:goddard-fortran-ecosystem/pfunit",
+      "repository": {
+        "owner": "Goddard-Fortran-Ecosystem",
+        "name": "pFUnit",
+        "url": "https://github.com/Goddard-Fortran-Ecosystem/pFUnit"
+      },
+      "license": {
+        "label": "Apache-2.0 with retained historical NOSA notices",
+        "spdx_expression": null,
+        "revision": "380524aa4ce4d97b2815a07a1bd24b660841cc6f",
+        "reviewed_on": "2026-11-08",
+        "notes": "Root LICENSE supplies Apache 2.0 terms and LICENSE-NOSA is also retained. Preserve applicable historical/source notices rather than assume every bundled historical component is relicensed from one root heading. Serial FUnit interfaces are scoped separately from MPI/preprocessor facilities.",
+        "evidence": [
+          {
+            "path": "LICENSE",
+            "url": "https://github.com/Goddard-Fortran-Ecosystem/pFUnit/blob/380524aa4ce4d97b2815a07a1bd24b660841cc6f/LICENSE",
+            "sha256": "63e236e1d5a052419dd4f2691a74e14d71710d9e047f1e8b4e6c7f0b640ed4a8"
+          },
+          {
+            "path": "README.md",
+            "url": "https://github.com/Goddard-Fortran-Ecosystem/pFUnit/blob/380524aa4ce4d97b2815a07a1bd24b660841cc6f/README.md",
+            "sha256": "669961c6612bddefe32f8f3cde166f4bbf56d4038efc6289446a149e633673c0"
+          },
+          {
+            "path": "src/funit/asserts/AssertBasic.F90",
+            "url": "https://github.com/Goddard-Fortran-Ecosystem/pFUnit/blob/380524aa4ce4d97b2815a07a1bd24b660841cc6f/src/funit/asserts/AssertBasic.F90",
+            "sha256": "32434391f880d9c24a08e727b8e40a82664fbba528e3472e28b39c2b4f857d32"
+          },
+          {
+            "path": "LICENSE-NOSA",
+            "url": "https://github.com/Goddard-Fortran-Ecosystem/pFUnit/blob/380524aa4ce4d97b2815a07a1bd24b660841cc6f/LICENSE-NOSA",
+            "sha256": "1044b575f6da498f9a20f12b87d5d99313c6ca6974929acbeb2990b8da1bbfac"
+          }
+        ]
+      },
+      "classifications": [
+        {
+          "code": "S3",
+          "level": "source-reviewed",
+          "revision": "380524aa4ce4d97b2815a07a1bd24b660841cc6f",
+          "reviewed_on": "2026-11-08",
+          "notes": "Plain Fortran logical assertions document runner/context requirements and the distinction from direct process termination. This is a pinned public-interface/source review, not a new numerical execution check or complete API audit. Existing hosted drivers and their verified problem scope are recorded separately.",
+          "evidence": [
+            {
+              "path": "src/funit/asserts/AssertBasic.F90",
+              "url": "https://github.com/Goddard-Fortran-Ecosystem/pFUnit/blob/380524aa4ce4d97b2815a07a1bd24b660841cc6f/src/funit/asserts/AssertBasic.F90",
+              "sha256": "32434391f880d9c24a08e727b8e40a82664fbba528e3472e28b39c2b4f857d32"
+            },
+            {
+              "path": "LICENSE-NOSA",
+              "url": "https://github.com/Goddard-Fortran-Ecosystem/pFUnit/blob/380524aa4ce4d97b2815a07a1bd24b660841cc6f/LICENSE-NOSA",
+              "sha256": "1044b575f6da498f9a20f12b87d5d99313c6ca6974929acbeb2990b8da1bbfac"
+            }
+          ],
+          "procedures": [
+            {
+              "procedure": "assertTrue",
+              "role": "public-entry-point",
+              "module": "FUnit",
+              "summary": "Scalar logical ASSERTTRUE overload records a test assertion, with optional CHARACTER message and TYPE(SOURCELOCATION) location. It is intended within an initialized FUnit test runner/context. A failed assertion is routed through the framework exception machinery; a bare call is not a standalone replacement for ERROR STOP or a full test-result report. Plain serial Fortran tests do not require the annotation preprocessor.",
+              "signature": "CALL assertTrue(CONDITION,[MESSAGE],[LOCATION])",
+              "path": "src/funit/asserts/AssertBasic.F90",
+              "line_start": 222,
+              "line_end": 233,
+              "declarations": [
+                {
+                  "path": "src/funit/asserts/AssertBasic.F90",
+                  "line_start": 222,
+                  "line_end": 225
+                },
+                {
+                  "path": "src/funit/asserts/AssertBasic.F90",
+                  "line_start": 46,
+                  "line_end": 95
+                }
+              ]
+            },
+            {
+              "procedure": "assertFalse",
+              "role": "public-entry-point",
+              "module": "FUnit",
+              "summary": "Scalar logical ASSERTFALSE overload records success when CONDITION is false, using the same optional message/location contracts. Run it inside a TestMethod/TestSuite through a TestRunner, then inspect TestResult%wasSuccessful and counts and choose an application exit status. The hosted build scopes serial assertion ranks/configuration; MPI/image-aware tests and every generated assertion kind are outside that check.",
+              "signature": "CALL assertFalse(CONDITION,[MESSAGE],[LOCATION])",
+              "path": "src/funit/asserts/AssertBasic.F90",
+              "line_start": 319,
+              "line_end": 325,
+              "declarations": [
+                {
+                  "path": "src/funit/asserts/AssertBasic.F90",
+                  "line_start": 319,
+                  "line_end": 322
+                },
+                {
+                  "path": "src/funit/asserts/AssertBasic.F90",
+                  "line_start": 46,
+                  "line_end": 95
                 }
               ]
             }
@@ -37783,6 +39801,117 @@
         }
       ]
     },
+    "plplot": {
+      "id": "github:plplot/plplot",
+      "repository": {
+        "owner": "PLplot",
+        "name": "PLplot",
+        "url": "https://github.com/PLplot/PLplot"
+      },
+      "license": {
+        "label": "LGPL-2.0-or-later",
+        "spdx_expression": "LGPL-2.0-or-later",
+        "revision": "a28c702862ea466a4ee22faba1b676aade77dc4c",
+        "reviewed_on": "2026-11-08",
+        "notes": "Selected Fortran headers grant Library GPL version 2 or later; COPYING.LIB supplies that text. Device/back-end libraries retain separate terms. This review scopes file rendering rather than guarantee interactive window support.",
+        "evidence": [
+          {
+            "path": "COPYING.LIB",
+            "url": "https://github.com/PLplot/PLplot/blob/a28c702862ea466a4ee22faba1b676aade77dc4c/COPYING.LIB",
+            "sha256": "974ab0626f9babf350e751e3d62b8352d7c7051f23d998220cbaabf0edc2d66f"
+          },
+          {
+            "path": "bindings/fortran/plplot.f90",
+            "url": "https://github.com/PLplot/PLplot/blob/a28c702862ea466a4ee22faba1b676aade77dc4c/bindings/fortran/plplot.f90",
+            "sha256": "a6d9638c10f45bccb1831d2d97a109668e22a9fece4fb5cb2667dfcca403ac63"
+          }
+        ]
+      },
+      "classifications": [
+        {
+          "code": "Q",
+          "level": "source-reviewed",
+          "revision": "a28c702862ea466a4ee22faba1b676aade77dc4c",
+          "reviewed_on": "2026-11-08",
+          "notes": "Headless device selection, polyline drawing and stream finalization document native device availability and array-length requirements. This is a pinned public-interface/source review, not a new numerical execution check or complete API audit. Existing hosted drivers and their verified problem scope are recorded separately.",
+          "evidence": [
+            {
+              "path": "bindings/fortran/plplot.f90",
+              "url": "https://github.com/PLplot/PLplot/blob/a28c702862ea466a4ee22faba1b676aade77dc4c/bindings/fortran/plplot.f90",
+              "sha256": "a6d9638c10f45bccb1831d2d97a109668e22a9fece4fb5cb2667dfcca403ac63"
+            },
+            {
+              "path": "bindings/fortran/included_plplot_real_interfaces.f90",
+              "url": "https://github.com/PLplot/PLplot/blob/a28c702862ea466a4ee22faba1b676aade77dc4c/bindings/fortran/included_plplot_real_interfaces.f90",
+              "sha256": "435c2be71ae830c18eb43374b9bd62cd8dddb3112cf8fa43520b67dfde2b65f5"
+            },
+            {
+              "path": "bindings/fortran/plplot_double.f90",
+              "url": "https://github.com/PLplot/PLplot/blob/a28c702862ea466a4ee22faba1b676aade77dc4c/bindings/fortran/plplot_double.f90",
+              "sha256": "b9134d1f3342ee08581248e7def1d539a426676026d1297e2c900e03488fa0ce"
+            }
+          ],
+          "procedures": [
+            {
+              "procedure": "plsdev",
+              "role": "public-entry-point",
+              "module": "plplot",
+              "summary": "Select a compiled-in native device using ordinary Fortran CHARACTER, for example \"pngcairo\" for a supported headless raster build. Call before PLINIT, and set output filename via PLSFNAM first. The wrapper trims/adds the C terminator itself. Device availability depends on the linked build; a GUI device may require a display server.",
+              "signature": "CALL plsdev(DEVNAME)",
+              "path": "bindings/fortran/plplot.f90",
+              "line_start": 1334,
+              "line_end": 1346,
+              "declarations": [
+                {
+                  "path": "bindings/fortran/plplot.f90",
+                  "line_start": 1334,
+                  "line_end": 1335
+                }
+              ]
+            },
+            {
+              "procedure": "plline",
+              "role": "public-entry-point",
+              "module": "plplot",
+              "summary": "Draw the connected polyline defined by same-length X/Y vectors of REAL(PLFLT) after stream/device initialization and setting plot coordinates (for example PLENV). No explicit point count is passed by the Fortran caller. A length mismatch only emits a warning before forwarding SIZE(X) elements, so validate lengths yourself; do not depend on safe truncation. This draws on the current stream and does not finalize/save a whole plot by itself.",
+              "signature": "CALL plline(X,Y)",
+              "path": "bindings/fortran/included_plplot_real_interfaces.f90",
+              "line_start": 2444,
+              "line_end": 2464,
+              "declarations": [
+                {
+                  "path": "bindings/fortran/included_plplot_real_interfaces.f90",
+                  "line_start": 2444,
+                  "line_end": 2445
+                },
+                {
+                  "path": "bindings/fortran/plplot_double.f90",
+                  "line_start": 1,
+                  "line_end": 45
+                }
+              ]
+            },
+            {
+              "procedure": "plend",
+              "role": "public-entry-point",
+              "module": "plplot",
+              "summary": "Finish all PLplot streams and flush native output after drawing; PLEND1 is the separate current-stream operation. For a headless PNG device this finalization makes the file ready for collection. It does not itself display a browser image or invoke a Python plotting process. Explicit stream lifecycle is distinct from the Fortran array lifetime.",
+              "signature": "CALL plend()",
+              "path": "bindings/fortran/plplot.f90",
+              "line_start": 561,
+              "line_end": 567,
+              "declarations": [
+                {
+                  "path": "bindings/fortran/plplot.f90",
+                  "line_start": 561,
+                  "line_end": 561
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
     "m_cli": {
       "id": "github:urbanjost/m_cli",
       "repository": {
@@ -38090,6 +40219,127 @@
                   "path": "src/modbus.F90",
                   "line_start": 161,
                   "line_end": 165
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "gtk-fortran": {
+      "id": "github:vmagnin/gtk-fortran",
+      "repository": {
+        "owner": "vmagnin",
+        "name": "gtk-fortran",
+        "url": "https://github.com/vmagnin/gtk-fortran"
+      },
+      "license": {
+        "label": "GPL-3.0 with GCC runtime exception",
+        "spdx_expression": null,
+        "revision": "6f731807228c55bcc0551d15f6d1f7f50bf1fe49",
+        "reviewed_on": "2026-11-08",
+        "notes": "Root LICENSE supplies GPLv3 and LICENSE_EXCEPTION supplies GCC Runtime Library Exception 3.1. Selected generated wrapper header identifies GPL version 3; preserve both project notices and native GTK/Cairo library terms rather than infer unqualified permissive licensing.",
+        "evidence": [
+          {
+            "path": "LICENSE",
+            "url": "https://github.com/vmagnin/gtk-fortran/blob/6f731807228c55bcc0551d15f6d1f7f50bf1fe49/LICENSE",
+            "sha256": "8ceb4b9ee5adedde47b31e975c1d90c73ad27b6b165a1dcd80c7c545eb65b903"
+          },
+          {
+            "path": "README.md",
+            "url": "https://github.com/vmagnin/gtk-fortran/blob/6f731807228c55bcc0551d15f6d1f7f50bf1fe49/README.md",
+            "sha256": "0a29ea8e3d0eb1649b1569b9be0b550d272dcced16fe64535d94fa015ddfb614"
+          },
+          {
+            "path": "src/cairo-auto.f90",
+            "url": "https://github.com/vmagnin/gtk-fortran/blob/6f731807228c55bcc0551d15f6d1f7f50bf1fe49/src/cairo-auto.f90",
+            "sha256": "baa4875fd7a70488f39b687ba01a75500aa6babb531a362ab35ea16eb18bfe81"
+          },
+          {
+            "path": "LICENSE_EXCEPTION",
+            "url": "https://github.com/vmagnin/gtk-fortran/blob/6f731807228c55bcc0551d15f6d1f7f50bf1fe49/LICENSE_EXCEPTION",
+            "sha256": "9d6b43ce4d8de0c878bf16b54d8e7a10d9bd42b75178153e3af6a815bdc90f74"
+          }
+        ]
+      },
+      "classifications": [
+        {
+          "code": "Q",
+          "level": "source-reviewed",
+          "revision": "6f731807228c55bcc0551d15f6d1f7f50bf1fe49",
+          "reviewed_on": "2026-11-08",
+          "notes": "Headless Cairo surface/context creation and PNG output document C kinds, native error surfaces, C strings and explicit destruction. This is a pinned public-interface/source review, not a new numerical execution check or complete API audit. Existing hosted drivers and their verified problem scope are recorded separately.",
+          "evidence": [
+            {
+              "path": "src/cairo-auto.f90",
+              "url": "https://github.com/vmagnin/gtk-fortran/blob/6f731807228c55bcc0551d15f6d1f7f50bf1fe49/src/cairo-auto.f90",
+              "sha256": "baa4875fd7a70488f39b687ba01a75500aa6babb531a362ab35ea16eb18bfe81"
+            },
+            {
+              "path": "LICENSE_EXCEPTION",
+              "url": "https://github.com/vmagnin/gtk-fortran/blob/6f731807228c55bcc0551d15f6d1f7f50bf1fe49/LICENSE_EXCEPTION",
+              "sha256": "9d6b43ce4d8de0c878bf16b54d8e7a10d9bd42b75178153e3af6a815bdc90f74"
+            }
+          ],
+          "procedures": [
+            {
+              "procedure": "cairo_image_surface_create",
+              "role": "public-entry-point",
+              "module": "cairo",
+              "summary": "Create a headless Cairo image surface. FORMAT/WIDTH/HEIGHT are INTEGER(C_INT), VALUE; use a supported Cairo format enum and positive pixel dimensions. Return TYPE(C_PTR) with ordinary value assignment, not a Fortran POINTER result. Test C_ASSOCIATED and CAIRO_SURFACE_STATUS: Cairo can return a nonnull error surface. No GTK initialization/display server is needed for this image-surface path.",
+              "signature": "VALUE = cairo_image_surface_create(FORMAT,WIDTH,HEIGHT)",
+              "path": "src/cairo-auto.f90",
+              "line_start": 2903,
+              "line_end": 2910,
+              "declarations": [
+                {
+                  "path": "src/cairo-auto.f90",
+                  "line_start": 2903,
+                  "line_end": 2909
+                }
+              ]
+            },
+            {
+              "procedure": "cairo_create",
+              "role": "public-entry-point",
+              "module": "cairo",
+              "summary": "Create a drawing context from a live surface C_PTR. Use ordinary value assignment and check CAIRO_STATUS as well as pointer association. Native drawing calls use C_DOUBLE coordinates and the live context; C strings require explicit C_NULL_CHAR unlike PLplot wrappers. Finish/use the output before destroying the context and surface in order.",
+              "signature": "VALUE = cairo_create(TARGET)",
+              "path": "src/cairo-auto.f90",
+              "line_start": 560,
+              "line_end": 565,
+              "declarations": [
+                {
+                  "path": "src/cairo-auto.f90",
+                  "line_start": 560,
+                  "line_end": 564
+                }
+              ]
+            },
+            {
+              "procedure": "cairo_surface_write_to_png",
+              "role": "public-entry-point",
+              "module": "cairo",
+              "summary": "Write a surface to PNG and return INTEGER(C_INT) Cairo status; check zero success. FILENAME is an interoperable C_CHAR character sequence and must be explicitly NUL-terminated, for example filename//C_NULL_CHAR with a compatible character kind. This writes a local file; browser presentation is handled separately by the playground. Destroy the context with CAIRO_DESTROY and the surface with CAIRO_SURFACE_DESTROY after use.",
+              "signature": "VALUE = cairo_surface_write_to_png(SURFACE,FILENAME)",
+              "path": "src/cairo-auto.f90",
+              "line_start": 2697,
+              "line_end": 2703,
+              "declarations": [
+                {
+                  "path": "src/cairo-auto.f90",
+                  "line_start": 2697,
+                  "line_end": 2702
+                },
+                {
+                  "path": "src/cairo-auto.f90",
+                  "line_start": 578,
+                  "line_end": 582
+                },
+                {
+                  "path": "src/cairo-auto.f90",
+                  "line_start": 2644,
+                  "line_end": 2648
                 }
               ]
             }
@@ -38477,6 +40727,7 @@
   },
   "report": {
     "matched": [
+      "fortran-lapack",
       "test-drive",
       "pyplot-fortran",
       "json-fortran",
@@ -38484,6 +40735,7 @@
       "fftpack",
       "roots-fortran",
       "m_strings",
+      "stdlib",
       "bspline-fortran",
       "pchip",
       "finterp",
@@ -38515,6 +40767,7 @@
       "fhash",
       "functional-fortran",
       "forwarddiff",
+      "kinds",
       "forcolormap",
       "rational_number",
       "fortran_test_helper",
@@ -38533,6 +40786,7 @@
       "m_framework",
       "fitpack",
       "lsqr",
+      "mpfun2020-var1",
       "rklib",
       "ddeabm",
       "dvode",
@@ -38550,6 +40804,7 @@
       "quaff",
       "forpca",
       "neural-fortran",
+      "lightkrylov",
       "polyroots-fortran",
       "fortran-sqlite3",
       "geodesic-fortran",
@@ -38644,6 +40899,7 @@
       "dnaoad-fpm",
       "seiscope-optimization",
       "gslib",
+      "featom",
       "econ-toolchain",
       "m_la",
       "fglm",
@@ -38679,7 +40935,9 @@
       "smart-pointers",
       "rpn-calculator-fortran",
       "nc4fortran",
+      "fundamental_constants",
       "array_range",
+      "kronrod",
       "fortran-regex",
       "fed",
       "any",
@@ -38700,13 +40958,16 @@
       "differentia",
       "coretran",
       "npy-for-fortran",
+      "ftl",
       "delaunaysparse",
       "qnstop",
       "poisfft",
       "fortran-lmdb",
       "fortran-lua54",
       "fortran-unix",
+      "vtmop",
       "fatode",
+      "slicot",
       "arpack-ng",
       "fortran-error-handler",
       "berkeley-assert",
@@ -38732,52 +40993,40 @@
       "scifortran",
       "forpy",
       "fkb",
+      "ntpoly",
       "mpifx",
       "scalapackfx",
       "easy-plplot",
+      "gftl",
+      "gftl-shared",
+      "yafyaml",
+      "pflogger",
       "flook",
       "ogpf",
       "fgsl",
       "fdict",
       "flibcpp",
+      "libmbd",
       "dtfft",
+      "dbcsr",
       "2decomp-fft",
       "ennuf",
+      "ddpcm",
+      "dftd4",
       "ftorch",
       "tsunami",
+      "pfunit",
       "raffle",
       "m_history",
       "fortran-curl",
+      "plplot",
       "m_cli",
       "fortran-modbus",
+      "gtk-fortran",
       "fycollections",
       "fortran-sdl2"
     ],
     "revision_mismatches": [],
-    "no_independent_review": [
-      "fortran-lapack",
-      "stdlib",
-      "kinds",
-      "mpfun2020-var1",
-      "lightkrylov",
-      "featom",
-      "fundamental_constants",
-      "kronrod",
-      "ftl",
-      "vtmop",
-      "slicot",
-      "ntpoly",
-      "gftl",
-      "gftl-shared",
-      "yafyaml",
-      "pflogger",
-      "libmbd",
-      "dbcsr",
-      "ddpcm",
-      "dftd4",
-      "pfunit",
-      "plplot",
-      "gtk-fortran"
-    ]
+    "no_independent_review": []
   }
 }

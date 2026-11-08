@@ -144,13 +144,19 @@ def generate_gams_site(destination, feed, *, asset_version=None, reviews=None):
         claims = [c for c in review['classifications'] if code is None or
                   (c['code'] in tree and code in ancestors(tree, c['code']))]
         interfaces = []
+        public_data = []
+        templates = []
         for claim in claims:
             for procedure in claim['procedures']:
+                is_data = procedure.get('role') == 'public-data'
+                is_template = procedure.get('role') == 'public-template'
                 name = qualified_procedure(procedure)
                 source = repository + '/blob/' + claim['revision'] + '/' + quote(procedure['path'], safe='/')
                 item = '<p><strong>' + e(name) + '</strong> &mdash; ' + link(
                     source + f'#L{procedure["line_start"]}-L{procedure["line_end"]}',
                     procedure['path'] + ':' + str(procedure['line_start'])) + '</p>'
+                if procedure.get('role') == 'public-adapter':
+                    item += '<p>Playground adapter; not an upstream public procedure.</p>'
                 if procedure.get('summary'):
                     item += '<p>' + e(procedure['summary']) + '</p>'
                 if detailed:
@@ -160,7 +166,10 @@ def generate_gams_site(destination, feed, *, asset_version=None, reviews=None):
                     declaration = procedure['declarations'][0]
                     url = repository + '/blob/' + claim['revision'] + '/' + quote(declaration['path'], safe='/')
                     url += f'#L{declaration["line_start"]}-L{declaration["line_end"]}'
-                    item += '<p>Usage (click for argument declarations):</p><pre><code>' + link(
+                    label = 'Usage (click for constant declarations)' if is_data else 'Usage (click for argument declarations)'
+                    if is_template:
+                        label = 'Usage (click for template instantiation)'
+                    item += '<p>' + label + ':</p><pre><code>' + link(
                         url, procedure['signature']) + '</code></pre>'
                     if detailed:
                         for declaration in procedure['declarations'][1:]:
@@ -181,13 +190,18 @@ def generate_gams_site(destination, feed, *, asset_version=None, reviews=None):
                     if (demo['procedure_id'] in native_ids and claim['code'] in tree
                             and claim['code'] in ancestors(tree, demo['gams_code'])):
                         item += '<p>' + link(demo['url'], 'Open checked example in playground: ' + demo['name']) + '</p>'
-                interfaces.append(item)
-        if interfaces:
+                (public_data if is_data else templates if is_template else interfaces).append(item)
+        if interfaces or public_data or templates:
             if detailed:
-                result += '<h2>Calling sequences</h2>' + ''.join(interfaces)
+                if interfaces:
+                    result += '<h2>Calling sequences</h2>' + ''.join(interfaces)
+                if public_data:
+                    result += '<h2>Public constants and usage</h2>' + ''.join(public_data)
+                if templates:
+                    result += '<h2>Template instantiation and usage</h2>' + ''.join(templates)
             else:
                 result += '<details><summary>Independent calling interfaces and source review</summary>'
-                result += ''.join(interfaces) + '</details>'
+                result += ''.join(interfaces + public_data + templates) + '</details>'
         if not result:
             return ''
         return ('<section class="independent-review">' + result + '<p>' + link(origin, 'Independent review and license evidence')

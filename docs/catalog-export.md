@@ -43,7 +43,7 @@ interfaces. Package details also show review scope, limitations and explicitly
 unchecked calling sketches. Signatures link to pinned argument declarations.
 The broader catalog remains the source for these reviews; new reviews need to be
 recorded there before they can appear here. Matching independent reviews currently
-cover 275 selected packages: PowellOpt, lbfgsb, fmin, minpack, quadpack, pchip,
+cover all 298 selected packages: PowellOpt, lbfgsb, fmin, minpack, quadpack, pchip,
 fftpack, specfun, specfunc-fullerton, carlson-elliptic-integrals, fortran-bessels,
 polyroots-fortran, lsmr, minres, kiss, fstats, forinv, foreig, forsvd, fordot,
 formatmul, fjsample, fortsa, lib_statistics, econ-toolchain, roots-fortran,
@@ -84,7 +84,15 @@ cairo-fortran, forpy, qcontainers, dftatom, fortran-lua53, ogpf, easy-plplot,
 fortrandf, neural-fortran, ftorch, fortran-sdl2, fycollections, flook, dtfft,
 2decomp-fft, ennuf, fkb, fiats, julienne, veggies, m-system, m_draw, m_history,
 quaff, parff, graphstruc, diffstruc, athena, coretran, formal, heatflow, raffle
-and gslib.
+gslib, fortran-lapack, stdlib, kinds, mpfun2020-var1, lightkrylov, featom,
+fundamental_constants, kronrod, ftl, vtmop, slicot, ntpoly, gftl, gftl-shared,
+yafyaml, pflogger, libmbd, dbcsr, ddpcm, dftd4, pfunit, plplot and gtk-fortran.
+Constants-only packages show public data/import declarations, and template
+libraries show instantiation/usage guidance under separate headings. Kronrod
+routines extracted by the playground are explicitly labeled as adapters, not
+upstream public module procedures. These public roles survive review export and
+import; private helpers and execution claims remain excluded. This completes
+representative coverage of selected packages, not every overload or GAMS class.
 Package detail pages show calling sequences
 directly, with links to argument, callback and precision declarations; cards keep
 their interfaces expandable. Each sequence links to matching checked examples

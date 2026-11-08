@@ -33,6 +33,42 @@ def fixture():
 
 
 class ReviewImportTests(unittest.TestCase):
+    def test_noncallable_interfaces_and_adapters_are_distinct_in_rendered_pages(self):
+        from catalog_export import build_export
+        from xgams_site import generate_gams_site
+        exported = build_export()
+        project = copy.deepcopy(next(p for p in exported['projects'] if p['name'] == 'stdlib'))
+        exported['projects'] = [project]
+        exported['demonstrations'] = []
+        for role, heading in [('public-data', 'Public constants and usage'),
+                              ('public-template', 'Template instantiation and usage'),
+                              ('public-adapter', 'Calling sequences')]:
+            with self.subTest(role=role), tempfile.TemporaryDirectory() as tmp:
+                feed, _ = fixture()
+                review = feed['projects'][0]
+                review['id'] = project['id']
+                review['repository'] = project['repository']
+                pin = project['playground']['package_revision']
+                review['license']['revision'] = pin
+                for record in [review['license'], *review['classifications']]:
+                    record['revision'] = pin
+                    for source in record['evidence']:
+                        source['url'] = project['repository']['url']+'/blob/'+pin+'/'+source['path']
+                procedure = review['classifications'][0]['procedures'][0]
+                procedure['role'] = role
+                if role != 'public-adapter':
+                    procedure['signature'] = 'USE solver_mod, ONLY: example'
+                feed['snapshot_id'] = digest(feed)
+                validate_feed(feed)
+                generate_gams_site(Path(tmp), exported, reviews={'stdlib': review})
+                page = (Path(tmp)/'packages/stdlib/index.html').read_text(encoding='utf-8')
+                self.assertIn('<h2>'+heading+'</h2>', page)
+                if role != 'public-adapter':
+                    self.assertNotIn('<h2>Calling sequences</h2>', page)
+                    self.assertNotIn('click for argument declarations', page)
+                else:
+                    self.assertIn('not an upstream public procedure', page)
+
     def test_exact_identity_and_pin_preserve_input_and_report_other_cases(self):
         feed, packages = fixture()
         original = copy.deepcopy(feed)

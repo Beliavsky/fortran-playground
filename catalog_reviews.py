@@ -78,7 +78,7 @@ def validate_project(project):
         if not isinstance(claim['procedures'], list):
             raise ValueError('Expected a list of reviewed procedures.')
         for procedure in claim['procedures']:
-            if (procedure.get('role') != 'public-entry-point' or 'local_driver' in procedure
+            if (procedure.get('role') not in {'public-entry-point', 'public-data', 'public-template', 'public-adapter'} or 'local_driver' in procedure
                     or 'driver_id' in procedure):
                 raise ValueError('Only public interfaces, without execution claims, may be imported.')
             text(procedure['procedure'])
