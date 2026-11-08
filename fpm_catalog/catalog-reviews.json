@@ -2,7 +2,7 @@
   "schema_version": 1,
   "publisher": "fortran-gams-catalog-independent-reviews",
   "source_url": "https://beliavsky.github.io/fortran-gams-catalog/reviewed-metadata.json",
-  "source_snapshot_id": "sha256:fe5798bbbc59de74f6df7cf4152ac8b8d4af28e6ff894faf643dbcfff19ef3bb",
+  "source_snapshot_id": "sha256:06f3e29a3484ad6dc9de1d2c3e9d41125824093f555323f368293d71a3935e5f",
   "packages": {
     "test-drive": {
       "id": "github:fortran-lang/test-drive",
@@ -25449,6 +25449,169 @@
         }
       ]
     },
+    "veggies": {
+      "id": "github:everythingfunctional/veggies",
+      "repository": {
+        "owner": "everythingfunctional",
+        "name": "veggies",
+        "url": "https://github.com/everythingfunctional/veggies"
+      },
+      "license": {
+        "label": "MIT",
+        "spdx_expression": "MIT",
+        "revision": "8388f5e2633afa3d08cf5c6e7db1eeb0dcab2dc8",
+        "reviewed_on": "2026-11-08",
+        "notes": "Root LICENSE.md supplies Brad Richardson MIT terms. These public interfaces do not imply a Simpson/integration algorithm belongs to Veggies merely because an existing hosted test example checks one.",
+        "evidence": [
+          {
+            "path": "LICENSE.md",
+            "url": "https://github.com/everythingfunctional/veggies/blob/8388f5e2633afa3d08cf5c6e7db1eeb0dcab2dc8/LICENSE.md",
+            "sha256": "eaaba0e663dd2a7f7a94245c747228f49b5fc17bc4f772222c243d2d46230907"
+          },
+          {
+            "path": "README.md",
+            "url": "https://github.com/everythingfunctional/veggies/blob/8388f5e2633afa3d08cf5c6e7db1eeb0dcab2dc8/README.md",
+            "sha256": "c568720866e7f40de9dba698965ac149c2f33ec9fcd5b26944e654bfdb34a103"
+          },
+          {
+            "path": "src/veggies/assert/equals_integer_m.f90",
+            "url": "https://github.com/everythingfunctional/veggies/blob/8388f5e2633afa3d08cf5c6e7db1eeb0dcab2dc8/src/veggies/assert/equals_integer_m.f90",
+            "sha256": "08832b3db9002889584d0bdbae4753c39cec40902510ede1aa214fa982084960"
+          }
+        ]
+      },
+      "classifications": [
+        {
+          "code": "S3",
+          "level": "source-reviewed",
+          "revision": "8388f5e2633afa3d08cf5c6e7db1eeb0dcab2dc8",
+          "reviewed_on": "2026-11-08",
+          "notes": "Integer/absolute-real assertion results, retained test callback construction and scalar-item runner document result types and explicit failure propagation. This is a pinned public-interface/source review, not a new numerical execution check or complete API audit. Existing hosted drivers and their verified problem scope are recorded separately.",
+          "evidence": [
+            {
+              "path": "src/veggies/assert/equals_integer_m.f90",
+              "url": "https://github.com/everythingfunctional/veggies/blob/8388f5e2633afa3d08cf5c6e7db1eeb0dcab2dc8/src/veggies/assert/equals_integer_m.f90",
+              "sha256": "08832b3db9002889584d0bdbae4753c39cec40902510ede1aa214fa982084960"
+            },
+            {
+              "path": "src/veggies/assert/equals_within_absolute_m.f90",
+              "url": "https://github.com/everythingfunctional/veggies/blob/8388f5e2633afa3d08cf5c6e7db1eeb0dcab2dc8/src/veggies/assert/equals_within_absolute_m.f90",
+              "sha256": "876d2c9d84954de2e735100533c2641550f444ae0e229880d710e21680a2463d"
+            },
+            {
+              "path": "src/veggies/test_constructors_m.f90",
+              "url": "https://github.com/everythingfunctional/veggies/blob/8388f5e2633afa3d08cf5c6e7db1eeb0dcab2dc8/src/veggies/test_constructors_m.f90",
+              "sha256": "3398f83ecf6effbb1ee0729f8c7a206e1f26eedeaeb3b26c7bdfebd25f5be742"
+            },
+            {
+              "path": "src/veggies/run_tests_m.f90",
+              "url": "https://github.com/everythingfunctional/veggies/blob/8388f5e2633afa3d08cf5c6e7db1eeb0dcab2dc8/src/veggies/run_tests_m.f90",
+              "sha256": "886c21672e9ac70570e694c9a17c9cb61ab40f23eb6b362f2c43bbebe3606594"
+            },
+            {
+              "path": "src/veggies/test_interfaces_m.f90",
+              "url": "https://github.com/everythingfunctional/veggies/blob/8388f5e2633afa3d08cf5c6e7db1eeb0dcab2dc8/src/veggies/test_interfaces_m.f90",
+              "sha256": "9b158caf3a062b1c02bba921b7d046111ef635f4501376a4e8376a90563e5abf"
+            }
+          ],
+          "procedures": [
+            {
+              "procedure": "assert_equals",
+              "role": "public-entry-point",
+              "module": "veggies",
+              "summary": "Default-integer scalar ASSERT_EQUALS overload returns TYPE(RESULT_T), not logical. EXPECTED precedes ACTUAL. Despite the name, this pure assertion function constructs a result/diagnostic rather than stopping the program itself; return/combine it in a test callback or inspect it with the framework. Array/other-kind/message overloads have different signatures.",
+              "signature": "VALUE = assert_equals(EXPECTED,ACTUAL)",
+              "path": "src/veggies/assert/equals_integer_m.f90",
+              "line_start": 24,
+              "line_end": 34,
+              "declarations": [
+                {
+                  "path": "src/veggies/assert/equals_integer_m.f90",
+                  "line_start": 25,
+                  "line_end": 27
+                },
+                {
+                  "path": "src/veggies/assert/equals_integer_m.f90",
+                  "line_start": 1,
+                  "line_end": 22
+                }
+              ]
+            },
+            {
+              "procedure": "assert_equals_within_absolute",
+              "role": "public-entry-point",
+              "module": "veggies",
+              "summary": "Scalar DOUBLE PRECISION assertion returning TYPE(RESULT_T) for an explicit absolute tolerance. EXPECTED, ACTUAL and TOLERANCE are required; this is not a relative-error/digit/ULP option. Use a nonnegative tolerance and do not treat a returned result object as a logical expression or an automatic process stop. This scope does not establish every exceptional-value or array overload.",
+              "signature": "VALUE = assert_equals_within_absolute(EXPECTED,ACTUAL,TOLERANCE)",
+              "path": "src/veggies/assert/equals_within_absolute_m.f90",
+              "line_start": 25,
+              "line_end": 41,
+              "declarations": [
+                {
+                  "path": "src/veggies/assert/equals_within_absolute_m.f90",
+                  "line_start": 30,
+                  "line_end": 33
+                },
+                {
+                  "path": "src/veggies/assert/equals_within_absolute_m.f90",
+                  "line_start": 1,
+                  "line_end": 23
+                }
+              ]
+            },
+            {
+              "procedure": "it",
+              "role": "public-entry-point",
+              "module": "veggies",
+              "summary": "Character-description overload of IT creates TYPE(TEST_ITEM_T) from a no-argument callback matching SIMPLE_TEST_I, which returns TYPE(RESULT_T). The callback is retained for later execution; keep its host/procedure context valid while the test item is used and do not pass an ordinary subroutine instead. Construction names/registers this item but does not execute the callback.",
+              "signature": "VALUE = it(DESCRIPTION,TEST)",
+              "path": "src/veggies/test_constructors_m.f90",
+              "line_start": 364,
+              "line_end": 370,
+              "declarations": [
+                {
+                  "path": "src/veggies/test_constructors_m.f90",
+                  "line_start": 365,
+                  "line_end": 367
+                },
+                {
+                  "path": "src/veggies/test_interfaces_m.f90",
+                  "line_start": 23,
+                  "line_end": 29
+                }
+              ]
+            },
+            {
+              "procedure": "run_tests",
+              "role": "public-entry-point",
+              "module": "veggies",
+              "summary": "Execute one TYPE(TEST_ITEM_T), which can represent a case or composed collection, and return a LOGICAL pass result. This actual is a scalar test item, not an arbitrary array of test items; use the framework collection constructors to combine cases. The runner parses program command-line test options, filters cases and writes reports, so it is not a quiet side-effect-free predicate. Use the returned logical to choose the program exit status; merely calling the function does not make every failed test an automatic ERROR STOP.",
+              "signature": "VALUE = run_tests(TESTS)",
+              "path": "src/veggies/run_tests_m.f90",
+              "line_start": 13,
+              "line_end": 107,
+              "declarations": [
+                {
+                  "path": "src/veggies/run_tests_m.f90",
+                  "line_start": 14,
+                  "line_end": 15
+                },
+                {
+                  "path": "src/veggies/test_interfaces_m.f90",
+                  "line_start": 23,
+                  "line_end": 29
+                },
+                {
+                  "path": "src/veggies/run_tests_m.f90",
+                  "line_start": 26,
+                  "line_end": 51
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
     "shunting-yard-fortran": {
       "id": "github:14ngiestas/shunting-yard-fortran",
       "repository": {
@@ -31303,6 +31466,124 @@
         }
       ]
     },
+    "m-system": {
+      "id": "github:urbanjost/m_system",
+      "repository": {
+        "owner": "urbanjost",
+        "name": "M_system",
+        "url": "https://github.com/urbanjost/M_system"
+      },
+      "license": {
+        "label": "Unlicense",
+        "spdx_expression": "Unlicense",
+        "revision": "cb558fe8be200783e603e33a66aaba0289b6d3d1",
+        "reviewed_on": "2026-11-08",
+        "notes": "Root LICENSE supplies the Unlicense dedication and fallback terms. Selected source wraps native POSIX helpers; this interface review does not establish Windows compatibility or every mixed-C system facility.",
+        "evidence": [
+          {
+            "path": "LICENSE",
+            "url": "https://github.com/urbanjost/M_system/blob/cb558fe8be200783e603e33a66aaba0289b6d3d1/LICENSE",
+            "sha256": "f40d08f39a7fbaf627c062ede8033c31b58da5afc0cf0c13a756aeff6c5be721"
+          },
+          {
+            "path": "README.md",
+            "url": "https://github.com/urbanjost/M_system/blob/cb558fe8be200783e603e33a66aaba0289b6d3d1/README.md",
+            "sha256": "d64763707a4925a0784688f45f9ec64e4ea2ebcfb6a9c6b81abdefeeaec40cc8"
+          },
+          {
+            "path": "src/M_system.F90",
+            "url": "https://github.com/urbanjost/M_system/blob/cb558fe8be200783e603e33a66aaba0289b6d3d1/src/M_system.F90",
+            "sha256": "878c50af04e6fa0077f543625b65959b3f24ff5c74f773b3ac9046a6a2440e0e"
+          }
+        ]
+      },
+      "classifications": [
+        {
+          "code": "N1",
+          "level": "source-reviewed",
+          "revision": "cb558fe8be200783e603e33a66aaba0289b6d3d1",
+          "reviewed_on": "2026-11-08",
+          "notes": "Directory creation/type checks and file/empty-directory removal document Fortran path conversion and differing native failure return conventions. This is a pinned public-interface/source review, not a new numerical execution check or complete API audit. Existing hosted drivers and their verified problem scope are recorded separately.",
+          "evidence": [
+            {
+              "path": "src/M_system.F90",
+              "url": "https://github.com/urbanjost/M_system/blob/cb558fe8be200783e603e33a66aaba0289b6d3d1/src/M_system.F90",
+              "sha256": "878c50af04e6fa0077f543625b65959b3f24ff5c74f773b3ac9046a6a2440e0e"
+            }
+          ],
+          "procedures": [
+            {
+              "procedure": "system_mkdir",
+              "role": "public-entry-point",
+              "module": "M_system",
+              "summary": "Create a directory with a required default-integer MODE (for example INT(O\"700\")); POSIX umask also affects permissions. The wrapper trims/converts the Fortran path. This scope uses a simple leaf name: paths containing slash dispatch to a separate helper rather than exactly the same direct mkdir path. Check the integer function result for zero; no success logical or output directory handle is returned. Native filesystem/sandbox permissions apply.",
+              "signature": "VALUE = system_mkdir(DIRNAME,MODE)",
+              "path": "src/M_system.F90",
+              "line_start": 3680,
+              "line_end": 3716,
+              "declarations": [
+                {
+                  "path": "src/M_system.F90",
+                  "line_start": 3684,
+                  "line_end": 3688
+                }
+              ]
+            },
+            {
+              "procedure": "system_isdir",
+              "role": "public-entry-point",
+              "module": "M_system",
+              "summary": "Return logical true when a path identifies a directory through the native helper. A false value can represent absence or another failure and is not a detailed errno report. It does not create/open the directory or make a later filesystem operation race-free. Ordinary Fortran paths are trimmed/converted by the wrapper.",
+              "signature": "VALUE = system_isdir(DIRNAME)",
+              "path": "src/M_system.F90",
+              "line_start": 2299,
+              "line_end": 2323,
+              "declarations": [
+                {
+                  "path": "src/M_system.F90",
+                  "line_start": 2304,
+                  "line_end": 2305
+                }
+              ]
+            },
+            {
+              "procedure": "system_unlink",
+              "role": "public-entry-point",
+              "module": "M_system",
+              "summary": "Remove a file link, using an ordinary Fortran CHARACTER path that the wrapper trims and terminates. Return is the native-style default integer status, zero success and -1 failure; obtain detailed errno separately before it is overwritten. This is not recursive directory deletion or an in-memory buffer operation. Check return status before assuming cleanup succeeded.",
+              "signature": "VALUE = system_unlink(FNAME)",
+              "path": "src/M_system.F90",
+              "line_start": 2695,
+              "line_end": 2714,
+              "declarations": [
+                {
+                  "path": "src/M_system.F90",
+                  "line_start": 2699,
+                  "line_end": 2700
+                }
+              ]
+            },
+            {
+              "procedure": "system_rmdir",
+              "role": "public-entry-point",
+              "module": "M_system",
+              "summary": "Remove an empty directory. Unlike SYSTEM_UNLINK, this wrapper replaces a nonzero native return with SYSTEM_ERRNO(), so failure is an errno value rather than necessarily -1. Check INTEGER(C_INT) result zero for success. The directory must be empty and accessible; this neither recursively deletes contents nor closes unrelated open files.",
+              "signature": "VALUE = system_rmdir(DIRNAME)",
+              "path": "src/M_system.F90",
+              "line_start": 3451,
+              "line_end": 3470,
+              "declarations": [
+                {
+                  "path": "src/M_system.F90",
+                  "line_start": 3455,
+                  "line_end": 3456
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
     "fortran-tcl86": {
       "id": "github:interkosmos/fortran-tcl86",
       "repository": {
@@ -31629,6 +31910,352 @@
                   "path": "src/lib_algebra.f90",
                   "line_start": 31,
                   "line_end": 50
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "fiats": {
+      "id": "github:berkeleylab/fiats",
+      "repository": {
+        "owner": "BerkeleyLab",
+        "name": "fiats",
+        "url": "https://github.com/BerkeleyLab/fiats"
+      },
+      "license": {
+        "label": "Berkeley inference-engine custom terms with enhancement provision",
+        "spdx_expression": null,
+        "revision": "7d564b86389460555d6f7d9b7a6b5198588af9df",
+        "reviewed_on": "2026-11-08",
+        "notes": "Root LICENSE.txt contains BSD-like redistribution conditions and a separate enhancement-contribution license provision. Preserve the full current text instead of substituting an unqualified standard BSD label; Julienne/Assert dependency notices remain separate.",
+        "evidence": [
+          {
+            "path": "LICENSE.txt",
+            "url": "https://github.com/BerkeleyLab/fiats/blob/7d564b86389460555d6f7d9b7a6b5198588af9df/LICENSE.txt",
+            "sha256": "e3a2997d6bc4e1d95d81e60b261657b26023fab48d882f1793a43513df918bc5"
+          },
+          {
+            "path": "README.md",
+            "url": "https://github.com/BerkeleyLab/fiats/blob/7d564b86389460555d6f7d9b7a6b5198588af9df/README.md",
+            "sha256": "6b532a49b63ab2f138173e8ff71eef31787bf3003f8d631011658cbc8ee1f65a"
+          },
+          {
+            "path": "src/inference_engine/inference_engine_m_.f90",
+            "url": "https://github.com/BerkeleyLab/fiats/blob/7d564b86389460555d6f7d9b7a6b5198588af9df/src/inference_engine/inference_engine_m_.f90",
+            "sha256": "c986dc7b0a35b42dbdc302214eb268cccc17def4a562d94792dd4b61eeee1618"
+          }
+        ]
+      },
+      "classifications": [
+        {
+          "code": "K",
+          "level": "source-reviewed",
+          "revision": "7d564b86389460555d6f7d9b7a6b5198588af9df",
+          "reviewed_on": "2026-11-08",
+          "notes": "Pinned historical Fiats constructor, tensor inference and dimension query document metadata, padded parameter arrays and default-real scaling. This is a pinned public-interface/source review, not a new numerical execution check or complete API audit. Existing hosted drivers and their verified problem scope are recorded separately.",
+          "evidence": [
+            {
+              "path": "src/inference_engine/inference_engine_m_.f90",
+              "url": "https://github.com/BerkeleyLab/fiats/blob/7d564b86389460555d6f7d9b7a6b5198588af9df/src/inference_engine/inference_engine_m_.f90",
+              "sha256": "c986dc7b0a35b42dbdc302214eb268cccc17def4a562d94792dd4b61eeee1618"
+            },
+            {
+              "path": "src/inference_engine/inference_engine_s.F90",
+              "url": "https://github.com/BerkeleyLab/fiats/blob/7d564b86389460555d6f7d9b7a6b5198588af9df/src/inference_engine/inference_engine_s.F90",
+              "sha256": "2cf4a15d555dba4a8bea68d12b9dd654ba1477e8df22ba0e9d2da0eda506427c"
+            },
+            {
+              "path": "src/inference_engine_m.f90",
+              "url": "https://github.com/BerkeleyLab/fiats/blob/7d564b86389460555d6f7d9b7a6b5198588af9df/src/inference_engine_m.f90",
+              "sha256": "b2ba7fdc07b1c120e1fb102c2323cb7dc18b6f7236b80322d787cdd07ad408de"
+            },
+            {
+              "path": "src/inference_engine/metadata_m.f90",
+              "url": "https://github.com/BerkeleyLab/fiats/blob/7d564b86389460555d6f7d9b7a6b5198588af9df/src/inference_engine/metadata_m.f90",
+              "sha256": "c3f03908d45cfe236e26e331d84da18ced2f9c7c241b29e45ecf562346cfe68a"
+            },
+            {
+              "path": "src/inference_engine/tensor_m.f90",
+              "url": "https://github.com/BerkeleyLab/fiats/blob/7d564b86389460555d6f7d9b7a6b5198588af9df/src/inference_engine/tensor_m.f90",
+              "sha256": "7f1f18090e50f687f939607fac8147f342212c9dedbbc6b293d5f05ec9d300a5"
+            },
+            {
+              "path": "src/inference_engine/kind_parameters_m.f90",
+              "url": "https://github.com/BerkeleyLab/fiats/blob/7d564b86389460555d6f7d9b7a6b5198588af9df/src/inference_engine/kind_parameters_m.f90",
+              "sha256": "b59bad0a8689c70a6ff8c09a3036348725c725c36200b96db9a2d978076a39bb"
+            }
+          ],
+          "procedures": [
+            {
+              "procedure": "inference_engine_t",
+              "role": "public-entry-point",
+              "module": "inference_engine_m",
+              "summary": "Constructor for the historical INFERENCE_ENGINE_T interface at this selected Fiats revision. METADATA contains at least five Julienne STRING_T entries in model-name/author/date/activation/skip-connections order; the fourth selects the implemented activation. NODES is indexed from zero for the input layer. Pad REAL(RKIND) weights to (max-width,max-width,number-of-noninput-layers) and biases to (max-width,number-of-noninput-layers), respecting each layer node count. RKIND is default REAL here, not REAL64. Optional input/output ranges set scaling; defaults cover zero-to-one ranges. Internal assertions/native allocation expose no recoverable status.",
+              "signature": "VALUE = inference_engine_t(METADATA,WEIGHTS,BIASES,NODES,[INPUT_RANGE],[OUTPUT_RANGE])",
+              "path": "src/inference_engine/inference_engine_m_.f90",
+              "line_start": 63,
+              "line_end": 71,
+              "declarations": [
+                {
+                  "path": "src/inference_engine/inference_engine_m_.f90",
+                  "line_start": 66,
+                  "line_end": 70
+                },
+                {
+                  "path": "src/inference_engine_m.f90",
+                  "line_start": 3,
+                  "line_end": 25
+                },
+                {
+                  "path": "src/inference_engine/inference_engine_m_.f90",
+                  "line_start": 20,
+                  "line_end": 43
+                },
+                {
+                  "path": "src/inference_engine/metadata_m.f90",
+                  "line_start": 18,
+                  "line_end": 33
+                },
+                {
+                  "path": "src/inference_engine/tensor_m.f90",
+                  "line_start": 18,
+                  "line_end": 34
+                },
+                {
+                  "path": "src/inference_engine/kind_parameters_m.f90",
+                  "line_start": 3,
+                  "line_end": 9
+                },
+                {
+                  "path": "src/inference_engine/inference_engine_s.F90",
+                  "line_start": 155,
+                  "line_end": 191
+                }
+              ]
+            },
+            {
+              "procedure": "infer",
+              "role": "public-entry-point",
+              "module": "inference_engine_m",
+              "derived_type": "inference_engine_t",
+              "summary": "Declare TYPE(inference_engine_t) :: solver from inference_engine_m. Evaluate an initialized inference engine with TYPE(TENSOR_T) INPUTS of the configured input length and return TYPE(TENSOR_T), not a raw array. Construct tensor inputs from REAL(RKIND) values and obtain output values through its VALUES binding. The implementation maps input range, applies the configured activation at every layer, then maps output range. This call neither trains weights nor certifies approximation quality. The hosted example uses fixed ReLU weights and one image; broader parallel/model-file behavior is outside that check. The passed object SELF is implicit in solver%; do not pass it again. Optional actuals shown in brackets can be supplied by keyword.",
+              "signature": "VALUE = solver%infer(INPUTS)",
+              "path": "src/inference_engine/inference_engine_m_.f90",
+              "line_start": 130,
+              "line_end": 135,
+              "declarations": [
+                {
+                  "path": "src/inference_engine/inference_engine_m_.f90",
+                  "line_start": 132,
+                  "line_end": 134
+                },
+                {
+                  "path": "src/inference_engine_m.f90",
+                  "line_start": 3,
+                  "line_end": 25
+                },
+                {
+                  "path": "src/inference_engine/inference_engine_m_.f90",
+                  "line_start": 20,
+                  "line_end": 43
+                },
+                {
+                  "path": "src/inference_engine/metadata_m.f90",
+                  "line_start": 18,
+                  "line_end": 33
+                },
+                {
+                  "path": "src/inference_engine/tensor_m.f90",
+                  "line_start": 18,
+                  "line_end": 34
+                },
+                {
+                  "path": "src/inference_engine/kind_parameters_m.f90",
+                  "line_start": 3,
+                  "line_end": 9
+                },
+                {
+                  "path": "src/inference_engine/inference_engine_s.F90",
+                  "line_start": 43,
+                  "line_end": 90
+                }
+              ]
+            },
+            {
+              "procedure": "num_inputs",
+              "role": "public-entry-point",
+              "module": "inference_engine_m",
+              "derived_type": "inference_engine_t",
+              "summary": "Declare TYPE(inference_engine_t) :: solver from inference_engine_m. Return the configured number of input components from an already constructed engine. This is a dimension query, not a native handle or prediction call; use it to size tensor values before INFER. A bare unconstructed object does not provide valid node metadata merely because the derived type can be declared. The selected package retains its historical module/type names even though the current project is named Fiats. The passed object SELF is implicit in solver%; do not pass it again. Optional actuals shown in brackets can be supplied by keyword.",
+              "signature": "VALUE = solver%num_inputs()",
+              "path": "src/inference_engine/inference_engine_m_.f90",
+              "line_start": 149,
+              "line_end": 153,
+              "declarations": [
+                {
+                  "path": "src/inference_engine/inference_engine_m_.f90",
+                  "line_start": 150,
+                  "line_end": 152
+                },
+                {
+                  "path": "src/inference_engine_m.f90",
+                  "line_start": 3,
+                  "line_end": 25
+                },
+                {
+                  "path": "src/inference_engine/inference_engine_m_.f90",
+                  "line_start": 20,
+                  "line_end": 43
+                },
+                {
+                  "path": "src/inference_engine/metadata_m.f90",
+                  "line_start": 18,
+                  "line_end": 33
+                },
+                {
+                  "path": "src/inference_engine/tensor_m.f90",
+                  "line_start": 18,
+                  "line_end": 34
+                },
+                {
+                  "path": "src/inference_engine/kind_parameters_m.f90",
+                  "line_start": 3,
+                  "line_end": 9
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "julienne": {
+      "id": "github:berkeleylab/julienne",
+      "repository": {
+        "owner": "BerkeleyLab",
+        "name": "julienne",
+        "url": "https://github.com/BerkeleyLab/julienne"
+      },
+      "license": {
+        "label": "Julienne Berkeley/Sourcery custom terms with enhancement provision",
+        "spdx_expression": null,
+        "revision": "b2648cc10d8cdd0549d5c286b56d023a642e2a3e",
+        "reviewed_on": "2026-11-08",
+        "notes": "Root LICENSE.txt includes three-clause-style terms plus an enhancement-contribution provision, along with relevant institutional notices. Preserve the complete text rather than assume the heading BSD 3-Clause removes the additional provision. Dependency notices are separate.",
+        "evidence": [
+          {
+            "path": "LICENSE.txt",
+            "url": "https://github.com/BerkeleyLab/julienne/blob/b2648cc10d8cdd0549d5c286b56d023a642e2a3e/LICENSE.txt",
+            "sha256": "b826fd9c61adee08cf5767965d40a27dc11b35286111f64d537f4c87a5d9255c"
+          },
+          {
+            "path": "README.md",
+            "url": "https://github.com/BerkeleyLab/julienne/blob/b2648cc10d8cdd0549d5c286b56d023a642e2a3e/README.md",
+            "sha256": "cb4c7650f804e036dde52f62f7d6906f28c17676b68a29ebf718ad3fcaed2792"
+          },
+          {
+            "path": "src/julienne/julienne_test_diagnosis_m.F90",
+            "url": "https://github.com/BerkeleyLab/julienne/blob/b2648cc10d8cdd0549d5c286b56d023a642e2a3e/src/julienne/julienne_test_diagnosis_m.F90",
+            "sha256": "ad04cc86d819abc65d4dc021b7d243b8fa00a9c3d72849a46d79bac5cdac57f1"
+          }
+        ]
+      },
+      "classifications": [
+        {
+          "code": "S3",
+          "level": "source-reviewed",
+          "revision": "b2648cc10d8cdd0549d5c286b56d023a642e2a3e",
+          "reviewed_on": "2026-11-08",
+          "notes": "Diagnosis construction, local-image outcome and text inspection document stored messages and the distinction from harness termination. This is a pinned public-interface/source review, not a new numerical execution check or complete API audit. Existing hosted drivers and their verified problem scope are recorded separately.",
+          "evidence": [
+            {
+              "path": "src/julienne/julienne_test_diagnosis_m.F90",
+              "url": "https://github.com/BerkeleyLab/julienne/blob/b2648cc10d8cdd0549d5c286b56d023a642e2a3e/src/julienne/julienne_test_diagnosis_m.F90",
+              "sha256": "ad04cc86d819abc65d4dc021b7d243b8fa00a9c3d72849a46d79bac5cdac57f1"
+            },
+            {
+              "path": "src/julienne/julienne_test_diagnosis_s.F90",
+              "url": "https://github.com/BerkeleyLab/julienne/blob/b2648cc10d8cdd0549d5c286b56d023a642e2a3e/src/julienne/julienne_test_diagnosis_s.F90",
+              "sha256": "ffb48c98bac55dd1e9be1aec3779fdf00897d4182cce72810d4e061a38c7c552"
+            }
+          ],
+          "procedures": [
+            {
+              "procedure": "test_diagnosis_t",
+              "role": "public-entry-point",
+              "module": "julienne_test_diagnosis_m",
+              "summary": "Character-message overload of TEST_DIAGNOSIS_T constructs a stored pass/fail result and diagnostic text. TEST_PASSED is required logical; DIAGNOSTICS_STRING is required CHARACTER and is copied into owned allocatable storage. The constructor does not itself print, stop or register a test with the harness. Its text is stored even for a passing result; use an empty message when none is intended rather than assuming the success flag erases supplied text.",
+              "signature": "VALUE = test_diagnosis_t(TEST_PASSED,DIAGNOSTICS_STRING)",
+              "path": "src/julienne/julienne_test_diagnosis_m.F90",
+              "line_start": 578,
+              "line_end": 584,
+              "declarations": [
+                {
+                  "path": "src/julienne/julienne_test_diagnosis_m.F90",
+                  "line_start": 581,
+                  "line_end": 583
+                },
+                {
+                  "path": "src/julienne/julienne_test_diagnosis_m.F90",
+                  "line_start": 6,
+                  "line_end": 46
+                },
+                {
+                  "path": "src/julienne/julienne_test_diagnosis_s.F90",
+                  "line_start": 686,
+                  "line_end": 689
+                }
+              ]
+            },
+            {
+              "procedure": "test_passed",
+              "role": "public-entry-point",
+              "module": "julienne_test_diagnosis_m",
+              "derived_type": "test_diagnosis_t",
+              "summary": "Declare TYPE(test_diagnosis_t) :: solver from julienne_test_diagnosis_m. Return the logical flag of this diagnosis on the executing image. This query does not aggregate all images or terminate on failure. Construct the object explicitly to establish both flag and message state before using it in reporting; this is a test result, not a numerical solver convergence code. The passed object SELF is implicit in solver%; do not pass it again. Optional actuals shown in brackets can be supplied by keyword.",
+              "signature": "VALUE = solver%test_passed()",
+              "path": "src/julienne/julienne_test_diagnosis_m.F90",
+              "line_start": 618,
+              "line_end": 623,
+              "declarations": [
+                {
+                  "path": "src/julienne/julienne_test_diagnosis_m.F90",
+                  "line_start": 621,
+                  "line_end": 622
+                },
+                {
+                  "path": "src/julienne/julienne_test_diagnosis_m.F90",
+                  "line_start": 6,
+                  "line_end": 46
+                }
+              ]
+            },
+            {
+              "procedure": "diagnostics_string",
+              "role": "public-entry-point",
+              "module": "julienne_test_diagnosis_m",
+              "derived_type": "test_diagnosis_t",
+              "summary": "Declare TYPE(test_diagnosis_t) :: solver from julienne_test_diagnosis_m. Return an allocatable CHARACTER copy of the stored diagnostic. Despite a comment suggesting successful diagnoses always have zero-length text, the implementation returns whatever the constructor stored; TEST_PASSED should be inspected separately. A bare default object can have unallocated message storage and triggers an assertion here. This accessor does not print or automatically convert an unsuccessful check into process failure. The passed object SELF is implicit in solver%; do not pass it again. Optional actuals shown in brackets can be supplied by keyword.",
+              "signature": "VALUE = solver%diagnostics_string()",
+              "path": "src/julienne/julienne_test_diagnosis_m.F90",
+              "line_start": 625,
+              "line_end": 630,
+              "declarations": [
+                {
+                  "path": "src/julienne/julienne_test_diagnosis_m.F90",
+                  "line_start": 628,
+                  "line_end": 629
+                },
+                {
+                  "path": "src/julienne/julienne_test_diagnosis_m.F90",
+                  "line_start": 6,
+                  "line_end": 46
+                },
+                {
+                  "path": "src/julienne/julienne_test_diagnosis_s.F90",
+                  "line_start": 703,
+                  "line_end": 710
                 }
               ]
             }
@@ -32413,6 +33040,141 @@
         }
       ]
     },
+    "m_draw": {
+      "id": "github:urbanjost/m_draw",
+      "repository": {
+        "owner": "urbanjost",
+        "name": "M_draw",
+        "url": "https://github.com/urbanjost/M_draw"
+      },
+      "license": {
+        "label": "Unlicense",
+        "spdx_expression": "Unlicense",
+        "revision": "a70c305f607cdc1b3e95d5c2ed3b723dcc803204",
+        "reviewed_on": "2026-11-08",
+        "notes": "Root LICENSE supplies the Unlicense dedication and fallback terms. Native driver/font and linked system components retain any applicable notices; this review scopes the selected Fortran drawing bindings rather than audit every legacy driver.",
+        "evidence": [
+          {
+            "path": "LICENSE",
+            "url": "https://github.com/urbanjost/M_draw/blob/a70c305f607cdc1b3e95d5c2ed3b723dcc803204/LICENSE",
+            "sha256": "f40d08f39a7fbaf627c062ede8033c31b58da5afc0cf0c13a756aeff6c5be721"
+          },
+          {
+            "path": "README.md",
+            "url": "https://github.com/urbanjost/M_draw/blob/a70c305f607cdc1b3e95d5c2ed3b723dcc803204/README.md",
+            "sha256": "4104a33acc66e66dd2d781a57035581c44679b0a383332e39bbadf56db61d39f"
+          },
+          {
+            "path": "src/M_draw.F90",
+            "url": "https://github.com/urbanjost/M_draw/blob/a70c305f607cdc1b3e95d5c2ed3b723dcc803204/src/M_draw.F90",
+            "sha256": "3586514c7b68daef344244927c7bee30aa6e1cb7374aa112ac452984a9e057b7"
+          }
+        ]
+      },
+      "classifications": [
+        {
+          "code": "Q",
+          "level": "source-reviewed",
+          "revision": "a70c305f607cdc1b3e95d5c2ed3b723dcc803204",
+          "reviewed_on": "2026-11-08",
+          "notes": "Headless drawing output/device selection, single-precision move/line primitives and finalization document native state and raster presentation boundaries. This is a pinned public-interface/source review, not a new numerical execution check or complete API audit. Existing hosted drivers and their verified problem scope are recorded separately.",
+          "evidence": [
+            {
+              "path": "src/M_draw.F90",
+              "url": "https://github.com/urbanjost/M_draw/blob/a70c305f607cdc1b3e95d5c2ed3b723dcc803204/src/M_draw.F90",
+              "sha256": "3586514c7b68daef344244927c7bee30aa6e1cb7374aa112ac452984a9e057b7"
+            }
+          ],
+          "procedures": [
+            {
+              "procedure": "voutput",
+              "role": "public-entry-point",
+              "module": "M_draw",
+              "summary": "Select the native drawing output filename using ordinary Fortran CHARACTER text; this wrapper converts it with S2C. Configure before VINIT with a file driver such as the hosted PPM path. This does not itself choose the driver, allocate a canvas or save a complete image. No success/status dummy is exposed.",
+              "signature": "CALL voutput(NAME)",
+              "path": "src/M_draw.F90",
+              "line_start": 10044,
+              "line_end": 10048,
+              "declarations": [
+                {
+                  "path": "src/M_draw.F90",
+                  "line_start": 10045,
+                  "line_end": 10046
+                }
+              ]
+            },
+            {
+              "procedure": "vinit",
+              "role": "public-entry-point",
+              "module": "M_draw",
+              "summary": "Initialize the selected native drawing device, for example \"ppm\" for a headless file render. The wrapper terminates the CHARACTER device name. Configure output first and use supported native driver/coordinate/color settings before drawing. Font/interactive/X11 facilities have their own runtime requirements; compilation/linking alone does not validate those paths. Finish with VEXIT to flush/release native device state.",
+              "signature": "CALL vinit(NAME)",
+              "path": "src/M_draw.F90",
+              "line_start": 10038,
+              "line_end": 10042,
+              "declarations": [
+                {
+                  "path": "src/M_draw.F90",
+                  "line_start": 10039,
+                  "line_end": 10040
+                }
+              ]
+            },
+            {
+              "procedure": "move2",
+              "role": "public-entry-point",
+              "module": "M_draw",
+              "summary": "Move the current two-dimensional drawing position without drawing a line. X/Y are REAL(C_FLOAT),VALUE in this native binding; use that kind rather than assuming default REAL64 actuals convert through the explicit interface. Coordinates follow the active view/projection, not inherently pixel indices. Requires a live initialized device and does not itself create a file or return a status.",
+              "signature": "CALL move2(X,Y)",
+              "path": "src/M_draw.F90",
+              "line_start": 8742,
+              "line_end": 8747,
+              "declarations": [
+                {
+                  "path": "src/M_draw.F90",
+                  "line_start": 8745,
+                  "line_end": 8746
+                }
+              ]
+            },
+            {
+              "procedure": "draw2",
+              "role": "public-entry-point",
+              "module": "M_draw",
+              "summary": "Draw a line from the current position to REAL(C_FLOAT) X/Y and update that position. Call MOVE2 first when beginning a new curve and set the intended coordinate mapping/color separately. These are scalar by-value C_FLOAT arguments, not vector polyline arrays. Output remains tied to the current native device until finalization; no numerical/rendering status is returned.",
+              "signature": "CALL draw2(X,Y)",
+              "path": "src/M_draw.F90",
+              "line_start": 8498,
+              "line_end": 8503,
+              "declarations": [
+                {
+                  "path": "src/M_draw.F90",
+                  "line_start": 8501,
+                  "line_end": 8502
+                }
+              ]
+            },
+            {
+              "procedure": "vexit",
+              "role": "public-entry-point",
+              "module": "M_draw",
+              "summary": "Finish drawing and release/flush the current native device. For the hosted PPM driver the produced raster is separately collected/converted to a browser PNG preview; VEXIT itself does not open a browser or provide that conversion. This no-argument C binding is explicit lifecycle cleanup, not an automatic finalizer on a Fortran figure object.",
+              "signature": "CALL vexit()",
+              "path": "src/M_draw.F90",
+              "line_start": 8677,
+              "line_end": 8680,
+              "declarations": [
+                {
+                  "path": "src/M_draw.F90",
+                  "line_start": 8677,
+                  "line_end": 8677
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
     "fortran-lua53": {
       "id": "github:interkosmos/fortran-lua53",
       "repository": {
@@ -33148,6 +33910,145 @@
                   "path": "forpy_mod.F90",
                   "line_start": 856,
                   "line_end": 880
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "fkb": {
+      "id": "github:scientific-computing/fkb",
+      "repository": {
+        "owner": "scientific-computing",
+        "name": "FKB",
+        "url": "https://github.com/scientific-computing/FKB"
+      },
+      "license": {
+        "label": "MIT",
+        "spdx_expression": "MIT",
+        "revision": "a1c97d4d66431df87662b59fe8e8a24feaf28a3a",
+        "reviewed_on": "2026-11-08",
+        "notes": "Root LICENSE supplies Scientific Computing MIT terms. This source review describes selected unchanged FKB inference/I/O interfaces, not the separate Keras conversion tools, training correctness or parallel performance.",
+        "evidence": [
+          {
+            "path": "LICENSE",
+            "url": "https://github.com/scientific-computing/FKB/blob/a1c97d4d66431df87662b59fe8e8a24feaf28a3a/LICENSE",
+            "sha256": "19263773b43c91154e869a947cb373266d98b750323f86e125c583ae8d38f758"
+          },
+          {
+            "path": "README.md",
+            "url": "https://github.com/scientific-computing/FKB/blob/a1c97d4d66431df87662b59fe8e8a24feaf28a3a/README.md",
+            "sha256": "c6c14353e6e180e7b16990a03ae62477c9a17b7b0c9654e9baac97c1940c4ba7"
+          },
+          {
+            "path": "src/lib/mod_network.F90",
+            "url": "https://github.com/scientific-computing/FKB/blob/a1c97d4d66431df87662b59fe8e8a24feaf28a3a/src/lib/mod_network.F90",
+            "sha256": "a79b92aa54dd8e0e11009da9ecb09fce9b114d3cb6fa406b9d7e5ddfc17a3951"
+          }
+        ]
+      },
+      "classifications": [
+        {
+          "code": "K",
+          "level": "source-reviewed",
+          "revision": "a1c97d4d66431df87662b59fe8e8a24feaf28a3a",
+          "reviewed_on": "2026-11-08",
+          "notes": "Text-model load, stateful forward evaluation and save document build-selected kinds, format compatibility and fresh-owner round trips. This is a pinned public-interface/source review, not a new numerical execution check or complete API audit. Existing hosted drivers and their verified problem scope are recorded separately.",
+          "evidence": [
+            {
+              "path": "src/lib/mod_network.F90",
+              "url": "https://github.com/scientific-computing/FKB/blob/a1c97d4d66431df87662b59fe8e8a24feaf28a3a/src/lib/mod_network.F90",
+              "sha256": "a79b92aa54dd8e0e11009da9ecb09fce9b114d3cb6fa406b9d7e5ddfc17a3951"
+            },
+            {
+              "path": "src/lib/mod_kinds.F90",
+              "url": "https://github.com/scientific-computing/FKB/blob/a1c97d4d66431df87662b59fe8e8a24feaf28a3a/src/lib/mod_kinds.F90",
+              "sha256": "335e69ad07fdc3cc9ff79fa2c74a0ce05d868377507479052c3ef7fbbe530482"
+            }
+          ],
+          "procedures": [
+            {
+              "procedure": "load",
+              "role": "public-entry-point",
+              "module": "mod_network",
+              "derived_type": "network_type",
+              "summary": "Declare TYPE(network_type) :: solver from mod_network. Load the FKB text model format into a fresh network object. This is not a direct Keras HDF5/SavedModel loader; conversion/export to the expected layer/bias/weight format is separate. The hosted build selects REAL64/INT32 via MOD_KINDS, while upstream defaults differ. Native OPEN/READ and internal initialization expose no recoverable status argument. Use a complete compatible model file, and do not assume repeated LOAD on a populated pointer-layer owner is a safe replacement operation. The passed object SELF is implicit in solver%; do not pass it again. Optional actuals shown in brackets can be supplied by keyword.",
+              "signature": "CALL solver%load(FILENAME)",
+              "path": "src/lib/mod_network.F90",
+              "line_start": 163,
+              "line_end": 226,
+              "declarations": [
+                {
+                  "path": "src/lib/mod_network.F90",
+                  "line_start": 165,
+                  "line_end": 169
+                },
+                {
+                  "path": "src/lib/mod_network.F90",
+                  "line_start": 1,
+                  "line_end": 46
+                },
+                {
+                  "path": "src/lib/mod_kinds.F90",
+                  "line_start": 1,
+                  "line_end": 26
+                }
+              ]
+            },
+            {
+              "procedure": "output",
+              "role": "public-entry-point",
+              "module": "mod_network",
+              "derived_type": "network_type",
+              "summary": "Declare TYPE(network_type) :: solver from mod_network. Evaluate a loaded/initialized network with REAL(RK) INPUT(:) matching the first layer width; return an allocatable REAL(RK) output vector. This forwards through mutable layer state, so the passed object is INOUT despite inference terminology. The scoped hosted model contains dense/ReLU operations; all possible dropout/batch-normalization or trained-model behaviors are not established. No independent accuracy/error-status result is supplied. The passed object SELF is implicit in solver%; do not pass it again. Optional actuals shown in brackets can be supplied by keyword.",
+              "signature": "VALUE = solver%output(INPUT)",
+              "path": "src/lib/mod_network.F90",
+              "line_start": 244,
+              "line_end": 264,
+              "declarations": [
+                {
+                  "path": "src/lib/mod_network.F90",
+                  "line_start": 246,
+                  "line_end": 248
+                },
+                {
+                  "path": "src/lib/mod_network.F90",
+                  "line_start": 1,
+                  "line_end": 46
+                },
+                {
+                  "path": "src/lib/mod_kinds.F90",
+                  "line_start": 1,
+                  "line_end": 26
+                }
+              ]
+            },
+            {
+              "procedure": "save",
+              "role": "public-entry-point",
+              "module": "mod_network",
+              "derived_type": "network_type",
+              "summary": "Declare TYPE(network_type) :: solver from mod_network. Write a compatible FKB text model containing architecture, learning rate, dense biases/weights and supported additional layer fields. Use an initialized model and a writable path; this is an explicit file operation, not a serialization string return or a Python conversion call. Native I/O failures have no status dummy here. Saved files can be loaded into a separate fresh network for round-trip use; layer pointer ownership still needs care. The passed object SELF is implicit in solver%; do not pass it again. Optional actuals shown in brackets can be supplied by keyword.",
+              "signature": "CALL solver%save(FILENAME)",
+              "path": "src/lib/mod_network.F90",
+              "line_start": 288,
+              "line_end": 335,
+              "declarations": [
+                {
+                  "path": "src/lib/mod_network.F90",
+                  "line_start": 290,
+                  "line_end": 291
+                },
+                {
+                  "path": "src/lib/mod_network.F90",
+                  "line_start": 1,
+                  "line_end": 46
+                },
+                {
+                  "path": "src/lib/mod_kinds.F90",
+                  "line_start": 1,
+                  "line_end": 26
                 }
               ]
             }
@@ -34425,6 +35326,492 @@
         }
       ]
     },
+    "dtfft": {
+      "id": "github:shatrovoa/dtfft",
+      "repository": {
+        "owner": "ShatrovOA",
+        "name": "dtFFT",
+        "url": "https://github.com/ShatrovOA/dtFFT"
+      },
+      "license": {
+        "label": "GPL-3.0-or-later",
+        "spdx_expression": "GPL-3.0-or-later",
+        "revision": "bbfd6746be7482bd8366ccb09a73b72882573984",
+        "reviewed_on": "2026-11-08",
+        "notes": "Selected source headers expressly grant GPL version 3 or later; root LICENSE supplies GPLv3 text. FFTW/MPI and optional native components retain their own terms. This is a CPU one-process interface review, not validation of distributed scaling or all compile-time backends.",
+        "evidence": [
+          {
+            "path": "LICENSE",
+            "url": "https://github.com/ShatrovOA/dtFFT/blob/bbfd6746be7482bd8366ccb09a73b72882573984/LICENSE",
+            "sha256": "605e9047a563c5c8396ffb18232aa4304ec56586aee537c45064c6fb425e44ad"
+          },
+          {
+            "path": "README.md",
+            "url": "https://github.com/ShatrovOA/dtFFT/blob/bbfd6746be7482bd8366ccb09a73b72882573984/README.md",
+            "sha256": "f71e4aceb4cfd4e4c197ba5cee28c33c813f9e72edf05ef4a596d941be97de07"
+          },
+          {
+            "path": "src/dtfft_plan.F90",
+            "url": "https://github.com/ShatrovOA/dtFFT/blob/bbfd6746be7482bd8366ccb09a73b72882573984/src/dtfft_plan.F90",
+            "sha256": "06ddc7b3ac9bd0e362541ea351d0f78dc804bf8897c419e7a41093f10984f57e"
+          }
+        ]
+      },
+      "classifications": [
+        {
+          "code": "J1",
+          "level": "source-reviewed",
+          "revision": "bbfd6746be7482bd8366ccb09a73b72882573984",
+          "reviewed_on": "2026-11-08",
+          "notes": "Complex FFT plan creation, local storage query, execution and teardown document enum/kind requirements, zero-based starts and normalization. This is a pinned public-interface/source review, not a new numerical execution check or complete API audit. Existing hosted drivers and their verified problem scope are recorded separately.",
+          "evidence": [
+            {
+              "path": "src/dtfft_plan.F90",
+              "url": "https://github.com/ShatrovOA/dtFFT/blob/bbfd6746be7482bd8366ccb09a73b72882573984/src/dtfft_plan.F90",
+              "sha256": "06ddc7b3ac9bd0e362541ea351d0f78dc804bf8897c419e7a41093f10984f57e"
+            },
+            {
+              "path": "src/dtfft.F90",
+              "url": "https://github.com/ShatrovOA/dtFFT/blob/bbfd6746be7482bd8366ccb09a73b72882573984/src/dtfft.F90",
+              "sha256": "7f6c49b4f2f88984154ab999a95fa8f519eea7b67d424f85e953ee610213392c"
+            }
+          ],
+          "procedures": [
+            {
+              "procedure": "create",
+              "role": "public-entry-point",
+              "module": "dtfft",
+              "derived_type": "dtfft_plan_c2c_t",
+              "summary": "Declare TYPE(dtfft_plan_c2c_t) :: solver from dtfft. Create a concrete complex-to-complex plan after native MPI initialization. DIMS is INTEGER(INT32) with positive global transform sizes. Choose precision and an available executor explicitly for the intended transform, such as the hosted double-precision CPU/FFTW configuration; optional COMM follows the MPI interface selected by preprocessing. Request INTEGER(INT32) ERROR_CODE and check DTFFT_SUCCESS. Plan creation is collective over its communicator and does not itself launch MPI processes. Hosted execution checks cover one process only; GPU/compression/other executors are outside that scope. The passed object SELF is implicit in solver%; do not pass it again. Optional actuals shown in brackets can be supplied by keyword.",
+              "signature": "CALL solver%create(DIMS,[COMM],[PRECISION],[EFFORT],[EXECUTOR],[ERROR_CODE])",
+              "path": "src/dtfft_plan.F90",
+              "line_start": 2441,
+              "line_end": 2461,
+              "declarations": [
+                {
+                  "path": "src/dtfft_plan.F90",
+                  "line_start": 2443,
+                  "line_end": 2455
+                },
+                {
+                  "path": "src/dtfft.F90",
+                  "line_start": 20,
+                  "line_end": 63
+                },
+                {
+                  "path": "src/dtfft_plan.F90",
+                  "line_start": 177,
+                  "line_end": 198
+                },
+                {
+                  "path": "src/dtfft_plan.F90",
+                  "line_start": 300,
+                  "line_end": 311
+                }
+              ]
+            },
+            {
+              "procedure": "get_local_sizes",
+              "role": "public-entry-point",
+              "module": "dtfft",
+              "derived_type": "dtfft_plan_c2c_t",
+              "summary": "Declare TYPE(dtfft_plan_c2c_t) :: solver from dtfft. Query an already created plan before allocating buffers. Request at least one size/start output, not ERROR_CODE alone: otherwise this pin reports invalid usage. IN_STARTS/COUNTS and OUT_STARTS/COUNTS are INTEGER(INT32) vectors of the plan dimensionality; starts are ZERO BASED. ALLOC_SIZE is INTEGER(INT64) elements, not bytes, and may exceed the visible local data count for working layouts. Check status and allocate adequate contiguous storage for both transform directions. The passed object SELF is implicit in solver%; do not pass it again. Optional actuals shown in brackets can be supplied by keyword.",
+              "signature": "CALL solver%get_local_sizes([IN_STARTS],[IN_COUNTS],[OUT_STARTS],[OUT_COUNTS],[ALLOC_SIZE],[ERROR_CODE])",
+              "path": "src/dtfft_plan.F90",
+              "line_start": 1797,
+              "line_end": 1851,
+              "declarations": [
+                {
+                  "path": "src/dtfft_plan.F90",
+                  "line_start": 1799,
+                  "line_end": 1811
+                },
+                {
+                  "path": "src/dtfft.F90",
+                  "line_start": 20,
+                  "line_end": 63
+                },
+                {
+                  "path": "src/dtfft_plan.F90",
+                  "line_start": 177,
+                  "line_end": 198
+                },
+                {
+                  "path": "src/dtfft_plan.F90",
+                  "line_start": 300,
+                  "line_end": 311
+                }
+              ]
+            },
+            {
+              "procedure": "execute",
+              "role": "public-entry-point",
+              "module": "dtfft",
+              "derived_type": "dtfft_plan_c2c_t",
+              "summary": "Declare TYPE(dtfft_plan_c2c_t) :: solver from dtfft. Execute a live plan using DTFFT_EXECUTE_FORWARD or BACKWARD. IN/OUT are assumed-type, assumed-rank TARGET actuals; their real/complex kind, layout, contiguous capacity and lifetime must match the plan because the wrapper forwards C_LOC rather than providing general type/stride conversion. Optional AUX must meet GET_AUX_SIZE requirements. Check ERROR_CODE. Forward/backward transforms are unnormalized; divide an inverse round trip by the global dimension product. This scope uses distinct double-complex CPU buffers and one MPI process, not arbitrary in-place aliases. The passed object SELF is implicit in solver%; do not pass it again. Optional actuals shown in brackets can be supplied by keyword.",
+              "signature": "CALL solver%execute(IN,OUT,EXECUTE_TYPE,[AUX],[ERROR_CODE])",
+              "path": "src/dtfft_plan.F90",
+              "line_start": 749,
+              "line_end": 769,
+              "declarations": [
+                {
+                  "path": "src/dtfft_plan.F90",
+                  "line_start": 751,
+                  "line_end": 763
+                },
+                {
+                  "path": "src/dtfft.F90",
+                  "line_start": 20,
+                  "line_end": 63
+                },
+                {
+                  "path": "src/dtfft_plan.F90",
+                  "line_start": 177,
+                  "line_end": 198
+                },
+                {
+                  "path": "src/dtfft_plan.F90",
+                  "line_start": 300,
+                  "line_end": 311
+                }
+              ]
+            },
+            {
+              "procedure": "destroy",
+              "role": "public-entry-point",
+              "module": "dtfft",
+              "derived_type": "dtfft_plan_c2c_t",
+              "summary": "Declare TYPE(dtfft_plan_c2c_t) :: solver from dtfft. Destroy one successfully created plan after transforms finish and before finalizing the MPI environment. This releases internal plans/work state, not caller-owned input/output arrays. Request and inspect ERROR_CODE; destroying a plan that was not created is an error in this pin, so do not assume repeated destruction or shallow owner copies are safe. This is an explicit binding, not a process-wide MPI finalizer. The passed object SELF is implicit in solver%; do not pass it again. Optional actuals shown in brackets can be supplied by keyword.",
+              "signature": "CALL solver%destroy([ERROR_CODE])",
+              "path": "src/dtfft_plan.F90",
+              "line_start": 1169,
+              "line_end": 1250,
+              "declarations": [
+                {
+                  "path": "src/dtfft_plan.F90",
+                  "line_start": 1171,
+                  "line_end": 1173
+                },
+                {
+                  "path": "src/dtfft.F90",
+                  "line_start": 20,
+                  "line_end": 63
+                },
+                {
+                  "path": "src/dtfft_plan.F90",
+                  "line_start": 177,
+                  "line_end": 198
+                },
+                {
+                  "path": "src/dtfft_plan.F90",
+                  "line_start": 300,
+                  "line_end": 311
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "2decomp-fft": {
+      "id": "github:2decomp-fft/2decomp-fft",
+      "repository": {
+        "owner": "2decomp-fft",
+        "name": "2decomp-fft",
+        "url": "https://github.com/2decomp-fft/2decomp-fft"
+      },
+      "license": {
+        "label": "BSD-3-Clause",
+        "spdx_expression": "BSD-3-Clause",
+        "revision": "4cb38be477b9457cfa5f5624c8fe09387968b190",
+        "reviewed_on": "2026-11-08",
+        "notes": "Root LICENSE and selected SPDX headers supply three-clause BSD terms, retaining NAG and 2DECOMP&FFT contributor notices. MPI and optional FFT backends retain separate terms. Included common-source links correspond to the hosted generic CPU backend.",
+        "evidence": [
+          {
+            "path": "LICENSE",
+            "url": "https://github.com/2decomp-fft/2decomp-fft/blob/4cb38be477b9457cfa5f5624c8fe09387968b190/LICENSE",
+            "sha256": "8f0ee9d31769ea6e4983ff7736325b9e4fff6fd4cc27ed76d4227eb7fd3ce364"
+          },
+          {
+            "path": "README.md",
+            "url": "https://github.com/2decomp-fft/2decomp-fft/blob/4cb38be477b9457cfa5f5624c8fe09387968b190/README.md",
+            "sha256": "11c28eb740d5035b1f1b7bba7915a0ba995c205acaf4a2eb534531735558092d"
+          },
+          {
+            "path": "src/decomp_2d_init_fin.f90",
+            "url": "https://github.com/2decomp-fft/2decomp-fft/blob/4cb38be477b9457cfa5f5624c8fe09387968b190/src/decomp_2d_init_fin.f90",
+            "sha256": "dd0b1b9b5d645d75fa10491649609727d3fcbe87cce33bbb8d60093df2313673"
+          }
+        ]
+      },
+      "classifications": [
+        {
+          "code": "J1",
+          "level": "source-reviewed",
+          "revision": "4cb38be477b9457cfa5f5624c8fe09387968b190",
+          "reviewed_on": "2026-11-08",
+          "notes": "Global decomposition/FFT initialization, complex transform and ordered teardown document pencil storage, destructive input and caller normalization. This is a pinned public-interface/source review, not a new numerical execution check or complete API audit. Existing hosted drivers and their verified problem scope are recorded separately.",
+          "evidence": [
+            {
+              "path": "src/decomp_2d_init_fin.f90",
+              "url": "https://github.com/2decomp-fft/2decomp-fft/blob/4cb38be477b9457cfa5f5624c8fe09387968b190/src/decomp_2d_init_fin.f90",
+              "sha256": "dd0b1b9b5d645d75fa10491649609727d3fcbe87cce33bbb8d60093df2313673"
+            },
+            {
+              "path": "src/fft_common.f90",
+              "url": "https://github.com/2decomp-fft/2decomp-fft/blob/4cb38be477b9457cfa5f5624c8fe09387968b190/src/fft_common.f90",
+              "sha256": "48e6bb726a92c4d8dc030d51d7f80ac990bfacadb44e915d6454182d799ce427"
+            },
+            {
+              "path": "src/fft_common_3d.f90",
+              "url": "https://github.com/2decomp-fft/2decomp-fft/blob/4cb38be477b9457cfa5f5624c8fe09387968b190/src/fft_common_3d.f90",
+              "sha256": "e197c40c0e7a09d80dc2372ca383104fb590611a9a81016aaebe37aac16b4dcf"
+            },
+            {
+              "path": "src/decomp_2d.f90",
+              "url": "https://github.com/2decomp-fft/2decomp-fft/blob/4cb38be477b9457cfa5f5624c8fe09387968b190/src/decomp_2d.f90",
+              "sha256": "e826f8e91c77f05bf0ada38e4bf720e467e3ed981f30d91d465dc147558ffa32"
+            },
+            {
+              "path": "src/fft_generic.f90",
+              "url": "https://github.com/2decomp-fft/2decomp-fft/blob/4cb38be477b9457cfa5f5624c8fe09387968b190/src/fft_generic.f90",
+              "sha256": "f00f1a326e1a717024b12960f1d9ee4171388052705accd8b6c188999038168a"
+            }
+          ],
+          "procedures": [
+            {
+              "procedure": "decomp_2d_init",
+              "role": "public-entry-point",
+              "module": "decomp_2d",
+              "summary": "Initialize global decomposition state after MPI_INIT with positive default-integer NX/NY/NZ and variable P_ROW/P_COL, which are INOUT. The verified hosted scope uses P_ROW=P_COL=1 and one MPI process. Optional PERIODIC_BC(3) concerns halo behavior, not a general FFT boundary-condition selector. No recoverable status dummy is exposed; invalid dimensions/layouts can abort. Call the public DECOMP_2D_INIT generic rather than the implementation name, and finalize decomposition before MPI_FINALIZE.",
+              "signature": "CALL decomp_2d_init(NX,NY,NZ,P_ROW,P_COL,[PERIODIC_BC],[COMM],[COMPLEX_POOL])",
+              "path": "src/decomp_2d_init_fin.f90",
+              "line_start": 15,
+              "line_end": 190,
+              "declarations": [
+                {
+                  "path": "src/decomp_2d_init_fin.f90",
+                  "line_start": 25,
+                  "line_end": 29
+                },
+                {
+                  "path": "src/decomp_2d.f90",
+                  "line_start": 131,
+                  "line_end": 137
+                },
+                {
+                  "path": "src/fft_generic.f90",
+                  "line_start": 5,
+                  "line_end": 49
+                },
+                {
+                  "path": "src/fft_common.f90",
+                  "line_start": 31,
+                  "line_end": 53
+                }
+              ]
+            },
+            {
+              "procedure": "decomp_2d_fft_init",
+              "role": "public-entry-point",
+              "module": "decomp_2d_fft",
+              "summary": "Initialize FFT state using an already initialized global decomposition and a pencil selector such as PHYSICAL_IN_X. This is the pencil-argument overload of DECOMP_2D_FFT_INIT, not the arbitrary-grid or no-argument overload. Omit OPT_SKIP_XYZ_C2C for a full three-dimensional transform. The hosted build uses double precision and the generic CPU backend; per-process layouts and state are not independent per-call objects.",
+              "signature": "CALL decomp_2d_fft_init(PENCIL,[OPT_SKIP_XYZ_C2C])",
+              "path": "src/fft_common.f90",
+              "line_start": 75,
+              "line_end": 86,
+              "declarations": [
+                {
+                  "path": "src/fft_common.f90",
+                  "line_start": 79,
+                  "line_end": 80
+                },
+                {
+                  "path": "src/decomp_2d.f90",
+                  "line_start": 131,
+                  "line_end": 137
+                },
+                {
+                  "path": "src/fft_generic.f90",
+                  "line_start": 5,
+                  "line_end": 49
+                },
+                {
+                  "path": "src/fft_common.f90",
+                  "line_start": 31,
+                  "line_end": 53
+                }
+              ]
+            },
+            {
+              "procedure": "decomp_2d_fft_3d",
+              "role": "public-entry-point",
+              "module": "decomp_2d_fft",
+              "summary": "Complex rank-three overload of DECOMP_2D_FFT_3D uses COMPLEX(MYTYPE), where the selected build is double precision. ISIGN selects the exported forward/backward constant. Allocate local physical/spectral buffers using the decomposition objects; forward X-pencil input produces the corresponding spectral pencil, and inverse reverses that mapping. IN is INOUT and may be overwritten; do not pass immutable data or arbitrary overlapping sections. Both transforms are unnormalized, so divide an inverse round trip by NX*NY*NZ. This scope is one-process CPU execution, not proof that a global dense array is valid local storage on every process grid.",
+              "signature": "CALL decomp_2d_fft_3d(IN,OUT,ISIGN)",
+              "path": "src/fft_common_3d.f90",
+              "line_start": 9,
+              "line_end": 116,
+              "declarations": [
+                {
+                  "path": "src/fft_common_3d.f90",
+                  "line_start": 14,
+                  "line_end": 16
+                },
+                {
+                  "path": "src/decomp_2d.f90",
+                  "line_start": 131,
+                  "line_end": 137
+                },
+                {
+                  "path": "src/fft_generic.f90",
+                  "line_start": 5,
+                  "line_end": 49
+                },
+                {
+                  "path": "src/fft_common.f90",
+                  "line_start": 31,
+                  "line_end": 53
+                }
+              ]
+            },
+            {
+              "procedure": "decomp_2d_fft_finalize",
+              "role": "public-entry-point",
+              "module": "decomp_2d_fft",
+              "summary": "Explicitly release FFT engines/work state after the last transform and before finalizing decomposition. This no-argument routine operates on module-wide state and returns no status. It does not free caller-owned arrays, finalize the decomposition communicators or terminate MPI.",
+              "signature": "CALL decomp_2d_fft_finalize()",
+              "path": "src/fft_common.f90",
+              "line_start": 244,
+              "line_end": 276,
+              "declarations": [
+                {
+                  "path": "src/fft_common.f90",
+                  "line_start": 244,
+                  "line_end": 244
+                }
+              ]
+            },
+            {
+              "procedure": "decomp_2d_finalize",
+              "role": "public-entry-point",
+              "module": "decomp_2d",
+              "summary": "Finalize initialized decomposition state and owned library communicators after FFT finalization and all transposes/communication have finished. This public generic wraps DECOMP_2D_FINALIZE_REF; there are no actual arguments or status result. MPI lifetime is separately managed by the application; call MPI_FINALIZE afterward, not before this cleanup.",
+              "signature": "CALL decomp_2d_finalize()",
+              "path": "src/decomp_2d_init_fin.f90",
+              "line_start": 195,
+              "line_end": 233,
+              "declarations": [
+                {
+                  "path": "src/decomp_2d_init_fin.f90",
+                  "line_start": 195,
+                  "line_end": 195
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "ennuf": {
+      "id": "github:metoffice/ennuf",
+      "repository": {
+        "owner": "MetOffice",
+        "name": "ennuf",
+        "url": "https://github.com/MetOffice/ennuf"
+      },
+      "license": {
+        "label": "BSD-3-Clause",
+        "spdx_expression": "BSD-3-Clause",
+        "revision": "2555a7f1560ef3cb7cf707221fa5bb1b5334ee6f",
+        "reviewed_on": "2026-11-08",
+        "notes": "Root LICENSE supplies Met Office three-clause BSD terms and selected source retains Crown copyright notices. This review scopes Fortran kernels used in generated inference; it does not make the Python model generator a visitor-runtime dependency or establish every generated layer.",
+        "evidence": [
+          {
+            "path": "LICENSE",
+            "url": "https://github.com/MetOffice/ennuf/blob/2555a7f1560ef3cb7cf707221fa5bb1b5334ee6f/LICENSE",
+            "sha256": "0a3bb56912680e7e6a3cd04c9fcf494912df682f6f8868d32c2b375ff20d3852"
+          },
+          {
+            "path": "README.md",
+            "url": "https://github.com/MetOffice/ennuf/blob/2555a7f1560ef3cb7cf707221fa5bb1b5334ee6f/README.md",
+            "sha256": "7e9fff60c3b73638d6f668136c05726c2371458c82deb7be0f19bb2dcccb2770"
+          },
+          {
+            "path": "src/ennuf/_internal/fortran/neural_net_mod.f90",
+            "url": "https://github.com/MetOffice/ennuf/blob/2555a7f1560ef3cb7cf707221fa5bb1b5334ee6f/src/ennuf/_internal/fortran/neural_net_mod.f90",
+            "sha256": "6b036196f96eb13729e3b0730c22840373c56bb7197cf4c8de9357a3d667e5d8"
+          }
+        ]
+      },
+      "classifications": [
+        {
+          "code": "K",
+          "level": "source-reviewed",
+          "revision": "2555a7f1560ef3cb7cf707221fa5bb1b5334ee6f",
+          "reviewed_on": "2026-11-08",
+          "notes": "Author-generator dense and activation kernels document channels-first array shapes, literal precision and selector/optional-slope restrictions. This is a pinned public-interface/source review, not a new numerical execution check or complete API audit. Existing hosted drivers and their verified problem scope are recorded separately.",
+          "evidence": [
+            {
+              "path": "src/ennuf/_internal/fortran/neural_net_mod.f90",
+              "url": "https://github.com/MetOffice/ennuf/blob/2555a7f1560ef3cb7cf707221fa5bb1b5334ee6f/src/ennuf/_internal/fortran/neural_net_mod.f90",
+              "sha256": "6b036196f96eb13729e3b0730c22840373c56bb7197cf4c8de9357a3d667e5d8"
+            }
+          ],
+          "procedures": [
+            {
+              "procedure": "dense",
+              "role": "public-entry-point",
+              "module": "neural_net_mod",
+              "summary": "Low-level dense inference kernel used by the author model generator. X_IN has shape (CHANNELS,LENGTH_IN), Y_OUT (CHANNELS,LENGTH_OUT), and WEIGHTS (LENGTH_OUT,LENGTH_IN); optional BIASES has LENGTH_OUT entries. These arrays use the pinned literal REAL(KIND=4), matching REAL32 in the hosted GNU build, not a universally portable precision selector. Caller supplies trained/fixed parameters and distinct adequately sized arrays. No model file is loaded, activation applied, parameter training performed or status returned by this kernel. The hosted generated example is separate from these upstream source links.",
+              "signature": "CALL dense(X_IN,Y_OUT,CHANNELS,LENGTH_IN,LENGTH_OUT,WEIGHTS,[BIASES])",
+              "path": "src/ennuf/_internal/fortran/neural_net_mod.f90",
+              "line_start": 14,
+              "line_end": 72,
+              "declarations": [
+                {
+                  "path": "src/ennuf/_internal/fortran/neural_net_mod.f90",
+                  "line_start": 32,
+                  "line_end": 47
+                },
+                {
+                  "path": "src/ennuf/_internal/fortran/neural_net_mod.f90",
+                  "line_start": 1,
+                  "line_end": 12
+                }
+              ]
+            },
+            {
+              "procedure": "activation_function",
+              "role": "public-entry-point",
+              "module": "neural_net_mod",
+              "summary": "Apply an activation to REAL(KIND=4) X_IN/Y_OUT arrays shaped (CHANNELS,LENGTH). Use a CHARACTER(LEN=10) selector, for example a variable initialized to \"relu\", so the fixed-length dummy has adequate actual storage. This scoped path is ReLU; the pin also implements other named cases but an unknown selector exits. For LEAKYRELU, ALPHA is required in practice: omitting it prints a warning then the branch references the absent optional. SOFTMAX uses direct exponentials without maximum subtraction, so general overflow robustness is not established. No recoverable status is returned.",
+              "signature": "CALL activation_function(X_IN,Y_OUT,CHANNELS,LENGTH,ACTIVATION,[ALPHA])",
+              "path": "src/ennuf/_internal/fortran/neural_net_mod.f90",
+              "line_start": 306,
+              "line_end": 410,
+              "declarations": [
+                {
+                  "path": "src/ennuf/_internal/fortran/neural_net_mod.f90",
+                  "line_start": 323,
+                  "line_end": 339
+                },
+                {
+                  "path": "src/ennuf/_internal/fortran/neural_net_mod.f90",
+                  "line_start": 1,
+                  "line_end": 12
+                },
+                {
+                  "path": "src/ennuf/_internal/fortran/neural_net_mod.f90",
+                  "line_start": 344,
+                  "line_end": 410
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
     "ftorch": {
       "id": "github:cambridge-iccs/ftorch",
       "repository": {
@@ -34735,6 +36122,83 @@
                   "path": "src/ch04/mod_initial.f90",
                   "line_start": 1,
                   "line_end": 9
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "m_history": {
+      "id": "github:urbanjost/m_history",
+      "repository": {
+        "owner": "urbanjost",
+        "name": "M_history",
+        "url": "https://github.com/urbanjost/M_history"
+      },
+      "license": {
+        "label": "MIT",
+        "spdx_expression": "MIT",
+        "revision": "fe7dd940a5d15792653233962d8df9cb3b5443f6",
+        "reviewed_on": "2026-11-08",
+        "notes": "Root LICENSE supplies urbanjost MIT terms for M_history. This source review scopes public REDO rather than treat private string/numeric helpers or the public-domain example application as the library API.",
+        "evidence": [
+          {
+            "path": "LICENSE",
+            "url": "https://github.com/urbanjost/M_history/blob/fe7dd940a5d15792653233962d8df9cb3b5443f6/LICENSE",
+            "sha256": "9126ac97c76d643f513157e9f77a9446209fe0311936f23ef1ac7a195c569083"
+          },
+          {
+            "path": "README.md",
+            "url": "https://github.com/urbanjost/M_history/blob/fe7dd940a5d15792653233962d8df9cb3b5443f6/README.md",
+            "sha256": "d91ef6890577774fe7aa312bedd5ebddc834baf2f7cffeb32a2efcdb42c09f31"
+          },
+          {
+            "path": "src/M_history.f90",
+            "url": "https://github.com/urbanjost/M_history/blob/fe7dd940a5d15792653233962d8df9cb3b5443f6/src/M_history.f90",
+            "sha256": "59dcb8f8c0ffea5641d8890fb5909dab2c4d1cb8da94dc6b15091d52c4c70f8e"
+          }
+        ]
+      },
+      "classifications": [
+        {
+          "code": "N3",
+          "level": "source-reviewed",
+          "revision": "fe7dd940a5d15792653233962d8df9cb3b5443f6",
+          "reviewed_on": "2026-11-08",
+          "notes": "Command history and editing entry documents required buffer capacity, optional scripted input and shared scratch history state. This is a pinned public-interface/source review, not a new numerical execution check or complete API audit. Existing hosted drivers and their verified problem scope are recorded separately.",
+          "evidence": [
+            {
+              "path": "src/M_history.f90",
+              "url": "https://github.com/urbanjost/M_history/blob/fe7dd940a5d15792653233962d8df9cb3b5443f6/src/M_history.f90",
+              "sha256": "59dcb8f8c0ffea5641d8890fb5909dab2c4d1cb8da94dc6b15091d52c4c70f8e"
+            }
+          ],
+          "procedures": [
+            {
+              "procedure": "redo",
+              "role": "public-entry-point",
+              "module": "M_history",
+              "summary": "Record or recall/edit an INOUT CHARACTER command line through the public REDO routine. Use a 1024-character buffer matching READLEN for the supported hosted path; shorter buffers encounter fixed-substring assumptions in this pin. Optional one-character R changes the default trigger \"r\", and LUN supplies editing input from an already open unit instead of requiring interactive input. History uses saved module/procedure state and a scratch direct-access file (unit 1071); it is not an independent editor object per call. Returned text is recorded, not executed as a shell command. This routine exposes no explicit success/status output.",
+              "signature": "CALL redo(INPUTLINE,[R],[LUN])",
+              "path": "src/M_history.f90",
+              "line_start": 254,
+              "line_end": 305,
+              "declarations": [
+                {
+                  "path": "src/M_history.f90",
+                  "line_start": 262,
+                  "line_end": 264
+                },
+                {
+                  "path": "src/M_history.f90",
+                  "line_start": 223,
+                  "line_end": 229
+                },
+                {
+                  "path": "src/M_history.f90",
+                  "line_start": 279,
+                  "line_end": 305
                 }
               ]
             }
@@ -35790,6 +37254,7 @@
       "argparse-f",
       "io_utilities",
       "uint-fortran",
+      "veggies",
       "shunting-yard-fortran",
       "sqliteff",
       "erloff",
@@ -35831,8 +37296,11 @@
       "fmm2d",
       "fortran-utils",
       "dftatom",
+      "m-system",
       "fortran-tcl86",
       "fortranlib",
+      "fiats",
+      "julienne",
       "m-process",
       "nufft1d",
       "nufft2d",
@@ -35840,10 +37308,12 @@
       "propack",
       "qcontainers",
       "stdlib-os",
+      "m_draw",
       "fortran-lua53",
       "netcdf-fortran",
       "scifortran",
       "forpy",
+      "fkb",
       "mpifx",
       "scalapackfx",
       "easy-plplot",
@@ -35852,8 +37322,12 @@
       "fgsl",
       "fdict",
       "flibcpp",
+      "dtfft",
+      "2decomp-fft",
+      "ennuf",
       "ftorch",
       "tsunami",
+      "m_history",
       "fortran-curl",
       "m_cli",
       "fortran-modbus",
@@ -35875,7 +37349,6 @@
       "featom",
       "heatflow",
       "athena",
-      "veggies",
       "fundamental_constants",
       "kronrod",
       "coretran",
@@ -35883,26 +37356,17 @@
       "vtmop",
       "slicot",
       "formal",
-      "m-system",
-      "fiats",
-      "julienne",
-      "m_draw",
-      "fkb",
       "ntpoly",
       "gftl",
       "gftl-shared",
       "yafyaml",
       "pflogger",
       "libmbd",
-      "dtfft",
       "dbcsr",
-      "2decomp-fft",
-      "ennuf",
       "ddpcm",
       "dftd4",
       "pfunit",
       "raffle",
-      "m_history",
       "plplot",
       "gtk-fortran"
     ]
