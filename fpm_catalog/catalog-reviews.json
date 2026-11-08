@@ -2,7 +2,7 @@
   "schema_version": 1,
   "publisher": "fortran-gams-catalog-independent-reviews",
   "source_url": "https://beliavsky.github.io/fortran-gams-catalog/reviewed-metadata.json",
-  "source_snapshot_id": "sha256:a2aea084678b2caceec22d1f0cd96b5d6f59a3f764f6e18e82e67335f447d75c",
+  "source_snapshot_id": "sha256:fb15c09108fc52c9b757cd218b1772fb62b1bfda53a74687246caa007f3c63de",
   "packages": {
     "test-drive": {
       "id": "github:fortran-lang/test-drive",
@@ -13191,6 +13191,288 @@
         }
       ]
     },
+    "metis-fpm": {
+      "id": "github:gnikit/metis-fpm",
+      "repository": {
+        "owner": "gnikit",
+        "name": "metis-fpm",
+        "url": "https://github.com/gnikit/metis-fpm"
+      },
+      "license": {
+        "label": "MIT binding; Apache-2.0 native METIS",
+        "spdx_expression": null,
+        "revision": "5db1dc1e46fd819a53a86fe2170eaf5464bf17c7",
+        "reviewed_on": "2026-11-08",
+        "notes": "Root LICENSE supplies Giannis Nikiteas MIT terms for the repackaging/binding; README identifies native METIS as Apache-2.0. Preserve component terms rather than call the complete native-backed package MIT-only.",
+        "evidence": [
+          {
+            "path": "LICENSE",
+            "url": "https://github.com/gnikit/metis-fpm/blob/5db1dc1e46fd819a53a86fe2170eaf5464bf17c7/LICENSE",
+            "sha256": "28df9feaa9e22535fed2ba9d6afd43e2bac1eb6e9c99d7c6270b4aab101f04ea"
+          },
+          {
+            "path": "README.md",
+            "url": "https://github.com/gnikit/metis-fpm/blob/5db1dc1e46fd819a53a86fe2170eaf5464bf17c7/README.md",
+            "sha256": "d5b628fc1874910e18816de951974644ed2e416600a844c23f4316a8854583fb"
+          },
+          {
+            "path": "src/metis_c_interface.F90",
+            "url": "https://github.com/gnikit/metis-fpm/blob/5db1dc1e46fd819a53a86fe2170eaf5464bf17c7/src/metis_c_interface.F90",
+            "sha256": "9332525a4c42db8942fc28f1cdb476d6d1bfa5c7204a969e9f3a43da452580d3"
+          }
+        ]
+      },
+      "classifications": [
+        {
+          "code": "P",
+          "level": "source-reviewed",
+          "revision": "5db1dc1e46fd819a53a86fe2170eaf5464bf17c7",
+          "reviewed_on": "2026-11-08",
+          "notes": "Graph partitioning and nested-dissection ordering document CSR numbering, option indexing and required versus native-null arrays. This is a pinned public-interface/source review, not a new numerical execution check or complete API audit. Existing hosted drivers and their verified problem scope are recorded separately.",
+          "evidence": [
+            {
+              "path": "src/metis_c_interface.F90",
+              "url": "https://github.com/gnikit/metis-fpm/blob/5db1dc1e46fd819a53a86fe2170eaf5464bf17c7/src/metis_c_interface.F90",
+              "sha256": "9332525a4c42db8942fc28f1cdb476d6d1bfa5c7204a969e9f3a43da452580d3"
+            }
+          ],
+          "procedures": [
+            {
+              "procedure": "METIS_SetDefaultOptions",
+              "role": "public-entry-point",
+              "module": "metis_c_interface",
+              "summary": "Initialize INTEGER(IDX_T) OPTIONS(METIS_NOPTIONS) and check returned METIS_OK (1), not a zero-success convention. Constants for option positions are native zero-based values: for a normal Fortran OPTIONS(1:40), write OPTIONS(METIS_OPTION_NUMBERING+1). Alternatively declare OPTIONS(0:METIS_NOPTIONS-1) and use constants directly. Use a native METIS build matching the binding IDXTYPEWIDTH/REALTYPEWIDTH macros; this calling review scopes the 32-bit idx_t ABI rather than validating alternative C integer return widths.",
+              "signature": "VALUE = METIS_SetDefaultOptions(OPTIONS)",
+              "path": "src/metis_c_interface.F90",
+              "line_start": 519,
+              "line_end": 525,
+              "declarations": [
+                {
+                  "path": "src/metis_c_interface.F90",
+                  "line_start": 522,
+                  "line_end": 524
+                },
+                {
+                  "path": "src/metis_c_interface.F90",
+                  "line_start": 1,
+                  "line_end": 34
+                },
+                {
+                  "path": "src/metis_c_interface.F90",
+                  "line_start": 41,
+                  "line_end": 62
+                },
+                {
+                  "path": "src/metis_c_interface.F90",
+                  "line_start": 111,
+                  "line_end": 139
+                }
+              ]
+            },
+            {
+              "procedure": "METIS_PartGraphKway",
+              "role": "public-entry-point",
+              "module": "metis_c_interface",
+              "summary": "Partition an undirected graph in CSR arrays: XADJ has NVTXS+1 entries and ADJNCY lists neighbor numbers. Keep all CSR offsets, vertex numbers and returned partition interpretation consistent with OPTIONS numbering; Fortran array lower bounds alone do not select native numbering. Use NCON=1 for the basic unweighted case. Optional arrays/options may be omitted by KEYWORD calls; do not pass C_NULL_PTR to typed array dummies. For multiple constraints the native flat weight layout must be packed deliberately, not inferred from misleading rank-two dimension labels. Check METIS_OK before reading EDGECUT/PART; match native IDX_T/REAL_T and scope this sketch to the 32-bit ABI.",
+              "signature": "VALUE = METIS_PartGraphKway(NVTXS,NCON,XADJ,ADJNCY,[VWGT],[VSIZE],[ADJWGT],NPARTS,[TPWGTS],[UBVEC],[OPTIONS],EDGECUT,PART)",
+              "path": "src/metis_c_interface.F90",
+              "line_start": 218,
+              "line_end": 286,
+              "declarations": [
+                {
+                  "path": "src/metis_c_interface.F90",
+                  "line_start": 223,
+                  "line_end": 285
+                },
+                {
+                  "path": "src/metis_c_interface.F90",
+                  "line_start": 1,
+                  "line_end": 34
+                },
+                {
+                  "path": "src/metis_c_interface.F90",
+                  "line_start": 41,
+                  "line_end": 62
+                },
+                {
+                  "path": "src/metis_c_interface.F90",
+                  "line_start": 111,
+                  "line_end": 139
+                }
+              ]
+            },
+            {
+              "procedure": "METIS_NodeND",
+              "role": "public-entry-point",
+              "module": "metis_c_interface",
+              "summary": "Compute nested-dissection vertex order PERM(NVTXS) and inverse IPERM from undirected CSR structure for fill reduction. This is an ordering, not a numeric factorization or partition vector. VWGT and OPTIONS are REQUIRED in this pinned Fortran interface despite prose discussing native NULL weights: pass INTEGER(IDX_T) unit weights and initialized options for an unweighted call. Exclude self-neighbors and use consistent zero- or one-based graph/returned vertex numbers under OPTIONS. Check returned METIS_OK before using permutations; use the 32-bit IDX_T ABI scope described for SETDEFAULTOPTIONS.",
+              "signature": "VALUE = METIS_NodeND(NVTXS,XADJ,ADJNCY,VWGT,OPTIONS,PERM,IPERM)",
+              "path": "src/metis_c_interface.F90",
+              "line_start": 478,
+              "line_end": 505,
+              "declarations": [
+                {
+                  "path": "src/metis_c_interface.F90",
+                  "line_start": 482,
+                  "line_end": 504
+                },
+                {
+                  "path": "src/metis_c_interface.F90",
+                  "line_start": 1,
+                  "line_end": 34
+                },
+                {
+                  "path": "src/metis_c_interface.F90",
+                  "line_start": 41,
+                  "line_end": 62
+                },
+                {
+                  "path": "src/metis_c_interface.F90",
+                  "line_start": 111,
+                  "line_end": 139
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "m_calculator": {
+      "id": "github:urbanjost/m_calculator",
+      "repository": {
+        "owner": "urbanjost",
+        "name": "M_calculator",
+        "url": "https://github.com/urbanjost/M_calculator"
+      },
+      "license": {
+        "label": "Unlicense (root; manifest says MIT)",
+        "spdx_expression": null,
+        "revision": "b6bbc08f81eb158a6908a42016059815fe72217d",
+        "reviewed_on": "2026-11-08",
+        "notes": "Root LICENSE contains the Unlicense public-domain dedication and warranty disclaimer, and procedure comments say Public Domain; the manifest instead says MIT. Record the explicit root terms and discrepancy without inventing a missing MIT grant.",
+        "evidence": [
+          {
+            "path": "LICENSE",
+            "url": "https://github.com/urbanjost/M_calculator/blob/b6bbc08f81eb158a6908a42016059815fe72217d/LICENSE",
+            "sha256": "f40d08f39a7fbaf627c062ede8033c31b58da5afc0cf0c13a756aeff6c5be721"
+          },
+          {
+            "path": "README.md",
+            "url": "https://github.com/urbanjost/M_calculator/blob/b6bbc08f81eb158a6908a42016059815fe72217d/README.md",
+            "sha256": "03a8865e541ed87801e047709a18dd011d4ea361c59e6fa0280858dc6b13b58e"
+          },
+          {
+            "path": "src/M_calculator.f90",
+            "url": "https://github.com/urbanjost/M_calculator/blob/b6bbc08f81eb158a6908a42016059815fe72217d/src/M_calculator.f90",
+            "sha256": "82b9e626ce3de502daba907258f0cb0b0dda33afc65323df145aec718c375fe9"
+          }
+        ]
+      },
+      "classifications": [
+        {
+          "code": "N3",
+          "level": "source-reviewed",
+          "revision": "b6bbc08f81eb158a6908a42016059815fe72217d",
+          "reviewed_on": "2026-11-08",
+          "notes": "Numeric/string expression evaluation and dictionary assignment document shared state, typed values, sentinels and bounded text. This is a pinned public-interface/source review, not a new numerical execution check or complete API audit. Existing hosted drivers and their verified problem scope are recorded separately.",
+          "evidence": [
+            {
+              "path": "src/M_calculator.f90",
+              "url": "https://github.com/urbanjost/M_calculator/blob/b6bbc08f81eb158a6908a42016059815fe72217d/src/M_calculator.f90",
+              "sha256": "82b9e626ce3de502daba907258f0cb0b0dda33afc65323df145aec718c375fe9"
+            },
+            {
+              "path": "fpm.toml",
+              "url": "https://github.com/urbanjost/M_calculator/blob/b6bbc08f81eb158a6908a42016059815fe72217d/fpm.toml",
+              "sha256": "80b4dcfb27ad8d97e3575381a76828959e61852f55687c7b9a368af0484e5304"
+            }
+          ],
+          "procedures": [
+            {
+              "procedure": "dnum0",
+              "role": "public-entry-point",
+              "module": "M_calculator",
+              "summary": "Evaluate a numeric calculator expression as DOUBLE PRECISION. Supply optional default-INTEGER IERR and accept the number only when it indicates success; numerical errors also return 0.0, so value alone cannot distinguish failure from a valid zero. Blank input returns zero; the special literal \"*\" returns -99999.0 without being a general error status. Assignments update module-wide calculator variables and parsing happens on each call; this is not a compiled expression object. Syntax has package-specific precedence/limits, including left-associated successive powers, and expressions can print diagnostics.",
+              "signature": "VALUE = dnum0(INLINE,[IERR])",
+              "path": "src/M_calculator.f90",
+              "line_start": 3021,
+              "line_end": 3048,
+              "declarations": [
+                {
+                  "path": "src/M_calculator.f90",
+                  "line_start": 3025,
+                  "line_end": 3026
+                },
+                {
+                  "path": "src/M_calculator.f90",
+                  "line_start": 93,
+                  "line_end": 126
+                },
+                {
+                  "path": "src/M_calculator.f90",
+                  "line_start": 254,
+                  "line_end": 280
+                }
+              ]
+            },
+            {
+              "procedure": "stuff",
+              "role": "public-entry-point",
+              "module": "M_calculator",
+              "summary": "Store/replace a numeric named variable in the module-wide calculator dictionary. VALUE is CLASS(*) but this implementation only SELECT TYPEs default INTEGER, default REAL and DOUBLE PRECISION; other dynamic types/kinds are not checked conversions and can leave the stored value undefined. Numeric names must not start with \"$\". Optional IOFLAG requests formatted output, not a returned error flag. No public status argument is supplied. State persists across calls and is shared by DNUM0/SNUM0 and other evaluator entries.",
+              "signature": "CALL stuff(VARNAM,VALUE,[IOFLAG])",
+              "path": "src/M_calculator.f90",
+              "line_start": 2650,
+              "line_end": 2690,
+              "declarations": [
+                {
+                  "path": "src/M_calculator.f90",
+                  "line_start": 2654,
+                  "line_end": 2656
+                },
+                {
+                  "path": "src/M_calculator.f90",
+                  "line_start": 93,
+                  "line_end": 126
+                },
+                {
+                  "path": "src/M_calculator.f90",
+                  "line_start": 254,
+                  "line_end": 280
+                }
+              ]
+            },
+            {
+              "procedure": "snum0",
+              "role": "public-entry-point",
+              "module": "M_calculator",
+              "summary": "Evaluate calculator text and return allocatable CHARACTER, with optional default-INTEGER IERR. String variables begin with \"$\" and string values use the package quoting syntax. Input is copied into a fixed ICLEN_CALC=512 working buffer and longer input can truncate; allocation of the returned string does not mean the expression succeeded. Blank input returns blank. Check IERR for failure, and treat this as the same shared mutable calculator context used by STUFF/DNUM0, not an independent per-call parser.",
+              "signature": "VALUE = snum0(INLINE0,[IERR])",
+              "path": "src/M_calculator.f90",
+              "line_start": 3121,
+              "line_end": 3158,
+              "declarations": [
+                {
+                  "path": "src/M_calculator.f90",
+                  "line_start": 3126,
+                  "line_end": 3128
+                },
+                {
+                  "path": "src/M_calculator.f90",
+                  "line_start": 93,
+                  "line_end": 126
+                },
+                {
+                  "path": "src/M_calculator.f90",
+                  "line_start": 254,
+                  "line_end": 280
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
     "befor64": {
       "id": "github:szaghi/befor64",
       "repository": {
@@ -15672,6 +15954,159 @@
         }
       ]
     },
+    "fortran-flann": {
+      "id": "github:ivan-pi/fortran-flann",
+      "repository": {
+        "owner": "ivan-pi",
+        "name": "fortran-flann",
+        "url": "https://github.com/ivan-pi/fortran-flann"
+      },
+      "license": {
+        "label": "BSD-3-Clause (root; manifest says BSD-2-Clause)",
+        "spdx_expression": "BSD-3-Clause",
+        "revision": "35370c851602d954d1d01d10c9c14ff82dd96496",
+        "reviewed_on": "2026-11-08",
+        "notes": "Root LICENSE has BSD three-clause terms credited to Ivan Pribec and the README badge agrees; the manifest says BSD-2-Clause. Retain the explicit root grant and this discrepancy. Native FLANN has separate notices.",
+        "evidence": [
+          {
+            "path": "LICENSE",
+            "url": "https://github.com/ivan-pi/fortran-flann/blob/35370c851602d954d1d01d10c9c14ff82dd96496/LICENSE",
+            "sha256": "bfaf4c001ee227c098d43433a83f40805fca7aad81676c7c4ab560bb95ee9b01"
+          },
+          {
+            "path": "README.md",
+            "url": "https://github.com/ivan-pi/fortran-flann/blob/35370c851602d954d1d01d10c9c14ff82dd96496/README.md",
+            "sha256": "d92598ebf6144133bdd902b7537f568eaf3bc001d8234deb6e60153c6ca612d5"
+          },
+          {
+            "path": "src/flann.f90",
+            "url": "https://github.com/ivan-pi/fortran-flann/blob/35370c851602d954d1d01d10c9c14ff82dd96496/src/flann.f90",
+            "sha256": "6c2fb5c9d062de09209f6b47179a1888859b142f8c5e2a0323f83511383f0005"
+          }
+        ]
+      },
+      "classifications": [
+        {
+          "code": "N5",
+          "level": "source-reviewed",
+          "revision": "35370c851602d954d1d01d10c9c14ff82dd96496",
+          "reviewed_on": "2026-11-08",
+          "notes": "Nearest-neighbor index configuration/build/query document borrowed C-float storage, exact output shapes and native index conventions. This is a pinned public-interface/source review, not a new numerical execution check or complete API audit. Existing hosted drivers and their verified problem scope are recorded separately.",
+          "evidence": [
+            {
+              "path": "src/flann.f90",
+              "url": "https://github.com/ivan-pi/fortran-flann/blob/35370c851602d954d1d01d10c9c14ff82dd96496/src/flann.f90",
+              "sha256": "6c2fb5c9d062de09209f6b47179a1888859b142f8c5e2a0323f83511383f0005"
+            },
+            {
+              "path": "fpm.toml",
+              "url": "https://github.com/ivan-pi/fortran-flann/blob/35370c851602d954d1d01d10c9c14ff82dd96496/fpm.toml",
+              "sha256": "477bbe688355d7da030617563362d4512f0bccf028030ba58f365ebd97e89024"
+            }
+          ],
+          "procedures": [
+            {
+              "procedure": "flann_index",
+              "role": "public-entry-point",
+              "module": "flann",
+              "summary": "Construct a FLANN_INDEX with required FLANNParameters and integer(C_INT) distance identifier, plus optional Minkowski ORDER. This overload configures an initially unbuilt object; use e.g. LINEARINDEXPARAMS() or KDTREEINDEXPARAMS(...) then BUILD_INDEX(points). It sets native FLANN global distance state, so do not assume distance selection is independent across arbitrary simultaneous indexes. Avoid copying an owning built object: native handles/pointers are shallow-copied while a FINAL routine frees the index. Native libflann must be linked.",
+              "signature": "VALUE = flann_index(PARAMS,DISTANCE,[ORDER])",
+              "path": "src/flann.f90",
+              "line_start": 190,
+              "line_end": 203,
+              "declarations": [
+                {
+                  "path": "src/flann.f90",
+                  "line_start": 191,
+                  "line_end": 194
+                },
+                {
+                  "path": "src/flann.f90",
+                  "line_start": 3,
+                  "line_end": 10
+                },
+                {
+                  "path": "src/flann.f90",
+                  "line_start": 49,
+                  "line_end": 116
+                },
+                {
+                  "path": "src/flann.f90",
+                  "line_start": 398,
+                  "line_end": 412
+                }
+              ]
+            },
+            {
+              "procedure": "build_index",
+              "role": "public-entry-point",
+              "module": "flann",
+              "derived_type": "flann_index",
+              "summary": "Declare TYPE(flann_index) :: solver from flann. Build the native index from contiguous REAL(C_FLOAT) TARGET point storage shaped (dimension,number_of_points). The wrapper retains a pointer to the actual data rather than making an owning copy; keep its allocation and target alive/unchanged through all searches and index finalization. Optional SPEEDUP is REAL(C_FLOAT). This method returns no status and assigns a native handle directly; rebuilding an already built object does not explicitly free its earlier handle at this pin. Use a fresh owning index, and do not pass an expression or temporary array as persistent data. The passed object SELF is implicit in solver%; do not pass it again. Optional actuals shown in brackets can be supplied by keyword.",
+              "signature": "CALL solver%build_index(POINTS,[SPEEDUP])",
+              "path": "src/flann.f90",
+              "line_start": 269,
+              "line_end": 288,
+              "declarations": [
+                {
+                  "path": "src/flann.f90",
+                  "line_start": 270,
+                  "line_end": 272
+                },
+                {
+                  "path": "src/flann.f90",
+                  "line_start": 3,
+                  "line_end": 10
+                },
+                {
+                  "path": "src/flann.f90",
+                  "line_start": 49,
+                  "line_end": 116
+                },
+                {
+                  "path": "src/flann.f90",
+                  "line_start": 398,
+                  "line_end": 412
+                }
+              ]
+            },
+            {
+              "procedure": "knn_search",
+              "role": "public-entry-point",
+              "module": "flann",
+              "derived_type": "flann_index",
+              "summary": "Declare TYPE(flann_index) :: solver from flann. Query a built index with REAL(C_FLOAT) QUERIES(dimension,nquery). Preallocate INTEGER(C_INT) INDICES and REAL(C_FLOAT) DISTS to EXACT shape (KNN,nquery), not just spare capacity; mismatch ERROR STOPs before the native call. PARAMS is required SEARCH_PARAMS; optional INTEGER(C_INT) STAT reports the native status, while omission can ERROR STOP. Euclidean DISTS are squared distances and native returned indices remain zero-based at this pin. The routine also contains diagnostic PRINTs. Require matching query dimension, 1<=KNN<=number_of_points and live backing data; this is not a shape-validating general wrapper. The passed object SELF is implicit in solver%; do not pass it again. Optional actuals shown in brackets can be supplied by keyword.",
+              "signature": "CALL solver%knn_search(QUERIES,INDICES,DISTS,KNN,PARAMS,[STAT])",
+              "path": "src/flann.f90",
+              "line_start": 290,
+              "line_end": 339,
+              "declarations": [
+                {
+                  "path": "src/flann.f90",
+                  "line_start": 291,
+                  "line_end": 307
+                },
+                {
+                  "path": "src/flann.f90",
+                  "line_start": 3,
+                  "line_end": 10
+                },
+                {
+                  "path": "src/flann.f90",
+                  "line_start": 49,
+                  "line_end": 116
+                },
+                {
+                  "path": "src/flann.f90",
+                  "line_start": 398,
+                  "line_end": 412
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
     "fortran_stb_image": {
       "id": "github:lewisfish/fortran_stb_image",
       "repository": {
@@ -17911,6 +18346,467 @@
                   "path": "src/Fourier_Transform/dft/NAFPack_Fourier_Transform_dft_compute.f90",
                   "line_start": 107,
                   "line_end": 148
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "fishpack": {
+      "id": "github:jlokimlin/fishpack",
+      "repository": {
+        "owner": "jlokimlin",
+        "name": "fishpack",
+        "url": "https://github.com/jlokimlin/fishpack"
+      },
+      "license": {
+        "label": "UCAR redistribution terms and MIT modernization notice",
+        "spdx_expression": null,
+        "revision": "9dc7d2e7a847fa6a610752d4e91eda3ef9c6130d",
+        "reviewed_on": "2026-11-08",
+        "notes": "Root LICENSE carries UCAR redistribution, attribution and non-endorsement conditions and a registration-acceptance preamble; LICENSE.mit.md credits Jon Lo Kim Lin modernization under MIT. Preserve both notices rather than label all historical sources MIT.",
+        "evidence": [
+          {
+            "path": "LICENSE",
+            "url": "https://github.com/jlokimlin/fishpack/blob/9dc7d2e7a847fa6a610752d4e91eda3ef9c6130d/LICENSE",
+            "sha256": "3f3b9e97cd15383617e2dac4f1b058871716f908797b9fa9385e326e5db45f41"
+          },
+          {
+            "path": "README.md",
+            "url": "https://github.com/jlokimlin/fishpack/blob/9dc7d2e7a847fa6a610752d4e91eda3ef9c6130d/README.md",
+            "sha256": "c930af67aca74ff0879a1a7d4348eeb5b8e4852484898c4dd8841af2cd473a8b"
+          },
+          {
+            "path": "src/centered_helmholtz_solvers.f90",
+            "url": "https://github.com/jlokimlin/fishpack/blob/9dc7d2e7a847fa6a610752d4e91eda3ef9c6130d/src/centered_helmholtz_solvers.f90",
+            "sha256": "998dfb61b0f924f51ffecf5b0e8a908cda3adcdafd54179474400a541a4846a3"
+          },
+          {
+            "path": "LICENSE.mit.md",
+            "url": "https://github.com/jlokimlin/fishpack/blob/9dc7d2e7a847fa6a610752d4e91eda3ef9c6130d/LICENSE.mit.md",
+            "sha256": "9ee2fd694dffb5836b4a198a7fdffbe9a112f3a896872c20b6f499b9a8ee1da5"
+          }
+        ]
+      },
+      "classifications": [
+        {
+          "code": "I2",
+          "level": "source-reviewed",
+          "revision": "9dc7d2e7a847fa6a610752d4e91eda3ef9c6130d",
+          "reviewed_on": "2026-11-08",
+          "notes": "Centered/staggered Cartesian and 3-D Helmholtz calls document grids, boundary storage, overwritten RHS and compatibility corrections. This is a pinned public-interface/source review, not a new numerical execution check or complete API audit. Existing hosted drivers and their verified problem scope are recorded separately.",
+          "evidence": [
+            {
+              "path": "src/centered_helmholtz_solvers.f90",
+              "url": "https://github.com/jlokimlin/fishpack/blob/9dc7d2e7a847fa6a610752d4e91eda3ef9c6130d/src/centered_helmholtz_solvers.f90",
+              "sha256": "998dfb61b0f924f51ffecf5b0e8a908cda3adcdafd54179474400a541a4846a3"
+            },
+            {
+              "path": "src/staggered_helmholtz_solvers.f90",
+              "url": "https://github.com/jlokimlin/fishpack/blob/9dc7d2e7a847fa6a610752d4e91eda3ef9c6130d/src/staggered_helmholtz_solvers.f90",
+              "sha256": "767c6dd5ea8e0fde2ed5256978d7e92cd7add8c8b0570cf2db0b8cc1da0ff3cf"
+            },
+            {
+              "path": "src/three_dimensional_solvers.f90",
+              "url": "https://github.com/jlokimlin/fishpack/blob/9dc7d2e7a847fa6a610752d4e91eda3ef9c6130d/src/three_dimensional_solvers.f90",
+              "sha256": "ae8c68092aad80ccd911953212dd61d824017bb422d42191c49d59c35e078e71"
+            },
+            {
+              "path": "src/fishpack.f90",
+              "url": "https://github.com/jlokimlin/fishpack/blob/9dc7d2e7a847fa6a610752d4e91eda3ef9c6130d/src/fishpack.f90",
+              "sha256": "d712bd4daef95a9fc2bd3f7036f99d4840971124d3a95da6f5b14d5944087d0b"
+            },
+            {
+              "path": "src/fishpack_precision.f90",
+              "url": "https://github.com/jlokimlin/fishpack/blob/9dc7d2e7a847fa6a610752d4e91eda3ef9c6130d/src/fishpack_precision.f90",
+              "sha256": "cf64ee277ee4d606155aded9a599c3044ae3a0f946874428f6536fc9a17e9b70"
+            },
+            {
+              "path": "src/centered_cartesian_solver.f90",
+              "url": "https://github.com/jlokimlin/fishpack/blob/9dc7d2e7a847fa6a610752d4e91eda3ef9c6130d/src/centered_cartesian_solver.f90",
+              "sha256": "7637d5e74bcbc78eb40b1d3fe6aadcbd8ea3e1eaae643fa9991150288f113726"
+            },
+            {
+              "path": "src/staggered_cartesian_solver.f90",
+              "url": "https://github.com/jlokimlin/fishpack/blob/9dc7d2e7a847fa6a610752d4e91eda3ef9c6130d/src/staggered_cartesian_solver.f90",
+              "sha256": "dcf018a93362331f14ec10400489137f8aca284f4f45329656c8123aaf84c1ec"
+            },
+            {
+              "path": "src/centered_cartesian_helmholtz_solver_3d.f90",
+              "url": "https://github.com/jlokimlin/fishpack/blob/9dc7d2e7a847fa6a610752d4e91eda3ef9c6130d/src/centered_cartesian_helmholtz_solver_3d.f90",
+              "sha256": "e2ae98f6a7c98ed70940e14d7adb0d56511b8b2d17a60c99a60c063429cbb304"
+            },
+            {
+              "path": "LICENSE.mit.md",
+              "url": "https://github.com/jlokimlin/fishpack/blob/9dc7d2e7a847fa6a610752d4e91eda3ef9c6130d/LICENSE.mit.md",
+              "sha256": "9ee2fd694dffb5836b4a198a7fdffbe9a112f3a896872c20b6f499b9a8ee1da5"
+            }
+          ],
+          "procedures": [
+            {
+              "procedure": "hwscrt",
+              "role": "public-entry-point",
+              "module": "fishpack",
+              "summary": "Solve the five-point Cartesian Helmholtz discretization on a boundary-inclusive (M+1)-by-(N+1) grid. Use REAL(WP)/INTEGER(IP) from FISHPACK, with A<B, C<D and M,N>3. F(IDIMF,N+1), IDIMF>=M+1, holds RHS and required Dirichlet boundary values on entry and is overwritten by the solution; derivative data go in BDA/BDB(N+1) and BDC/BDD(M+1). Boundary codes 0-4 distinguish periodic, value and derivative conditions. Check IERROR and PERTRB: singular Poisson cases may solve an RHS adjusted by PERTRB and have an arbitrary additive constant. Positive-lambda warning 6 is not the same as invalid-input failure. Internal workspace is allocated; no legacy W argument is accepted.",
+              "signature": "CALL hwscrt(A,B,M,MBDCND,BDA,BDB,C,D,N,NBDCND,BDC,BDD,ELMBDA,F,IDIMF,PERTRB,IERROR)",
+              "path": "src/centered_helmholtz_solvers.f90",
+              "line_start": 37,
+              "line_end": 58,
+              "declarations": [
+                {
+                  "path": "src/centered_helmholtz_solvers.f90",
+                  "line_start": 41,
+                  "line_end": 57
+                },
+                {
+                  "path": "src/fishpack.f90",
+                  "line_start": 1,
+                  "line_end": 84
+                },
+                {
+                  "path": "src/fishpack_precision.f90",
+                  "line_start": 1,
+                  "line_end": 40
+                },
+                {
+                  "path": "src/centered_cartesian_solver.f90",
+                  "line_start": 45,
+                  "line_end": 268
+                }
+              ]
+            },
+            {
+              "procedure": "hstcrt",
+              "role": "public-entry-point",
+              "module": "fishpack",
+              "summary": "Solve the five-point Cartesian Helmholtz discretization on a STAGGERED M-by-N cell-center grid, not the boundary-inclusive HWSCRT layout. F(IDIMF,N) is input RHS then output solution, IDIMF>=M; boundary arrays BDA/BDB have N entries and BDC/BDD have M. Supply the values or derivatives required by the documented 0-4 boundary codes. Use FISHPACK WP/IP kinds and inspect IERROR plus the compatibility adjustment PERTRB for singular Poisson problems. Do not copy centered-grid boundary values into F using HWSCRT rules. Workspace is allocated internally.",
+              "signature": "CALL hstcrt(A,B,M,MBDCND,BDA,BDB,C,D,N,NBDCND,BDC,BDD,ELMBDA,F,IDIMF,PERTRB,IERROR)",
+              "path": "src/staggered_helmholtz_solvers.f90",
+              "line_start": 33,
+              "line_end": 56,
+              "declarations": [
+                {
+                  "path": "src/staggered_helmholtz_solvers.f90",
+                  "line_start": 38,
+                  "line_end": 54
+                },
+                {
+                  "path": "src/fishpack.f90",
+                  "line_start": 1,
+                  "line_end": 84
+                },
+                {
+                  "path": "src/fishpack_precision.f90",
+                  "line_start": 1,
+                  "line_end": 40
+                },
+                {
+                  "path": "src/staggered_cartesian_solver.f90",
+                  "line_start": 36,
+                  "line_end": 257
+                }
+              ]
+            },
+            {
+              "procedure": "hw3crt",
+              "role": "public-entry-point",
+              "module": "fishpack",
+              "summary": "Solve the seven-point 3-D Cartesian Helmholtz discretization with boundary-inclusive grid sizes L+1,M+1,N+1. Supply F(LDIMF,MDIMF,N+1), LDIMF>=L+1 and MDIMF>=M+1, and boundary-face arrays of the linked shapes. F combines interior RHS and requested Dirichlet data, then is overwritten; derivative faces are separate actuals. Boundary codes control each pair of faces. Use FISHPACK WP/IP, check IERROR/PERTRB and account for null-space constants in singular Poisson cases. This is a finite-difference solve, not a continuous exact-solution or convergence-error guarantee.",
+              "signature": "CALL hw3crt(XS,XF,L,LBDCND,BDXS,BDXF,YS,YF,M,MBDCND,BDYS,BDYF,ZS,ZF,N,NBDCND,BDZS,BDZF,ELMBDA,LDIMF,MDIMF,F,PERTRB,IERROR)",
+              "path": "src/three_dimensional_solvers.f90",
+              "line_start": 64,
+              "line_end": 93,
+              "declarations": [
+                {
+                  "path": "src/three_dimensional_solvers.f90",
+                  "line_start": 69,
+                  "line_end": 92
+                },
+                {
+                  "path": "src/fishpack.f90",
+                  "line_start": 1,
+                  "line_end": 84
+                },
+                {
+                  "path": "src/fishpack_precision.f90",
+                  "line_start": 1,
+                  "line_end": 40
+                },
+                {
+                  "path": "src/centered_cartesian_helmholtz_solver_3d.f90",
+                  "line_start": 39,
+                  "line_end": 321
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "spherepack": {
+      "id": "github:jlokimlin/spherepack",
+      "repository": {
+        "owner": "jlokimlin",
+        "name": "spherepack",
+        "url": "https://github.com/jlokimlin/spherepack"
+      },
+      "license": {
+        "label": "UCAR redistribution terms and MIT modernization notice",
+        "spdx_expression": null,
+        "revision": "e80da29462c5987162a0884baaab7434d0215467",
+        "reviewed_on": "2026-11-08",
+        "notes": "Root LICENSE.md supplies UCAR attribution, redistribution and non-endorsement conditions; LICENSE.mit.md supplies Jon Lo Kim Lin MIT modernization terms. Keep both notices; this review does not treat every historical component as MIT-only.",
+        "evidence": [
+          {
+            "path": "LICENSE.md",
+            "url": "https://github.com/jlokimlin/spherepack/blob/e80da29462c5987162a0884baaab7434d0215467/LICENSE.md",
+            "sha256": "0823e3f569a66e5fdaa5df315a8502820a112034436b1cbf2d18635222ad3432"
+          },
+          {
+            "path": "README.md",
+            "url": "https://github.com/jlokimlin/spherepack/blob/e80da29462c5987162a0884baaab7434d0215467/README.md",
+            "sha256": "902d70d10700f6e428c6603942862e733162a733434e204af642b8ec591ea293"
+          },
+          {
+            "path": "src/scalar_analysis_routines.f90",
+            "url": "https://github.com/jlokimlin/spherepack/blob/e80da29462c5987162a0884baaab7434d0215467/src/scalar_analysis_routines.f90",
+            "sha256": "27c90ea6100765edb7135d8b2795eb902dd6a7a13b6e699f02e916314efd7419"
+          },
+          {
+            "path": "LICENSE.mit.md",
+            "url": "https://github.com/jlokimlin/spherepack/blob/e80da29462c5987162a0884baaab7434d0215467/LICENSE.mit.md",
+            "sha256": "dd1f85eb2646fcc6a2e36e3ed5e3f106d00675506151d4567eec4139548a675c"
+          }
+        ]
+      },
+      "classifications": [
+        {
+          "code": "J",
+          "level": "source-reviewed",
+          "revision": "e80da29462c5987162a0884baaab7434d0215467",
+          "reviewed_on": "2026-11-08",
+          "notes": "Regular-grid scalar harmonic analysis/synthesis with separate table setup and Gaussian-grid coordinate/weight generation. This is a pinned public-interface/source review, not a new numerical execution check or complete API audit. Existing hosted drivers and their verified problem scope are recorded separately.",
+          "evidence": [
+            {
+              "path": "src/scalar_analysis_routines.f90",
+              "url": "https://github.com/jlokimlin/spherepack/blob/e80da29462c5987162a0884baaab7434d0215467/src/scalar_analysis_routines.f90",
+              "sha256": "27c90ea6100765edb7135d8b2795eb902dd6a7a13b6e699f02e916314efd7419"
+            },
+            {
+              "path": "src/scalar_synthesis_routines.f90",
+              "url": "https://github.com/jlokimlin/spherepack/blob/e80da29462c5987162a0884baaab7434d0215467/src/scalar_synthesis_routines.f90",
+              "sha256": "0a8247b20469862021ac1e698ee227bc38d50a2323708d898fbc1cf15450681c"
+            },
+            {
+              "path": "src/gaussian_latitudes_and_weights_routines.f90",
+              "url": "https://github.com/jlokimlin/spherepack/blob/e80da29462c5987162a0884baaab7434d0215467/src/gaussian_latitudes_and_weights_routines.f90",
+              "sha256": "fd529c5dc24c4b673751f890cab7423f709adbfe4cd66a6161ee36a091982cbb"
+            },
+            {
+              "path": "src/spherepack.f90",
+              "url": "https://github.com/jlokimlin/spherepack/blob/e80da29462c5987162a0884baaab7434d0215467/src/spherepack.f90",
+              "sha256": "e860da5d7ad9610267aa52ab667877c6015a201c8b404b0d79709ee206fcd8f9"
+            },
+            {
+              "path": "src/spherepack_precision.f90",
+              "url": "https://github.com/jlokimlin/spherepack/blob/e80da29462c5987162a0884baaab7434d0215467/src/spherepack_precision.f90",
+              "sha256": "4061099154facb837657ae5deda75ff0c9da2768cdc457049c4f8ab990fec131"
+            },
+            {
+              "path": "src/scalar_analysis_regular_grid.f90",
+              "url": "https://github.com/jlokimlin/spherepack/blob/e80da29462c5987162a0884baaab7434d0215467/src/scalar_analysis_regular_grid.f90",
+              "sha256": "e736206ba37aefd60b2753cd05050f7741d1084c61d4d9455bd453c2a8028fd1"
+            },
+            {
+              "path": "src/scalar_synthesis_regular_grid.f90",
+              "url": "https://github.com/jlokimlin/spherepack/blob/e80da29462c5987162a0884baaab7434d0215467/src/scalar_synthesis_regular_grid.f90",
+              "sha256": "cc60bb5d3efb2ea25ef029fd1b1ec059a71b42dd05045c90f525470018be6799"
+            },
+            {
+              "path": "LICENSE.mit.md",
+              "url": "https://github.com/jlokimlin/spherepack/blob/e80da29462c5987162a0884baaab7434d0215467/LICENSE.mit.md",
+              "sha256": "dd1f85eb2646fcc6a2e36e3ed5e3f106d00675506151d4567eec4139548a675c"
+            }
+          ],
+          "procedures": [
+            {
+              "procedure": "initialize_shaec",
+              "role": "public-entry-point",
+              "module": "spherepack",
+              "summary": "Allocate and initialize allocatable REAL(WP) WAVETABLE(:) for regular-grid scalar analysis at NLAT/NLON. Check ERROR_FLAG=0 before SHAEC. This is the allocating convenience wrapper around SHAECI, so the caller does not calculate a legacy wavetable length. An INTENT(OUT) allocatable actual is replaced on reinitialization. Reuse the resulting table only for the same grid and do not modify it. The synthesis table is initialized separately by INITIALIZE_SHSEC.",
+              "signature": "CALL initialize_shaec(NLAT,NLON,WAVETABLE,ERROR_FLAG)",
+              "path": "src/scalar_analysis_routines.f90",
+              "line_start": 256,
+              "line_end": 271,
+              "declarations": [
+                {
+                  "path": "src/scalar_analysis_routines.f90",
+                  "line_start": 259,
+                  "line_end": 262
+                },
+                {
+                  "path": "src/spherepack.f90",
+                  "line_start": 65,
+                  "line_end": 85
+                },
+                {
+                  "path": "src/spherepack.f90",
+                  "line_start": 168,
+                  "line_end": 171
+                },
+                {
+                  "path": "src/spherepack_precision.f90",
+                  "line_start": 1,
+                  "line_end": 26
+                }
+              ]
+            },
+            {
+              "procedure": "shaec",
+              "role": "public-entry-point",
+              "module": "spherepack",
+              "summary": "Analyze NT scalar fields on a regular latitude/longitude sphere into the package normalized real harmonic coefficients A/B. For the basic full-sphere case ISYM=0, use G(IDG,JDG,NT) with IDG>=NLAT, JDG>=NLON; theta(i)=(i-1)*pi/(NLAT-1) includes both poles, longitude has NLON distinct points without a repeated 2*pi endpoint. NLAT>=3, NLON>=4. A/B are (MDAB,NDAB,NT), NDAB>=NLAT and MDAB at least MIN(NLAT,(NLON+2)/2) for even NLON or MIN(NLAT,(NLON+1)/2) for odd NLON. Initialize WSHAEC first and check IERROR. ISYM=1/2 use different half-sphere storage. Do not substitute a Gaussian latitude grid.",
+              "signature": "CALL shaec(NLAT,NLON,ISYM,NT,G,IDG,JDG,A,B,MDAB,NDAB,WSHAEC,IERROR)",
+              "path": "src/scalar_analysis_routines.f90",
+              "line_start": 57,
+              "line_end": 73,
+              "declarations": [
+                {
+                  "path": "src/scalar_analysis_routines.f90",
+                  "line_start": 60,
+                  "line_end": 72
+                },
+                {
+                  "path": "src/spherepack.f90",
+                  "line_start": 65,
+                  "line_end": 85
+                },
+                {
+                  "path": "src/spherepack.f90",
+                  "line_start": 168,
+                  "line_end": 171
+                },
+                {
+                  "path": "src/spherepack_precision.f90",
+                  "line_start": 1,
+                  "line_end": 26
+                },
+                {
+                  "path": "src/scalar_analysis_regular_grid.f90",
+                  "line_start": 37,
+                  "line_end": 125
+                }
+              ]
+            },
+            {
+              "procedure": "initialize_shsec",
+              "role": "public-entry-point",
+              "module": "spherepack",
+              "summary": "Allocate and initialize a distinct REAL(WP) WAVETABLE(:) for regular-grid scalar SYNTHESIS. Check ERROR_FLAG before SHSEC, retain the table unchanged for repeated synthesis at the same NLAT/NLON, and reinitialize after grid-size changes. This initializes tables only, not harmonic coefficients or output fields. Do not assume an analysis table is interchangeable with this synthesis table.",
+              "signature": "CALL initialize_shsec(NLAT,NLON,WAVETABLE,ERROR_FLAG)",
+              "path": "src/scalar_synthesis_routines.f90",
+              "line_start": 169,
+              "line_end": 184,
+              "declarations": [
+                {
+                  "path": "src/scalar_synthesis_routines.f90",
+                  "line_start": 172,
+                  "line_end": 175
+                },
+                {
+                  "path": "src/spherepack.f90",
+                  "line_start": 65,
+                  "line_end": 85
+                },
+                {
+                  "path": "src/spherepack.f90",
+                  "line_start": 168,
+                  "line_end": 171
+                },
+                {
+                  "path": "src/spherepack_precision.f90",
+                  "line_start": 1,
+                  "line_end": 26
+                }
+              ]
+            },
+            {
+              "procedure": "shsec",
+              "role": "public-entry-point",
+              "module": "spherepack",
+              "summary": "Synthesize NT regular-grid scalar fields G from the package A/B harmonic coefficients. With ISYM=0 use the same full-sphere dimensions, grid order and coefficient normalization as SHAEC; NDAB>=NLAT and MDAB obeys the linked parity rule. G is an output array and A/B are input. Initialize WSHSEC for this grid with INITIALIZE_SHSEC and inspect IERROR before using G. Arbitrary samples need not survive an analysis/synthesis round trip exactly: unresolved harmonic content is projected away. Gaussian-grid synthesis uses a different entry point.",
+              "signature": "CALL shsec(NLAT,NLON,ISYM,NT,G,IDG,JDG,A,B,MDAB,NDAB,WSHSEC,IERROR)",
+              "path": "src/scalar_synthesis_routines.f90",
+              "line_start": 112,
+              "line_end": 128,
+              "declarations": [
+                {
+                  "path": "src/scalar_synthesis_routines.f90",
+                  "line_start": 115,
+                  "line_end": 127
+                },
+                {
+                  "path": "src/spherepack.f90",
+                  "line_start": 65,
+                  "line_end": 85
+                },
+                {
+                  "path": "src/spherepack.f90",
+                  "line_start": 168,
+                  "line_end": 171
+                },
+                {
+                  "path": "src/spherepack_precision.f90",
+                  "line_start": 1,
+                  "line_end": 26
+                },
+                {
+                  "path": "src/scalar_synthesis_regular_grid.f90",
+                  "line_start": 40,
+                  "line_end": 140
+                }
+              ]
+            },
+            {
+              "procedure": "compute_gaussian_latitudes_and_weights",
+              "role": "public-entry-point",
+              "module": "spherepack",
+              "summary": "Return Gaussian COLATITUDES THETA(NLAT) in increasing radians in (0,pi) and Gauss-Legendre WTS(NLAT); NLAT must be positive and IERROR=0 indicates valid input. These are angular colatitudes, not latitude degrees or the uniform-grid coordinates required by SHAEC/SHSEC. Weights apply to integration in cos(theta), so they are not uniform theta-step weights. The caller allocates both output arrays; this does not initialize a harmonic transform table.",
+              "signature": "CALL compute_gaussian_latitudes_and_weights(NLAT,THETA,WTS,IERROR)",
+              "path": "src/gaussian_latitudes_and_weights_routines.f90",
+              "line_start": 102,
+              "line_end": 230,
+              "declarations": [
+                {
+                  "path": "src/gaussian_latitudes_and_weights_routines.f90",
+                  "line_start": 105,
+                  "line_end": 108
+                },
+                {
+                  "path": "src/spherepack.f90",
+                  "line_start": 65,
+                  "line_end": 85
+                },
+                {
+                  "path": "src/spherepack.f90",
+                  "line_start": 168,
+                  "line_end": 171
+                },
+                {
+                  "path": "src/spherepack_precision.f90",
+                  "line_start": 1,
+                  "line_end": 26
+                },
+                {
+                  "path": "src/gaussian_latitudes_and_weights_routines.f90",
+                  "line_start": 80,
+                  "line_end": 101
+                },
+                {
+                  "path": "src/gaussian_latitudes_and_weights_routines.f90",
+                  "line_start": 129,
+                  "line_end": 137
                 }
               ]
             }
@@ -25587,6 +26483,212 @@
         }
       ]
     },
+    "delaunaysparse": {
+      "id": "github:vtopt/delaunaysparse",
+      "repository": {
+        "owner": "vtopt",
+        "name": "DelaunaySparse",
+        "url": "https://github.com/vtopt/DelaunaySparse"
+      },
+      "license": {
+        "label": "MIT",
+        "spdx_expression": "MIT",
+        "revision": "f3ffef04e24281aa42a0e5ec81f5c68f6bb5fb01",
+        "reviewed_on": "2026-11-08",
+        "notes": "Root LICENSE and src/LICENSE supply the MIT grant credited to Chang, Watson, Lux and collaborators. Bundled linear algebra retains its own notices.",
+        "evidence": [
+          {
+            "path": "LICENSE",
+            "url": "https://github.com/vtopt/DelaunaySparse/blob/f3ffef04e24281aa42a0e5ec81f5c68f6bb5fb01/LICENSE",
+            "sha256": "3c147500f05717658083009f351371cbd639604ad2d16ad96f51916034354bd6"
+          },
+          {
+            "path": "README.md",
+            "url": "https://github.com/vtopt/DelaunaySparse/blob/f3ffef04e24281aa42a0e5ec81f5c68f6bb5fb01/README.md",
+            "sha256": "299b77c961d8a9e8f0ec77d3959592b9f81062e202f42bf624c56220387eeacd"
+          },
+          {
+            "path": "src/delsparse.f90",
+            "url": "https://github.com/vtopt/DelaunaySparse/blob/f3ffef04e24281aa42a0e5ec81f5c68f6bb5fb01/src/delsparse.f90",
+            "sha256": "05ae7093145b67417c0081c46ca097be67e08fdd0dfe957fcb17ae63f00c4134"
+          },
+          {
+            "path": "src/LICENSE",
+            "url": "https://github.com/vtopt/DelaunaySparse/blob/f3ffef04e24281aa42a0e5ec81f5c68f6bb5fb01/src/LICENSE",
+            "sha256": "3c147500f05717658083009f351371cbd639604ad2d16ad96f51916034354bd6"
+          }
+        ]
+      },
+      "classifications": [
+        {
+          "code": "E2",
+          "level": "source-reviewed",
+          "revision": "f3ffef04e24281aa42a0e5ec81f5c68f6bb5fb01",
+          "reviewed_on": "2026-11-08",
+          "notes": "Serial multivariate Delaunay interpolation documents modified coordinates, per-query status and paired response arrays. This is a pinned public-interface/source review, not a new numerical execution check or complete API audit. Existing hosted drivers and their verified problem scope are recorded separately.",
+          "evidence": [
+            {
+              "path": "src/delsparse.f90",
+              "url": "https://github.com/vtopt/DelaunaySparse/blob/f3ffef04e24281aa42a0e5ec81f5c68f6bb5fb01/src/delsparse.f90",
+              "sha256": "05ae7093145b67417c0081c46ca097be67e08fdd0dfe957fcb17ae63f00c4134"
+            },
+            {
+              "path": "src/LICENSE",
+              "url": "https://github.com/vtopt/DelaunaySparse/blob/f3ffef04e24281aa42a0e5ec81f5c68f6bb5fb01/src/LICENSE",
+              "sha256": "3c147500f05717658083009f351371cbd639604ad2d16ad96f51916034354bd6"
+            }
+          ],
+          "procedures": [
+            {
+              "procedure": "DELAUNAYSPARSES",
+              "role": "public-entry-point",
+              "module": "DELSPARSE_MOD",
+              "summary": "Locate interpolation simplices and barycentric weights for M query columns Q(D,M) among data columns PTS(D,N), using REAL(R8). PTS and Q are INTENT(INOUT): both are rescaled/shifted, so copy originals first when they must be retained. Allocate SIMPS(D+1,M), WEIGHTS(D+1,M) and IERR(M); simplex vertex indices are one-based column indices into PTS. Check EACH IERR: 0 is interpolation, 1 permitted extrapolation, 2 outside the permitted distance, and other codes are failures with potentially unusable outputs. Optional INTERP_IN(response_count,N) and INTERP_OUT(response_count,M) must occur together. This local simplex search does not return the complete triangulation. Degenerate/duplicate data, budgets and extrapolation limits require the linked handling.",
+              "signature": "CALL DELAUNAYSPARSES(D,N,PTS,M,Q,SIMPS,WEIGHTS,IERR,[INTERP_IN],[INTERP_OUT],[EPS],[EXTRAP],[RNORM],[IBUDGET],[CHAIN],[EXACT])",
+              "path": "src/delsparse.f90",
+              "line_start": 15,
+              "line_end": 33,
+              "declarations": [
+                {
+                  "path": "src/delsparse.f90",
+                  "line_start": 19,
+                  "line_end": 32
+                },
+                {
+                  "path": "src/delsparse.f90",
+                  "line_start": 1,
+                  "line_end": 17
+                },
+                {
+                  "path": "src/delsparse.f90",
+                  "line_start": 69,
+                  "line_end": 209
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "qnstop": {
+      "id": "github:vtopt/qnstop",
+      "repository": {
+        "owner": "vtopt",
+        "name": "qnstop",
+        "url": "https://github.com/vtopt/qnstop"
+      },
+      "license": {
+        "label": "MIT",
+        "spdx_expression": "MIT",
+        "revision": "39e8273247f586fca8305ef3d8e879b27b6512d0",
+        "reviewed_on": "2026-11-08",
+        "notes": "Root LICENSE.mit supplies an MIT permission grant credited to the authors. BLAS/LAPACK and random-number components retain their own notices; this review scopes the serial QNSTOPS module rather than a complete bundled-component license audit.",
+        "evidence": [
+          {
+            "path": "LICENSE.mit",
+            "url": "https://github.com/vtopt/qnstop/blob/39e8273247f586fca8305ef3d8e879b27b6512d0/LICENSE.mit",
+            "sha256": "a6a590651104748b806bb33e097bffe07d89aec778791a98d54f4243794eacbb"
+          },
+          {
+            "path": "README.md",
+            "url": "https://github.com/vtopt/qnstop/blob/39e8273247f586fca8305ef3d8e879b27b6512d0/README.md",
+            "sha256": "f0defaf24430f6520f3e1636e5601dd2e8fdacf2bd0741711ae2af3a4a0a662f"
+          },
+          {
+            "path": "src/qnstops.f95",
+            "url": "https://github.com/vtopt/qnstop/blob/39e8273247f586fca8305ef3d8e879b27b6512d0/src/qnstops.f95",
+            "sha256": "b57bdbf67a13552540f0e0cf60e48df194b25a8fa45871295896f98c4cbfa454"
+          }
+        ]
+      },
+      "classifications": [
+        {
+          "code": "G2",
+          "level": "source-reviewed",
+          "revision": "39e8273247f586fca8305ef3d8e879b27b6512d0",
+          "reviewed_on": "2026-11-08",
+          "notes": "Serial stochastic/global optimization and its public Latin-hypercube starting-design helper document callbacks, budgets and unchecked design inputs. This is a pinned public-interface/source review, not a new numerical execution check or complete API audit. Existing hosted drivers and their verified problem scope are recorded separately.",
+          "evidence": [
+            {
+              "path": "src/qnstops.f95",
+              "url": "https://github.com/vtopt/qnstop/blob/39e8273247f586fca8305ef3d8e879b27b6512d0/src/qnstops.f95",
+              "sha256": "b57bdbf67a13552540f0e0cf60e48df194b25a8fa45871295896f98c4cbfa454"
+            },
+            {
+              "path": "src/real_precision.f95",
+              "url": "https://github.com/vtopt/qnstop/blob/39e8273247f586fca8305ef3d8e879b27b6512d0/src/real_precision.f95",
+              "sha256": "468c681cb43c6c41e4dc566a1764879edba1e0250462fffd2c7c53285b17a626"
+            }
+          ],
+          "procedures": [
+            {
+              "procedure": "QNSTOPS",
+              "role": "public-entry-point",
+              "module": "QNSTOPS_MOD",
+              "summary": "Serial box-constrained quasi-Newton stochastic/global search. Use REAL(R8) LB/UB/XI of dimension P with strict LB<UB and valid start points. MODE is a one-character G (global) or S (stochastic) selector. OBJ_FUNC(C,IFLAG) returns REAL(R8), setting IFLAG=0 when defined. Supply an explicit stopping rule, e.g. a positive variable MAX_ITER or MAX_EVAL; these are INTENT(INOUT), not literal-constant actuals. STATUS 1/2/3 are normal iteration/evaluation/minimum-radius stops, not certificates of an optimum. Check nonzero tens-digit errors before using XI/FMIN. Optional multistart modes have linked START_PTS/NSTART/ASP_GEN requirements; use keywords to skip optionals. This scope makes no parallel-scaling or global-optimality claim.",
+              "signature": "CALL QNSTOPS(P,LB,UB,OBJ_FUNC,XI,MODE,FMIN,STATUS,[SWITCH],[NSTART],[START_PTS],[N],[MAX_ITER],[MAX_EVAL],[MIN_TAU],[TAU],[GAIN],[GAMMAV],[GAMMAW],[ETA],[TRACE],[ASP_GEN])",
+              "path": "src/qnstops.f95",
+              "line_start": 23,
+              "line_end": 1121,
+              "declarations": [
+                {
+                  "path": "src/qnstops.f95",
+                  "line_start": 214,
+                  "line_end": 245
+                },
+                {
+                  "path": "src/qnstops.f95",
+                  "line_start": 14,
+                  "line_end": 20
+                },
+                {
+                  "path": "src/real_precision.f95",
+                  "line_start": 1,
+                  "line_end": 3
+                },
+                {
+                  "path": "src/qnstops.f95",
+                  "line_start": 38,
+                  "line_end": 211
+                }
+              ]
+            },
+            {
+              "procedure": "LATINDESIGN",
+              "role": "public-entry-point",
+              "module": "QNSTOPS_MOD",
+              "summary": "Generate a Latin-hypercube initial design LHSDESIGN(P,LNSTART) for a box, with supplied XI inserted as the last column. Use REAL(R8), P>0, LNSTART>=2, strictly positive box widths and XI inside the box. This public helper exposes no status or input validation; invalid bounds/coordinates can cause division or indexing errors. It uses intrinsic RANDOM_NUMBER and its process seed, so seed explicitly when reproducible initial designs are required. It constructs samples only and never evaluates an objective or solves an optimization problem.",
+              "signature": "CALL LATINDESIGN(P,LNSTART,LB,UB,XI,LHSDESIGN)",
+              "path": "src/qnstops.f95",
+              "line_start": 1418,
+              "line_end": 1496,
+              "declarations": [
+                {
+                  "path": "src/qnstops.f95",
+                  "line_start": 1455,
+                  "line_end": 1457
+                },
+                {
+                  "path": "src/qnstops.f95",
+                  "line_start": 14,
+                  "line_end": 20
+                },
+                {
+                  "path": "src/real_precision.f95",
+                  "line_start": 1,
+                  "line_end": 3
+                },
+                {
+                  "path": "src/qnstops.f95",
+                  "line_start": 1418,
+                  "line_end": 1453
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
     "fortran-utils": {
       "id": "github:certik/fortran-utils",
       "repository": {
@@ -25980,6 +27082,127 @@
         }
       ]
     },
+    "m-process": {
+      "id": "github:urbanjost/m_process",
+      "repository": {
+        "owner": "urbanjost",
+        "name": "M_process",
+        "url": "https://github.com/urbanjost/M_process"
+      },
+      "license": {
+        "label": "Unlicense",
+        "spdx_expression": "Unlicense",
+        "revision": "a38afc744f991a602eded0f7782beb2eff87c8cd",
+        "reviewed_on": "2026-11-08",
+        "notes": "Root LICENSE contains the Unlicense dedication/disclaimer; source procedure notices say Public Domain. This scope describes POSIX interfaces and does not establish portable native-Windows operation.",
+        "evidence": [
+          {
+            "path": "LICENSE",
+            "url": "https://github.com/urbanjost/M_process/blob/a38afc744f991a602eded0f7782beb2eff87c8cd/LICENSE",
+            "sha256": "f40d08f39a7fbaf627c062ede8033c31b58da5afc0cf0c13a756aeff6c5be721"
+          },
+          {
+            "path": "README.md",
+            "url": "https://github.com/urbanjost/M_process/blob/a38afc744f991a602eded0f7782beb2eff87c8cd/README.md",
+            "sha256": "7608239584b75971bda7be91aa9d3af50eb3fd7aa4fe668cf846b9f8c05e0695"
+          },
+          {
+            "path": "src/M_process.f90",
+            "url": "https://github.com/urbanjost/M_process/blob/a38afc744f991a602eded0f7782beb2eff87c8cd/src/M_process.f90",
+            "sha256": "7e7bb3db4cedb1ca4f0c443c1af6f3424f14db48d8efb1f66daf619516f26618"
+          }
+        ]
+      },
+      "classifications": [
+        {
+          "code": "S",
+          "level": "source-reviewed",
+          "revision": "a38afc744f991a602eded0f7782beb2eff87c8cd",
+          "reviewed_on": "2026-11-08",
+          "notes": "POSIX subprocess open/read/close interfaces document shell semantics, bounded record handling and the pinned undefined-status cleanup defect. This is a pinned public-interface/source review, not a new numerical execution check or complete API audit. Existing hosted drivers and their verified problem scope are recorded separately.",
+          "evidence": [
+            {
+              "path": "src/M_process.f90",
+              "url": "https://github.com/urbanjost/M_process/blob/a38afc744f991a602eded0f7782beb2eff87c8cd/src/M_process.f90",
+              "sha256": "7e7bb3db4cedb1ca4f0c443c1af6f3424f14db48d8efb1f66daf619516f26618"
+            }
+          ],
+          "procedures": [
+            {
+              "procedure": "process_open_read",
+              "role": "public-entry-point",
+              "module": "M_process",
+              "summary": "Open a POSIX POPEN pipe to read command stdout into TYPE(STREAMPOINTER) FP; IERR=0 only means the pipe was opened, not that the child command succeeded. CMD is a shell command string with shell quoting/expansion semantics, not an argv array. A compatible POSIX C runtime and allowed subprocesses are required; sandbox restrictions still apply. Do not reopen an already owned FP or shallow-copy its native handle. See the pinned PROCESS_CLOSE limitation before relying on cleanup or exit reporting.",
+              "signature": "CALL process_open_read(CMD,FP,IERR)",
+              "path": "src/M_process.f90",
+              "line_start": 581,
+              "line_end": 597,
+              "declarations": [
+                {
+                  "path": "src/M_process.f90",
+                  "line_start": 586,
+                  "line_end": 590
+                },
+                {
+                  "path": "src/M_process.f90",
+                  "line_start": 338,
+                  "line_end": 358
+                },
+                {
+                  "path": "src/M_process.f90",
+                  "line_start": 730,
+                  "line_end": 755
+                }
+              ]
+            },
+            {
+              "procedure": "process_readline",
+              "role": "public-entry-point",
+              "module": "M_process",
+              "summary": "Read into caller CHARACTER READFROM from an already open pipe. IERR=0 returns a record chunk; IERR=-1 combines end-of-file and read failure. This pin uses bounded FGETS and assumes newline plus NUL when trimming, so an overlong line or final unterminated line may lose data. Restrict this sketch to newline-terminated records comfortably shorter than the caller buffer (length at least two); it is not a lossless arbitrary-length record reader. The stream remains open after EOF and requires cleanup.",
+              "signature": "CALL process_readline(READFROM,FP,IERR)",
+              "path": "src/M_process.f90",
+              "line_start": 939,
+              "line_end": 978,
+              "declarations": [
+                {
+                  "path": "src/M_process.f90",
+                  "line_start": 944,
+                  "line_end": 946
+                },
+                {
+                  "path": "src/M_process.f90",
+                  "line_start": 338,
+                  "line_end": 358
+                }
+              ]
+            },
+            {
+              "procedure": "process_close",
+              "role": "public-entry-point",
+              "module": "M_process",
+              "summary": "Intended explicit POPEN cleanup using PCLOSE and a returned integer status, but this PIN has a source defect: IERR is INTENT(OUT) and is read in IF(IERR.GE.0) before assignment, so calling with IERR=0 beforehand does not repair the undefined read and PCLOSE can be skipped. The handle is not nullified after closing either. Do not rely on this upstream routine for guaranteed cleanup, repeated-close safety or dependable child exit reporting without a corrected implementation. This review identifies the interface/limitation, not a verified resource-lifetime recipe.",
+              "signature": "CALL process_close(FP,IERR)",
+              "path": "src/M_process.f90",
+              "line_start": 821,
+              "line_end": 847,
+              "declarations": [
+                {
+                  "path": "src/M_process.f90",
+                  "line_start": 826,
+                  "line_end": 828
+                },
+                {
+                  "path": "src/M_process.f90",
+                  "line_start": 338,
+                  "line_end": 358
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
     "nufft1d": {
       "id": "github:zgimbutas/nufft1d",
       "repository": {
@@ -26284,6 +27507,320 @@
           ]
         }
       ]
+    },
+    "m_cli": {
+      "id": "github:urbanjost/m_cli",
+      "repository": {
+        "owner": "urbanjost",
+        "name": "M_CLI",
+        "url": "https://github.com/urbanjost/M_CLI"
+      },
+      "license": {
+        "label": "Unlicense",
+        "spdx_expression": "Unlicense",
+        "revision": "45a7cbcdc12b71b828c482fb4c33498db7fb5618",
+        "reviewed_on": "2026-11-08",
+        "notes": "Root LICENSE supplies the Unlicense dedication/disclaimer and source documentation says Public Domain. Only public commandline/check/dictionary interfaces are reviewed.",
+        "evidence": [
+          {
+            "path": "LICENSE",
+            "url": "https://github.com/urbanjost/M_CLI/blob/45a7cbcdc12b71b828c482fb4c33498db7fb5618/LICENSE",
+            "sha256": "f40d08f39a7fbaf627c062ede8033c31b58da5afc0cf0c13a756aeff6c5be721"
+          },
+          {
+            "path": "README.md",
+            "url": "https://github.com/urbanjost/M_CLI/blob/45a7cbcdc12b71b828c482fb4c33498db7fb5618/README.md",
+            "sha256": "709f49e1f1a2069bf8b9f366f5cf902958329c1c93369aba6f194a980520c6bb"
+          },
+          {
+            "path": "src/M_CLI.f90",
+            "url": "https://github.com/urbanjost/M_CLI/blob/45a7cbcdc12b71b828c482fb4c33498db7fb5618/src/M_CLI.f90",
+            "sha256": "33469b27731b15117ffe050d478ce00e4c05417cbb292ee11a6534c187c4e7a8"
+          }
+        ]
+      },
+      "classifications": [
+        {
+          "code": "N3",
+          "level": "source-reviewed",
+          "revision": "45a7cbcdc12b71b828c482fb4c33498db7fb5618",
+          "reviewed_on": "2026-11-08",
+          "notes": "Prototype-command to NAMELIST conversion and diagnostics document caller READ, shared state and stopping help/error behavior. This is a pinned public-interface/source review, not a new numerical execution check or complete API audit. Existing hosted drivers and their verified problem scope are recorded separately.",
+          "evidence": [
+            {
+              "path": "src/M_CLI.f90",
+              "url": "https://github.com/urbanjost/M_CLI/blob/45a7cbcdc12b71b828c482fb4c33498db7fb5618/src/M_CLI.f90",
+              "sha256": "33469b27731b15117ffe050d478ce00e4c05417cbb292ee11a6534c187c4e7a8"
+            },
+            {
+              "path": "docs/fpm-ford/src/demo_M_CLI.f90",
+              "url": "https://github.com/urbanjost/M_CLI/blob/45a7cbcdc12b71b828c482fb4c33498db7fb5618/docs/fpm-ford/src/demo_M_CLI.f90",
+              "sha256": "d02c06b258d0cffabe6a81c974b5c763b3da9db4b509ce06bc53593bdb699b7e"
+            }
+          ],
+          "procedures": [
+            {
+              "procedure": "commandline",
+              "role": "public-entry-point",
+              "module": "M_CLI",
+              "summary": "Convert a prototype option definition plus the actual process command arguments into allocated CHARACTER NAMELIST text. Default group name is ARGS; optional NAME changes it. The caller must declare the matching NAMELIST and READ the returned text with IOSTAT/IOMSG to populate typed variables; this call does not bind variable addresses. Optional NOQUOTE changes string quoting behavior. Each call rebuilds module-wide option state and UNNAMED arguments, so this is not an independent parser object. Program command arguments must be supplied through the runner, not stdin.",
+              "signature": "VALUE = commandline(DEFINITION,[NAME],[NOQUOTE])",
+              "path": "src/M_CLI.f90",
+              "line_start": 602,
+              "line_end": 639,
+              "declarations": [
+                {
+                  "path": "src/M_CLI.f90",
+                  "line_start": 606,
+                  "line_end": 611
+                },
+                {
+                  "path": "src/M_CLI.f90",
+                  "line_start": 178,
+                  "line_end": 188
+                },
+                {
+                  "path": "docs/fpm-ford/src/demo_M_CLI.f90",
+                  "line_start": 1,
+                  "line_end": 28
+                }
+              ]
+            },
+            {
+              "procedure": "check_commandline",
+              "role": "public-entry-point",
+              "module": "M_CLI",
+              "summary": "After READ(returned_text,NML=...,IOSTAT=ios,IOMSG=message), check IOS/MESSAGE and process usage/help/version requests saved by COMMANDLINE. Nonzero IOS prints options and STOP 1; usage/help/version can print and STOP normally. This is deliberately a command-program convenience, not recoverable library error handling. Optional HELP_TEXT/VERSION_TEXT require allocated deferred-length CHARACTER arrays, not just arbitrary scalar strings. Inspect IOS yourself instead if the application must continue after parse failure.",
+              "signature": "CALL check_commandline(IOS,MESSAGE,[HELP_TEXT],[VERSION_TEXT])",
+              "path": "src/M_CLI.f90",
+              "line_start": 376,
+              "line_end": 431,
+              "declarations": [
+                {
+                  "path": "src/M_CLI.f90",
+                  "line_start": 378,
+                  "line_end": 381
+                },
+                {
+                  "path": "src/M_CLI.f90",
+                  "line_start": 178,
+                  "line_end": 188
+                },
+                {
+                  "path": "docs/fpm-ford/src/demo_M_CLI.f90",
+                  "line_start": 1,
+                  "line_end": 28
+                }
+              ]
+            },
+            {
+              "procedure": "print_dictionary",
+              "role": "public-entry-point",
+              "module": "M_CLI",
+              "summary": "Print saved option names, presence flags, values and positional UNNAMED arguments to stderr. Optional HEADER prefixes the listing and optional STOP=.TRUE. terminates the program after printing; omit STOP or use .FALSE. to continue. Call after COMMANDLINE establishes the current dictionary. This is diagnostic output, not a returned typed dictionary or a mechanism for populating the caller NAMELIST.",
+              "signature": "CALL print_dictionary([HEADER],[STOP])",
+              "path": "src/M_CLI.f90",
+              "line_start": 1361,
+              "line_end": 1385,
+              "declarations": [
+                {
+                  "path": "src/M_CLI.f90",
+                  "line_start": 1362,
+                  "line_end": 1363
+                },
+                {
+                  "path": "src/M_CLI.f90",
+                  "line_start": 178,
+                  "line_end": 188
+                },
+                {
+                  "path": "docs/fpm-ford/src/demo_M_CLI.f90",
+                  "line_start": 1,
+                  "line_end": 28
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "fortran-modbus": {
+      "id": "github:interkosmos/fortran-modbus",
+      "repository": {
+        "owner": "interkosmos",
+        "name": "fortran-modbus",
+        "url": "https://github.com/interkosmos/fortran-modbus"
+      },
+      "license": {
+        "label": "ISC",
+        "spdx_expression": "ISC",
+        "revision": "1e99906209fbbcdd1f1bf2064a92325cf4bb05fa",
+        "reviewed_on": "2026-11-08",
+        "notes": "British-spelled root LICENCE supplies Philipp Engel ISC terms for the Fortran bindings. Native libmodbus is a separate dependency with its own license.",
+        "evidence": [
+          {
+            "path": "LICENCE",
+            "url": "https://github.com/interkosmos/fortran-modbus/blob/1e99906209fbbcdd1f1bf2064a92325cf4bb05fa/LICENCE",
+            "sha256": "5b8f95034f3e3a48f315ce398842d9f8683c234d03708b9a9ea23ca00c00c9b8"
+          },
+          {
+            "path": "README.md",
+            "url": "https://github.com/interkosmos/fortran-modbus/blob/1e99906209fbbcdd1f1bf2064a92325cf4bb05fa/README.md",
+            "sha256": "737e07a2fc4141f581fca73b9a56f3f6561b058501166bf9e5e528147b5727da"
+          },
+          {
+            "path": "src/modbus.F90",
+            "url": "https://github.com/interkosmos/fortran-modbus/blob/1e99906209fbbcdd1f1bf2064a92325cf4bb05fa/src/modbus.F90",
+            "sha256": "a32330d7ac66c86bc3fcc09cd600125aea52c7a029d7ba95eb616f7f64375338"
+          }
+        ]
+      },
+      "classifications": [
+        {
+          "code": "N2",
+          "level": "source-reviewed",
+          "revision": "1e99906209fbbcdd1f1bf2064a92325cf4bb05fa",
+          "reviewed_on": "2026-11-08",
+          "notes": "Offline floating/register representation conversion in paired ABCD/DCBA orders documents C kinds and caller-owned two-register buffers. This is a pinned public-interface/source review, not a new numerical execution check or complete API audit. Existing hosted drivers and their verified problem scope are recorded separately.",
+          "evidence": [
+            {
+              "path": "src/modbus.F90",
+              "url": "https://github.com/interkosmos/fortran-modbus/blob/1e99906209fbbcdd1f1bf2064a92325cf4bb05fa/src/modbus.F90",
+              "sha256": "a32330d7ac66c86bc3fcc09cd600125aea52c7a029d7ba95eb616f7f64375338"
+            }
+          ],
+          "procedures": [
+            {
+              "procedure": "modbus_set_float_abcd",
+              "role": "public-entry-point",
+              "module": "modbus",
+              "summary": "Encode REAL(C_FLOAT) F into at least two contiguous INTEGER(C_UINT16_T) register elements in ABCD byte order. This is an offline representation conversion, requiring native libmodbus but no device context or connection. DEST is assumed-size and no length/status is passed, so the caller guarantees enough storage. In the ordinary HAS_UNSIGNED=0 build C_UINT16_T aliases signed C_INT16_T: preserve raw register bits rather than treating each element as a nonnegative Fortran integer.",
+              "signature": "CALL modbus_set_float_abcd(F,DEST)",
+              "path": "src/modbus.F90",
+              "line_start": 537,
+              "line_end": 542,
+              "declarations": [
+                {
+                  "path": "src/modbus.F90",
+                  "line_start": 540,
+                  "line_end": 541
+                },
+                {
+                  "path": "src/modbus.F90",
+                  "line_start": 5,
+                  "line_end": 32
+                },
+                {
+                  "path": "src/modbus.F90",
+                  "line_start": 132,
+                  "line_end": 136
+                },
+                {
+                  "path": "src/modbus.F90",
+                  "line_start": 161,
+                  "line_end": 165
+                }
+              ]
+            },
+            {
+              "procedure": "modbus_get_float_abcd",
+              "role": "public-entry-point",
+              "module": "modbus",
+              "summary": "Decode at least two INTEGER(C_UINT16_T) register elements in ABCD order into REAL(C_FLOAT). Use the matching SET_FLOAT_ABCD conversion or externally documented device ordering. No context, allocation or status is involved and the assumed-size SRC actual must be long enough. This does not numerically convert two integer values to a float; it interprets their bit representation. Signed fallback register kinds retain the native 16-bit payload.",
+              "signature": "VALUE = modbus_get_float_abcd(SRC)",
+              "path": "src/modbus.F90",
+              "line_start": 258,
+              "line_end": 263,
+              "declarations": [
+                {
+                  "path": "src/modbus.F90",
+                  "line_start": 261,
+                  "line_end": 262
+                },
+                {
+                  "path": "src/modbus.F90",
+                  "line_start": 5,
+                  "line_end": 32
+                },
+                {
+                  "path": "src/modbus.F90",
+                  "line_start": 132,
+                  "line_end": 136
+                },
+                {
+                  "path": "src/modbus.F90",
+                  "line_start": 161,
+                  "line_end": 165
+                }
+              ]
+            },
+            {
+              "procedure": "modbus_set_float_dcba",
+              "role": "public-entry-point",
+              "module": "modbus",
+              "summary": "Encode REAL(C_FLOAT) F into at least two INTEGER(C_UINT16_T) register elements in DCBA order, the alternative order paired with GET_FLOAT_DCBA. No device/network operation is performed. Supply adequate contiguous storage, the build-selected register kind and a native libmodbus version exporting this symbol; no array-bound checks or recoverable error result are provided. Do not interchange ABCD/DCBA getters based on host endianness assumptions.",
+              "signature": "CALL modbus_set_float_dcba(F,DEST)",
+              "path": "src/modbus.F90",
+              "line_start": 561,
+              "line_end": 566,
+              "declarations": [
+                {
+                  "path": "src/modbus.F90",
+                  "line_start": 564,
+                  "line_end": 565
+                },
+                {
+                  "path": "src/modbus.F90",
+                  "line_start": 5,
+                  "line_end": 32
+                },
+                {
+                  "path": "src/modbus.F90",
+                  "line_start": 132,
+                  "line_end": 136
+                },
+                {
+                  "path": "src/modbus.F90",
+                  "line_start": 161,
+                  "line_end": 165
+                }
+              ]
+            },
+            {
+              "procedure": "modbus_get_float_dcba",
+              "role": "public-entry-point",
+              "module": "modbus",
+              "summary": "Decode two or more INTEGER(C_UINT16_T) elements using DCBA byte ordering and return REAL(C_FLOAT). Pair with SET_FLOAT_DCBA for a round trip; other orderings are separate functions. Buffer length and interpretation belong to the caller because SRC is assumed-size and no status is exposed. This scoped call demonstrates data conversion only, not Modbus transport, address validation or device availability.",
+              "signature": "VALUE = modbus_get_float_dcba(SRC)",
+              "path": "src/modbus.F90",
+              "line_start": 282,
+              "line_end": 287,
+              "declarations": [
+                {
+                  "path": "src/modbus.F90",
+                  "line_start": 285,
+                  "line_end": 286
+                },
+                {
+                  "path": "src/modbus.F90",
+                  "line_start": 5,
+                  "line_end": 32
+                },
+                {
+                  "path": "src/modbus.F90",
+                  "line_start": 132,
+                  "line_end": 136
+                },
+                {
+                  "path": "src/modbus.F90",
+                  "line_start": 161,
+                  "line_end": 165
+                }
+              ]
+            }
+          ]
+        }
+      ]
     }
   },
   "report": {
@@ -26385,6 +27922,8 @@
       "gaussjacobiquad",
       "kissfft-f",
       "h5fortran",
+      "metis-fpm",
+      "m_calculator",
       "befor64",
       "fortran-zlib",
       "iapws",
@@ -26404,6 +27943,7 @@
       "fortran_huffman",
       "fastmath",
       "fortsa",
+      "fortran-flann",
       "fortran_stb_image",
       "odepack",
       "kiss",
@@ -26423,6 +27963,8 @@
       "rkf45",
       "forlab",
       "nafpack",
+      "fishpack",
+      "spherepack",
       "forsvd",
       "qdutillib",
       "qdldl-fortran",
@@ -26478,11 +28020,16 @@
       "penf",
       "differentia",
       "npy-for-fortran",
+      "delaunaysparse",
+      "qnstop",
       "fortran-utils",
       "fortranlib",
+      "m-process",
       "nufft1d",
       "nufft2d",
-      "scifortran"
+      "scifortran",
+      "m_cli",
+      "fortran-modbus"
     ],
     "revision_mismatches": [],
     "no_independent_review": [
@@ -26500,18 +28047,13 @@
       "twopnt",
       "astro-fortran",
       "daskr",
-      "metis-fpm",
-      "m_calculator",
       "ciaaw",
-      "fortran-flann",
       "cairo-fortran",
       "forsudoku",
       "parff",
       "graphstruc",
       "libdogleg-f",
-      "fishpack",
       "dde_solver",
-      "spherepack",
       "diffstruc",
       "seiscope-optimization",
       "gslib",
@@ -26528,8 +28070,6 @@
       "fassert",
       "coretran",
       "ftl",
-      "delaunaysparse",
-      "qnstop",
       "poisfft",
       "fortran-lmdb",
       "fortran-lua54",
@@ -26547,7 +28087,6 @@
       "fortran-tcl86",
       "fiats",
       "julienne",
-      "m-process",
       "aotus",
       "propack",
       "qcontainers",
@@ -26584,8 +28123,6 @@
       "m_history",
       "fortran-curl",
       "plplot",
-      "m_cli",
-      "fortran-modbus",
       "gtk-fortran",
       "fycollections",
       "fortran-sdl2"
