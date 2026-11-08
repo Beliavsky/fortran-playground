@@ -2,7 +2,7 @@
   "schema_version": 1,
   "publisher": "fortran-gams-catalog-independent-reviews",
   "source_url": "https://beliavsky.github.io/fortran-gams-catalog/reviewed-metadata.json",
-  "source_snapshot_id": "sha256:f88a6aa956be04e256aef6020fe49b6689b0a259e5d8da82df34826522a9debb",
+  "source_snapshot_id": "sha256:48e608156a39000d0bf34040371ace53b87e9fc5a52f632cf5af7584067ed051",
   "packages": {
     "test-drive": {
       "id": "github:fortran-lang/test-drive",
@@ -153,6 +153,130 @@
                   "path": "src/testdrive.F90",
                   "line_start": 286,
                   "line_end": 332
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "pyplot-fortran": {
+      "id": "github:jacobwilliams/pyplot-fortran",
+      "repository": {
+        "owner": "jacobwilliams",
+        "name": "pyplot-fortran",
+        "url": "https://github.com/jacobwilliams/pyplot-fortran"
+      },
+      "license": {
+        "label": "BSD-3-Clause",
+        "spdx_expression": "BSD-3-Clause",
+        "revision": "217d0c97a12812ff5c5aca00e5439237e866bc91",
+        "reviewed_on": "2026-11-07",
+        "notes": "Root LICENSE supplies Jacob Williams BSD three-clause terms. Python/Matplotlib are separate runtime dependencies; this interface review does not run a new plot.",
+        "evidence": [
+          {
+            "path": "LICENSE",
+            "url": "https://github.com/jacobwilliams/pyplot-fortran/blob/217d0c97a12812ff5c5aca00e5439237e866bc91/LICENSE",
+            "sha256": "784d23d2b30e28074da94c749eb1f9994580ab9e3db3ddcebe93df9ef8f3fc71"
+          },
+          {
+            "path": "README.md",
+            "url": "https://github.com/jacobwilliams/pyplot-fortran/blob/217d0c97a12812ff5c5aca00e5439237e866bc91/README.md",
+            "sha256": "7e25cac00873fdc7db4b0c18570293cfbe8fbbd082d6049498642449e972509a"
+          },
+          {
+            "path": "src/pyplot_module.F90",
+            "url": "https://github.com/jacobwilliams/pyplot-fortran/blob/217d0c97a12812ff5c5aca00e5439237e866bc91/src/pyplot_module.F90",
+            "sha256": "f1d3de3e2aca70e23c8463467f045d9659ea168135a61317ee6cfb6f2da69ab1"
+          }
+        ]
+      },
+      "classifications": [
+        {
+          "code": "Q",
+          "level": "source-reviewed",
+          "revision": "217d0c97a12812ff5c5aca00e5439237e866bc91",
+          "reviewed_on": "2026-11-07",
+          "notes": "Plot initialization, line construction and headless-capable file rendering expose the Fortran/Python boundary. This is a pinned public-interface/source review, not a new numerical execution check or complete API audit. Existing hosted drivers and their verified problem scope are recorded separately.",
+          "evidence": [
+            {
+              "path": "src/pyplot_module.F90",
+              "url": "https://github.com/jacobwilliams/pyplot-fortran/blob/217d0c97a12812ff5c5aca00e5439237e866bc91/src/pyplot_module.F90",
+              "sha256": "f1d3de3e2aca70e23c8463467f045d9659ea168135a61317ee6cfb6f2da69ab1"
+            }
+          ],
+          "procedures": [
+            {
+              "procedure": "initialize",
+              "role": "public-entry-point",
+              "module": "pyplot_module",
+              "derived_type": "pyplot",
+              "summary": "Declare TYPE(pyplot) :: solver from pyplot_module. Initialize/reinitialize the Python-script-building plotting object before ADD_PLOT or SAVEFIG. All explicit arguments are optional; use keywords for labels, TITLE, GRID and styling. Import PYPLOT_WP for numeric data. USE_OO_API=.TRUE. selects Matplotlib figure/canvas operations for headless saving and cannot be combined with SHOWFIG. This method constructs script text rather than displaying an image or launching Python. FIGSIZE is an INTEGER pair, not a real vector. The passed object ME is implicit in solver%; do not pass it again. Optional actuals shown in brackets can be supplied by keyword.",
+              "signature": "CALL solver%initialize([GRID],[XLABEL],[YLABEL],[ZLABEL],[TITLE],[LEGEND],[USE_NUMPY],[FIGSIZE],[FONT_SIZE],[AXES_LABELSIZE],[XTICK_LABELSIZE],[YTICK_LABELSIZE],[ZTICK_LABELSIZE],[LEGEND_FONTSIZE],[MPLOT3D],[AXIS_EQUAL],[POLAR],[REAL_FMT],[USE_OO_API],[AXISBELOW],[TIGHT_LAYOUT],[RAW_STRINGS],[USETEX],[XAXIS_DATE_FMT],[YAXIS_DATE_FMT],[DARK_BACKGROUND],[XAXIS_USEMATHTEXT],[YAXIS_USEMATHTEXT],[XAXIS_USEOFFSET],[YAXIS_USEOFFSET],[GRID_COLOR],[GRID_LINESTYLE],[GRID_LINEWIDTH])",
+              "path": "src/pyplot_module.F90",
+              "line_start": 183,
+              "line_end": 419,
+              "declarations": [
+                {
+                  "path": "src/pyplot_module.F90",
+                  "line_start": 190,
+                  "line_end": 224
+                },
+                {
+                  "path": "src/pyplot_module.F90",
+                  "line_start": 30,
+                  "line_end": 99
+                }
+              ]
+            },
+            {
+              "procedure": "add_plot",
+              "role": "public-entry-point",
+              "module": "pyplot_module",
+              "derived_type": "pyplot",
+              "summary": "Declare TYPE(pyplot) :: solver from pyplot_module. Append a two-dimensional line plot from equal-length REAL(PYPLOT_WP) X/Y vectors. LABEL and LINESTYLE are required character actuals even when no legend is wanted. Optional ISTAT reports builder errors; Python/Matplotlib errors occur later during execution. Optional COLOR is a real RGB vector, not a color-name string; MARKERSIZE/LINEWIDTH are integers in this interface. Initialize first and save/show after adding curves. The passed object ME is implicit in solver%; do not pass it again. Optional actuals shown in brackets can be supplied by keyword.",
+              "signature": "CALL solver%add_plot(X,Y,LABEL,LINESTYLE,[MARKERSIZE],[LINEWIDTH],[XLIM],[YLIM],[XSCALE],[YSCALE],[COLOR],[ISTAT])",
+              "path": "src/pyplot_module.F90",
+              "line_start": 427,
+              "line_end": 509,
+              "declarations": [
+                {
+                  "path": "src/pyplot_module.F90",
+                  "line_start": 429,
+                  "line_end": 441
+                },
+                {
+                  "path": "src/pyplot_module.F90",
+                  "line_start": 30,
+                  "line_end": 99
+                }
+              ]
+            },
+            {
+              "procedure": "savefig",
+              "role": "public-entry-point",
+              "module": "pyplot_module",
+              "derived_type": "pyplot",
+              "summary": "Declare TYPE(pyplot) :: solver from pyplot_module. Append figure-save commands and execute the generated Python script. FIGFILE is required; PYFILE optionally retains the generated script. DPI is CHARACTER (e.g. \"150\"), not an integer actual. Optional PYTHON names the executable, WAIT defaults true, and ISTAT reports execution status. Python with Matplotlib must be available separately. In a browser playground use a supported image artifact such as PNG; SAVEFIG produces the file and the playground displays the artifact. GUI SHOWFIG is a different operation. The passed object ME is implicit in solver%; do not pass it again. Optional actuals shown in brackets can be supplied by keyword.",
+              "signature": "CALL solver%savefig(FIGFILE,[PYFILE],[DPI],[TRANSPARENT],[FACECOLOR],[EDGECOLOR],[ORIENTATION],[ISTAT],[PYTHON],[WAIT])",
+              "path": "src/pyplot_module.F90",
+              "line_start": 1824,
+              "line_end": 1880,
+              "declarations": [
+                {
+                  "path": "src/pyplot_module.F90",
+                  "line_start": 1828,
+                  "line_end": 1840
+                },
+                {
+                  "path": "src/pyplot_module.F90",
+                  "line_start": 30,
+                  "line_end": 99
+                },
+                {
+                  "path": "src/pyplot_module.F90",
+                  "line_start": 1663,
+                  "line_end": 1755
                 }
               ]
             }
@@ -7882,6 +8006,183 @@
         }
       ]
     },
+    "io-fortran-library": {
+      "id": "github:acbbullock/io-fortran-library",
+      "repository": {
+        "owner": "acbbullock",
+        "name": "IO-Fortran-Library",
+        "url": "https://github.com/acbbullock/IO-Fortran-Library"
+      },
+      "license": {
+        "label": "MIT",
+        "spdx_expression": "MIT",
+        "revision": "15bc3557c36adc174abbd9a077e0686dc11cc4af",
+        "reviewed_on": "2026-11-07",
+        "notes": "Root LICENCE supplies Austin Bullock MIT terms. The British-spelled grant file is pinned explicitly instead of relying only on the manifest license label.",
+        "evidence": [
+          {
+            "path": "LICENCE",
+            "url": "https://github.com/acbbullock/IO-Fortran-Library/blob/15bc3557c36adc174abbd9a077e0686dc11cc4af/LICENCE",
+            "sha256": "b3a37a8cbe7fc356c9ef8cdda760415c0479d21109d4d334542bc785001fdd7c"
+          },
+          {
+            "path": "README.md",
+            "url": "https://github.com/acbbullock/IO-Fortran-Library/blob/15bc3557c36adc174abbd9a077e0686dc11cc4af/README.md",
+            "sha256": "7f6fd25a0f753a06044e5222d98bf4509f8162b888e3642fc729e367b47eb5ce"
+          },
+          {
+            "path": "src/modules/io_fortran_lib_mod.f90",
+            "url": "https://github.com/acbbullock/IO-Fortran-Library/blob/15bc3557c36adc174abbd9a077e0686dc11cc4af/src/modules/io_fortran_lib_mod.f90",
+            "sha256": "1c2fcc3ee6ff94adcc4c9539e44ff77cee64421210c04e557a47812cd8553c31"
+          }
+        ]
+      },
+      "classifications": [
+        {
+          "code": "N1",
+          "level": "source-reviewed",
+          "revision": "15bc3557c36adc174abbd9a077e0686dc11cc4af",
+          "reviewed_on": "2026-11-07",
+          "notes": "REAL64 file write/text-read generics distinguish allocated input/output ranks and their different header arguments. This is a pinned public-interface/source review, not a new numerical execution check or complete API audit. Existing hosted drivers and their verified problem scope are recorded separately.",
+          "evidence": [
+            {
+              "path": "src/modules/io_fortran_lib_mod.f90",
+              "url": "https://github.com/acbbullock/IO-Fortran-Library/blob/15bc3557c36adc174abbd9a077e0686dc11cc4af/src/modules/io_fortran_lib_mod.f90",
+              "sha256": "1c2fcc3ee6ff94adcc4c9539e44ff77cee64421210c04e557a47812cd8553c31"
+            },
+            {
+              "path": "src/io_fortran_lib/file_io_impl.f90",
+              "url": "https://github.com/acbbullock/IO-Fortran-Library/blob/15bc3557c36adc174abbd9a077e0686dc11cc4af/src/io_fortran_lib/file_io_impl.f90",
+              "sha256": "dbd1660949fee042ab937b56b2b9fa77667fcffc0950763e1c4f6bdf7dfbaab1"
+            },
+            {
+              "path": "src/io_fortran_lib/internal_io_impl.f90",
+              "url": "https://github.com/acbbullock/IO-Fortran-Library/blob/15bc3557c36adc174abbd9a077e0686dc11cc4af/src/io_fortran_lib/internal_io_impl.f90",
+              "sha256": "6cbfbf14ae3f0dd086ecd562342063681be619f6b8196df9ce351470bbd6e18b"
+            },
+            {
+              "path": "LICENCE",
+              "url": "https://github.com/acbbullock/IO-Fortran-Library/blob/15bc3557c36adc174abbd9a077e0686dc11cc4af/LICENCE",
+              "sha256": "b3a37a8cbe7fc356c9ef8cdda760415c0479d21109d4d334542bc785001fdd7c"
+            }
+          ],
+          "procedures": [
+            {
+              "procedure": "to_file",
+              "role": "public-entry-point",
+              "module": "io_fortran_lib",
+              "summary": "REAL64 TO_FILE dispatches by filename extension. Text output supports rank one/two; binary extensions use a different path. For CSV supply a vector/matrix, optional character HEADER(:), locale/delimiter and formatting controls. FMT is a library format selector, not an arbitrary Fortran format specification. Supply optional STAT and a sufficiently long fixed CHARACTER ERRMSG; otherwise failures can be silently ignored. Check STAT before using the generated file.",
+              "signature": "CALL to_file(X,FILE,[HEADER],[LOCALE],[DELIM],[FMT],[DECIMALS],[STAT],[ERRMSG])",
+              "path": "src/modules/io_fortran_lib_mod.f90",
+              "line_start": 1036,
+              "line_end": 1046,
+              "declarations": [
+                {
+                  "path": "src/modules/io_fortran_lib_mod.f90",
+                  "line_start": 1037,
+                  "line_end": 1045
+                },
+                {
+                  "path": "src/modules/io_fortran_lib_mod.f90",
+                  "line_start": 1,
+                  "line_end": 19
+                },
+                {
+                  "path": "src/io_fortran_lib/file_io_impl.f90",
+                  "line_start": 602,
+                  "line_end": 736
+                }
+              ]
+            },
+            {
+              "procedure": "from_file",
+              "role": "public-entry-point",
+              "module": "io_fortran_lib",
+              "summary": "Text FROM_FILE overload allocates REAL64 INTO of caller-declared rank one or two. Optional HEADER is LOGICAL (skip header), unlike the character header array accepted by TO_FILE. Locale/delimiter/format selectors must match the text. Supply STAT/ERRMSG and check success/allocation. This overload is selected without DATA_SHAPE; the binary-reader overload uses that required shape argument. No guarantee of general quoted CSV/heterogeneous-table parsing is implied.",
+              "signature": "CALL from_file(FILE,INTO,[HEADER],[LOCALE],[DELIM],[FMT],[STAT],[ERRMSG])",
+              "path": "src/modules/io_fortran_lib_mod.f90",
+              "line_start": 1169,
+              "line_end": 1178,
+              "declarations": [
+                {
+                  "path": "src/modules/io_fortran_lib_mod.f90",
+                  "line_start": 1170,
+                  "line_end": 1177
+                },
+                {
+                  "path": "src/modules/io_fortran_lib_mod.f90",
+                  "line_start": 1,
+                  "line_end": 19
+                },
+                {
+                  "path": "src/io_fortran_lib/file_io_impl.f90",
+                  "line_start": 1955,
+                  "line_end": 2051
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "code": "N3",
+          "level": "source-reviewed",
+          "revision": "15bc3557c36adc174abbd9a077e0686dc11cc4af",
+          "reviewed_on": "2026-11-07",
+          "notes": "REAL64-to-string conversion exposes selectors and non-status failure behavior. This is a pinned public-interface/source review, not a new numerical execution check or complete API audit. Existing hosted drivers and their verified problem scope are recorded separately.",
+          "evidence": [
+            {
+              "path": "src/modules/io_fortran_lib_mod.f90",
+              "url": "https://github.com/acbbullock/IO-Fortran-Library/blob/15bc3557c36adc174abbd9a077e0686dc11cc4af/src/modules/io_fortran_lib_mod.f90",
+              "sha256": "1c2fcc3ee6ff94adcc4c9539e44ff77cee64421210c04e557a47812cd8553c31"
+            },
+            {
+              "path": "src/io_fortran_lib/file_io_impl.f90",
+              "url": "https://github.com/acbbullock/IO-Fortran-Library/blob/15bc3557c36adc174abbd9a077e0686dc11cc4af/src/io_fortran_lib/file_io_impl.f90",
+              "sha256": "dbd1660949fee042ab937b56b2b9fa77667fcffc0950763e1c4f6bdf7dfbaab1"
+            },
+            {
+              "path": "src/io_fortran_lib/internal_io_impl.f90",
+              "url": "https://github.com/acbbullock/IO-Fortran-Library/blob/15bc3557c36adc174abbd9a077e0686dc11cc4af/src/io_fortran_lib/internal_io_impl.f90",
+              "sha256": "6cbfbf14ae3f0dd086ecd562342063681be619f6b8196df9ce351470bbd6e18b"
+            },
+            {
+              "path": "LICENCE",
+              "url": "https://github.com/acbbullock/IO-Fortran-Library/blob/15bc3557c36adc174abbd9a077e0686dc11cc4af/LICENCE",
+              "sha256": "b3a37a8cbe7fc356c9ef8cdda760415c0479d21109d4d334542bc785001fdd7c"
+            }
+          ],
+          "procedures": [
+            {
+              "procedure": "cast",
+              "role": "public-entry-point",
+              "module": "io_fortran_lib",
+              "summary": "Scalar REAL64 CAST writes a TYPE(STRING) INTO using optional LOCALE, FMT and DECIMALS; it is a subroutine, not intrinsic numeric CAST. Locale choices include \"US\"/\"EU\" and format selectors include \"e\"/\"f\"/\"z\". Invalid selectors can produce an empty string with no status channel. Reduced DECIMALS in exponential mode edits emitted digits; do not infer a correctly rounded decimal quantizer or mathematical error bound.",
+              "signature": "CALL cast(X,INTO,[LOCALE],[FMT],[DECIMALS])",
+              "path": "src/modules/io_fortran_lib_mod.f90",
+              "line_start": 706,
+              "line_end": 712,
+              "declarations": [
+                {
+                  "path": "src/modules/io_fortran_lib_mod.f90",
+                  "line_start": 707,
+                  "line_end": 711
+                },
+                {
+                  "path": "src/modules/io_fortran_lib_mod.f90",
+                  "line_start": 1,
+                  "line_end": 19
+                },
+                {
+                  "path": "src/io_fortran_lib/internal_io_impl.f90",
+                  "line_start": 3573,
+                  "line_end": 3718
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
     "collections": {
       "id": "github:jchristopherson/collections",
       "repository": {
@@ -12269,6 +12570,137 @@
         }
       ]
     },
+    "ncio": {
+      "id": "github:alex-robinson/ncio",
+      "repository": {
+        "owner": "alex-robinson",
+        "name": "ncio",
+        "url": "https://github.com/alex-robinson/ncio"
+      },
+      "license": {
+        "label": "MIT",
+        "spdx_expression": "MIT",
+        "revision": "d76d39df3dcaa892bff5d2b5b24770f3dc65abaa",
+        "reviewed_on": "2026-11-07",
+        "notes": "The full MIT grant is embedded at the beginning of src/ncio.f90 for Alexander Robinson and Mahe Perrette; the placeholder manifest label is not used as evidence of the terms.",
+        "evidence": [
+          {
+            "path": "src/ncio.f90",
+            "url": "https://github.com/alex-robinson/ncio/blob/d76d39df3dcaa892bff5d2b5b24770f3dc65abaa/src/ncio.f90",
+            "sha256": "8d4d70d72c801d97ae639a7595365a748068cbe6830c9c2fe8c3d28e8f5b5ffa"
+          },
+          {
+            "path": "README.md",
+            "url": "https://github.com/alex-robinson/ncio/blob/d76d39df3dcaa892bff5d2b5b24770f3dc65abaa/README.md",
+            "sha256": "2bcae4eb0add498b72b6069250df24f38b648b721f43227f16fc21d1df036181"
+          }
+        ]
+      },
+      "classifications": [
+        {
+          "code": "N1",
+          "level": "source-reviewed",
+          "revision": "d76d39df3dcaa892bff5d2b5b24770f3dc65abaa",
+          "reviewed_on": "2026-11-07",
+          "notes": "Dataset creation plus double-precision vector write/read document clobbering, dimensions, handle reuse and status limitations. This is a pinned public-interface/source review, not a new numerical execution check or complete API audit. Existing hosted drivers and their verified problem scope are recorded separately.",
+          "evidence": [
+            {
+              "path": "src/ncio.f90",
+              "url": "https://github.com/alex-robinson/ncio/blob/d76d39df3dcaa892bff5d2b5b24770f3dc65abaa/src/ncio.f90",
+              "sha256": "8d4d70d72c801d97ae639a7595365a748068cbe6830c9c2fe8c3d28e8f5b5ffa"
+            }
+          ],
+          "procedures": [
+            {
+              "procedure": "nc_create",
+              "role": "public-entry-point",
+              "module": "ncio",
+              "summary": "Create a dataset and close it before returning. OVERWRITE defaults true (clobber); NETCDF4 defaults false. This pin rejects NETCDF4=true with OVERWRITE=false. Optional provenance strings become global attributes. No file handle or status is returned; native failures can STOP through NC_CHECK. Declare dimensions/coordinates separately before writing variables; this call alone does not define them.",
+              "signature": "CALL nc_create(FILENAME,[OVERWRITE],[NETCDF4],[AUTHOR],[CREATION_DATE],[INSTITUTION],[DESCRIPTION])",
+              "path": "src/ncio.f90",
+              "line_start": 1234,
+              "line_end": 1287,
+              "declarations": [
+                {
+                  "path": "src/ncio.f90",
+                  "line_start": 1238,
+                  "line_end": 1241
+                },
+                {
+                  "path": "src/ncio.f90",
+                  "line_start": 1,
+                  "line_end": 28
+                },
+                {
+                  "path": "src/ncio.f90",
+                  "line_start": 58,
+                  "line_end": 114
+                }
+              ]
+            },
+            {
+              "procedure": "nc_write",
+              "role": "public-entry-point",
+              "module": "ncio",
+              "summary": "Double-precision vector NC_WRITE overload writes a named variable into a prepared dataset. Supply existing dimension names with DIMS or DIM1 and conforming optional START/COUNT arrays for slices. Optional metadata includes UNITS, LONG_NAME and MISSING_VALUE. NCID allows reuse of a caller-opened handle; otherwise filename-based handling opens/closes internally. No public IOSTAT is available on this writer, so native errors can stop execution. Input double precision is stored as NF90_DOUBLE.",
+              "signature": "CALL nc_write(FILENAME,NAME,DAT,[NCID],[DIMS],[DIM1],[DIM2],[DIM3],[DIM4],[DIM5],[DIM6],[START],[COUNT],[LONG_NAME],[STANDARD_NAME],[GRID_MAPPING],[UNITS],[MISSING_VALUE])",
+              "path": "src/ncio.f90",
+              "line_start": 2171,
+              "line_end": 2197,
+              "declarations": [
+                {
+                  "path": "src/ncio.f90",
+                  "line_start": 2177,
+                  "line_end": 2183
+                },
+                {
+                  "path": "src/ncio.f90",
+                  "line_start": 1,
+                  "line_end": 28
+                },
+                {
+                  "path": "src/ncio.f90",
+                  "line_start": 58,
+                  "line_end": 114
+                }
+              ]
+            },
+            {
+              "procedure": "nc_read",
+              "role": "public-entry-point",
+              "module": "ncio",
+              "summary": "Double-precision NC_READ fills caller-sized DAT(:); it does not allocate DAT. Optional START/COUNT select a slice, MISSING_VALUE controls replacement and NCID reuses a handle. Request IOSTAT and check it before trusting DAT: the wrapper assigns its temporary buffer afterward even when the internal routine reports failure. IOSTAT covers some recoverable read paths, not every native/validation error. Use a vector sized for the expected variable/slice.",
+              "signature": "CALL nc_read(FILENAME,NAME,DAT,[START],[COUNT],[MISSING_VALUE],[NCID],[IOSTAT])",
+              "path": "src/ncio.f90",
+              "line_start": 3029,
+              "line_end": 3059,
+              "declarations": [
+                {
+                  "path": "src/ncio.f90",
+                  "line_start": 3036,
+                  "line_end": 3044
+                },
+                {
+                  "path": "src/ncio.f90",
+                  "line_start": 1,
+                  "line_end": 28
+                },
+                {
+                  "path": "src/ncio.f90",
+                  "line_start": 58,
+                  "line_end": 114
+                },
+                {
+                  "path": "src/ncio.f90",
+                  "line_start": 372,
+                  "line_end": 505
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
     "fastconv": {
       "id": "github:gronki/fastconv",
       "repository": {
@@ -12598,6 +13030,316 @@
                   "path": "src/kissfft-f_fftshift.f90",
                   "line_start": 1,
                   "line_end": 9
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "h5fortran": {
+      "id": "github:geospace-code/h5fortran",
+      "repository": {
+        "owner": "geospace-code",
+        "name": "h5fortran",
+        "url": "https://github.com/geospace-code/h5fortran"
+      },
+      "license": {
+        "label": "BSD-3-Clause",
+        "spdx_expression": "BSD-3-Clause",
+        "revision": "9fb7549a2d213c10190ae268edecaac4c4c06d0a",
+        "reviewed_on": "2026-11-07",
+        "notes": "Root LICENSE supplies Michael Hirsch BSD three-clause terms. Native HDF5 is a separately licensed build/runtime dependency.",
+        "evidence": [
+          {
+            "path": "LICENSE",
+            "url": "https://github.com/geospace-code/h5fortran/blob/9fb7549a2d213c10190ae268edecaac4c4c06d0a/LICENSE",
+            "sha256": "9079819daa6f7972d66b968c867b9999d17fef0bc18c3880fccaa3fd2984bf52"
+          },
+          {
+            "path": "README.md",
+            "url": "https://github.com/geospace-code/h5fortran/blob/9fb7549a2d213c10190ae268edecaac4c4c06d0a/README.md",
+            "sha256": "06b0a31765c72b9e6a95919095aef4f4deea91bfdc3ee71099f3aadbfa3e2c1c"
+          },
+          {
+            "path": "src/interface.f90",
+            "url": "https://github.com/geospace-code/h5fortran/blob/9fb7549a2d213c10190ae268edecaac4c4c06d0a/src/interface.f90",
+            "sha256": "5a3ffda3481f915f0e4965609a6ef4e2431f9c32867830934f0a6b9264e4cb4c"
+          }
+        ]
+      },
+      "classifications": [
+        {
+          "code": "N1",
+          "level": "source-reviewed",
+          "revision": "9fb7549a2d213c10190ae268edecaac4c4c06d0a",
+          "reviewed_on": "2026-11-07",
+          "notes": "HDF5 file opening, rank-one dataset writing and explicit close record mode, shape and native-handle contracts. This is a pinned public-interface/source review, not a new numerical execution check or complete API audit. Existing hosted drivers and their verified problem scope are recorded separately.",
+          "evidence": [
+            {
+              "path": "src/interface.f90",
+              "url": "https://github.com/geospace-code/h5fortran/blob/9fb7549a2d213c10190ae268edecaac4c4c06d0a/src/interface.f90",
+              "sha256": "5a3ffda3481f915f0e4965609a6ef4e2431f9c32867830934f0a6b9264e4cb4c"
+            },
+            {
+              "path": "src/utils.f90",
+              "url": "https://github.com/geospace-code/h5fortran/blob/9fb7549a2d213c10190ae268edecaac4c4c06d0a/src/utils.f90",
+              "sha256": "519d7bffaa3e40f497f3ae2e3b0ee9782e4d45c44b7985cb31dd9112298ae4ba"
+            },
+            {
+              "path": "src/writer.f90",
+              "url": "https://github.com/geospace-code/h5fortran/blob/9fb7549a2d213c10190ae268edecaac4c4c06d0a/src/writer.f90",
+              "sha256": "56559a134443e820b70e355b4ae6788b056ba8271da84ca5cdf6b91e38ee2e3d"
+            },
+            {
+              "path": "src/writer.inc",
+              "url": "https://github.com/geospace-code/h5fortran/blob/9fb7549a2d213c10190ae268edecaac4c4c06d0a/src/writer.inc",
+              "sha256": "96c9b4c3f98b8caeb2d345c59d888c407d71b030357d06c723bd19a7f8e1e6fd"
+            }
+          ],
+          "procedures": [
+            {
+              "procedure": "open",
+              "role": "public-entry-point",
+              "module": "h5fortran",
+              "derived_type": "hdf5_file",
+              "summary": "Declare TYPE(hdf5_file) :: solver from h5fortran. Open/create an HDF5 file. ACTION defaults \"r\"; \"r+\" opens existing writable data, \"w\" truncates, and \"rw\"/\"a\" open an HDF5 file or create a new one. Optional compression/checksum controls affect dataset creation. This type owns a native handle; explicitly CLOSE after writes. No IOSTAT argument is exposed: invalid modes/files/native failures can ERROR STOP. The passed object SELF is implicit in solver%; do not pass it again. Optional actuals shown in brackets can be supplied by keyword.",
+              "signature": "CALL solver%open(FILENAME,[ACTION],[COMP_LVL],[SHUFFLE],[FLETCHER32],[DEBUG])",
+              "path": "src/interface.f90",
+              "line_start": 652,
+              "line_end": 668,
+              "declarations": [
+                {
+                  "path": "src/interface.f90",
+                  "line_start": 661,
+                  "line_end": 667
+                },
+                {
+                  "path": "src/interface.f90",
+                  "line_start": 1,
+                  "line_end": 76
+                },
+                {
+                  "path": "src/utils.f90",
+                  "line_start": 36,
+                  "line_end": 128
+                }
+              ]
+            },
+            {
+              "procedure": "write",
+              "role": "public-entry-point",
+              "module": "h5fortran",
+              "derived_type": "hdf5_file",
+              "summary": "Declare TYPE(hdf5_file) :: solver from h5fortran. Rank-one WRITE accepts CHARACTER DNAME and a supported numeric/character vector via CLASS(*). For a basic REAL64 dataset supply the full vector on a writable open file and omit slice controls. CHUNK_SIZE/ISTART/IEND/STRIDE/DSET_DIMS are optional DEFAULT-INTEGER arrays of length one, not scalar actuals. The vector is input, not allocated output. Runtime type checks/native failures can ERROR STOP; there is no status dummy. Partial-dataset rules are separate from this full-vector scope. The passed object SELF is implicit in solver%; do not pass it again. Optional actuals shown in brackets can be supplied by keyword.",
+              "signature": "CALL solver%write(DNAME,A,[CHUNK_SIZE],[ISTART],[IEND],[STRIDE],[COMPACT],[DSET_DIMS])",
+              "path": "src/interface.f90",
+              "line_start": 267,
+              "line_end": 273,
+              "declarations": [
+                {
+                  "path": "src/interface.f90",
+                  "line_start": 268,
+                  "line_end": 272
+                },
+                {
+                  "path": "src/interface.f90",
+                  "line_start": 1,
+                  "line_end": 76
+                },
+                {
+                  "path": "src/writer.f90",
+                  "line_start": 9,
+                  "line_end": 11
+                },
+                {
+                  "path": "src/writer.inc",
+                  "line_start": 1,
+                  "line_end": 71
+                }
+              ]
+            },
+            {
+              "procedure": "close",
+              "role": "public-entry-point",
+              "module": "h5fortran",
+              "derived_type": "hdf5_file",
+              "summary": "Declare TYPE(hdf5_file) :: solver from h5fortran. Close the owning HDF5 file so buffered data reaches disk; do this explicitly before process termination. Optional CLOSE_HDF5_INTERFACE should normally be omitted/false when other HDF5 objects exist: true shuts down the library globally and can affect handles opened outside this wrapper. Native cleanup failures may ERROR STOP. A finalizer exists but is not a reason to omit explicit close in a main program. The passed object SELF is implicit in solver%; do not pass it again. Optional actuals shown in brackets can be supplied by keyword.",
+              "signature": "CALL solver%close([CLOSE_HDF5_INTERFACE])",
+              "path": "src/interface.f90",
+              "line_start": 670,
+              "line_end": 681,
+              "declarations": [
+                {
+                  "path": "src/interface.f90",
+                  "line_start": 679,
+                  "line_end": 680
+                },
+                {
+                  "path": "src/interface.f90",
+                  "line_start": 1,
+                  "line_end": 76
+                },
+                {
+                  "path": "src/utils.f90",
+                  "line_start": 131,
+                  "line_end": 214
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "befor64": {
+      "id": "github:szaghi/befor64",
+      "repository": {
+        "owner": "szaghi",
+        "name": "BeFoR64",
+        "url": "https://github.com/szaghi/BeFoR64"
+      },
+      "license": {
+        "label": "Multiple licenses; see pinned README",
+        "spdx_expression": null,
+        "revision": "1dd004ea296b7e5aca60a9704bab81c610f87cff",
+        "reviewed_on": "2026-11-07",
+        "notes": "README describes GPL v3 for FOSS and BSD two-clause/BSD three-clause/MIT choices for closed-source or commercial use, followed by an invitation to pick a license. Preserve that wording and all four grants rather than infer an unconditional SPDX expression.",
+        "evidence": [
+          {
+            "path": "LICENSE.mit.md",
+            "url": "https://github.com/szaghi/BeFoR64/blob/1dd004ea296b7e5aca60a9704bab81c610f87cff/LICENSE.mit.md",
+            "sha256": "8003a672c9f7ce542cb731ad95ac9a708f5f00cf9d35170f7a57371c3523e8d1"
+          },
+          {
+            "path": "README.md",
+            "url": "https://github.com/szaghi/BeFoR64/blob/1dd004ea296b7e5aca60a9704bab81c610f87cff/README.md",
+            "sha256": "59f9b3bf0209119af1ac98940b94b33b1a7c36cca65a2fe9a0ad7778287539cf"
+          },
+          {
+            "path": "src/lib/befor64.F90",
+            "url": "https://github.com/szaghi/BeFoR64/blob/1dd004ea296b7e5aca60a9704bab81c610f87cff/src/lib/befor64.F90",
+            "sha256": "a0869bde9562bf376f1b4613a95943e46559527c2a25af903b5c92131803a52b"
+          },
+          {
+            "path": "LICENSE.bsd-2.md",
+            "url": "https://github.com/szaghi/BeFoR64/blob/1dd004ea296b7e5aca60a9704bab81c610f87cff/LICENSE.bsd-2.md",
+            "sha256": "e002bc3f78e6a4b2f269b1485efec506c4cadca86f117b8e0b3da5dd0c9b1044"
+          },
+          {
+            "path": "LICENSE.bsd-3.md",
+            "url": "https://github.com/szaghi/BeFoR64/blob/1dd004ea296b7e5aca60a9704bab81c610f87cff/LICENSE.bsd-3.md",
+            "sha256": "8127b4fe24bb1dee20f5c24dcd11e0bfd1c7089b45ef839db0faac73b0e7475e"
+          },
+          {
+            "path": "LICENSE.gpl3.md",
+            "url": "https://github.com/szaghi/BeFoR64/blob/1dd004ea296b7e5aca60a9704bab81c610f87cff/LICENSE.gpl3.md",
+            "sha256": "ccb349b4132ed7737f25e5adebfe61f3d52dca33708df1e50352320438d1d4c2"
+          }
+        ]
+      },
+      "classifications": [
+        {
+          "code": "N3",
+          "level": "source-reviewed",
+          "revision": "1dd004ea296b7e5aca60a9704bab81c610f87cff",
+          "reviewed_on": "2026-11-07",
+          "notes": "String Base64 initialization/encode/decode distinguish allocated encoded output from fixed-length decoded storage. This is a pinned public-interface/source review, not a new numerical execution check or complete API audit. Existing hosted drivers and their verified problem scope are recorded separately.",
+          "evidence": [
+            {
+              "path": "src/lib/befor64.F90",
+              "url": "https://github.com/szaghi/BeFoR64/blob/1dd004ea296b7e5aca60a9704bab81c610f87cff/src/lib/befor64.F90",
+              "sha256": "a0869bde9562bf376f1b4613a95943e46559527c2a25af903b5c92131803a52b"
+            },
+            {
+              "path": "README.md",
+              "url": "https://github.com/szaghi/BeFoR64/blob/1dd004ea296b7e5aca60a9704bab81c610f87cff/README.md",
+              "sha256": "59f9b3bf0209119af1ac98940b94b33b1a7c36cca65a2fe9a0ad7778287539cf"
+            },
+            {
+              "path": "LICENSE.mit.md",
+              "url": "https://github.com/szaghi/BeFoR64/blob/1dd004ea296b7e5aca60a9704bab81c610f87cff/LICENSE.mit.md",
+              "sha256": "8003a672c9f7ce542cb731ad95ac9a708f5f00cf9d35170f7a57371c3523e8d1"
+            },
+            {
+              "path": "LICENSE.bsd-2.md",
+              "url": "https://github.com/szaghi/BeFoR64/blob/1dd004ea296b7e5aca60a9704bab81c610f87cff/LICENSE.bsd-2.md",
+              "sha256": "e002bc3f78e6a4b2f269b1485efec506c4cadca86f117b8e0b3da5dd0c9b1044"
+            },
+            {
+              "path": "LICENSE.bsd-3.md",
+              "url": "https://github.com/szaghi/BeFoR64/blob/1dd004ea296b7e5aca60a9704bab81c610f87cff/LICENSE.bsd-3.md",
+              "sha256": "8127b4fe24bb1dee20f5c24dcd11e0bfd1c7089b45ef839db0faac73b0e7475e"
+            },
+            {
+              "path": "LICENSE.gpl3.md",
+              "url": "https://github.com/szaghi/BeFoR64/blob/1dd004ea296b7e5aca60a9704bab81c610f87cff/LICENSE.gpl3.md",
+              "sha256": "ccb349b4132ed7737f25e5adebfe61f3d52dca33708df1e50352320438d1d4c2"
+            }
+          ],
+          "procedures": [
+            {
+              "procedure": "b64_init",
+              "role": "public-entry-point",
+              "module": "befor64",
+              "summary": "Initialize the PENF-supported Base64 runtime before encoding/decoding. This no-argument call sets IS_B64_INITIALIZED and initializes PENF when necessary. It does not encode data or return a status. Call initialization before entering concurrent pure encoder/decoder work rather than assuming a pure specific performs it.",
+              "signature": "CALL b64_init()",
+              "path": "src/lib/befor64.F90",
+              "line_start": 175,
+              "line_end": 189,
+              "declarations": [
+                {
+                  "path": "src/lib/befor64.F90",
+                  "line_start": 15,
+                  "line_end": 16
+                },
+                {
+                  "path": "src/lib/befor64.F90",
+                  "line_start": 3,
+                  "line_end": 28
+                }
+              ]
+            },
+            {
+              "procedure": "b64_encode",
+              "role": "public-entry-point",
+              "module": "befor64",
+              "summary": "Character overload of B64_ENCODE accepts assumed-length S and allocates output CHARACTER(:) CODE. It includes all input characters, including trailing blanks; trim explicitly when that is intended. The output uses the standard alphabet with = padding. Call B64_INIT first. No stream/MIME wrapping, character-set conversion or status argument is supplied; numeric overloads instead encode their raw representation.",
+              "signature": "CALL b64_encode(S,CODE)",
+              "path": "src/lib/befor64.F90",
+              "line_start": 577,
+              "line_end": 600,
+              "declarations": [
+                {
+                  "path": "src/lib/befor64.F90",
+                  "line_start": 588,
+                  "line_end": 592
+                },
+                {
+                  "path": "src/lib/befor64.F90",
+                  "line_start": 3,
+                  "line_end": 28
+                }
+              ]
+            },
+            {
+              "procedure": "b64_decode",
+              "role": "public-entry-point",
+              "module": "befor64",
+              "summary": "Character B64_DECODE writes into caller-provided CHARACTER(*) S; it does not allocate a correctly sized destination. Determine and supply the decoded byte length beforehand, including padding semantics, and initialize the library first. Use valid complete Base64 input: this specific exposes no validation/status result and is not a checked decoder for malformed text. Allocating a deferred-length destination remains the caller responsibility.",
+              "signature": "CALL b64_decode(CODE,S)",
+              "path": "src/lib/befor64.F90",
+              "line_start": 942,
+              "line_end": 961,
+              "declarations": [
+                {
+                  "path": "src/lib/befor64.F90",
+                  "line_start": 954,
+                  "line_end": 956
+                },
+                {
+                  "path": "src/lib/befor64.F90",
+                  "line_start": 3,
+                  "line_end": 28
                 }
               ]
             }
@@ -14510,6 +15252,135 @@
         }
       ]
     },
+    "fortran_huffman": {
+      "id": "github:euler-37/fortran_huffman",
+      "repository": {
+        "owner": "Euler-37",
+        "name": "fortran_huffman",
+        "url": "https://github.com/Euler-37/fortran_huffman"
+      },
+      "license": {
+        "label": "No license identified",
+        "spdx_expression": null,
+        "revision": "c9976192e0db7738fcb65f3e83f209ac49b52880",
+        "reviewed_on": "2026-11-07",
+        "notes": "The pinned archive has a placeholder manifest license and no identified project license grant in the inspected README/source. Public availability does not establish permission terms.",
+        "evidence": [
+          {
+            "path": "fpm.toml",
+            "url": "https://github.com/Euler-37/fortran_huffman/blob/c9976192e0db7738fcb65f3e83f209ac49b52880/fpm.toml",
+            "sha256": "bed8012700e27c361557d2d43f131f513da3ff27d7dfefd90880b5ef82e60061"
+          },
+          {
+            "path": "README.md",
+            "url": "https://github.com/Euler-37/fortran_huffman/blob/c9976192e0db7738fcb65f3e83f209ac49b52880/README.md",
+            "sha256": "e6a5e323ad6a30e24157c9013d2bd2de2047516c48d76261f3d373028dbcc312"
+          },
+          {
+            "path": "src/huffman_mod.f90",
+            "url": "https://github.com/Euler-37/fortran_huffman/blob/c9976192e0db7738fcb65f3e83f209ac49b52880/src/huffman_mod.f90",
+            "sha256": "26a6d75f669e00b4d561a5d1b1a42765e8de2b41bda8cc0c0a159d7251878a6c"
+          }
+        ]
+      },
+      "classifications": [
+        {
+          "code": "N3",
+          "level": "source-reviewed",
+          "revision": "c9976192e0db7738fcb65f3e83f209ac49b52880",
+          "reviewed_on": "2026-11-07",
+          "notes": "Byte-symbol Huffman tree construction and custom file encoding/decoding expose initialization, filenames and format limits. This is a pinned public-interface/source review, not a new numerical execution check or complete API audit. Existing hosted drivers and their verified problem scope are recorded separately.",
+          "evidence": [
+            {
+              "path": "src/huffman_mod.f90",
+              "url": "https://github.com/Euler-37/fortran_huffman/blob/c9976192e0db7738fcb65f3e83f209ac49b52880/src/huffman_mod.f90",
+              "sha256": "26a6d75f669e00b4d561a5d1b1a42765e8de2b41bda8cc0c0a159d7251878a6c"
+            },
+            {
+              "path": "src/loop_bit_mod.f90",
+              "url": "https://github.com/Euler-37/fortran_huffman/blob/c9976192e0db7738fcb65f3e83f209ac49b52880/src/loop_bit_mod.f90",
+              "sha256": "5733250f85d18bc127b707f225d5670513c5c64b5e9353a6646c3a99201c1fb0"
+            },
+            {
+              "path": "fpm.toml",
+              "url": "https://github.com/Euler-37/fortran_huffman/blob/c9976192e0db7738fcb65f3e83f209ac49b52880/fpm.toml",
+              "sha256": "bed8012700e27c361557d2d43f131f513da3ff27d7dfefd90880b5ef82e60061"
+            }
+          ],
+          "procedures": [
+            {
+              "procedure": "creat",
+              "role": "public-entry-point",
+              "module": "huffman_mod",
+              "derived_type": "hftree",
+              "summary": "Declare TYPE(hftree) :: solver from huffman_mod. Build the Huffman tree using INTEGER(1) distinct CH(:) byte symbols and matching default-INTEGER WEIGHT(:). The public binding is spelled CREAT, not CREATE. Use at least two symbols with positive representable weights; initialization allocates the tree internally, so call on a fresh object rather than INIT first or rebuilding an allocated tree. It does not fill bit-code MAP until CODE is called. There is no status output or full input validation. The passed object THIS is implicit in solver%; do not pass it again. Optional actuals shown in brackets can be supplied by keyword.",
+              "signature": "CALL solver%creat(CH,WEIGHT)",
+              "path": "src/huffman_mod.f90",
+              "line_start": 42,
+              "line_end": 64,
+              "declarations": [
+                {
+                  "path": "src/huffman_mod.f90",
+                  "line_start": 43,
+                  "line_end": 45
+                },
+                {
+                  "path": "src/huffman_mod.f90",
+                  "line_start": 1,
+                  "line_end": 28
+                }
+              ]
+            },
+            {
+              "procedure": "encode",
+              "role": "public-entry-point",
+              "module": "huffman_mod",
+              "derived_type": "hftree",
+              "summary": "Declare TYPE(hftree) :: solver from huffman_mod. Encode FILE to FILE//\".bin\", including this library custom tree header. It counts bytes and calls CREAT/CODE internally: use a fresh HFTREE, not one already initialized by CREAT. Restrict this scope to nonempty files with at least two distinct symbols; single-symbol/empty and large-counter overflow behavior are not established. File opens/writes have no public status channel. This is not gzip/ZIP or a portable general archive format. The passed object THIS is implicit in solver%; do not pass it again. Optional actuals shown in brackets can be supplied by keyword.",
+              "signature": "CALL solver%encode(FILE)",
+              "path": "src/huffman_mod.f90",
+              "line_start": 161,
+              "line_end": 223,
+              "declarations": [
+                {
+                  "path": "src/huffman_mod.f90",
+                  "line_start": 163,
+                  "line_end": 164
+                },
+                {
+                  "path": "src/huffman_mod.f90",
+                  "line_start": 1,
+                  "line_end": 28
+                }
+              ]
+            },
+            {
+              "procedure": "decode",
+              "role": "public-entry-point",
+              "module": "huffman_mod",
+              "derived_type": "hftree",
+              "summary": "Declare TYPE(hftree) :: solver from huffman_mod. Decode a known-valid file produced by this library to FILE//\".txt\" using stream unformatted byte I/O. The output suffix does not mean character conversion. Use a fresh HFTREE because reading the stored tree allocates its arrays. No output filename choice or public error status is provided; malformed/truncated inputs and cross-compiler/native-integer-format portability are not claimed supported by this review. The passed object THIS is implicit in solver%; do not pass it again. Optional actuals shown in brackets can be supplied by keyword.",
+              "signature": "CALL solver%decode(FILE)",
+              "path": "src/huffman_mod.f90",
+              "line_start": 309,
+              "line_end": 365,
+              "declarations": [
+                {
+                  "path": "src/huffman_mod.f90",
+                  "line_start": 311,
+                  "line_end": 312
+                },
+                {
+                  "path": "src/huffman_mod.f90",
+                  "line_start": 1,
+                  "line_end": 28
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
     "fastmath": {
       "id": "github:perazz/fastmath",
       "repository": {
@@ -14801,6 +15672,134 @@
         }
       ]
     },
+    "fortran_stb_image": {
+      "id": "github:lewisfish/fortran_stb_image",
+      "repository": {
+        "owner": "lewisfish",
+        "name": "fortran_stb_image",
+        "url": "https://github.com/lewisfish/fortran_stb_image"
+      },
+      "license": {
+        "label": "MIT",
+        "spdx_expression": "MIT",
+        "revision": "f5c1633dfbaa1953fe8fa12bd01cb06dab0b6128",
+        "reviewed_on": "2026-11-07",
+        "notes": "Root LICENSE supplies Lewis McMillan MIT terms. Bundled stb components retain their own notices; this scope covers the RGB wrapper and inspected writer dispatch.",
+        "evidence": [
+          {
+            "path": "LICENSE",
+            "url": "https://github.com/lewisfish/fortran_stb_image/blob/f5c1633dfbaa1953fe8fa12bd01cb06dab0b6128/LICENSE",
+            "sha256": "f59d31a95ee7d376fafbe4438b5aacaf875d8363184de4da6147d752c5f4a2ef"
+          },
+          {
+            "path": "README.md",
+            "url": "https://github.com/lewisfish/fortran_stb_image/blob/f5c1633dfbaa1953fe8fa12bd01cb06dab0b6128/README.md",
+            "sha256": "a62fdd9be6e98e0067b33febbeba74dcfee9d8982de21a469ddd31037f015e00"
+          },
+          {
+            "path": "src/image.f90",
+            "url": "https://github.com/lewisfish/fortran_stb_image/blob/f5c1633dfbaa1953fe8fa12bd01cb06dab0b6128/src/image.f90",
+            "sha256": "9e0f2749fadb8ea2a49d5c37270de633d84e7a98cb5f5e3433f181890c45d244"
+          }
+        ]
+      },
+      "classifications": [
+        {
+          "code": "Q",
+          "level": "source-reviewed",
+          "revision": "f5c1633dfbaa1953fe8fa12bd01cb06dab0b6128",
+          "reviewed_on": "2026-11-07",
+          "notes": "RGB image construction, writing and value-returning loading document pixel layout and pointer ownership. This is a pinned public-interface/source review, not a new numerical execution check or complete API audit. Existing hosted drivers and their verified problem scope are recorded separately.",
+          "evidence": [
+            {
+              "path": "src/image.f90",
+              "url": "https://github.com/lewisfish/fortran_stb_image/blob/f5c1633dfbaa1953fe8fa12bd01cb06dab0b6128/src/image.f90",
+              "sha256": "9e0f2749fadb8ea2a49d5c37270de633d84e7a98cb5f5e3433f181890c45d244"
+            },
+            {
+              "path": "src/stb_image_write.f90",
+              "url": "https://github.com/lewisfish/fortran_stb_image/blob/f5c1633dfbaa1953fe8fa12bd01cb06dab0b6128/src/stb_image_write.f90",
+              "sha256": "8ce033085d1f7fb313173e8d86eff18f762b5ee39955420a67f1052d9f98d5ba"
+            }
+          ],
+          "procedures": [
+            {
+              "procedure": "RGB_image",
+              "role": "public-entry-point",
+              "module": "image_mod",
+              "summary": "Construct TYPE(RGB_IMAGE) for positive default-INTEGER W/H. The pixel pointer is allocated with shape (width,height); each element has default-INTEGER R/G/B fields which must be filled before saving, normally in 0..255. There is no default pixel initialization, finalizer or deep-copy assignment. Explicitly deallocate owned IMAGE storage when done; copies can alias the same pointer target.",
+              "signature": "VALUE = RGB_image(W,H)",
+              "path": "src/image.f90",
+              "line_start": 61,
+              "line_end": 70,
+              "declarations": [
+                {
+                  "path": "src/image.f90",
+                  "line_start": 63,
+                  "line_end": 64
+                },
+                {
+                  "path": "src/image.f90",
+                  "line_start": 1,
+                  "line_end": 37
+                }
+              ]
+            },
+            {
+              "procedure": "save",
+              "role": "public-entry-point",
+              "module": "image_mod",
+              "derived_type": "RGB_image",
+              "summary": "Declare TYPE(RGB_image) :: solver from image_mod. Return the native writer integer status while saving an initialized RGB image. Supply a supported filename such as \"plot.png\" and inspect the return (native stb convention: nonzero success, zero failure). Width is the first pixel dimension. Optional QUALITY exists but the reviewed JPEG branch hard-codes 100; do not assume it changes JPEG output. This is a function, so assign its result rather than CALL it. The passed object THIS is implicit in solver%; do not pass it again. Optional actuals shown in brackets can be supplied by keyword.",
+              "signature": "VALUE = solver%save(FILENAME,[QUALITY])",
+              "path": "src/image.f90",
+              "line_start": 83,
+              "line_end": 99,
+              "declarations": [
+                {
+                  "path": "src/image.f90",
+                  "line_start": 87,
+                  "line_end": 89
+                },
+                {
+                  "path": "src/image.f90",
+                  "line_start": 1,
+                  "line_end": 37
+                },
+                {
+                  "path": "src/stb_image_write.f90",
+                  "line_start": 80,
+                  "line_end": 155
+                }
+              ]
+            },
+            {
+              "procedure": "load",
+              "role": "public-entry-point",
+              "module": "image_mod",
+              "derived_type": "RGB_image",
+              "summary": "Declare TYPE(RGB_image) :: solver from image_mod. Return a NEW RGB_IMAGE loaded from FILENAME; the passed object is INTENT(IN), so this does not fill it in place. Store the returned value, using a fresh/empty destination to avoid losing an old pointer allocation. The wrapper ignores STBI_INFO failure and assumes at least three channels; use known-valid RGB/RGBA files, not grayscale or arbitrary invalid input. It has no separate load status and no automatic cleanup. The passed object THIS is implicit in solver%; do not pass it again. Optional actuals shown in brackets can be supplied by keyword.",
+              "signature": "VALUE = solver%load(FILENAME)",
+              "path": "src/image.f90",
+              "line_start": 121,
+              "line_end": 145,
+              "declarations": [
+                {
+                  "path": "src/image.f90",
+                  "line_start": 126,
+                  "line_end": 128
+                },
+                {
+                  "path": "src/image.f90",
+                  "line_start": 1,
+                  "line_end": 37
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
     "odepack": {
       "id": "github:nicholaswogan/odepack",
       "repository": {
@@ -15000,6 +15999,273 @@
                   "path": "src/kiss.F90",
                   "line_start": 64,
                   "line_end": 67
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "fortran-messagepack": {
+      "id": "github:synthfi/fortran-messagepack",
+      "repository": {
+        "owner": "synthfi",
+        "name": "fortran-messagepack",
+        "url": "https://github.com/synthfi/fortran-messagepack"
+      },
+      "license": {
+        "label": "MIT",
+        "spdx_expression": "MIT",
+        "revision": "2b2c9fc78bf3f7212ec9e35c675febdd508b7830",
+        "reviewed_on": "2026-11-07",
+        "notes": "Root LICENSE supplies Kelly Schultz MIT terms. The package uses BYTE and pointer callbacks; this source review does not establish unrestricted malformed-input safety.",
+        "evidence": [
+          {
+            "path": "LICENSE",
+            "url": "https://github.com/synthfi/fortran-messagepack/blob/2b2c9fc78bf3f7212ec9e35c675febdd508b7830/LICENSE",
+            "sha256": "bea815eecfac13378466648c5b95ba949a33858c71885e676b02b3c1e6e222c7"
+          },
+          {
+            "path": "README.md",
+            "url": "https://github.com/synthfi/fortran-messagepack/blob/2b2c9fc78bf3f7212ec9e35c675febdd508b7830/README.md",
+            "sha256": "a2bde6e6ffe31212887ae658251ffdd5abafe0bb40eec261bcc0d7a5151f49ca"
+          },
+          {
+            "path": "src/messagepack_user.f90",
+            "url": "https://github.com/synthfi/fortran-messagepack/blob/2b2c9fc78bf3f7212ec9e35c675febdd508b7830/src/messagepack_user.f90",
+            "sha256": "28f705090b2163caea7236ddd87eac312a932bc644cf483a916ff50d8a3b0a55"
+          }
+        ]
+      },
+      "classifications": [
+        {
+          "code": "N3",
+          "level": "source-reviewed",
+          "revision": "2b2c9fc78bf3f7212ec9e35c675febdd508b7830",
+          "reviewed_on": "2026-11-07",
+          "notes": "MessagePack codec construction, allocated serialization and polymorphic deserialization expose initialization and byte/value ownership. This is a pinned public-interface/source review, not a new numerical execution check or complete API audit. Existing hosted drivers and their verified problem scope are recorded separately.",
+          "evidence": [
+            {
+              "path": "src/messagepack_user.f90",
+              "url": "https://github.com/synthfi/fortran-messagepack/blob/2b2c9fc78bf3f7212ec9e35c675febdd508b7830/src/messagepack_user.f90",
+              "sha256": "28f705090b2163caea7236ddd87eac312a932bc644cf483a916ff50d8a3b0a55"
+            },
+            {
+              "path": "src/messagepack.f90",
+              "url": "https://github.com/synthfi/fortran-messagepack/blob/2b2c9fc78bf3f7212ec9e35c675febdd508b7830/src/messagepack.f90",
+              "sha256": "fc3a19a9feaba377d55df7c42ffbc558ed69f06ebaa69505462910a49f5c3dbf"
+            },
+            {
+              "path": "src/messagepack_value.f90",
+              "url": "https://github.com/synthfi/fortran-messagepack/blob/2b2c9fc78bf3f7212ec9e35c675febdd508b7830/src/messagepack_value.f90",
+              "sha256": "0329000b87d3b3858ef49989750843221bb6595ccdc6b388070f769270fc3f0e"
+            }
+          ],
+          "procedures": [
+            {
+              "procedure": "msgpack",
+              "role": "public-entry-point",
+              "module": "messagepack",
+              "summary": "Construct TYPE(MSGPACK) via MSGPACK(), initializing callback tables, endianness, FAIL_FLAG and timestamp extensions. A bare declaration leaves important fields/tables uninitialized; assign the constructor before packing or unpacking. This returns a Fortran object, not an encoded buffer. The facade MESSAGEPACK reexports the public types.",
+              "signature": "VALUE = msgpack()",
+              "path": "src/messagepack_user.f90",
+              "line_start": 94,
+              "line_end": 130,
+              "declarations": [
+                {
+                  "path": "src/messagepack_user.f90",
+                  "line_start": 94,
+                  "line_end": 97
+                },
+                {
+                  "path": "src/messagepack_user.f90",
+                  "line_start": 3,
+                  "line_end": 78
+                },
+                {
+                  "path": "src/messagepack.f90",
+                  "line_start": 1,
+                  "line_end": 14
+                }
+              ]
+            },
+            {
+              "procedure": "pack_alloc",
+              "role": "public-entry-point",
+              "module": "messagepack",
+              "derived_type": "msgpack",
+              "summary": "Declare TYPE(msgpack) :: solver from messagepack. Serialize a concrete extension of MP_VALUE_TYPE into allocatable BYTE BUFFER(:), allocated to the size reported by the value object. This package uses the nonstandard BYTE spelling for one-byte integer data. Construct the codec first and inspect codec%FAILED() after packing. The buffer is caller-owned allocated output; it is not a character string or an output file. This path does not stream incremental chunks. The passed object THIS is implicit in solver%; do not pass it again. Optional actuals shown in brackets can be supplied by keyword.",
+              "signature": "CALL solver%pack_alloc(MPV,BUFFER)",
+              "path": "src/messagepack_user.f90",
+              "line_start": 216,
+              "line_end": 239,
+              "declarations": [
+                {
+                  "path": "src/messagepack_user.f90",
+                  "line_start": 223,
+                  "line_end": 227
+                },
+                {
+                  "path": "src/messagepack_user.f90",
+                  "line_start": 3,
+                  "line_end": 78
+                },
+                {
+                  "path": "src/messagepack.f90",
+                  "line_start": 1,
+                  "line_end": 14
+                }
+              ]
+            },
+            {
+              "procedure": "unpack",
+              "role": "public-entry-point",
+              "module": "messagepack",
+              "derived_type": "msgpack",
+              "summary": "Declare TYPE(msgpack) :: solver from messagepack. Deserialize a complete BYTE buffer into CLASS(MP_VALUE_TYPE), ALLOCATABLE output MPV. Inspect FAILED() and ALLOCATED(MPV), then SELECT TYPE before accessing the concrete value. The constructor defaults to treating trailing unused bytes as an error; UNPACK_BUF is the separate interface for consumed-byte accounting. Use known-valid buffers for this scoped interface; failure reporting is not a guarantee that arbitrary corrupt inputs are safely handled. The passed object THIS is implicit in solver%; do not pass it again. Optional actuals shown in brackets can be supplied by keyword.",
+              "signature": "CALL solver%unpack(BUFFER,MPV)",
+              "path": "src/messagepack_user.f90",
+              "line_start": 254,
+              "line_end": 276,
+              "declarations": [
+                {
+                  "path": "src/messagepack_user.f90",
+                  "line_start": 260,
+                  "line_end": 262
+                },
+                {
+                  "path": "src/messagepack_user.f90",
+                  "line_start": 3,
+                  "line_end": 78
+                },
+                {
+                  "path": "src/messagepack.f90",
+                  "line_start": 1,
+                  "line_end": 14
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "fmmap": {
+      "id": "github:pierugit/fmmap",
+      "repository": {
+        "owner": "PierUgit",
+        "name": "fmmap",
+        "url": "https://github.com/PierUgit/fmmap"
+      },
+      "license": {
+        "label": "MIT root grant; GPL v3 source notice",
+        "spdx_expression": null,
+        "revision": "0ccbb98b7165233bdd5a07728ee4312deed4f8f7",
+        "reviewed_on": "2026-11-07",
+        "notes": "Root LICENSE and manifest say MIT, while src/fmmap.F90 still says Licence: GPL v3. Record both conflicting declarations without resolving the upstream licensing ambiguity or assigning an unqualified SPDX expression.",
+        "evidence": [
+          {
+            "path": "LICENSE",
+            "url": "https://github.com/PierUgit/fmmap/blob/0ccbb98b7165233bdd5a07728ee4312deed4f8f7/LICENSE",
+            "sha256": "b1d18255cde5c251d59103103c606097263ea185caea00e213724f7198a2852a"
+          },
+          {
+            "path": "README.md",
+            "url": "https://github.com/PierUgit/fmmap/blob/0ccbb98b7165233bdd5a07728ee4312deed4f8f7/README.md",
+            "sha256": "9ff23fd3f07c99591435c7cbd88079816151474817f80ccdebe86f2066af41f8"
+          },
+          {
+            "path": "src/fmmap.F90",
+            "url": "https://github.com/PierUgit/fmmap/blob/0ccbb98b7165233bdd5a07728ee4312deed4f8f7/src/fmmap.F90",
+            "sha256": "0167c300f9c4b422f383f1ba47fc816088c2ea65b7aa9a8fb7278d561f44d337"
+          }
+        ]
+      },
+      "classifications": [
+        {
+          "code": "N4",
+          "level": "source-reviewed",
+          "revision": "0ccbb98b7165233bdd5a07728ee4312deed4f8f7",
+          "reviewed_on": "2026-11-07",
+          "notes": "Memory-mapping construction, borrowed C-pointer access and unmapping expose byte sizes and lifetime/writeback rules. This is a pinned public-interface/source review, not a new numerical execution check or complete API audit. Existing hosted drivers and their verified problem scope are recorded separately.",
+          "evidence": [
+            {
+              "path": "src/fmmap.F90",
+              "url": "https://github.com/PierUgit/fmmap/blob/0ccbb98b7165233bdd5a07728ee4312deed4f8f7/src/fmmap.F90",
+              "sha256": "0167c300f9c4b422f383f1ba47fc816088c2ea65b7aa9a8fb7278d561f44d337"
+            },
+            {
+              "path": "fpm.toml",
+              "url": "https://github.com/PierUgit/fmmap/blob/0ccbb98b7165233bdd5a07728ee4312deed4f8f7/fpm.toml",
+              "sha256": "38f7bcd2d8197ccb0e5f2c3a3a976a56ceb9e16662a743c969ca082676661654"
+            }
+          ],
+          "procedures": [
+            {
+              "procedure": "create",
+              "role": "public-entry-point",
+              "module": "fmmap",
+              "derived_type": "fmmap_t",
+              "summary": "Declare TYPE(fmmap_t) :: solver from fmmap. Byte-length CREATE overload takes FILESTATUS (FMMAP_NEW/OLD/SCRATCH/NOFILE), required FILENAME and INTEGER(C_SIZE_T) LENGTH variable. For OLD, LENGTH receives the mapped length; for new/anonymous mappings it supplies the size. NOFILE requires an empty filename. Optional PRIVATE controls copy-on-write behavior and STAT=0 indicates success; omitting STAT can stop on errors. This overload has no MOLD; the other overload measures elements. Avoid copying live owning descriptors. The passed object X is implicit in solver%; do not pass it again. Optional actuals shown in brackets can be supplied by keyword.",
+              "signature": "CALL solver%create(FILESTATUS,FILENAME,LENGTH,[PRIVATE],[STAT])",
+              "path": "src/fmmap.F90",
+              "line_start": 419,
+              "line_end": 519,
+              "declarations": [
+                {
+                  "path": "src/fmmap.F90",
+                  "line_start": 421,
+                  "line_end": 426
+                },
+                {
+                  "path": "src/fmmap.F90",
+                  "line_start": 1,
+                  "line_end": 58
+                }
+              ]
+            },
+            {
+              "procedure": "cptr",
+              "role": "public-entry-point",
+              "module": "fmmap",
+              "derived_type": "fmmap_t",
+              "summary": "Declare TYPE(fmmap_t) :: solver from fmmap. Return TYPE(C_PTR) to the mapped storage, or C_NULL_PTR when there is no active allocated descriptor. Check creation status/association before C_F_POINTER with a matching interoperable type and valid shape. The result borrows mapped storage: do not DEALLOCATE or C_FREE it, and do not use it after DESTROY/finalization or remapping. No typed-array allocation or bounds metadata is returned. The passed object X is implicit in solver%; do not pass it again. Optional actuals shown in brackets can be supplied by keyword.",
+              "signature": "VALUE = solver%cptr()",
+              "path": "src/fmmap.F90",
+              "line_start": 151,
+              "line_end": 160,
+              "declarations": [
+                {
+                  "path": "src/fmmap.F90",
+                  "line_start": 153,
+                  "line_end": 156
+                },
+                {
+                  "path": "src/fmmap.F90",
+                  "line_start": 1,
+                  "line_end": 58
+                }
+              ]
+            },
+            {
+              "procedure": "destroy",
+              "role": "public-entry-point",
+              "module": "fmmap",
+              "derived_type": "fmmap_t",
+              "summary": "Declare TYPE(fmmap_t) :: solver from fmmap. Unmap/release the owning descriptor and report optional STAT. WRITEBACK controls explicit persistence of private mappings, not ownership of the borrowed Fortran pointer. Defaults depend on FILESTATUS/private mode; NEW private mappings require writeback, SCRATCH/NOFILE forbid it, and shared mappings must not request private writeback. Invalid combinations can ERROR STOP even with STAT present. All borrowed pointers become invalid. The passed object X is implicit in solver%; do not pass it again. Optional actuals shown in brackets can be supplied by keyword.",
+              "signature": "CALL solver%destroy([WRITEBACK],[STAT])",
+              "path": "src/fmmap.F90",
+              "line_start": 201,
+              "line_end": 259,
+              "declarations": [
+                {
+                  "path": "src/fmmap.F90",
+                  "line_start": 203,
+                  "line_end": 211
+                },
+                {
+                  "path": "src/fmmap.F90",
+                  "line_start": 1,
+                  "line_end": 58
                 }
               ]
             }
@@ -19250,6 +20516,160 @@
         }
       ]
     },
+    "nc4fortran": {
+      "id": "github:geospace-code/nc4fortran",
+      "repository": {
+        "owner": "geospace-code",
+        "name": "nc4fortran",
+        "url": "https://github.com/geospace-code/nc4fortran"
+      },
+      "license": {
+        "label": "MIT",
+        "spdx_expression": "MIT",
+        "revision": "942ac4f83380acdef463002f555aebf30f3c46ac",
+        "reviewed_on": "2026-11-07",
+        "notes": "Root LICENSE supplies SciVision MIT terms. The native NetCDF Fortran/C libraries retain separate licensing and ABI requirements.",
+        "evidence": [
+          {
+            "path": "LICENSE",
+            "url": "https://github.com/geospace-code/nc4fortran/blob/942ac4f83380acdef463002f555aebf30f3c46ac/LICENSE",
+            "sha256": "2d9ea7e0c07e9700408ead1132c1d802f3eed8eb87ca6497afed6aebcd06a23b"
+          },
+          {
+            "path": "README.md",
+            "url": "https://github.com/geospace-code/nc4fortran/blob/942ac4f83380acdef463002f555aebf30f3c46ac/README.md",
+            "sha256": "afaf7035048bb800496b0c6cae403f93e0635ce0bb7211d1358874d0f794b23d"
+          },
+          {
+            "path": "src/interface.f90",
+            "url": "https://github.com/geospace-code/nc4fortran/blob/942ac4f83380acdef463002f555aebf30f3c46ac/src/interface.f90",
+            "sha256": "ea1463569a148abe350e1042ac345d65939221e0a9f9e67978bd5b722b7a627e"
+          }
+        ]
+      },
+      "classifications": [
+        {
+          "code": "N1",
+          "level": "source-reviewed",
+          "revision": "942ac4f83380acdef463002f555aebf30f3c46ac",
+          "reviewed_on": "2026-11-07",
+          "notes": "NetCDF4 object opening, caller-sized vector reading and explicit close document modes, slice ranks and stopping errors. This is a pinned public-interface/source review, not a new numerical execution check or complete API audit. Existing hosted drivers and their verified problem scope are recorded separately.",
+          "evidence": [
+            {
+              "path": "src/interface.f90",
+              "url": "https://github.com/geospace-code/nc4fortran/blob/942ac4f83380acdef463002f555aebf30f3c46ac/src/interface.f90",
+              "sha256": "ea1463569a148abe350e1042ac345d65939221e0a9f9e67978bd5b722b7a627e"
+            },
+            {
+              "path": "src/utils.f90",
+              "url": "https://github.com/geospace-code/nc4fortran/blob/942ac4f83380acdef463002f555aebf30f3c46ac/src/utils.f90",
+              "sha256": "8821fff9aafe873d365959fa58a225aef0957b588eaa9cf4815ba89df8ad5dfb"
+            },
+            {
+              "path": "src/reader.f90",
+              "url": "https://github.com/geospace-code/nc4fortran/blob/942ac4f83380acdef463002f555aebf30f3c46ac/src/reader.f90",
+              "sha256": "59239391d153e43f4bb0eaa4980638369a7e3563c8bd407a819fb4227efe58b6"
+            },
+            {
+              "path": "src/reader.inc",
+              "url": "https://github.com/geospace-code/nc4fortran/blob/942ac4f83380acdef463002f555aebf30f3c46ac/src/reader.inc",
+              "sha256": "d793fdd58789ff54f2a64aa8a3b6498b133ee3982f84acffc1c7a9f7ca0c9a6b"
+            }
+          ],
+          "procedures": [
+            {
+              "procedure": "open",
+              "role": "public-entry-point",
+              "module": "nc4fortran",
+              "derived_type": "netcdf_file",
+              "summary": "Declare TYPE(netcdf_file) :: solver from nc4fortran. Open a NETCDF_FILE handle; ACTION defaults \"r\", \"r+\" requests existing writable data, \"w\" creates/truncates NetCDF4, and \"rw\"/\"a\" open or create. COMP_LVL controls compression of subsequently created data, not conversion of an existing file. Explicit CLOSE is recommended. There is no returned status dummy; unsupported modes/native errors ERROR STOP. The passed object SELF is implicit in solver%; do not pass it again. Optional actuals shown in brackets can be supplied by keyword.",
+              "signature": "CALL solver%open(FILENAME,[ACTION],[COMP_LVL],[DEBUG])",
+              "path": "src/interface.f90",
+              "line_start": 278,
+              "line_end": 286,
+              "declarations": [
+                {
+                  "path": "src/interface.f90",
+                  "line_start": 281,
+                  "line_end": 285
+                },
+                {
+                  "path": "src/interface.f90",
+                  "line_start": 1,
+                  "line_end": 60
+                },
+                {
+                  "path": "src/utils.f90",
+                  "line_start": 8,
+                  "line_end": 54
+                }
+              ]
+            },
+            {
+              "procedure": "read",
+              "role": "public-entry-point",
+              "module": "nc4fortran",
+              "derived_type": "netcdf_file",
+              "summary": "Declare TYPE(netcdf_file) :: solver from nc4fortran. Rank-one READ fills a PREALLOCATED supported numeric vector A(:), for example REAL64. It does not allocate A. DNAME identifies an existing variable and the file must be open; ranks must match. For ordinary full reads size A to the variable and omit slice arguments. Optional default-INTEGER ISTART/IEND/STRIDE are length-one arrays; this review does not establish all nonunit-stride/count combinations. Native/type/rank errors ERROR STOP instead of returning IOSTAT. The passed object SELF is implicit in solver%; do not pass it again. Optional actuals shown in brackets can be supplied by keyword.",
+              "signature": "CALL solver%read(DNAME,A,[ISTART],[IEND],[STRIDE])",
+              "path": "src/interface.f90",
+              "line_start": 207,
+              "line_end": 212,
+              "declarations": [
+                {
+                  "path": "src/interface.f90",
+                  "line_start": 208,
+                  "line_end": 211
+                },
+                {
+                  "path": "src/interface.f90",
+                  "line_start": 1,
+                  "line_end": 60
+                },
+                {
+                  "path": "src/reader.f90",
+                  "line_start": 7,
+                  "line_end": 9
+                },
+                {
+                  "path": "src/reader.inc",
+                  "line_start": 1,
+                  "line_end": 35
+                }
+              ]
+            },
+            {
+              "procedure": "close",
+              "role": "public-entry-point",
+              "module": "nc4fortran",
+              "derived_type": "netcdf_file",
+              "summary": "Declare TYPE(netcdf_file) :: solver from nc4fortran. Close the native NetCDF handle and mark IS_OPEN=false. An already-closed handle emits a warning and returns; native close failure ERROR STOPs. Explicitly close before reusing an object/opening another filename and before relying on a generated file. A finalizer provides fallback cleanup but no public IOSTAT is returned. The passed object SELF is implicit in solver%; do not pass it again. Optional actuals shown in brackets can be supplied by keyword.",
+              "signature": "CALL solver%close()",
+              "path": "src/interface.f90",
+              "line_start": 293,
+              "line_end": 295,
+              "declarations": [
+                {
+                  "path": "src/interface.f90",
+                  "line_start": 294,
+                  "line_end": 294
+                },
+                {
+                  "path": "src/interface.f90",
+                  "line_start": 1,
+                  "line_end": 60
+                },
+                {
+                  "path": "src/utils.f90",
+                  "line_start": 64,
+                  "line_end": 77
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
     "array_range": {
       "id": "github:degawa/array_range",
       "repository": {
@@ -21964,6 +23384,7 @@
   "report": {
     "matched": [
       "test-drive",
+      "pyplot-fortran",
       "json-fortran",
       "toml-f",
       "fftpack",
@@ -22020,6 +23441,7 @@
       "ddeabm",
       "dvode",
       "pikaia",
+      "io-fortran-library",
       "collections",
       "peaks",
       "powellopt",
@@ -22053,9 +23475,12 @@
       "iso_varying_string",
       "fortimize",
       "forimage",
+      "ncio",
       "fastconv",
       "gaussjacobiquad",
       "kissfft-f",
+      "h5fortran",
+      "befor64",
       "fortran-zlib",
       "iapws",
       "linalg",
@@ -22071,10 +23496,14 @@
       "conmin",
       "opti",
       "interpolation",
+      "fortran_huffman",
       "fastmath",
       "fortsa",
+      "fortran_stb_image",
       "odepack",
       "kiss",
+      "fortran-messagepack",
+      "fmmap",
       "fortran_cubatures",
       "stiff3",
       "sparse_fortran",
@@ -22109,6 +23538,7 @@
       "uint-fortran",
       "fortran-tokenizer",
       "integer_set",
+      "nc4fortran",
       "array_range",
       "fortran-regex",
       "fed",
@@ -22132,13 +23562,11 @@
     "revision_mismatches": [],
     "no_independent_review": [
       "fortran-lapack",
-      "pyplot-fortran",
       "stdlib",
       "kinds",
       "fortran-astrodynamics-toolkit",
       "m_framework",
       "mpfun2020-var1",
-      "io-fortran-library",
       "quaff",
       "neural-fortran",
       "lightkrylov",
@@ -22147,22 +23575,15 @@
       "twopnt",
       "astro-fortran",
       "daskr",
-      "ncio",
-      "h5fortran",
       "metis-fpm",
       "m_calculator",
-      "befor64",
       "ciaaw",
-      "fortran_huffman",
       "fortran-flann",
-      "fortran_stb_image",
       "cairo-fortran",
       "forsudoku",
       "parff",
       "conmax",
       "graphstruc",
-      "fortran-messagepack",
-      "fmmap",
       "psqp",
       "optgra",
       "y12m",
@@ -22192,7 +23613,6 @@
       "erloff",
       "smart-pointers",
       "rpn-calculator-fortran",
-      "nc4fortran",
       "fundamental_constants",
       "kronrod",
       "any",
