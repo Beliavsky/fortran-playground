@@ -2,7 +2,7 @@
   "schema_version": 1,
   "publisher": "fortran-gams-catalog-independent-reviews",
   "source_url": "https://beliavsky.github.io/fortran-gams-catalog/reviewed-metadata.json",
-  "source_snapshot_id": "sha256:ac92c5687ea9b8f419a1773d5805d1afa4b5e5ebc7f530294d5716ad5b1e61c6",
+  "source_snapshot_id": "sha256:a2aea084678b2caceec22d1f0cd96b5d6f59a3f764f6e18e82e67335f447d75c",
   "packages": {
     "test-drive": {
       "id": "github:fortran-lang/test-drive",
@@ -16006,6 +16006,84 @@
         }
       ]
     },
+    "conmax": {
+      "id": "github:jacobwilliams/conmax",
+      "repository": {
+        "owner": "jacobwilliams",
+        "name": "conmax",
+        "url": "https://github.com/jacobwilliams/conmax"
+      },
+      "license": {
+        "label": "BSD-3-Clause plus original CONMAX notice",
+        "spdx_expression": null,
+        "revision": "ab7f237d30f94f7d13b86997e0c49f3d67bd7c54",
+        "reviewed_on": "2026-11-07",
+        "notes": "Root LICENSE.txt includes Jacob Williams BSD three-clause terms and the original Kaufman/Leeming/Taylor permission notice requiring preservation in software and supporting documentation. Retain both notices.",
+        "evidence": [
+          {
+            "path": "LICENSE.txt",
+            "url": "https://github.com/jacobwilliams/conmax/blob/ab7f237d30f94f7d13b86997e0c49f3d67bd7c54/LICENSE.txt",
+            "sha256": "6e94fc7189b2701cf17fa1627dbf8a0f9b29220bf38bad0a0889bd96594c353e"
+          },
+          {
+            "path": "README.md",
+            "url": "https://github.com/jacobwilliams/conmax/blob/ab7f237d30f94f7d13b86997e0c49f3d67bd7c54/README.md",
+            "sha256": "643e62b32092cd500f29f43e3e9f3d60704468353f961911762dac18c2c01920"
+          },
+          {
+            "path": "src/conmax.f90",
+            "url": "https://github.com/jacobwilliams/conmax/blob/ab7f237d30f94f7d13b86997e0c49f3d67bd7c54/src/conmax.f90",
+            "sha256": "533352fcb0bad345e3a1ab970fefec5f889fd844f4e7625f2f844e4d8f192dca"
+          }
+        ]
+      },
+      "classifications": [
+        {
+          "code": "G2a",
+          "level": "source-reviewed",
+          "revision": "ab7f237d30f94f7d13b86997e0c49f3d67bd7c54",
+          "reviewed_on": "2026-11-07",
+          "notes": "Constrained minimax solve with a concrete FNSET implementation, real64 data and caller-owned option/work arrays. This is a pinned public-interface/source review, not a new numerical execution check or complete API audit. Existing hosted drivers and their verified problem scope are recorded separately.",
+          "evidence": [
+            {
+              "path": "src/conmax.f90",
+              "url": "https://github.com/jacobwilliams/conmax/blob/ab7f237d30f94f7d13b86997e0c49f3d67bd7c54/src/conmax.f90",
+              "sha256": "533352fcb0bad345e3a1ab970fefec5f889fd844f4e7625f2f844e4d8f192dca"
+            }
+          ],
+          "procedures": [
+            {
+              "procedure": "solve",
+              "role": "public-entry-point",
+              "module": "conmax_module",
+              "derived_type": "conmax_solver",
+              "summary": "Use a concrete extension of CONMAX_SOLVER from conmax_module. Solve the constrained minimax problem from an initial PARAM vector. CONMAX_SOLVER is ABSTRACT: extend it and implement the deferred FNSET callback with the linked FUNC declarations; use that concrete solver as the receiver. The callback sets constraint types/values and requested derivatives. IOPTN=0 requests supplied derivatives; its units digit 1 enables differences. Allocate LIWRK >= 7*NUMGR+7*NPARM+3 and LWRK >= 2*NPARM**2+4*NUMGR*NPARM+11*NUMGR+27*NPARM+13. Reset option-bearing workspace inputs between calls. This pin returns ITER=-999 for short workspace, despite older comments describing negative lengths. Check ITER and ERROR(NUMGR+1:NUMGR+3), including feasibility and the iteration limit; return does not certify an optimum. Use REAL(REAL64) via ISO_FORTRAN_ENV. The passed object ME is implicit in solver%; do not pass it again. Optional actuals shown in brackets can be supplied by keyword.",
+              "signature": "CALL solver%solve(IOPTN,NPARM,NUMGR,ITLIM,FUN,IFUN,PTTBL,IPTB,INDM,IWORK,LIWRK,WORK,LWRK,ITER,PARAM,ERROR)",
+              "path": "src/conmax.f90",
+              "line_start": 150,
+              "line_end": 873,
+              "declarations": [
+                {
+                  "path": "src/conmax.f90",
+                  "line_start": 155,
+                  "line_end": 348
+                },
+                {
+                  "path": "src/conmax.f90",
+                  "line_start": 25,
+                  "line_end": 104
+                },
+                {
+                  "path": "src/conmax.f90",
+                  "line_start": 375,
+                  "line_end": 381
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
     "fortran-messagepack": {
       "id": "github:synthfi/fortran-messagepack",
       "repository": {
@@ -16689,6 +16767,251 @@
         }
       ]
     },
+    "psqp": {
+      "id": "github:jacobwilliams/psqp",
+      "repository": {
+        "owner": "jacobwilliams",
+        "name": "psqp",
+        "url": "https://github.com/jacobwilliams/psqp"
+      },
+      "license": {
+        "label": "LGPL-2.1-or-later with additional notice requirements",
+        "spdx_expression": null,
+        "revision": "57a853e14e3806d69adad6d6d44396d9665d842e",
+        "reviewed_on": "2026-11-07",
+        "notes": "Root license.txt states LGPL version 2.1 or later with an ACM-algorithm exception and accompanying copyright, availability, citation and modification-notice requirements. The manifest only says LGPL; preserve the full upstream notice.",
+        "evidence": [
+          {
+            "path": "license.txt",
+            "url": "https://github.com/jacobwilliams/psqp/blob/57a853e14e3806d69adad6d6d44396d9665d842e/license.txt",
+            "sha256": "ce7287a76a67573e1aa750021d4b1e2d7a7abb05ba2e1fbfb5c7c5e61b92049d"
+          },
+          {
+            "path": "README.md",
+            "url": "https://github.com/jacobwilliams/psqp/blob/57a853e14e3806d69adad6d6d44396d9665d842e/README.md",
+            "sha256": "10db3fb180e401f2e232b4ddf1bcdb1f3ab0c7ccc6d990dce234114842e58c3c"
+          },
+          {
+            "path": "src/psqp_module.f90",
+            "url": "https://github.com/jacobwilliams/psqp/blob/57a853e14e3806d69adad6d6d44396d9665d842e/src/psqp_module.f90",
+            "sha256": "fd0411a95a43bad3ddff172f6b93955091407e41a718a436913cf38b5e95ca96"
+          }
+        ]
+      },
+      "classifications": [
+        {
+          "code": "G2h3b1b",
+          "level": "source-reviewed",
+          "revision": "57a853e14e3806d69adad6d6d44396d9665d842e",
+          "reviewed_on": "2026-11-07",
+          "notes": "SQP solve and advanced workspace entry document objective/constraint gradients, callback lifetime and termination measures. This is a pinned public-interface/source review, not a new numerical execution check or complete API audit. Existing hosted drivers and their verified problem scope are recorded separately.",
+          "evidence": [
+            {
+              "path": "src/psqp_module.f90",
+              "url": "https://github.com/jacobwilliams/psqp/blob/57a853e14e3806d69adad6d6d44396d9665d842e/src/psqp_module.f90",
+              "sha256": "fd0411a95a43bad3ddff172f6b93955091407e41a718a436913cf38b5e95ca96"
+            },
+            {
+              "path": "src/psqp_kind_module.F90",
+              "url": "https://github.com/jacobwilliams/psqp/blob/57a853e14e3806d69adad6d6d44396d9665d842e/src/psqp_kind_module.F90",
+              "sha256": "38c1b56fd4b38080db9412061a50a0ad1db0c0b040524030c25286cfbdb2217e"
+            }
+          ],
+          "procedures": [
+            {
+              "procedure": "psqpn",
+              "role": "public-entry-point",
+              "module": "psqp_module",
+              "derived_type": "psqp_class",
+              "summary": "Declare TYPE(psqp_class) :: solver from psqp_module. Solve a smooth constrained problem from X, allocating internal work arrays. Supply OBJ/DOBJ and CON/DCON callbacks with analytic gradients and the exact linked interfaces; constraint callbacks remain required actual arguments even when NC=0. CF has NC+1 entries. Use REAL(PSQP_WP), IPAR(6), RPAR(5) and the documented bound/constraint type codes. Only REPORT is optional. Set IPRNT=0 for quiet operation. Check ITERM, CMAX and GMAX; statuses 11-13 are budgets rather than convergence. Callback pointers are retained in the object; keep their targets alive. An omitted REPORT on a reused object does not clear an earlier reporter, so use a fresh object when changing reporter lifetimes. The passed object ME is implicit in solver%; do not pass it again. Optional actuals shown in brackets can be supplied by keyword.",
+              "signature": "CALL solver%psqpn(NF,NB,NC,X,BOUND_TYPE,XL,XU,CF,CONSTRAINT_TYPE,CL,CU,IPAR,RPAR,F,GMAX,CMAX,IPRNT,ITERM,OBJ,DOBJ,CON,DCON,[REPORT])",
+              "path": "src/psqp_module.f90",
+              "line_start": 138,
+              "line_end": 257,
+              "declarations": [
+                {
+                  "path": "src/psqp_module.f90",
+                  "line_start": 142,
+                  "line_end": 212
+                },
+                {
+                  "path": "src/psqp_module.f90",
+                  "line_start": 12,
+                  "line_end": 128
+                },
+                {
+                  "path": "src/psqp_kind_module.F90",
+                  "line_start": 1,
+                  "line_end": 28
+                }
+              ]
+            },
+            {
+              "procedure": "psqp",
+              "role": "public-entry-point",
+              "module": "psqp_module",
+              "derived_type": "psqp_class",
+              "summary": "Declare TYPE(psqp_class) :: solver from psqp_module. Advanced caller-workspace SQP entry. Prefer PSQPN for a first solve: callback components are private and this lower-level call accepts no callbacks, so the object must already have valid callback associations established through PSQPN. Keep those procedure targets alive. All work arrays, X/IX and constraint arrays must have the linked extents; IC/IX and some bounds/settings are modified. CF is NC+1, CG is NF*NC, and CR/H each need NF*(NF+1)/2 storage. Inspect ITERM plus feasibility and gradient measures. This is a documented advanced interface, not a standalone initialization recipe. The passed object ME is implicit in solver%; do not pass it again. Optional actuals shown in brackets can be supplied by keyword.",
+              "signature": "CALL solver%psqp(NF,NB,NC,X,IX,XL,XU,CF,IC,CL,CU,CG,CFO,CFD,GC,ICA,CR,CZ,CP,GF,G,H,S,XO,GO,XMAX,TOLX,TOLC,TOLG,RPF,CMAX,GMAX,F,MIT,MFV,MET,MEC,IPRNT,ITERM)",
+              "path": "src/psqp_module.f90",
+              "line_start": 270,
+              "line_end": 652,
+              "declarations": [
+                {
+                  "path": "src/psqp_module.f90",
+                  "line_start": 274,
+                  "line_end": 359
+                },
+                {
+                  "path": "src/psqp_module.f90",
+                  "line_start": 12,
+                  "line_end": 128
+                },
+                {
+                  "path": "src/psqp_kind_module.F90",
+                  "line_start": 1,
+                  "line_end": 28
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "optgra": {
+      "id": "github:jacobwilliams/optgra",
+      "repository": {
+        "owner": "jacobwilliams",
+        "name": "optgra",
+        "url": "https://github.com/jacobwilliams/optgra"
+      },
+      "license": {
+        "label": "GPL-3.0 or ESA ESCL 2.4 Weak Copyleft",
+        "spdx_expression": null,
+        "revision": "914bed713e80faa4a190e03beb3a8307077eb028",
+        "reviewed_on": "2026-11-07",
+        "notes": "Root LICENSE.txt explicitly offers a choice of GNU GPL version 3 or ESA Software Community Licence 2.4 Weak Copyleft and includes the ESA text. Preserve that choice rather than reduce it to a single permissive label.",
+        "evidence": [
+          {
+            "path": "LICENSE.txt",
+            "url": "https://github.com/jacobwilliams/optgra/blob/914bed713e80faa4a190e03beb3a8307077eb028/LICENSE.txt",
+            "sha256": "acee0cbd13f37ab2d5c9db61f0675c19509a1a1ccf79c924bd3013bf14c1384a"
+          },
+          {
+            "path": "README.md",
+            "url": "https://github.com/jacobwilliams/optgra/blob/914bed713e80faa4a190e03beb3a8307077eb028/README.md",
+            "sha256": "0fa44ac6d9a698ca6ccfa6d00e71d442a9b7f15ad2e00e374c745825a06e0724"
+          },
+          {
+            "path": "src/optgra.F90",
+            "url": "https://github.com/jacobwilliams/optgra/blob/914bed713e80faa4a190e03beb3a8307077eb028/src/optgra.F90",
+            "sha256": "39252e9d069c4183ebdbfa9c6b1b6633e396f435ee88f7fbfcf0e2a774fbe306"
+          }
+        ]
+      },
+      "classifications": [
+        {
+          "code": "G2h3b1b",
+          "level": "source-reviewed",
+          "revision": "914bed713e80faa4a190e03beb3a8307077eb028",
+          "reviewed_on": "2026-11-07",
+          "notes": "Near-linear constrained optimization setup, solve and explicit cleanup distinguish constraint and merit slots and stopping statuses. This is a pinned public-interface/source review, not a new numerical execution check or complete API audit. Existing hosted drivers and their verified problem scope are recorded separately.",
+          "evidence": [
+            {
+              "path": "src/optgra.F90",
+              "url": "https://github.com/jacobwilliams/optgra/blob/914bed713e80faa4a190e03beb3a8307077eb028/src/optgra.F90",
+              "sha256": "39252e9d069c4183ebdbfa9c6b1b6633e396f435ee88f7fbfcf0e2a774fbe306"
+            }
+          ],
+          "procedures": [
+            {
+              "procedure": "initialize",
+              "role": "public-entry-point",
+              "module": "optgra_module",
+              "derived_type": "optgra",
+              "summary": "Declare TYPE(optgra) :: solver from optgra_module. Initialize the problem before SOLVE; every displayed argument is REQUIRED, including both value/derivative callbacks, iteration/logging settings and names. Use REAL(OPTGRA_WP) and default INT32 integers in this build. Arrays for constraints include an extra merit-function slot NUMCON+1, while variable arrays have NUMVAR entries; names have length 80. CONTYP(1:NUMCON) distinguishes >=0, <=0, equality and derived-data constraints, while CONTYP(NUMCON+1) selects maximization/minimization. VARDER chooses analytic or differenced derivatives. Callback procedure pointers are retained, so targets must outlive use. Scales must be meaningful/nonzero; no initialization status dummy is returned. The passed object ME is implicit in solver%; do not pass it again. Optional actuals shown in brackets can be supplied by keyword.",
+              "signature": "CALL solver%initialize(NUMVAR,NUMCON,CALVAL,CALDER,DELCON,CONPRI,CONSCA,CONSTR,CONLEN,CONTYP,VARDER,VARPER,VARMAX,VARSND,MAXITE,ITECOR,ITEOPT,ITEDIV,ITECNV,LOGLUP,VERBOS,SENOPT,VARSCA,VARSTR,VARLEN,VARTYP,LOGLUN,LOGLEV,MATLEV,TABLUN,TABLEV,OPTMET)",
+              "path": "src/optgra.F90",
+              "line_start": 166,
+              "line_end": 435,
+              "declarations": [
+                {
+                  "path": "src/optgra.F90",
+                  "line_start": 183,
+                  "line_end": 273
+                },
+                {
+                  "path": "src/optgra.F90",
+                  "line_start": 13,
+                  "line_end": 39
+                },
+                {
+                  "path": "src/optgra.F90",
+                  "line_start": 108,
+                  "line_end": 159
+                }
+              ]
+            },
+            {
+              "procedure": "solve",
+              "role": "public-entry-point",
+              "module": "optgra_module",
+              "derived_type": "optgra",
+              "summary": "Declare TYPE(optgra) :: solver from optgra_module. Solve after INITIALIZE, taking unscaled VALVAR as the initial variables and returning updated variables and VALCON(NUMCON+1), including the merit value in the last slot. Check FINOPT: 1 matched/optimal under its stopping tests; 2 matched but not optimal; 3 not matched/not optimal; 4 infeasible/not optimal; -1 fatal singular constraints. FINITE is a separate integer result, not a LOGICAL finiteness test. Returned values and status do not certify a global optimum. Callback dimensions, scale choices and iteration settings come from initialization. The passed object ME is implicit in solver%; do not pass it again. Optional actuals shown in brackets can be supplied by keyword.",
+              "signature": "CALL solver%solve(VALVAR,VALCON,FINOPT,FINITE)",
+              "path": "src/optgra.F90",
+              "line_start": 1582,
+              "line_end": 1996,
+              "declarations": [
+                {
+                  "path": "src/optgra.F90",
+                  "line_start": 1587,
+                  "line_end": 1600
+                },
+                {
+                  "path": "src/optgra.F90",
+                  "line_start": 13,
+                  "line_end": 39
+                },
+                {
+                  "path": "src/optgra.F90",
+                  "line_start": 108,
+                  "line_end": 159
+                }
+              ]
+            },
+            {
+              "procedure": "destroy",
+              "role": "public-entry-point",
+              "module": "optgra_module",
+              "derived_type": "optgra",
+              "summary": "Declare TYPE(optgra) :: solver from optgra_module. Explicitly deallocate allocated problem/work arrays after use. Allocation checks allow cleanup of a default object or repeated cleanup. It is not a solve, and it does not reset every scalar or nullify retained callback pointers. Do not call SOLVE again until INITIALIZE establishes a complete new problem. No FINAL binding is registered in this type at this pin. The passed object ME is implicit in solver%; do not pass it again. Optional actuals shown in brackets can be supplied by keyword.",
+              "signature": "CALL solver%destroy()",
+              "path": "src/optgra.F90",
+              "line_start": 437,
+              "line_end": 482,
+              "declarations": [
+                {
+                  "path": "src/optgra.F90",
+                  "line_start": 442,
+                  "line_end": 442
+                },
+                {
+                  "path": "src/optgra.F90",
+                  "line_start": 13,
+                  "line_end": 39
+                },
+                {
+                  "path": "src/optgra.F90",
+                  "line_start": 108,
+                  "line_end": 159
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
     "forinv": {
       "id": "github:gha3mi/forinv",
       "repository": {
@@ -16971,6 +17294,167 @@
                   "path": "src/dcuhre.f",
                   "line_start": 82,
                   "line_end": 197
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "y12m": {
+      "id": "github:ivan-pi/y12m",
+      "repository": {
+        "owner": "ivan-pi",
+        "name": "y12m",
+        "url": "https://github.com/ivan-pi/y12m"
+      },
+      "license": {
+        "label": "Unclear: no library-wide license grant identified",
+        "spdx_expression": null,
+        "revision": "5245418ed3f87c72bff4660432212328640a6322",
+        "reviewed_on": "2026-11-07",
+        "notes": "No root license file or library-wide grant was identified in the pinned README, manifest and selected library sources. Some author examples/tests carry GPL-2.0-only SPDX notices, including test/test_y12ma.F90; that alone does not establish the license of the entire historical library. Confirm upstream terms before reuse.",
+        "evidence": [
+          {
+            "path": "README.md",
+            "url": "https://github.com/ivan-pi/y12m/blob/5245418ed3f87c72bff4660432212328640a6322/README.md",
+            "sha256": "52a5490888255f2eabaac5ff61691adcafe327563a8788964c45f29dde343ac3"
+          },
+          {
+            "path": "src/y12m.f90",
+            "url": "https://github.com/ivan-pi/y12m/blob/5245418ed3f87c72bff4660432212328640a6322/src/y12m.f90",
+            "sha256": "8dd4968f3d1eac005ebcc9387e1ac37b974edecef115e9473824ce7553bc8be1"
+          }
+        ]
+      },
+      "classifications": [
+        {
+          "code": "D2a4",
+          "level": "source-reviewed",
+          "revision": "5245418ed3f87c72bff4660432212328640a6322",
+          "reviewed_on": "2026-11-07",
+          "notes": "Sparse Gaussian solve, original matrix norm and error-message conversion document destructive storage and index conventions. This is a pinned public-interface/source review, not a new numerical execution check or complete API audit. Existing hosted drivers and their verified problem scope are recorded separately.",
+          "evidence": [
+            {
+              "path": "src/y12m.f90",
+              "url": "https://github.com/ivan-pi/y12m/blob/5245418ed3f87c72bff4660432212328640a6322/src/y12m.f90",
+              "sha256": "8dd4968f3d1eac005ebcc9387e1ac37b974edecef115e9473824ce7553bc8be1"
+            },
+            {
+              "path": "src/legacy/y12ma.f",
+              "url": "https://github.com/ivan-pi/y12m/blob/5245418ed3f87c72bff4660432212328640a6322/src/legacy/y12ma.f",
+              "sha256": "446066f96deb73e1f7ab4c8de4b53b489bc77d0ff434685350f157d8925d8261"
+            },
+            {
+              "path": "src/legacy/y12mh.f",
+              "url": "https://github.com/ivan-pi/y12m/blob/5245418ed3f87c72bff4660432212328640a6322/src/legacy/y12mh.f",
+              "sha256": "49a8b7c0c33ae1ad8128237defd270f7d46b4d32d8d12964ade98db9121f0957"
+            },
+            {
+              "path": "docs/API.md",
+              "url": "https://github.com/ivan-pi/y12m/blob/5245418ed3f87c72bff4660432212328640a6322/docs/API.md",
+              "sha256": "df68bc373c3f43ff415e159bd76948bbf9e3c0ab599cdf4259a36beec923717a"
+            },
+            {
+              "path": "fpm.toml",
+              "url": "https://github.com/ivan-pi/y12m/blob/5245418ed3f87c72bff4660432212328640a6322/fpm.toml",
+              "sha256": "4048935fb10134db174e81489118e74e8c2eb548f319b0bc81cf31ea12d8096b"
+            },
+            {
+              "path": "test/test_y12ma.F90",
+              "url": "https://github.com/ivan-pi/y12m/blob/5245418ed3f87c72bff4660432212328640a6322/test/test_y12ma.F90",
+              "sha256": "c9ed60defb0c8a03a13bb18e0cd8e17fe866cbe47885cfb0add4317c1a8d0e47"
+            }
+          ],
+          "procedures": [
+            {
+              "procedure": "y12ma",
+              "role": "public-entry-point",
+              "module": "y12m",
+              "summary": "Double-precision overload of generic Y12MA solves one sparse square system, overwriting B with X and replacing A/index storage with factorization workspace. Put original nonzeros in A(1:Z), column indices in SNR and row indices in RNR, with no duplicates and 1-based indices. Allocate NN>=2*Z, NN1>=Z (fill-in can require more), HA(IHA,11) with IHA>=N, PIVOT(N), AFLAG(8), IFLAG(10). Initialize IFLAG(1)>=0 and reset inputs for each new solve; the driver sets its own AFLAG(1:4)/IFLAG(2:5) defaults. Check IFAIL=0 before using B as a solution. The single-precision overload is separate.",
+              "signature": "CALL y12ma(N,Z,A,SNR,NN,RNR,NN1,PIVOT,HA,IHA,AFLAG,IFLAG,B,IFAIL)",
+              "path": "src/y12m.f90",
+              "line_start": 47,
+              "line_end": 60,
+              "declarations": [
+                {
+                  "path": "src/y12m.f90",
+                  "line_start": 50,
+                  "line_end": 59
+                },
+                {
+                  "path": "src/y12m.f90",
+                  "line_start": 1,
+                  "line_end": 24
+                },
+                {
+                  "path": "docs/API.md",
+                  "line_start": 94,
+                  "line_end": 145
+                },
+                {
+                  "path": "src/legacy/y12ma.f",
+                  "line_start": 29,
+                  "line_end": 49
+                }
+              ]
+            },
+            {
+              "procedure": "y12mh",
+              "role": "public-entry-point",
+              "module": "y12m",
+              "summary": "Double-precision overload of generic Y12MH computes the original sparse matrix one-norm from A(NZ) and COLUMN indices SNR(NZ), using caller WORK(N). Call before factorization overwrites A/SNR if the result is needed for conditioning. WORK is reset then filled with absolute column sums; ANORM is their maximum. Require valid 1-based indices and already combined duplicate entries; this routine exposes no status or index validation. Do not confuse SNR with the row-index RNR array.",
+              "signature": "CALL y12mh(N,NZ,A,SNR,WORK,ANORM)",
+              "path": "src/y12m.f90",
+              "line_start": 216,
+              "line_end": 223,
+              "declarations": [
+                {
+                  "path": "src/y12m.f90",
+                  "line_start": 218,
+                  "line_end": 222
+                },
+                {
+                  "path": "src/y12m.f90",
+                  "line_start": 1,
+                  "line_end": 24
+                },
+                {
+                  "path": "docs/API.md",
+                  "line_start": 94,
+                  "line_end": 145
+                },
+                {
+                  "path": "src/legacy/y12mh.f",
+                  "line_start": 57,
+                  "line_end": 106
+                }
+              ]
+            },
+            {
+              "procedure": "y12m_get_error_msg",
+              "role": "public-entry-point",
+              "module": "y12m",
+              "summary": "Translate IFAIL into caller-supplied CHARACTER MESSAGE. Code 0 gives success text, 1-25 use the saved table and others return unknown-code text. Optional LENGTH returns full trimmed message length, even when a short MESSAGE actual truncates the text. No printing occurs and no prior solver state is needed; this routine reports the supplied code without recovering or verifying a solution.",
+              "signature": "CALL y12m_get_error_msg(IFAIL,MESSAGE,[LENGTH])",
+              "path": "src/y12m.f90",
+              "line_start": 228,
+              "line_end": 282,
+              "declarations": [
+                {
+                  "path": "src/y12m.f90",
+                  "line_start": 232,
+                  "line_end": 234
+                },
+                {
+                  "path": "src/y12m.f90",
+                  "line_start": 1,
+                  "line_end": 24
+                },
+                {
+                  "path": "docs/API.md",
+                  "line_start": 94,
+                  "line_end": 145
                 }
               ]
             }
@@ -17847,6 +18331,177 @@
         }
       ]
     },
+    "lusol": {
+      "id": "github:jacobwilliams/lusol",
+      "repository": {
+        "owner": "jacobwilliams",
+        "name": "lusol",
+        "url": "https://github.com/jacobwilliams/lusol"
+      },
+      "license": {
+        "label": "MIT OR BSD-3-Clause",
+        "spdx_expression": "MIT OR BSD-3-Clause",
+        "revision": "2d95174d44ec9bf9dabbbd07652c84c11fe56d71",
+        "reviewed_on": "2026-11-07",
+        "notes": "Root LICENSE.md explicitly distributes LUSOL under BSD or MIT and includes both grants, credited to Systems Optimization Laboratory. The manifest uses an ampersand, but the license document states a choice.",
+        "evidence": [
+          {
+            "path": "LICENSE.md",
+            "url": "https://github.com/jacobwilliams/lusol/blob/2d95174d44ec9bf9dabbbd07652c84c11fe56d71/LICENSE.md",
+            "sha256": "4f057a741999ffbdff6e7f668ad2c34e8f783aad4a5b3a66192be2027459eee6"
+          },
+          {
+            "path": "README.md",
+            "url": "https://github.com/jacobwilliams/lusol/blob/2d95174d44ec9bf9dabbbd07652c84c11fe56d71/README.md",
+            "sha256": "3725f99d51fd0403fbcac522a993ed103e75173897686306b2e95e83552c3c74"
+          },
+          {
+            "path": "src/lusol.f90",
+            "url": "https://github.com/jacobwilliams/lusol/blob/2d95174d44ec9bf9dabbbd07652c84c11fe56d71/src/lusol.f90",
+            "sha256": "2372004497e54012d074037e3f52edcc4193222b9d92af1295dd03e89e8391af"
+          }
+        ]
+      },
+      "classifications": [
+        {
+          "code": "D2a4",
+          "level": "source-reviewed",
+          "revision": "2d95174d44ec9bf9dabbbd07652c84c11fe56d71",
+          "reviewed_on": "2026-11-07",
+          "notes": "Sparse LU convenience and low-level factor/solve calls document kinds, reversed index-array naming and staged failure handling. This is a pinned public-interface/source review, not a new numerical execution check or complete API audit. Existing hosted drivers and their verified problem scope are recorded separately.",
+          "evidence": [
+            {
+              "path": "src/lusol.f90",
+              "url": "https://github.com/jacobwilliams/lusol/blob/2d95174d44ec9bf9dabbbd07652c84c11fe56d71/src/lusol.f90",
+              "sha256": "2372004497e54012d074037e3f52edcc4193222b9d92af1295dd03e89e8391af"
+            },
+            {
+              "path": "src/lusol_ez.f90",
+              "url": "https://github.com/jacobwilliams/lusol/blob/2d95174d44ec9bf9dabbbd07652c84c11fe56d71/src/lusol_ez.f90",
+              "sha256": "9f800dc1ccd7481382da10ee3a7979b4f07d767e425c356b618910e2ffa424df"
+            },
+            {
+              "path": "src/lusol_precision.F90",
+              "url": "https://github.com/jacobwilliams/lusol/blob/2d95174d44ec9bf9dabbbd07652c84c11fe56d71/src/lusol_precision.F90",
+              "sha256": "81138ea09a48b0ab6df0bce5309da497954c82e7d87decf54dd652b6c4295529"
+            }
+          ],
+          "procedures": [
+            {
+              "procedure": "solve",
+              "role": "public-entry-point",
+              "module": "lusol_ez_module",
+              "summary": "Convenience single-RHS sparse solve: NCOLS columns, NROWS rows, NN nonzeros represented by IROW/ICOL/MAT. The dimension/index actuals are DEFAULT INTEGER here, unlike the INT64 low-level API. REAL(RP) B has NROWS and X has NCOLS entries; optional LUSOL_SETTINGS defaults to mode 5 (A*X=B). Inputs are copied into internal storage. Important limitation: this pin calls LU6SOL even when LU1FAC failed and reports only the final INFORM as ISTAT, so ISTAT alone cannot recover an earlier factorization failure. For robust error handling use separate LU1FAC/LU6SOL with intermediate checks; the wrapper also chooses fixed workspace capacity without retry.",
+              "signature": "CALL solve(N_COLS,N_ROWS,N_NONZERO,IROW,ICOL,MAT,B,X,ISTAT,[SETTINGS])",
+              "path": "src/lusol_ez.f90",
+              "line_start": 43,
+              "line_end": 157,
+              "declarations": [
+                {
+                  "path": "src/lusol_ez.f90",
+                  "line_start": 45,
+                  "line_end": 53
+                },
+                {
+                  "path": "src/lusol.f90",
+                  "line_start": 53,
+                  "line_end": 60
+                },
+                {
+                  "path": "src/lusol_precision.F90",
+                  "line_start": 36,
+                  "line_end": 56
+                },
+                {
+                  "path": "src/lusol_ez.f90",
+                  "line_start": 14,
+                  "line_end": 31
+                },
+                {
+                  "path": "src/lusol_ez.f90",
+                  "line_start": 115,
+                  "line_end": 155
+                }
+              ]
+            },
+            {
+              "procedure": "lu1fac",
+              "role": "public-entry-point",
+              "module": "lusol",
+              "summary": "Factor sparse A using caller arrays and REAL(RP)/INTEGER(IP) from LUSOL_PRECISION (IP=INT64 at this pin). On input A(1:NELEM) stores values, INDC holds ROW indices, INDR holds COLUMN indices; supply unique 1-based pairs. Initialize LUPARM(30)/PARMLU(30) per the linked settings, including keepLU=1 when solving later; all-zero settings are not a documented default setup. Storage must allow fill-in, not just input nonzeros. Check INFORM before LU6SOL; on storage failure INFORM=7, LUPARM(13) recommends capacity. Save the returned arrays/permutations unchanged for subsequent solves.",
+              "signature": "CALL lu1fac(M,N,NELEM,LENA,LUPARM,PARMLU,A,INDC,INDR,P,Q,LENC,LENR,LOCC,LOCR,IPLOC,IQLOC,IPINV,IQINV,W,INFORM)",
+              "path": "src/lusol.f90",
+              "line_start": 101,
+              "line_end": 844,
+              "declarations": [
+                {
+                  "path": "src/lusol.f90",
+                  "line_start": 106,
+                  "line_end": 117
+                },
+                {
+                  "path": "src/lusol.f90",
+                  "line_start": 53,
+                  "line_end": 60
+                },
+                {
+                  "path": "src/lusol_precision.F90",
+                  "line_start": 36,
+                  "line_end": 56
+                },
+                {
+                  "path": "src/lusol.f90",
+                  "line_start": 120,
+                  "line_end": 145
+                },
+                {
+                  "path": "src/lusol.f90",
+                  "line_start": 270,
+                  "line_end": 343
+                },
+                {
+                  "path": "src/lusol.f90",
+                  "line_start": 369,
+                  "line_end": 395
+                }
+              ]
+            },
+            {
+              "procedure": "lu6sol",
+              "role": "public-entry-point",
+              "module": "lusol",
+              "summary": "Solve using valid retained LU1FAC factors and their permutations/row metadata. MODE=5 takes V(M) as RHS for A*W=V and overwrites V; W(N) is the solution. MODE=6 solves the transpose using W as RHS and V as output, destroying W. V and W must be distinct for modes 3-6. Other modes solve individual triangular systems or supported symmetric forms; choose their documented input/output convention rather than assume mode 5. Use INTEGER(IP)/REAL(RP), inspect INFORM and PARMLU(20), and restore RHS arrays for each solve. This does not factor the matrix.",
+              "signature": "CALL lu6sol(MODE,M,N,V,W,LENA,LUPARM,PARMLU,A,INDC,INDR,P,Q,LENC,LENR,LOCC,LOCR,INFORM)",
+              "path": "src/lusol.f90",
+              "line_start": 4709,
+              "line_end": 4817,
+              "declarations": [
+                {
+                  "path": "src/lusol.f90",
+                  "line_start": 4715,
+                  "line_end": 4723
+                },
+                {
+                  "path": "src/lusol.f90",
+                  "line_start": 53,
+                  "line_end": 60
+                },
+                {
+                  "path": "src/lusol_precision.F90",
+                  "line_start": 36,
+                  "line_end": 56
+                },
+                {
+                  "path": "src/lusol.f90",
+                  "line_start": 4725,
+                  "line_end": 4760
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
     "carlson-elliptic-integrals": {
       "id": "github:jacobwilliams/carlson-elliptic-integrals",
       "repository": {
@@ -18707,6 +19362,353 @@
         }
       ]
     },
+    "strith": {
+      "id": "github:degawa/strith",
+      "repository": {
+        "owner": "degawa",
+        "name": "strith",
+        "url": "https://github.com/degawa/strith"
+      },
+      "license": {
+        "label": "MIT",
+        "spdx_expression": "MIT",
+        "revision": "da2b1f489a178cb443f636e3f9c89aed6c8702b1",
+        "reviewed_on": "2026-11-07",
+        "notes": "Root LICENSE supplies Tomohiro Degawa MIT terms. Only the selected INT64 constructor and object bindings are reviewed here.",
+        "evidence": [
+          {
+            "path": "LICENSE",
+            "url": "https://github.com/degawa/strith/blob/da2b1f489a178cb443f636e3f9c89aed6c8702b1/LICENSE",
+            "sha256": "9706c35a393c4902687c90ce2055c8130df6ce757bbc9174514e6fa6ab3c4f00"
+          },
+          {
+            "path": "README.md",
+            "url": "https://github.com/degawa/strith/blob/da2b1f489a178cb443f636e3f9c89aed6c8702b1/README.md",
+            "sha256": "b1b4f16e7fd87b03edf733dae0d68a94dbc7159b0840dafe981f5facce43ab2b"
+          },
+          {
+            "path": "src/type/strint.f90",
+            "url": "https://github.com/degawa/strith/blob/da2b1f489a178cb443f636e3f9c89aed6c8702b1/src/type/strint.f90",
+            "sha256": "ce256be7c61235c255bf5ba095f41ec1215fa912f3bd82e16d324831a3a3f3f0"
+          }
+        ]
+      },
+      "classifications": [
+        {
+          "code": "A1",
+          "level": "source-reviewed",
+          "revision": "da2b1f489a178cb443f636e3f9c89aed6c8702b1",
+          "reviewed_on": "2026-11-07",
+          "notes": "Fixed-width decimal integer construction, addition and text extraction distinguish representation from arbitrary precision. This is a pinned public-interface/source review, not a new numerical execution check or complete API audit. Existing hosted drivers and their verified problem scope are recorded separately.",
+          "evidence": [
+            {
+              "path": "src/type/strint.f90",
+              "url": "https://github.com/degawa/strith/blob/da2b1f489a178cb443f636e3f9c89aed6c8702b1/src/type/strint.f90",
+              "sha256": "ce256be7c61235c255bf5ba095f41ec1215fa912f3bd82e16d324831a3a3f3f0"
+            },
+            {
+              "path": "src/strith.f90",
+              "url": "https://github.com/degawa/strith/blob/da2b1f489a178cb443f636e3f9c89aed6c8702b1/src/strith.f90",
+              "sha256": "3a537dc78c60b4308ceb21cdc02b897ad712b706f3aa5c30278558633177eba5"
+            },
+            {
+              "path": "src/parameter/parameter.f90",
+              "url": "https://github.com/degawa/strith/blob/da2b1f489a178cb443f636e3f9c89aed6c8702b1/src/parameter/parameter.f90",
+              "sha256": "8f3bd18a496a10682f0a911ea0a51cde2a6171ee82972636faa9c45db8b0ac11"
+            },
+            {
+              "path": "src/arithmetic/basic/add/add.f90",
+              "url": "https://github.com/degawa/strith/blob/da2b1f489a178cb443f636e3f9c89aed6c8702b1/src/arithmetic/basic/add/add.f90",
+              "sha256": "392c77f3fe5f5bbc7c979e5e1dec47d7eaf0202288e51389840cbbe91766894f"
+            },
+            {
+              "path": "src/arithmetic/basic/core/add.f90",
+              "url": "https://github.com/degawa/strith/blob/da2b1f489a178cb443f636e3f9c89aed6c8702b1/src/arithmetic/basic/core/add.f90",
+              "sha256": "6f4e12b154ff35dc23fce3ee4bff62f6c4c5e888a2a8538153068d3429a2e257"
+            }
+          ],
+          "procedures": [
+            {
+              "procedure": "new_strint",
+              "role": "public-entry-point",
+              "module": "strith",
+              "summary": "INTEGER(INT64) overload of NEW_STRINT returns an initialized STRINT_TYPE, storing a signed zero-padded decimal representation. Use ISO_FORTRAN_ENV::INT64 for the actual; other integer kinds and a fixed-width string use different overloads. Storage has the configured STRITH DIGITS width and is not arbitrary precision. The integer overload avoids the strict signed/padded input representation required by the character overload. No status is returned.",
+              "signature": "VALUE = new_strint(I64)",
+              "path": "src/type/strint.f90",
+              "line_start": 123,
+              "line_end": 130,
+              "declarations": [
+                {
+                  "path": "src/type/strint.f90",
+                  "line_start": 126,
+                  "line_end": 127
+                },
+                {
+                  "path": "src/strith.f90",
+                  "line_start": 1,
+                  "line_end": 60
+                },
+                {
+                  "path": "src/type/strint.f90",
+                  "line_start": 1,
+                  "line_end": 93
+                },
+                {
+                  "path": "src/parameter/parameter.f90",
+                  "line_start": 143,
+                  "line_end": 169
+                }
+              ]
+            },
+            {
+              "procedure": "add",
+              "role": "public-entry-point",
+              "module": "strith",
+              "derived_type": "strint_type",
+              "summary": "Declare TYPE(strint_type) :: solver from strith. Return a new STRINT_TYPE containing the sum; receiver and B are both unchanged. Equivalent generic syntax is a+b. Operands must be initialized; fixed-width decimal arithmetic does not grow storage or return an overflow status, and high carry beyond capacity is discarded in the digit core. Keep results within the representable magnitude instead of treating this as an arbitrary-precision package. The passed object A is implicit in solver%; do not pass it again. Optional actuals shown in brackets can be supplied by keyword.",
+              "signature": "VALUE = solver%add(B)",
+              "path": "src/type/strint.f90",
+              "line_start": 172,
+              "line_end": 180,
+              "declarations": [
+                {
+                  "path": "src/type/strint.f90",
+                  "line_start": 175,
+                  "line_end": 177
+                },
+                {
+                  "path": "src/strith.f90",
+                  "line_start": 1,
+                  "line_end": 60
+                },
+                {
+                  "path": "src/type/strint.f90",
+                  "line_start": 1,
+                  "line_end": 93
+                },
+                {
+                  "path": "src/parameter/parameter.f90",
+                  "line_start": 143,
+                  "line_end": 169
+                },
+                {
+                  "path": "src/arithmetic/basic/add/add.f90",
+                  "line_start": 12,
+                  "line_end": 44
+                },
+                {
+                  "path": "src/arithmetic/basic/core/add.f90",
+                  "line_start": 9,
+                  "line_end": 36
+                }
+              ]
+            },
+            {
+              "procedure": "to_string",
+              "role": "public-entry-point",
+              "module": "strith",
+              "derived_type": "strint_type",
+              "summary": "Declare TYPE(strint_type) :: solver from strith. Return allocatable CHARACTER for the stored signed decimal value. Default or omitted REMOVE_0_PADDING retains the fixed-width zero padding; .TRUE. requests the package padding-removal routine. This returns text and does not print, mutate the value or convert it to a machine INTEGER. Character formatting is distinct from the facade TO_STRING generic used for intrinsic integers. The passed object A is implicit in solver%; do not pass it again. Optional actuals shown in brackets can be supplied by keyword.",
+              "signature": "VALUE = solver%to_string([REMOVE_0_PADDING])",
+              "path": "src/type/strint.f90",
+              "line_start": 145,
+              "line_end": 157,
+              "declarations": [
+                {
+                  "path": "src/type/strint.f90",
+                  "line_start": 148,
+                  "line_end": 150
+                },
+                {
+                  "path": "src/strith.f90",
+                  "line_start": 1,
+                  "line_end": 60
+                },
+                {
+                  "path": "src/type/strint.f90",
+                  "line_start": 1,
+                  "line_end": 93
+                },
+                {
+                  "path": "src/parameter/parameter.f90",
+                  "line_start": 143,
+                  "line_end": 169
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "list": {
+      "id": "github:grofz/list",
+      "repository": {
+        "owner": "grofz",
+        "name": "list",
+        "url": "https://github.com/grofz/list"
+      },
+      "license": {
+        "label": "MIT",
+        "spdx_expression": "MIT",
+        "revision": "77a0c99686406eaa8d4423e778311d63c6940b43",
+        "reviewed_on": "2026-11-07",
+        "notes": "Root LICENSE.txt supplies Zdenek Grof MIT terms. The manifest retains placeholder Jane Doe metadata; the explicit grant is the license evidence.",
+        "evidence": [
+          {
+            "path": "LICENSE.txt",
+            "url": "https://github.com/grofz/list/blob/77a0c99686406eaa8d4423e778311d63c6940b43/LICENSE.txt",
+            "sha256": "a5fcbf68a47b2be5a922ab0d4069c39ee31a178a6aa8c372a49fd3629ab987c7"
+          },
+          {
+            "path": "README.md",
+            "url": "https://github.com/grofz/list/blob/77a0c99686406eaa8d4423e778311d63c6940b43/README.md",
+            "sha256": "4c6aa48fe84246c50a581ba3a997629f86f12d6e0db17d3e23cb34ca7901f334"
+          },
+          {
+            "path": "src/dll_mod.f90",
+            "url": "https://github.com/grofz/list/blob/77a0c99686406eaa8d4423e778311d63c6940b43/src/dll_mod.f90",
+            "sha256": "c3d9f7e37bf2af59f37ba050df495dd8551ad6ab8ef383627d156ee2ca08fbc6"
+          }
+        ]
+      },
+      "classifications": [
+        {
+          "code": "N4",
+          "level": "source-reviewed",
+          "revision": "77a0c99686406eaa8d4423e778311d63c6940b43",
+          "reviewed_on": "2026-11-07",
+          "notes": "Doubly linked integer-vector list append, callback sort and clear document copy/constructor stubs and pointer ownership. This is a pinned public-interface/source review, not a new numerical execution check or complete API audit. Existing hosted drivers and their verified problem scope are recorded separately.",
+          "evidence": [
+            {
+              "path": "src/dll_mod.f90",
+              "url": "https://github.com/grofz/list/blob/77a0c99686406eaa8d4423e778311d63c6940b43/src/dll_mod.f90",
+              "sha256": "c3d9f7e37bf2af59f37ba050df495dd8551ad6ab8ef383627d156ee2ca08fbc6"
+            },
+            {
+              "path": "src/common_mod.f90",
+              "url": "https://github.com/grofz/list/blob/77a0c99686406eaa8d4423e778311d63c6940b43/src/common_mod.f90",
+              "sha256": "9cef052fe656d08e44f92c04882b188d67dc9e1651ba6058c64aee036347af75"
+            },
+            {
+              "path": "src/dllnode_mod.f90",
+              "url": "https://github.com/grofz/list/blob/77a0c99686406eaa8d4423e778311d63c6940b43/src/dllnode_mod.f90",
+              "sha256": "e2b003ab0501787c1724d9b30e3134b37518d20886606c075b0c3d91dffee0d4"
+            }
+          ],
+          "procedures": [
+            {
+              "procedure": "append",
+              "role": "public-entry-point",
+              "module": "dll_mod",
+              "derived_type": "dll_t",
+              "summary": "Declare TYPE(dll_t) :: solver from dll_mod. Append a copy of INTEGER(DATA_KIND) VALUE(:) to a default-declared DLL_T. DATA_KIND comes from COMMON_MOD and is INT64 here. Each node owns an allocated integer-vector payload; arbitrary derived-type payloads are not accepted directly. Allocation failures ERROR STOP. Do not use the array constructor DLL_T(arr), COPY or EXTEND as initialization recipes: those paths are explicitly not implemented at this pin. Intrinsic copying aliases the pointer-owned chain; use a single owner and explicit CLEAR. The passed object THIS is implicit in solver%; do not pass it again. Optional actuals shown in brackets can be supplied by keyword.",
+              "signature": "CALL solver%append(VALUE)",
+              "path": "src/dll_mod.f90",
+              "line_start": 53,
+              "line_end": 64,
+              "declarations": [
+                {
+                  "path": "src/dll_mod.f90",
+                  "line_start": 55,
+                  "line_end": 56
+                },
+                {
+                  "path": "src/dll_mod.f90",
+                  "line_start": 11,
+                  "line_end": 42
+                },
+                {
+                  "path": "src/common_mod.f90",
+                  "line_start": 1,
+                  "line_end": 29
+                },
+                {
+                  "path": "src/dllnode_mod.f90",
+                  "line_start": 70,
+                  "line_end": 87
+                }
+              ]
+            },
+            {
+              "procedure": "sort",
+              "role": "public-entry-point",
+              "module": "dll_mod",
+              "derived_type": "dll_t",
+              "summary": "Declare TYPE(dll_t) :: solver from dll_mod. Sort the chain by a required COMPARE_FUN callback taking two INTEGER(DATA_KIND) vectors and returning default INTEGER -1/0/+1 for less/equal/greater. The merge sort relinks nodes in place and updates head/tail. Define a consistent comparison for differently sized payloads if they are allowed in your list. No status is returned and node pointers expose mutable structure; this review does not validate arbitrary caller modifications through those pointers. The passed object THIS is implicit in solver%; do not pass it again. Optional actuals shown in brackets can be supplied by keyword.",
+              "signature": "CALL solver%sort(CFUN)",
+              "path": "src/dll_mod.f90",
+              "line_start": 187,
+              "line_end": 194,
+              "declarations": [
+                {
+                  "path": "src/dll_mod.f90",
+                  "line_start": 189,
+                  "line_end": 190
+                },
+                {
+                  "path": "src/dll_mod.f90",
+                  "line_start": 11,
+                  "line_end": 42
+                },
+                {
+                  "path": "src/common_mod.f90",
+                  "line_start": 1,
+                  "line_end": 29
+                },
+                {
+                  "path": "src/dllnode_mod.f90",
+                  "line_start": 70,
+                  "line_end": 87
+                },
+                {
+                  "path": "src/dllnode_mod.f90",
+                  "line_start": 499,
+                  "line_end": 523
+                }
+              ]
+            },
+            {
+              "procedure": "clear",
+              "role": "public-entry-point",
+              "module": "dll_mod",
+              "derived_type": "dll_t",
+              "summary": "Declare TYPE(dll_t) :: solver from dll_mod. Explicitly free the owned chain/payloads and reset head, tail and count to empty. A default or already cleared list is handled by the node cleanup routine. No FINAL binding is registered, so scope exit alone is not an explicit chain-destruction API. Pointers returned earlier by FIRSTNODE/INDEX become dangling and shallow copies must not be independently cleared. The passed object THIS is implicit in solver%; do not pass it again. Optional actuals shown in brackets can be supplied by keyword.",
+              "signature": "CALL solver%clear()",
+              "path": "src/dll_mod.f90",
+              "line_start": 67,
+              "line_end": 75,
+              "declarations": [
+                {
+                  "path": "src/dll_mod.f90",
+                  "line_start": 69,
+                  "line_end": 69
+                },
+                {
+                  "path": "src/dll_mod.f90",
+                  "line_start": 11,
+                  "line_end": 42
+                },
+                {
+                  "path": "src/common_mod.f90",
+                  "line_start": 1,
+                  "line_end": 29
+                },
+                {
+                  "path": "src/dllnode_mod.f90",
+                  "line_start": 70,
+                  "line_end": 87
+                },
+                {
+                  "path": "src/dllnode_mod.f90",
+                  "line_start": 356,
+                  "line_end": 372
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
     "friction": {
       "id": "github:jchristopherson/friction",
       "repository": {
@@ -19167,6 +20169,157 @@
         }
       ]
     },
+    "bstrith": {
+      "id": "github:degawa/bstrith",
+      "repository": {
+        "owner": "degawa",
+        "name": "bstrith",
+        "url": "https://github.com/degawa/bstrith"
+      },
+      "license": {
+        "label": "MIT",
+        "spdx_expression": "MIT",
+        "revision": "7ed7730e34c7e1f78f2be9426ccc170f9dcaf57e",
+        "reviewed_on": "2026-11-07",
+        "notes": "Root LICENSE supplies Tomohiro Degawa MIT terms. The facade exports these operations; validation helpers live in their separate utility module.",
+        "evidence": [
+          {
+            "path": "LICENSE",
+            "url": "https://github.com/degawa/bstrith/blob/7ed7730e34c7e1f78f2be9426ccc170f9dcaf57e/LICENSE",
+            "sha256": "9706c35a393c4902687c90ce2055c8130df6ce757bbc9174514e6fa6ab3c4f00"
+          },
+          {
+            "path": "README.md",
+            "url": "https://github.com/degawa/bstrith/blob/7ed7730e34c7e1f78f2be9426ccc170f9dcaf57e/README.md",
+            "sha256": "91f77aaee474e8a73b0b6ef1bb118974b484b473ba9dce335748c4eefc204f71"
+          },
+          {
+            "path": "src/arithmetic/basic/add/add.f90",
+            "url": "https://github.com/degawa/bstrith/blob/7ed7730e34c7e1f78f2be9426ccc170f9dcaf57e/src/arithmetic/basic/add/add.f90",
+            "sha256": "541e826c31ecb31b980345f2853d396f6835a21d19c64b610e948ac84c6bf0a2"
+          }
+        ]
+      },
+      "classifications": [
+        {
+          "code": "A1",
+          "level": "source-reviewed",
+          "revision": "7ed7730e34c7e1f78f2be9426ccc170f9dcaf57e",
+          "reviewed_on": "2026-11-07",
+          "notes": "Fixed-width binary addition, zero-filled shift and digitwise XOR document equal widths and uninitialized invalid-input results. This is a pinned public-interface/source review, not a new numerical execution check or complete API audit. Existing hosted drivers and their verified problem scope are recorded separately.",
+          "evidence": [
+            {
+              "path": "src/arithmetic/basic/add/add.f90",
+              "url": "https://github.com/degawa/bstrith/blob/7ed7730e34c7e1f78f2be9426ccc170f9dcaf57e/src/arithmetic/basic/add/add.f90",
+              "sha256": "541e826c31ecb31b980345f2853d396f6835a21d19c64b610e948ac84c6bf0a2"
+            },
+            {
+              "path": "src/bit/shift/shift.f90",
+              "url": "https://github.com/degawa/bstrith/blob/7ed7730e34c7e1f78f2be9426ccc170f9dcaf57e/src/bit/shift/shift.f90",
+              "sha256": "38c84196392ebf938db8e1feedd119c0cf0e519351baab2f34605ec418071102"
+            },
+            {
+              "path": "src/logical/xor/xor.f90",
+              "url": "https://github.com/degawa/bstrith/blob/7ed7730e34c7e1f78f2be9426ccc170f9dcaf57e/src/logical/xor/xor.f90",
+              "sha256": "f107d56ecf47764ca236e2665a766a30415049b3f6eebad57a997686ff0c0dc3"
+            },
+            {
+              "path": "src/bstrith.f90",
+              "url": "https://github.com/degawa/bstrith/blob/7ed7730e34c7e1f78f2be9426ccc170f9dcaf57e/src/bstrith.f90",
+              "sha256": "2dcaba9e0a297493f65cd33d1fcec133a40f4bf72032ece972d861f30f2d327b"
+            },
+            {
+              "path": "src/util/isValid/isValid.f90",
+              "url": "https://github.com/degawa/bstrith/blob/7ed7730e34c7e1f78f2be9426ccc170f9dcaf57e/src/util/isValid/isValid.f90",
+              "sha256": "ce448d365ab3c0f446cd642c552e8861c09d6ff678502041d3ef3d752ad91ccf"
+            }
+          ],
+          "procedures": [
+            {
+              "procedure": "add",
+              "role": "public-entry-point",
+              "module": "bstrith",
+              "summary": "Add equal-length CHARACTER binary strings, returning allocated text with the SAME width as A. Use only 0/1 characters and equal actual lengths (B has explicit LEN(A)); high carry is dropped, giving fixed-width arithmetic rather than a growing result. Invalid input allocates output without assigning characters, so ALLOCATED(result) is not a validity check and no status is returned. Validate before calling, using the helper module if desired.",
+              "signature": "VALUE = add(A,B)",
+              "path": "src/arithmetic/basic/add/add.f90",
+              "line_start": 16,
+              "line_end": 38,
+              "declarations": [
+                {
+                  "path": "src/arithmetic/basic/add/add.f90",
+                  "line_start": 17,
+                  "line_end": 21
+                },
+                {
+                  "path": "src/bstrith.f90",
+                  "line_start": 1,
+                  "line_end": 18
+                },
+                {
+                  "path": "src/util/isValid/isValid.f90",
+                  "line_start": 1,
+                  "line_end": 39
+                }
+              ]
+            },
+            {
+              "procedure": "shift_l",
+              "role": "public-entry-point",
+              "module": "bstrith",
+              "summary": "Zero-fill a left shift of valid binary text, preserving its length. Optional INTEGER(INT32) AMOUNT defaults to 1; its absolute value is used, so a negative actual still shifts left. Require ABS(AMOUNT)<=LEN(A) and avoid the most-negative integer whose ABS cannot be represented. Invalid text or excessive shift allocates an uninitialized character result rather than returning a status. It is a logical string shift, not a cyclic shift or signed arithmetic shift.",
+              "signature": "VALUE = shift_l(A,[AMOUNT])",
+              "path": "src/bit/shift/shift.f90",
+              "line_start": 53,
+              "line_end": 87,
+              "declarations": [
+                {
+                  "path": "src/bit/shift/shift.f90",
+                  "line_start": 54,
+                  "line_end": 58
+                },
+                {
+                  "path": "src/bstrith.f90",
+                  "line_start": 1,
+                  "line_end": 18
+                },
+                {
+                  "path": "src/util/isValid/isValid.f90",
+                  "line_start": 1,
+                  "line_end": 39
+                }
+              ]
+            },
+            {
+              "procedure": "xor",
+              "role": "public-entry-point",
+              "module": "bstrith",
+              "summary": "Return allocated digitwise XOR of equal-width valid binary strings A/B. B is CHARACTER(LEN(A)); it is not a machine-integer XOR overload. Input remains unchanged. Invalid inputs cause allocation of uninitialized output text with no status, so ensure both operands contain only binary digits and satisfy the actual-length contract. Do not use allocation success as evidence of a valid bitstring.",
+              "signature": "VALUE = xor(A,B)",
+              "path": "src/logical/xor/xor.f90",
+              "line_start": 10,
+              "line_end": 41,
+              "declarations": [
+                {
+                  "path": "src/logical/xor/xor.f90",
+                  "line_start": 11,
+                  "line_end": 15
+                },
+                {
+                  "path": "src/bstrith.f90",
+                  "line_start": 1,
+                  "line_end": 18
+                },
+                {
+                  "path": "src/util/isValid/isValid.f90",
+                  "line_start": 1,
+                  "line_end": 39
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
     "hrweno": {
       "id": "github:hugomvale/hr-weno",
       "repository": {
@@ -19448,6 +20601,155 @@
                   "path": "src/precision.f90",
                   "line_start": 8,
                   "line_end": 15
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "orbs": {
+      "id": "github:degawa/orbs",
+      "repository": {
+        "owner": "degawa",
+        "name": "orbs",
+        "url": "https://github.com/degawa/orbs"
+      },
+      "license": {
+        "label": "MIT",
+        "spdx_expression": "MIT",
+        "revision": "3cf7fcec19798367f6f5bd26bad861c510449265",
+        "reviewed_on": "2026-11-07",
+        "notes": "Root LICENSE supplies Tomohiro Degawa MIT terms; stdlib remains a separately licensed dependency and its implementation/error paths are not fully audited here.",
+        "evidence": [
+          {
+            "path": "LICENSE",
+            "url": "https://github.com/degawa/orbs/blob/3cf7fcec19798367f6f5bd26bad861c510449265/LICENSE",
+            "sha256": "9706c35a393c4902687c90ce2055c8130df6ce757bbc9174514e6fa6ab3c4f00"
+          },
+          {
+            "path": "README.md",
+            "url": "https://github.com/degawa/orbs/blob/3cf7fcec19798367f6f5bd26bad861c510449265/README.md",
+            "sha256": "7d42ca9ff2b0fbeb347f9324c4a182e7170cc818e8741de8ccd292826c8f8c18"
+          },
+          {
+            "path": "src/type/operableBitset.f90",
+            "url": "https://github.com/degawa/orbs/blob/3cf7fcec19798367f6f5bd26bad861c510449265/src/type/operableBitset.f90",
+            "sha256": "5f9c1b25e550a27c5ccbf5e271ab61631489f62dad1ac13f55997560b456ff58"
+          }
+        ]
+      },
+      "classifications": [
+        {
+          "code": "N2",
+          "level": "source-reviewed",
+          "revision": "3cf7fcec19798367f6f5bd26bad861c510449265",
+          "reviewed_on": "2026-11-07",
+          "notes": "Stdlib-backed bitset initialization, position mutation and binary serialization expose status and bit-position contracts. This is a pinned public-interface/source review, not a new numerical execution check or complete API audit. Existing hosted drivers and their verified problem scope are recorded separately.",
+          "evidence": [
+            {
+              "path": "src/type/operableBitset.f90",
+              "url": "https://github.com/degawa/orbs/blob/3cf7fcec19798367f6f5bd26bad861c510449265/src/type/operableBitset.f90",
+              "sha256": "5f9c1b25e550a27c5ccbf5e271ab61631489f62dad1ac13f55997560b456ff58"
+            },
+            {
+              "path": "src/orbs.f90",
+              "url": "https://github.com/degawa/orbs/blob/3cf7fcec19798367f6f5bd26bad861c510449265/src/orbs.f90",
+              "sha256": "cba32ebdc46fa9e4d313a48384a513c41520677916bea365098c43bd0807efb6"
+            },
+            {
+              "path": "test/operableBitset/unitTests/bitOperations.f90",
+              "url": "https://github.com/degawa/orbs/blob/3cf7fcec19798367f6f5bd26bad861c510449265/test/operableBitset/unitTests/bitOperations.f90",
+              "sha256": "f43d2d0ea5458ab087d052a813b82601f76bb73825e79dbbd9c21913bb60680b"
+            }
+          ],
+          "procedures": [
+            {
+              "procedure": "init_string",
+              "role": "public-entry-point",
+              "module": "orbs",
+              "derived_type": "operable_bitset",
+              "summary": "Declare TYPE(operable_bitset) :: solver from orbs. Initialize the bitset from CHARACTER binary text, delegating to the selected stdlib BITSET_LARGE FROM_STRING implementation. Pass optional INTEGER(INT32) STATUS and compare with ORBS_SUCCESS before using the object; omission inherits dependency error handling rather than a recoverable status guarantee. Allocation/validation behavior belongs to that pinned dependency, not a new ORBS parser. Reinitialization is a mutating operation. Import OPERABLE_BITSET and ORBS_SUCCESS from ORBS and INT32 from ISO_FORTRAN_ENV. The passed object THIS is implicit in solver%; do not pass it again. Optional actuals shown in brackets can be supplied by keyword.",
+              "signature": "CALL solver%init_string(STRING,[STATUS])",
+              "path": "src/type/operableBitset.f90",
+              "line_start": 269,
+              "line_end": 278,
+              "declarations": [
+                {
+                  "path": "src/type/operableBitset.f90",
+                  "line_start": 270,
+                  "line_end": 274
+                },
+                {
+                  "path": "src/orbs.f90",
+                  "line_start": 1,
+                  "line_end": 61
+                },
+                {
+                  "path": "src/type/operableBitset.f90",
+                  "line_start": 61,
+                  "line_end": 127
+                }
+              ]
+            },
+            {
+              "procedure": "set_pos",
+              "role": "public-entry-point",
+              "module": "orbs",
+              "derived_type": "operable_bitset",
+              "summary": "Declare TYPE(operable_bitset) :: solver from orbs. Set one bit in an initialized OPERABLE_BITSET through the stdlib-backed SET operation. POS is INTEGER(INT32) and follows bitset zero-based positions, 0<=POS<solver%BITS(), rather than Fortran one-based array indexing. This binding returns no status and performs no local range validation; validate caller indices first. The range-setting overload is separate and does not take a count. The passed object THIS is implicit in solver%; do not pass it again. Optional actuals shown in brackets can be supplied by keyword.",
+              "signature": "CALL solver%set_pos(POS)",
+              "path": "src/type/operableBitset.f90",
+              "line_start": 324,
+              "line_end": 331,
+              "declarations": [
+                {
+                  "path": "src/type/operableBitset.f90",
+                  "line_start": 325,
+                  "line_end": 327
+                },
+                {
+                  "path": "src/orbs.f90",
+                  "line_start": 1,
+                  "line_end": 61
+                },
+                {
+                  "path": "src/type/operableBitset.f90",
+                  "line_start": 61,
+                  "line_end": 127
+                },
+                {
+                  "path": "test/operableBitset/unitTests/bitOperations.f90",
+                  "line_start": 16,
+                  "line_end": 54
+                }
+              ]
+            },
+            {
+              "procedure": "to_string",
+              "role": "public-entry-point",
+              "module": "orbs",
+              "derived_type": "operable_bitset",
+              "summary": "Declare TYPE(operable_bitset) :: solver from orbs. Return allocated CHARACTER containing the binary representation of an initialized bitset by delegating to BITSET_LARGE%TO_STRING. This produces text without printing, changing bits or returning a machine integer. It supplies no status actual to the dependency. Initialize successfully first; this interface review does not audit all dependency failure/allocation paths or formatted-I/O bindings. The passed object THIS is implicit in solver%; do not pass it again. Optional actuals shown in brackets can be supplied by keyword.",
+              "signature": "VALUE = solver%to_string()",
+              "path": "src/type/operableBitset.f90",
+              "line_start": 414,
+              "line_end": 421,
+              "declarations": [
+                {
+                  "path": "src/type/operableBitset.f90",
+                  "line_start": 415,
+                  "line_end": 417
+                },
+                {
+                  "path": "src/orbs.f90",
+                  "line_start": 1,
+                  "line_end": 61
+                },
+                {
+                  "path": "src/type/operableBitset.f90",
+                  "line_start": 61,
+                  "line_end": 127
                 }
               ]
             }
@@ -23881,6 +25183,182 @@
         }
       ]
     },
+    "penf": {
+      "id": "github:szaghi/penf",
+      "repository": {
+        "owner": "szaghi",
+        "name": "PENF",
+        "url": "https://github.com/szaghi/PENF"
+      },
+      "license": {
+        "label": "Multiple licenses with stated project-type choices",
+        "spdx_expression": null,
+        "revision": "65061235982495b158412b70c05b228af4320d94",
+        "reviewed_on": "2026-11-07",
+        "notes": "README Copyrights describes GPL v3 for FOSS and BSD-2/BSD-3/MIT for closed/commercial projects, then invites users to select a license. All four texts are supplied. Preserve the stated context instead of silently resolving it to an unconditional SPDX expression.",
+        "evidence": [
+          {
+            "path": "LICENSE.mit.md",
+            "url": "https://github.com/szaghi/PENF/blob/65061235982495b158412b70c05b228af4320d94/LICENSE.mit.md",
+            "sha256": "2047fbd5a61126d2b05a92a72b3c8ca25e09d0ba7f6e6e05d5c90ca9186c141d"
+          },
+          {
+            "path": "README.md",
+            "url": "https://github.com/szaghi/PENF/blob/65061235982495b158412b70c05b228af4320d94/README.md",
+            "sha256": "89b41a3a40fbc6859a2f49d257798f74db736345922ded1364f8cabf549dc933"
+          },
+          {
+            "path": "src/lib/penf_stringify.F90",
+            "url": "https://github.com/szaghi/PENF/blob/65061235982495b158412b70c05b228af4320d94/src/lib/penf_stringify.F90",
+            "sha256": "c45429dcaf7e434c739a812f2425c0a15582680219d1ca25fb8211050f87e52b"
+          },
+          {
+            "path": "LICENSE.bsd-2.md",
+            "url": "https://github.com/szaghi/PENF/blob/65061235982495b158412b70c05b228af4320d94/LICENSE.bsd-2.md",
+            "sha256": "94e811b919c64351575bbfabadec5d44bd1dfa1fc8ef3f7941f80903b4c67dd8"
+          },
+          {
+            "path": "LICENSE.bsd-3.md",
+            "url": "https://github.com/szaghi/PENF/blob/65061235982495b158412b70c05b228af4320d94/LICENSE.bsd-3.md",
+            "sha256": "086cbc29fd9f82670a34d4cb617cd19be51b3fbe540915573f9d797f7df9b3ce"
+          },
+          {
+            "path": "LICENSE.gpl3.md",
+            "url": "https://github.com/szaghi/PENF/blob/65061235982495b158412b70c05b228af4320d94/LICENSE.gpl3.md",
+            "sha256": "ccb349b4132ed7737f25e5adebfe61f3d52dca33708df1e50352320438d1d4c2"
+          }
+        ]
+      },
+      "classifications": [
+        {
+          "code": "N3",
+          "level": "source-reviewed",
+          "revision": "65061235982495b158412b70c05b228af4320d94",
+          "reviewed_on": "2026-11-07",
+          "notes": "Real formatting/parsing and zero-padded integer formatting document kind selection, fixed results and error/sign edge cases. This is a pinned public-interface/source review, not a new numerical execution check or complete API audit. Existing hosted drivers and their verified problem scope are recorded separately.",
+          "evidence": [
+            {
+              "path": "src/lib/penf_stringify.F90",
+              "url": "https://github.com/szaghi/PENF/blob/65061235982495b158412b70c05b228af4320d94/src/lib/penf_stringify.F90",
+              "sha256": "c45429dcaf7e434c739a812f2425c0a15582680219d1ca25fb8211050f87e52b"
+            },
+            {
+              "path": "src/lib/penf.F90",
+              "url": "https://github.com/szaghi/PENF/blob/65061235982495b158412b70c05b228af4320d94/src/lib/penf.F90",
+              "sha256": "13e0e3c92bd79d03fbaa775307405f31bf8143c468874373bbe5b936e7cca209"
+            },
+            {
+              "path": "LICENSE.mit.md",
+              "url": "https://github.com/szaghi/PENF/blob/65061235982495b158412b70c05b228af4320d94/LICENSE.mit.md",
+              "sha256": "2047fbd5a61126d2b05a92a72b3c8ca25e09d0ba7f6e6e05d5c90ca9186c141d"
+            },
+            {
+              "path": "LICENSE.bsd-2.md",
+              "url": "https://github.com/szaghi/PENF/blob/65061235982495b158412b70c05b228af4320d94/LICENSE.bsd-2.md",
+              "sha256": "94e811b919c64351575bbfabadec5d44bd1dfa1fc8ef3f7941f80903b4c67dd8"
+            },
+            {
+              "path": "LICENSE.bsd-3.md",
+              "url": "https://github.com/szaghi/PENF/blob/65061235982495b158412b70c05b228af4320d94/LICENSE.bsd-3.md",
+              "sha256": "086cbc29fd9f82670a34d4cb617cd19be51b3fbe540915573f9d797f7df9b3ce"
+            },
+            {
+              "path": "LICENSE.gpl3.md",
+              "url": "https://github.com/szaghi/PENF/blob/65061235982495b158412b70c05b228af4320d94/LICENSE.gpl3.md",
+              "sha256": "ccb349b4132ed7737f25e5adebfe61f3d52dca33708df1e50352320438d1d4c2"
+            }
+          ],
+          "procedures": [
+            {
+              "procedure": "str",
+              "role": "public-entry-point",
+              "module": "penf",
+              "summary": "REAL(R8P) overload of STR returns fixed-length CHARACTER(DR8P) in the configured real format. Optional COMPACT=.TRUE. compacts exponent/mantissa text within that fixed result; it is not an allocated shortest-round-trip formatter. Important pinned behavior: PRESENT(NO_SIGN), even NO_SIGN=.FALSE., strips the first character; omit that keyword to retain the sign. R8P/DR8P and format constants come from PENF. No formatting status is exposed.",
+              "signature": "VALUE = str(N,[NO_SIGN],[COMPACT])",
+              "path": "src/lib/penf_stringify.F90",
+              "line_start": 344,
+              "line_end": 375,
+              "declarations": [
+                {
+                  "path": "src/lib/penf_stringify.F90",
+                  "line_start": 364,
+                  "line_end": 367
+                },
+                {
+                  "path": "src/lib/penf.F90",
+                  "line_start": 3,
+                  "line_end": 35
+                },
+                {
+                  "path": "src/lib/penf_stringify.F90",
+                  "line_start": 38,
+                  "line_end": 80
+                }
+              ]
+            },
+            {
+              "procedure": "cton",
+              "role": "public-entry-point",
+              "module": "penf",
+              "summary": "REAL(R8P) overload of CTON parses CHARACTER STR via list-directed internal READ. KND is a required real kind selector, e.g. 1.0_R8P, not an integer kind number. Supply optional INTEGER(I4P) ERROR and use the result only when ERROR=0; a failed READ can leave it undefined and also prints to stderr even when ERROR is supplied. PREF only prefixes the error diagnostic, not the input text. Optional arguments can be supplied by keyword.",
+              "signature": "VALUE = cton(STR,KND,[PREF],[ERROR])",
+              "path": "src/lib/penf_stringify.F90",
+              "line_start": 1071,
+              "line_end": 1093,
+              "declarations": [
+                {
+                  "path": "src/lib/penf_stringify.F90",
+                  "line_start": 1079,
+                  "line_end": 1083
+                },
+                {
+                  "path": "src/lib/penf.F90",
+                  "line_start": 3,
+                  "line_end": 35
+                },
+                {
+                  "path": "src/lib/penf_stringify.F90",
+                  "line_start": 38,
+                  "line_end": 80
+                }
+              ]
+            },
+            {
+              "procedure": "strz",
+              "role": "public-entry-point",
+              "module": "penf",
+              "summary": "INTEGER(I4P) overload of STRZ returns fixed CHARACTER(DI4P) zero-padded text. Omitted NZ_PAD uses the default integer-width format; optional NZ_PAD selects a substring and the fixed result remains blank padded. Restrict this calling sketch to nonnegative values and 1<=NZ_PAD<=DI4P-1; the implementation does not validate substring bounds and too-small padding can retain only low digits. This is formatting, not checked decimal range conversion.",
+              "signature": "VALUE = strz(N,[NZ_PAD])",
+              "path": "src/lib/penf_stringify.F90",
+              "line_start": 978,
+              "line_end": 999,
+              "declarations": [
+                {
+                  "path": "src/lib/penf_stringify.F90",
+                  "line_start": 992,
+                  "line_end": 994
+                },
+                {
+                  "path": "src/lib/penf.F90",
+                  "line_start": 3,
+                  "line_end": 35
+                },
+                {
+                  "path": "src/lib/penf_stringify.F90",
+                  "line_start": 38,
+                  "line_end": 80
+                },
+                {
+                  "path": "src/lib/penf_stringify.F90",
+                  "line_start": 995,
+                  "line_end": 998
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
     "differentia": {
       "id": "github:nicholaswogan/differentia",
       "repository": {
@@ -24929,14 +26407,18 @@
       "fortran_stb_image",
       "odepack",
       "kiss",
+      "conmax",
       "fortran-messagepack",
       "fmmap",
       "fortran_cubatures",
       "stiff3",
       "sparse_fortran",
+      "psqp",
+      "optgra",
       "forinv",
       "forsolver",
       "dcuhre",
+      "y12m",
       "foreig",
       "rkf45",
       "forlab",
@@ -24944,6 +26426,7 @@
       "forsvd",
       "qdutillib",
       "qdldl-fortran",
+      "lusol",
       "carlson-elliptic-integrals",
       "fortran-bessels",
       "dynamics",
@@ -24951,12 +26434,16 @@
       "econ-toolchain",
       "m_la",
       "fglm",
+      "strith",
+      "list",
       "friction",
       "feq-parse",
       "fordot",
       "formatmul",
+      "bstrith",
       "hrweno",
       "fortran-simplify",
+      "orbs",
       "rearrayfx",
       "amosf90",
       "linalg_fortran",
@@ -24988,6 +26475,7 @@
       "fortran-fast-float",
       "config-fortran",
       "kdtree2",
+      "penf",
       "differentia",
       "npy-for-fortran",
       "fortran-utils",
@@ -25019,35 +26507,25 @@
       "cairo-fortran",
       "forsudoku",
       "parff",
-      "conmax",
       "graphstruc",
-      "psqp",
-      "optgra",
-      "y12m",
       "libdogleg-f",
       "fishpack",
       "dde_solver",
       "spherepack",
-      "lusol",
       "diffstruc",
       "seiscope-optimization",
       "gslib",
       "featom",
       "fortrandf",
-      "strith",
-      "list",
-      "bstrith",
       "heatflow",
       "ecx",
       "athena",
-      "orbs",
       "veggies",
       "shunting-yard-fortran",
       "rpn-calculator-fortran",
       "fundamental_constants",
       "kronrod",
       "fassert",
-      "penf",
       "coretran",
       "ftl",
       "delaunaysparse",
