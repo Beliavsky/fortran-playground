@@ -2,7 +2,7 @@
   "schema_version": 1,
   "publisher": "fortran-gams-catalog-independent-reviews",
   "source_url": "https://beliavsky.github.io/fortran-gams-catalog/reviewed-metadata.json",
-  "source_snapshot_id": "sha256:58d1683e02493ae278224ba64488fb731b7f4bc673bee616a2592eba5a29f3d7",
+  "source_snapshot_id": "sha256:5ad543407d3478b6864c29d39fc27433b451ee7465e1c24a4c50c4e7fe1b8ea2",
   "packages": {
     "test-drive": {
       "id": "github:fortran-lang/test-drive",
@@ -7209,6 +7209,148 @@
         }
       ]
     },
+    "m_framework": {
+      "id": "github:urbanjost/m_framework",
+      "repository": {
+        "owner": "urbanjost",
+        "name": "M_framework",
+        "url": "https://github.com/urbanjost/M_framework"
+      },
+      "license": {
+        "label": "Unlicense",
+        "spdx_expression": "Unlicense",
+        "revision": "05134b388078ce5e2e8391ceba5e04a6dce7a640",
+        "reviewed_on": "2026-11-08",
+        "notes": "Root LICENSE supplies the Unlicense public-domain dedication and fallback terms. This review scopes M_framework__timing rather than every diagnostic formatting, verification or journal subsystem.",
+        "evidence": [
+          {
+            "path": "LICENSE",
+            "url": "https://github.com/urbanjost/M_framework/blob/05134b388078ce5e2e8391ceba5e04a6dce7a640/LICENSE",
+            "sha256": "f40d08f39a7fbaf627c062ede8033c31b58da5afc0cf0c13a756aeff6c5be721"
+          },
+          {
+            "path": "README.md",
+            "url": "https://github.com/urbanjost/M_framework/blob/05134b388078ce5e2e8391ceba5e04a6dce7a640/README.md",
+            "sha256": "6359c76574699af8be1ca0eff72447ae7fd7b072d15a13a27944e8ceaad8c188"
+          },
+          {
+            "path": "src/M_framework__timing.f90",
+            "url": "https://github.com/urbanjost/M_framework/blob/05134b388078ce5e2e8391ceba5e04a6dce7a640/src/M_framework__timing.f90",
+            "sha256": "284d98edbe05027e2c1e8ee343e50ca1168f7d9efa23ec58a9ca550f23a95c82"
+          }
+        ]
+      },
+      "classifications": [
+        {
+          "code": "S3",
+          "level": "source-reviewed",
+          "revision": "05134b388078ce5e2e8391ceba5e04a6dce7a640",
+          "reviewed_on": "2026-11-08",
+          "notes": "Process timing lifecycle and stored wall/CPU elapsed queries document initialization, default-real results and clock limitations. This is a pinned public-interface/source review, not a new numerical execution check or complete API audit. Existing hosted drivers and their verified problem scope are recorded separately.",
+          "evidence": [
+            {
+              "path": "src/M_framework__timing.f90",
+              "url": "https://github.com/urbanjost/M_framework/blob/05134b388078ce5e2e8391ceba5e04a6dce7a640/src/M_framework__timing.f90",
+              "sha256": "284d98edbe05027e2c1e8ee343e50ca1168f7d9efa23ec58a9ca550f23a95c82"
+            }
+          ],
+          "procedures": [
+            {
+              "procedure": "tic",
+              "role": "public-entry-point",
+              "module": "M_framework__timing",
+              "derived_type": "timer",
+              "summary": "Declare TYPE(timer) :: solver from M_framework__timing. Initialize/restart the timer start and end samples using CPU_TIME and SYSTEM_CLOCK before timing work. A bare TYPE(timer) declaration has uninitialized components; TIC establishes a valid starting state and resets the recorded interval. This is a synchronous local-process measurement, not a service request timer or a promise that all work is single threaded. The passed object THIS is implicit in solver%; do not pass it again. Optional actuals shown in brackets can be supplied by keyword.",
+              "signature": "CALL solver%tic()",
+              "path": "src/M_framework__timing.f90",
+              "line_start": 39,
+              "line_end": 45,
+              "declarations": [
+                {
+                  "path": "src/M_framework__timing.f90",
+                  "line_start": 40,
+                  "line_end": 40
+                },
+                {
+                  "path": "src/M_framework__timing.f90",
+                  "line_start": 1,
+                  "line_end": 24
+                }
+              ]
+            },
+            {
+              "procedure": "toc",
+              "role": "public-entry-point",
+              "module": "M_framework__timing",
+              "derived_type": "timer",
+              "summary": "Declare TYPE(timer) :: solver from M_framework__timing. Record the ending CPU_TIME and SYSTEM_CLOCK samples after the measured work. Call TIC first and then TOC before reading the completed interval; this does not print or reset the starting sample. Repeated TOC calls extend the interval measured from the same start. No separate timing-availability/status output is exposed. The passed object THIS is implicit in solver%; do not pass it again. Optional actuals shown in brackets can be supplied by keyword.",
+              "signature": "CALL solver%toc()",
+              "path": "src/M_framework__timing.f90",
+              "line_start": 47,
+              "line_end": 51,
+              "declarations": [
+                {
+                  "path": "src/M_framework__timing.f90",
+                  "line_start": 48,
+                  "line_end": 48
+                },
+                {
+                  "path": "src/M_framework__timing.f90",
+                  "line_start": 1,
+                  "line_end": 24
+                }
+              ]
+            },
+            {
+              "procedure": "wallclock",
+              "role": "public-entry-point",
+              "module": "M_framework__timing",
+              "derived_type": "timer",
+              "summary": "Declare TYPE(timer) :: solver from M_framework__timing. Return default REAL elapsed seconds between the stored start/end clock counts, not an automatically refreshed current elapsed time. Call TIC and TOC first. This implementation converts counts/rate to default real and has no explicit system-clock-unavailable or wraparound handling; do not infer REAL64 result precision from the INT64 counters. The passed object THIS is implicit in solver%; do not pass it again. Optional actuals shown in brackets can be supplied by keyword.",
+              "signature": "VALUE = solver%wallclock()",
+              "path": "src/M_framework__timing.f90",
+              "line_start": 80,
+              "line_end": 87,
+              "declarations": [
+                {
+                  "path": "src/M_framework__timing.f90",
+                  "line_start": 81,
+                  "line_end": 84
+                },
+                {
+                  "path": "src/M_framework__timing.f90",
+                  "line_start": 1,
+                  "line_end": 24
+                }
+              ]
+            },
+            {
+              "procedure": "cputime",
+              "role": "public-entry-point",
+              "module": "M_framework__timing",
+              "derived_type": "timer",
+              "summary": "Declare TYPE(timer) :: solver from M_framework__timing. Return default REAL CPU seconds from the stored CPU_TIME difference. Call TIC and TOC first; querying does not resample either endpoint. CPU time differs from elapsed wall time and can reflect multiple threads; this function does not compute the percentage or subtract network/service overhead. No failure status or monotonic-clock guarantee is supplied. The passed object THIS is implicit in solver%; do not pass it again. Optional actuals shown in brackets can be supplied by keyword.",
+              "signature": "VALUE = solver%cputime()",
+              "path": "src/M_framework__timing.f90",
+              "line_start": 89,
+              "line_end": 93,
+              "declarations": [
+                {
+                  "path": "src/M_framework__timing.f90",
+                  "line_start": 90,
+                  "line_end": 91
+                },
+                {
+                  "path": "src/M_framework__timing.f90",
+                  "line_start": 1,
+                  "line_end": 24
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
     "fitpack": {
       "id": "github:perazz/fitpack",
       "repository": {
@@ -10711,6 +10853,221 @@
                   "path": "src/str2real_m.f90",
                   "line_start": 33,
                   "line_end": 76
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "ad_dnsvm": {
+      "id": "github:lauvergn/ad_dnsvm",
+      "repository": {
+        "owner": "lauvergn",
+        "name": "AD_dnSVM",
+        "url": "https://github.com/lauvergn/AD_dnSVM"
+      },
+      "license": {
+        "label": "MIT",
+        "spdx_expression": "MIT",
+        "revision": "32db0bd122ce1dae290e9cf4c1fda4ab8f3de6f1",
+        "reviewed_on": "2026-11-08",
+        "notes": "Root LICENSE supplies lauvergn MIT terms; selected source credits David Lauvergnat. QDUtil dependency and precision build selections remain part of the calling contract and retain their own notices.",
+        "evidence": [
+          {
+            "path": "LICENSE",
+            "url": "https://github.com/lauvergn/AD_dnSVM/blob/32db0bd122ce1dae290e9cf4c1fda4ab8f3de6f1/LICENSE",
+            "sha256": "17a6617f50fd9802b998b106f50ac3d16dcaf943cbc34c903d2f08add36438b1"
+          },
+          {
+            "path": "ReadMe.md",
+            "url": "https://github.com/lauvergn/AD_dnSVM/blob/32db0bd122ce1dae290e9cf4c1fda4ab8f3de6f1/ReadMe.md",
+            "sha256": "8b0214c12b846624a04085a92bc379ac479e2c784a584aa608a5c0c0d49aa73f"
+          },
+          {
+            "path": "SRC/ADdnSVM/dnS_m.f90",
+            "url": "https://github.com/lauvergn/AD_dnSVM/blob/32db0bd122ce1dae290e9cf4c1fda4ab8f3de6f1/SRC/ADdnSVM/dnS_m.f90",
+            "sha256": "88cd7d3889d4e766612171de2e3a40479ec31dda55851c172ad3bdf9602812c2"
+          }
+        ]
+      },
+      "classifications": [
+        {
+          "code": "H1",
+          "level": "source-reviewed",
+          "revision": "32db0bd122ce1dae290e9cf4c1fda4ab8f3de6f1",
+          "reviewed_on": "2026-11-08",
+          "notes": "Scalar automatic-differentiation seeding and value/gradient/Hessian/third-derivative extraction document required orders, kinds and unallocated results. This is a pinned public-interface/source review, not a new numerical execution check or complete API audit. Existing hosted drivers and their verified problem scope are recorded separately.",
+          "evidence": [
+            {
+              "path": "SRC/ADdnSVM/dnS_m.f90",
+              "url": "https://github.com/lauvergn/AD_dnSVM/blob/32db0bd122ce1dae290e9cf4c1fda4ab8f3de6f1/SRC/ADdnSVM/dnS_m.f90",
+              "sha256": "88cd7d3889d4e766612171de2e3a40479ec31dda55851c172ad3bdf9602812c2"
+            },
+            {
+              "path": "SRC/dnSVM_m.f90",
+              "url": "https://github.com/lauvergn/AD_dnSVM/blob/32db0bd122ce1dae290e9cf4c1fda4ab8f3de6f1/SRC/dnSVM_m.f90",
+              "sha256": "84ee1b83e0e8006ba86d9ce98d56e29022bebe5b7dabfbb6dde98ccd7df671b4"
+            }
+          ],
+          "procedures": [
+            {
+              "procedure": "Variable",
+              "role": "public-entry-point",
+              "module": "ADdnSVM_dnS_m",
+              "summary": "Scalar overload of VARIABLE constructs TYPE(dnS_t) from REAL(Rkind) VAL; import Rkind from QDUtil_m. Supply the same positive NVAR for all independent variables, NDERIV=1, 2 or 3 for desired derivative order, and IVAR in 1:NVAR to seed its unit gradient. Defaults are one variable, derivative order zero and index one, so the default constructor alone does not request differentiation. Although the index guard admits zero, the subsequent D1(IVAR) assignment is unsafe at zero when derivatives are enabled. Invalid allocation/index paths STOP. Evaluate expressions through exported overloaded operators/functions before extracting derivatives.",
+              "signature": "VALUE = Variable(VAL,[NVAR],[NDERIV],[IVAR])",
+              "path": "SRC/ADdnSVM/dnS_m.f90",
+              "line_start": 484,
+              "line_end": 538,
+              "declarations": [
+                {
+                  "path": "SRC/ADdnSVM/dnS_m.f90",
+                  "line_start": 488,
+                  "line_end": 490
+                },
+                {
+                  "path": "SRC/ADdnSVM/dnS_m.f90",
+                  "line_start": 91,
+                  "line_end": 107
+                },
+                {
+                  "path": "SRC/ADdnSVM/dnS_m.f90",
+                  "line_start": 174,
+                  "line_end": 248
+                },
+                {
+                  "path": "SRC/dnSVM_m.f90",
+                  "line_start": 35,
+                  "line_end": 42
+                }
+              ]
+            },
+            {
+              "procedure": "get_d0",
+              "role": "public-entry-point",
+              "module": "ADdnSVM_dnS_m",
+              "summary": "GET_D0 scalar generic returns REAL(Rkind) function value from an initialized/evaluated dnS_t. It does not seed derivatives, perform a new evaluation or return a gradient. Use the same Rkind and derivative-object construction convention throughout an expression; no status output or finite-difference error estimate is supplied.",
+              "signature": "VALUE = get_d0(S)",
+              "path": "SRC/ADdnSVM/dnS_m.f90",
+              "line_start": 964,
+              "line_end": 975,
+              "declarations": [
+                {
+                  "path": "SRC/ADdnSVM/dnS_m.f90",
+                  "line_start": 968,
+                  "line_end": 969
+                },
+                {
+                  "path": "SRC/ADdnSVM/dnS_m.f90",
+                  "line_start": 91,
+                  "line_end": 107
+                },
+                {
+                  "path": "SRC/ADdnSVM/dnS_m.f90",
+                  "line_start": 174,
+                  "line_end": 248
+                },
+                {
+                  "path": "SRC/dnSVM_m.f90",
+                  "line_start": 35,
+                  "line_end": 42
+                }
+              ]
+            },
+            {
+              "procedure": "get_d1",
+              "role": "public-entry-point",
+              "module": "ADdnSVM_dnS_m",
+              "summary": "GET_D1 scalar generic returns an allocatable REAL(Rkind) gradient vector indexed by the NVAR independent-variable order used during seeding. Construct/evaluate with NDERIV>=1 first. If D1 was never allocated, this pin returns an unallocated result; inspect ALLOCATED before indexing rather than assuming a zero gradient. This copies stored AD derivatives, not finite-difference samples.",
+              "signature": "VALUE = get_d1(S)",
+              "path": "SRC/ADdnSVM/dnS_m.f90",
+              "line_start": 983,
+              "line_end": 994,
+              "declarations": [
+                {
+                  "path": "SRC/ADdnSVM/dnS_m.f90",
+                  "line_start": 987,
+                  "line_end": 988
+                },
+                {
+                  "path": "SRC/ADdnSVM/dnS_m.f90",
+                  "line_start": 91,
+                  "line_end": 107
+                },
+                {
+                  "path": "SRC/ADdnSVM/dnS_m.f90",
+                  "line_start": 174,
+                  "line_end": 248
+                },
+                {
+                  "path": "SRC/dnSVM_m.f90",
+                  "line_start": 35,
+                  "line_end": 42
+                }
+              ]
+            },
+            {
+              "procedure": "get_d2",
+              "role": "public-entry-point",
+              "module": "ADdnSVM_dnS_m",
+              "summary": "GET_D2 scalar generic returns an allocatable REAL(Rkind) Hessian with shape (NVAR,NVAR), using the seeded variable ordering. Require a result evaluated with NDERIV>=2; otherwise the returned allocatable can remain unallocated. These are stored second derivatives rather than polynomial coefficients divided by factorials. No independent error bound or smoothness check is established by extraction.",
+              "signature": "VALUE = get_d2(S)",
+              "path": "SRC/ADdnSVM/dnS_m.f90",
+              "line_start": 1043,
+              "line_end": 1054,
+              "declarations": [
+                {
+                  "path": "SRC/ADdnSVM/dnS_m.f90",
+                  "line_start": 1047,
+                  "line_end": 1048
+                },
+                {
+                  "path": "SRC/ADdnSVM/dnS_m.f90",
+                  "line_start": 91,
+                  "line_end": 107
+                },
+                {
+                  "path": "SRC/ADdnSVM/dnS_m.f90",
+                  "line_start": 174,
+                  "line_end": 248
+                },
+                {
+                  "path": "SRC/dnSVM_m.f90",
+                  "line_start": 35,
+                  "line_end": 42
+                }
+              ]
+            },
+            {
+              "procedure": "get_d3",
+              "role": "public-entry-point",
+              "module": "ADdnSVM_dnS_m",
+              "summary": "GET_D3 scalar generic returns an allocatable REAL(Rkind) rank-three derivative tensor in the same independent-variable ordering. Require NDERIV=3 and check allocation before accessing it. This interface does not promise derivative existence across nonsmooth branches or validate every overloaded function; it extracts the tensor propagated by the chosen AD expression.",
+              "signature": "VALUE = get_d3(S)",
+              "path": "SRC/ADdnSVM/dnS_m.f90",
+              "line_start": 1062,
+              "line_end": 1073,
+              "declarations": [
+                {
+                  "path": "SRC/ADdnSVM/dnS_m.f90",
+                  "line_start": 1066,
+                  "line_end": 1067
+                },
+                {
+                  "path": "SRC/ADdnSVM/dnS_m.f90",
+                  "line_start": 91,
+                  "line_end": 107
+                },
+                {
+                  "path": "SRC/ADdnSVM/dnS_m.f90",
+                  "line_start": 174,
+                  "line_end": 248
+                },
+                {
+                  "path": "SRC/dnSVM_m.f90",
+                  "line_start": 35,
+                  "line_end": 42
                 }
               ]
             }
@@ -14839,6 +15196,137 @@
         }
       ]
     },
+    "ciaaw": {
+      "id": "github:milanskocic/ciaaw",
+      "repository": {
+        "owner": "MilanSkocic",
+        "name": "ciaaw",
+        "url": "https://github.com/MilanSkocic/ciaaw"
+      },
+      "license": {
+        "label": "MIT",
+        "spdx_expression": "MIT",
+        "revision": "02efd49caea1a7bbff0602b752075d3fe935bd10",
+        "reviewed_on": "2026-11-08",
+        "notes": "Root COPYING and source SPDX notices identify Milan Skocic MIT terms. This source-interface review concerns lookup behavior and does not independently validate the scientific reference tables or their freshness.",
+        "evidence": [
+          {
+            "path": "COPYING",
+            "url": "https://github.com/MilanSkocic/ciaaw/blob/02efd49caea1a7bbff0602b752075d3fe935bd10/COPYING",
+            "sha256": "7567cb00c4b2611e4b0dfaa4b3407820059cac29bf605d7369937746b9b6b04e"
+          },
+          {
+            "path": "src/ciaaw.f90",
+            "url": "https://github.com/MilanSkocic/ciaaw/blob/02efd49caea1a7bbff0602b752075d3fe935bd10/src/ciaaw.f90",
+            "sha256": "8ad2dc37642ff4b1c34162ef809f8f5d6c6c311bbd209348a376608457a83957"
+          }
+        ]
+      },
+      "classifications": [
+        {
+          "code": "Z",
+          "level": "source-reviewed",
+          "revision": "02efd49caea1a7bbff0602b752075d3fe935bd10",
+          "reviewed_on": "2026-11-08",
+          "notes": "Atomic-weight and isotope table interfaces document current public names, precision, uncertainty selection and safe lookup scope. This is a pinned public-interface/source review, not a new numerical execution check or complete API audit. Existing hosted drivers and their verified problem scope are recorded separately.",
+          "evidence": [
+            {
+              "path": "src/ciaaw.f90",
+              "url": "https://github.com/MilanSkocic/ciaaw/blob/02efd49caea1a7bbff0602b752075d3fe935bd10/src/ciaaw.f90",
+              "sha256": "8ad2dc37642ff4b1c34162ef809f8f5d6c6c311bbd209348a376608457a83957"
+            },
+            {
+              "path": "src/ciaaw_common.f90",
+              "url": "https://github.com/MilanSkocic/ciaaw/blob/02efd49caea1a7bbff0602b752075d3fe935bd10/src/ciaaw_common.f90",
+              "sha256": "7092902f46f7cbed3e7941fcf799e4414338b1cde15c4605a9f77134abe4aef2"
+            }
+          ],
+          "procedures": [
+            {
+              "procedure": "saw",
+              "role": "public-entry-point",
+              "module": "ciaaw",
+              "summary": "Look up a valid case-sensitive element symbol and return REAL(DP) standard atomic weight; import DP from stdlib_kinds. AB defaults true for the abridged value and U defaults false; U=.TRUE. requests uncertainty instead of the weight. With AB=.FALSE., this pin reduces a tabulated interval to a rounded midpoint and uncertainty, rather than returning both interval endpoints. Check for IEEE NaN and the documented negative missing-data sentinel before interpreting the result. This is a pinned table lookup, not a new calculation of atomic weights or a promise of the latest data.",
+              "signature": "VALUE = saw(S,[AB],[U])",
+              "path": "src/ciaaw.f90",
+              "line_start": 252,
+              "line_end": 305,
+              "declarations": [
+                {
+                  "path": "src/ciaaw.f90",
+                  "line_start": 254,
+                  "line_end": 257
+                },
+                {
+                  "path": "src/ciaaw.f90",
+                  "line_start": 6,
+                  "line_end": 39
+                },
+                {
+                  "path": "src/ciaaw_common.f90",
+                  "line_start": 6,
+                  "line_end": 16
+                }
+              ]
+            },
+            {
+              "procedure": "ice",
+              "role": "public-entry-point",
+              "module": "ciaaw",
+              "summary": "Retrieve isotopic composition for a valid element symbol S and INTEGER(INT32) mass number A; use stdlib_kinds for INT32/DP. The scalar REAL(DP) return is composition or, with U=.TRUE., its uncertainty; it is not a list of all isotopes. Missing mass entries return NaN in this implementation. Restrict S to a valid symbol: the internal Z>0 .AND. PT(Z) expression does not guarantee short-circuit protection against invalid table indexing. Use NAW for nuclide atomic weight instead of interpreting this fraction as a mass.",
+              "signature": "VALUE = ice(S,A,[U])",
+              "path": "src/ciaaw.f90",
+              "line_start": 369,
+              "line_end": 404,
+              "declarations": [
+                {
+                  "path": "src/ciaaw.f90",
+                  "line_start": 371,
+                  "line_end": 374
+                },
+                {
+                  "path": "src/ciaaw.f90",
+                  "line_start": 6,
+                  "line_end": 39
+                },
+                {
+                  "path": "src/ciaaw_common.f90",
+                  "line_start": 6,
+                  "line_end": 16
+                }
+              ]
+            },
+            {
+              "procedure": "naw",
+              "role": "public-entry-point",
+              "module": "ciaaw",
+              "summary": "Retrieve REAL(DP) nuclide atomic weight for a valid symbol and INTEGER(INT32) mass number, optionally returning uncertainty via U=.TRUE. Check missing-data sentinels/NaN before use. This differs from SAW, which represents standard element atomic weights, and ICE, which represents isotopic composition. Invalid symbols are outside this scoped safe lookup path because the pinned compound table guard need not short-circuit. The result follows the bundled table revision; no isotope averaging or unit conversion is performed here.",
+              "signature": "VALUE = naw(S,A,[U])",
+              "path": "src/ciaaw.f90",
+              "line_start": 599,
+              "line_end": 635,
+              "declarations": [
+                {
+                  "path": "src/ciaaw.f90",
+                  "line_start": 601,
+                  "line_end": 604
+                },
+                {
+                  "path": "src/ciaaw.f90",
+                  "line_start": 6,
+                  "line_end": 39
+                },
+                {
+                  "path": "src/ciaaw_common.f90",
+                  "line_start": 6,
+                  "line_end": 16
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
     "rngff": {
       "id": "github:archaeologic-inc/rngff",
       "repository": {
@@ -16660,6 +17148,154 @@
                   "path": "src/image.f90",
                   "line_start": 1,
                   "line_end": 37
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "forsudoku": {
+      "id": "github:vmagnin/forsudoku",
+      "repository": {
+        "owner": "vmagnin",
+        "name": "ForSudoku",
+        "url": "https://github.com/vmagnin/ForSudoku"
+      },
+      "license": {
+        "label": "GPL-3.0-or-later",
+        "spdx_expression": "GPL-3.0-or-later",
+        "revision": "a849a7fe87c3e19aea1bd8ed4caef15e651c3208",
+        "reviewed_on": "2026-11-08",
+        "notes": "Selected source headers expressly grant GPL version 3 or later and root LICENSE supplies the GPLv3 text; fpm.toml agrees. The header mentions LICENSE_EXCEPTION, but this review does not infer any additional exception that was not found in the pinned root.",
+        "evidence": [
+          {
+            "path": "LICENSE",
+            "url": "https://github.com/vmagnin/ForSudoku/blob/a849a7fe87c3e19aea1bd8ed4caef15e651c3208/LICENSE",
+            "sha256": "8ceb4b9ee5adedde47b31e975c1d90c73ad27b6b165a1dcd80c7c545eb65b903"
+          },
+          {
+            "path": "README.md",
+            "url": "https://github.com/vmagnin/ForSudoku/blob/a849a7fe87c3e19aea1bd8ed4caef15e651c3208/README.md",
+            "sha256": "b50d50e5209f7fa9babf99f5c5dce143f0bd0ece98a65c56fdeb01bba5e6700a"
+          },
+          {
+            "path": "src/sudoku.f90",
+            "url": "https://github.com/vmagnin/ForSudoku/blob/a849a7fe87c3e19aea1bd8ed4caef15e651c3208/src/sudoku.f90",
+            "sha256": "ebfda5e884439a836555ae12796e2fa6df779ff27960d479d18f0f6169780b59"
+          }
+        ]
+      },
+      "classifications": [
+        {
+          "code": "Z",
+          "level": "source-reviewed",
+          "revision": "a849a7fe87c3e19aea1bd8ed4caef15e651c3208",
+          "reviewed_on": "2026-11-08",
+          "notes": "Sudoku random seeding, validity/occupancy checks and randomized solve document input constraints and the absence of an unsatisfiable stopping result. This is a pinned public-interface/source review, not a new numerical execution check or complete API audit. Existing hosted drivers and their verified problem scope are recorded separately.",
+          "evidence": [
+            {
+              "path": "src/sudoku.f90",
+              "url": "https://github.com/vmagnin/ForSudoku/blob/a849a7fe87c3e19aea1bd8ed4caef15e651c3208/src/sudoku.f90",
+              "sha256": "ebfda5e884439a836555ae12796e2fa6df779ff27960d479d18f0f6169780b59"
+            },
+            {
+              "path": "fpm.toml",
+              "url": "https://github.com/vmagnin/ForSudoku/blob/a849a7fe87c3e19aea1bd8ed4caef15e651c3208/fpm.toml",
+              "sha256": "374c364c4ca08f6a37b8dec6be2640cf4cc47064e69d636ffcd6ed639ff0ac5c"
+            }
+          ],
+          "procedures": [
+            {
+              "procedure": "initialize_random_number_generator",
+              "role": "public-entry-point",
+              "module": "sudoku",
+              "summary": "Initialize the intrinsic process random generator before randomized puzzle solving. Optional USER_SEED is a default integer replicated across the compiler-required seed vector; without it this implementation derives seed values from the clock. Equal seeds support repetition within a compiler/runtime, not identical sequences across different compilers. This changes global RANDOM_NUMBER state rather than creating an independent RNG object.",
+              "signature": "CALL initialize_random_number_generator([USER_SEED])",
+              "path": "src/sudoku.f90",
+              "line_start": 569,
+              "line_end": 591,
+              "declarations": [
+                {
+                  "path": "src/sudoku.f90",
+                  "line_start": 571,
+                  "line_end": 571
+                },
+                {
+                  "path": "src/sudoku.f90",
+                  "line_start": 22,
+                  "line_end": 31
+                }
+              ]
+            },
+            {
+              "procedure": "valid_grid",
+              "role": "public-entry-point",
+              "module": "sudoku",
+              "summary": "Check row, column and 3-by-3-region duplicate constraints on a default-integer GRID(9,9) whose entries must be in 0:9. Despite the comment referring to a full grid, zero cells are ignored and a partially filled grid may return true. Combine with IS_FULL for a completed solution check. Out-of-range digits can index counters out of bounds; this function is not a safe arbitrary-integer input validator.",
+              "signature": "VALUE = valid_grid(GRID)",
+              "path": "src/sudoku.f90",
+              "line_start": 168,
+              "line_end": 203,
+              "declarations": [
+                {
+                  "path": "src/sudoku.f90",
+                  "line_start": 172,
+                  "line_end": 172
+                },
+                {
+                  "path": "src/sudoku.f90",
+                  "line_start": 22,
+                  "line_end": 31
+                },
+                {
+                  "path": "src/sudoku.f90",
+                  "line_start": 114,
+                  "line_end": 138
+                }
+              ]
+            },
+            {
+              "procedure": "is_full",
+              "role": "public-entry-point",
+              "module": "sudoku",
+              "summary": "Return whether GRID(9,9) contains no zero cells. This is only an occupancy test; it does not validate digit ranges, duplicate constraints or whether an input puzzle has a unique solution. With a known 0:9 digit range, combine IS_FULL with VALID_GRID when checking the returned solve.",
+              "signature": "VALUE = is_full(GRID)",
+              "path": "src/sudoku.f90",
+              "line_start": 220,
+              "line_end": 229,
+              "declarations": [
+                {
+                  "path": "src/sudoku.f90",
+                  "line_start": 222,
+                  "line_end": 222
+                },
+                {
+                  "path": "src/sudoku.f90",
+                  "line_start": 22,
+                  "line_end": 31
+                }
+              ]
+            },
+            {
+              "procedure": "solve_puzzle",
+              "role": "public-entry-point",
+              "module": "sudoku",
+              "summary": "Randomized fill-and-restart solver updates default-integer GRID(9,9), with zero representing blanks and valid 1:9 givens. Check initial digit ranges/duplicate constraints, seed the intrinsic RNG if repetition is desired and supply a known solvable puzzle. There is no status, iteration limit or unsatisfiable-puzzle detection; the loop can restart indefinitely. A completed result should satisfy IS_FULL and VALID_GRID and preserve the givens. This call does not prove uniqueness and is not suitable for unbounded arbitrary malformed input.",
+              "signature": "CALL solve_puzzle(GRID)",
+              "path": "src/sudoku.f90",
+              "line_start": 304,
+              "line_end": 372,
+              "declarations": [
+                {
+                  "path": "src/sudoku.f90",
+                  "line_start": 306,
+                  "line_end": 307
+                },
+                {
+                  "path": "src/sudoku.f90",
+                  "line_start": 22,
+                  "line_end": 31
                 }
               ]
             }
@@ -22408,6 +23044,137 @@
         }
       ]
     },
+    "ecx": {
+      "id": "github:milanskocic/ecx",
+      "repository": {
+        "owner": "MilanSkocic",
+        "name": "ecx",
+        "url": "https://github.com/MilanSkocic/ecx"
+      },
+      "license": {
+        "label": "MIT",
+        "spdx_expression": "MIT",
+        "revision": "d30725e3cb9186bc79f81481f3d6fae8d177a7b7",
+        "reviewed_on": "2026-11-08",
+        "notes": "Root COPYING supplies Milan Skocic MIT terms. stdlib dependencies retain their own terms; this review is limited to the unchanged complex circuit-element functions.",
+        "evidence": [
+          {
+            "path": "COPYING",
+            "url": "https://github.com/MilanSkocic/ecx/blob/d30725e3cb9186bc79f81481f3d6fae8d177a7b7/COPYING",
+            "sha256": "acfbae59130250d1d3c0ce3ef0bc1c372c3dc5458541360debe4e5d1072a0a22"
+          },
+          {
+            "path": "src/ecx_eis.f90",
+            "url": "https://github.com/MilanSkocic/ecx/blob/d30725e3cb9186bc79f81481f3d6fae8d177a7b7/src/ecx_eis.f90",
+            "sha256": "f860f6e5054217a00e40038e58844c9e5dbaa82dfcbe2885e2cc7b4a64de6ac8"
+          }
+        ]
+      },
+      "classifications": [
+        {
+          "code": "A4",
+          "level": "source-reviewed",
+          "revision": "d30725e3cb9186bc79f81481f3d6fae8d177a7b7",
+          "reviewed_on": "2026-11-08",
+          "notes": "Elemental resistor/capacitor/inductor complex-impedance calls document the actual exporting module and physical input conventions. This is a pinned public-interface/source review, not a new numerical execution check or complete API audit. Existing hosted drivers and their verified problem scope are recorded separately.",
+          "evidence": [
+            {
+              "path": "src/ecx_eis.f90",
+              "url": "https://github.com/MilanSkocic/ecx/blob/d30725e3cb9186bc79f81481f3d6fae8d177a7b7/src/ecx_eis.f90",
+              "sha256": "f860f6e5054217a00e40038e58844c9e5dbaa82dfcbe2885e2cc7b4a64de6ac8"
+            },
+            {
+              "path": "src/ecx_common.f90",
+              "url": "https://github.com/MilanSkocic/ecx/blob/d30725e3cb9186bc79f81481f3d6fae8d177a7b7/src/ecx_common.f90",
+              "sha256": "34565885313e547246a4526854727511bcafc105c84bf4420a1462bed0fc373a"
+            }
+          ],
+          "procedures": [
+            {
+              "procedure": "zr",
+              "role": "public-entry-point",
+              "module": "ecx__eis",
+              "summary": "Return COMPLEX(DP) resistor impedance in ohms from REAL(DP) R in ohms and angular frequency W in radians/second. Import DP from stdlib_kinds and use module ECX__EIS explicitly; these element functions are not public exports of the top-level ECX facade at this pin. W is part of the common interface but is not used in the resistor formula. The elemental function accepts conformable arrays/scalars and has no status or parameter-validation output.",
+              "signature": "VALUE = zr(W,R)",
+              "path": "src/ecx_eis.f90",
+              "line_start": 15,
+              "line_end": 24,
+              "declarations": [
+                {
+                  "path": "src/ecx_eis.f90",
+                  "line_start": 18,
+                  "line_end": 21
+                },
+                {
+                  "path": "src/ecx_eis.f90",
+                  "line_start": 1,
+                  "line_end": 13
+                },
+                {
+                  "path": "src/ecx_common.f90",
+                  "line_start": 14,
+                  "line_end": 28
+                }
+              ]
+            },
+            {
+              "procedure": "zc",
+              "role": "public-entry-point",
+              "module": "ecx__eis",
+              "summary": "Return COMPLEX(DP) capacitor impedance -i/(C*W), with C in farads and W in radians/second, from module ECX__EIS. Use nonzero capacitance and nonzero frequency for a finite result; no special DC/open-circuit representation or validation is implemented. This elemental formula can broadcast scalar C over a frequency array. Complex series addition or parallel combination is caller work, not an inferred circuit fitting operation.",
+              "signature": "VALUE = zc(W,C)",
+              "path": "src/ecx_eis.f90",
+              "line_start": 26,
+              "line_end": 34,
+              "declarations": [
+                {
+                  "path": "src/ecx_eis.f90",
+                  "line_start": 30,
+                  "line_end": 32
+                },
+                {
+                  "path": "src/ecx_eis.f90",
+                  "line_start": 1,
+                  "line_end": 13
+                },
+                {
+                  "path": "src/ecx_common.f90",
+                  "line_start": 14,
+                  "line_end": 28
+                }
+              ]
+            },
+            {
+              "procedure": "zl",
+              "role": "public-entry-point",
+              "module": "ecx__eis",
+              "summary": "Return COMPLEX(DP) inductor impedance i*L*W using REAL(DP) inductance in henries and angular frequency in radians/second. Scalars and conformable arrays follow elemental semantics. No internal conversion from hertz to angular frequency occurs, and no error/status dummy is returned. This scoped A4 mapping describes complex arithmetic for these analytic circuit elements, not an electrochemistry-specific GAMS algorithm or parameter-estimation solver.",
+              "signature": "VALUE = zl(W,L)",
+              "path": "src/ecx_eis.f90",
+              "line_start": 36,
+              "line_end": 48,
+              "declarations": [
+                {
+                  "path": "src/ecx_eis.f90",
+                  "line_start": 40,
+                  "line_end": 45
+                },
+                {
+                  "path": "src/ecx_eis.f90",
+                  "line_start": 1,
+                  "line_end": 13
+                },
+                {
+                  "path": "src/ecx_common.f90",
+                  "line_start": 14,
+                  "line_end": 28
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
     "orbs": {
       "id": "github:degawa/orbs",
       "repository": {
@@ -23743,6 +24510,125 @@
         }
       ]
     },
+    "shunting-yard-fortran": {
+      "id": "github:14ngiestas/shunting-yard-fortran",
+      "repository": {
+        "owner": "14NGiestas",
+        "name": "shunting-yard-fortran",
+        "url": "https://github.com/14NGiestas/shunting-yard-fortran"
+      },
+      "license": {
+        "label": "MIT",
+        "spdx_expression": "MIT",
+        "revision": "ff62d83502bc5fdf77f2750c3538b8634a543b91",
+        "reviewed_on": "2026-11-08",
+        "notes": "Root LICENSE supplies Ian Giestas Pauli MIT terms; fortran-tokenizer is a separate dependency. The author describes this as experimental and identifies global registration and missing syntax checks. Hosting applies a callback-layout patch separately; this review describes the pinned upstream public interface.",
+        "evidence": [
+          {
+            "path": "LICENSE",
+            "url": "https://github.com/14NGiestas/shunting-yard-fortran/blob/ff62d83502bc5fdf77f2750c3538b8634a543b91/LICENSE",
+            "sha256": "7e564d065f1b1846b27bdfe0a3b0f80df9439e7aead4a86fae70678aac32084c"
+          },
+          {
+            "path": "README.md",
+            "url": "https://github.com/14NGiestas/shunting-yard-fortran/blob/ff62d83502bc5fdf77f2750c3538b8634a543b91/README.md",
+            "sha256": "91a43a4d7e9e5127576576430faf455e7264daa40e36973cd7acc4804a95f3de"
+          },
+          {
+            "path": "src/parser.f90",
+            "url": "https://github.com/14NGiestas/shunting-yard-fortran/blob/ff62d83502bc5fdf77f2750c3538b8634a543b91/src/parser.f90",
+            "sha256": "031c159946ca0d9214c2b82a9021bc926c577f5fdf052d01d3e693b61980b84a"
+          }
+        ]
+      },
+      "classifications": [
+        {
+          "code": "N3",
+          "level": "source-reviewed",
+          "revision": "ff62d83502bc5fdf77f2750c3538b8634a543b91",
+          "reviewed_on": "2026-11-08",
+          "notes": "User-token expression registration and evaluation document NOPASS bindings, callback contracts, fixed precedence and global state. This is a pinned public-interface/source review, not a new numerical execution check or complete API audit. Existing hosted drivers and their verified problem scope are recorded separately.",
+          "evidence": [
+            {
+              "path": "src/parser.f90",
+              "url": "https://github.com/14NGiestas/shunting-yard-fortran/blob/ff62d83502bc5fdf77f2750c3538b8634a543b91/src/parser.f90",
+              "sha256": "031c159946ca0d9214c2b82a9021bc926c577f5fdf052d01d3e693b61980b84a"
+            }
+          ],
+          "procedures": [
+            {
+              "procedure": "register_unary",
+              "role": "public-entry-point",
+              "module": "parser_module",
+              "derived_type": "parser_t",
+              "summary": "Declare TYPE(parser_t) :: parser from parser_module. Register equal-width CHARACTER names for unary operations/functions before parsing. Names are appended to module-global registrations shared by every parser, and are also marked right associative. Registration does not implement evaluation: associate parser%on_unary and parser%on_operand callbacks with the linked token_t interfaces. Fixed precedence and the author-documented lack of syntax validation remain; independent concurrent parser configurations are not supported. This is a NOPASS binding: no parser object dummy is added to the displayed argument list.",
+              "signature": "CALL parser%register_unary(NAMES)",
+              "path": "src/parser.f90",
+              "line_start": 59,
+              "line_end": 73,
+              "declarations": [
+                {
+                  "path": "src/parser.f90",
+                  "line_start": 60,
+                  "line_end": 60
+                },
+                {
+                  "path": "src/parser.f90",
+                  "line_start": 9,
+                  "line_end": 50
+                }
+              ]
+            },
+            {
+              "procedure": "register_binary",
+              "role": "public-entry-point",
+              "module": "parser_module",
+              "derived_type": "parser_t",
+              "summary": "Declare TYPE(parser_t) :: parser from parser_module. Register equal-width CHARACTER operator names and optionally IS_RIGHT_ASSOC=.TRUE. for operators such as exponentiation. Registration appends names globally; it does not assign arbitrary precedence, which remains hard-coded for recognized symbols. Associate parser%on_binary with a compatible callback returning token_t. Repeated registration/configuration is shared across all instances, not private parser state. This is a NOPASS binding: no parser object dummy is added to the displayed argument list.",
+              "signature": "CALL parser%register_binary(NAMES,[IS_RIGHT_ASSOC])",
+              "path": "src/parser.f90",
+              "line_start": 75,
+              "line_end": 94,
+              "declarations": [
+                {
+                  "path": "src/parser.f90",
+                  "line_start": 76,
+                  "line_end": 77
+                },
+                {
+                  "path": "src/parser.f90",
+                  "line_start": 9,
+                  "line_end": 50
+                }
+              ]
+            },
+            {
+              "procedure": "parse",
+              "role": "public-entry-point",
+              "module": "parser_module",
+              "derived_type": "parser_t",
+              "summary": "Declare TYPE(parser_t) :: solver from parser_module. Return a token_t by tokenizing INFIX, converting to postfix and dispatching the associated operand/unary/binary callbacks. Register supported tokens and set every callback that can be invoked first; numeric interpretation and result object type are the caller callback responsibility. This pin checks enclosure and may STOP on unmatched parentheses, but does not provide a complete syntax/error-status protocol. Use only valid expressions in the scoped path; do not treat a returned token as proof arbitrary input was validated. Registrations are module global and not thread safe. The passed object SELF is implicit in solver%; do not pass it again. Optional actuals shown in brackets can be supplied by keyword.",
+              "signature": "VALUE = solver%parse(INFIX)",
+              "path": "src/parser.f90",
+              "line_start": 105,
+              "line_end": 137,
+              "declarations": [
+                {
+                  "path": "src/parser.f90",
+                  "line_start": 106,
+                  "line_end": 111
+                },
+                {
+                  "path": "src/parser.f90",
+                  "line_start": 9,
+                  "line_end": 50
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
     "sqliteff": {
       "id": "github:everythingfunctional/sqliteff",
       "repository": {
@@ -24486,6 +25372,226 @@
                   "path": "src/smart_pointer/sp_reference_counter_m.f90",
                   "line_start": 59,
                   "line_end": 62
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "rpn-calculator-fortran": {
+      "id": "github:scivision/rpn-calculator-fortran",
+      "repository": {
+        "owner": "scivision",
+        "name": "rpn-calculator-fortran",
+        "url": "https://github.com/scivision/rpn-calculator-fortran"
+      },
+      "license": {
+        "label": "MIT",
+        "spdx_expression": "MIT",
+        "revision": "7708e4949f17511d81f4e7dd0271a500f0bc3631",
+        "reviewed_on": "2026-11-08",
+        "notes": "Root LICENSE supplies David G. Simpson and Michael Hirsch MIT terms. These source reviews scope selected arithmetic/elementary helpers rather than the full interactive calculator or every separately attributed special-function source.",
+        "evidence": [
+          {
+            "path": "LICENSE",
+            "url": "https://github.com/scivision/rpn-calculator-fortran/blob/7708e4949f17511d81f4e7dd0271a500f0bc3631/LICENSE",
+            "sha256": "0c895f0f6b58a6e850debd281c4be7c09cde9da5093cfe256cae7ed28351f0c6"
+          },
+          {
+            "path": "README.md",
+            "url": "https://github.com/scivision/rpn-calculator-fortran/blob/7708e4949f17511d81f4e7dd0271a500f0bc3631/README.md",
+            "sha256": "3741356134c2acbe2acca8100ce3816d583c56dbddd65f7b9af5f16b6db29720"
+          },
+          {
+            "path": "src/rat.f90",
+            "url": "https://github.com/scivision/rpn-calculator-fortran/blob/7708e4949f17511d81f4e7dd0271a500f0bc3631/src/rat.f90",
+            "sha256": "2add4bee4850778b2bb39432749f19cae1f6649d6896bd0b8d003c619485f729"
+          }
+        ]
+      },
+      "classifications": [
+        {
+          "code": "B",
+          "level": "source-reviewed",
+          "revision": "7708e4949f17511d81f4e7dd0271a500f0bc3631",
+          "reviewed_on": "2026-11-08",
+          "notes": "Direct default-integer Euclidean GCD and LCM helpers document sign scope, zero cases and overflow limits. This is a pinned public-interface/source review, not a new numerical execution check or complete API audit. Existing hosted drivers and their verified problem scope are recorded separately.",
+          "evidence": [
+            {
+              "path": "src/rat.f90",
+              "url": "https://github.com/scivision/rpn-calculator-fortran/blob/7708e4949f17511d81f4e7dd0271a500f0bc3631/src/rat.f90",
+              "sha256": "2add4bee4850778b2bb39432749f19cae1f6649d6896bd0b8d003c619485f729"
+            },
+            {
+              "path": "src/funcs.f90",
+              "url": "https://github.com/scivision/rpn-calculator-fortran/blob/7708e4949f17511d81f4e7dd0271a500f0bc3631/src/funcs.f90",
+              "sha256": "45efe8c3beb31e519578af744301ddf25d90a8942432fd4def62ba3cc08d7084"
+            },
+            {
+              "path": "src/assert.F90",
+              "url": "https://github.com/scivision/rpn-calculator-fortran/blob/7708e4949f17511d81f4e7dd0271a500f0bc3631/src/assert.F90",
+              "sha256": "0cedd53f25196c50defaa3ed5bfdbda84e914d2bd8d2235d76c771ef176bffd5"
+            }
+          ],
+          "procedures": [
+            {
+              "procedure": "gcd",
+              "role": "public-entry-point",
+              "module": "rat",
+              "summary": "Euclidean greatest-common-divisor function on default integers. For this scope use nonnegative arguments with at least one nonzero; the code returns the final remainder chain value without normalizing its sign for arbitrary negative inputs. There is no status output or arbitrary-precision arithmetic. Direct module RAT calls do not require initializing the interactive calculator stack.",
+              "signature": "VALUE = gcd(A,B)",
+              "path": "src/rat.f90",
+              "line_start": 734,
+              "line_end": 751,
+              "declarations": [
+                {
+                  "path": "src/rat.f90",
+                  "line_start": 736,
+                  "line_end": 736
+                },
+                {
+                  "path": "src/assert.F90",
+                  "line_start": 1,
+                  "line_end": 19
+                },
+                {
+                  "path": "src/rat.f90",
+                  "line_start": 1,
+                  "line_end": 13
+                }
+              ]
+            },
+            {
+              "procedure": "lcm",
+              "role": "public-entry-point",
+              "module": "rat",
+              "summary": "Default-integer least common multiple computes ABS((A/GCD(A,B))*B). Use nonnegative inputs, at least one nonzero, and values whose intermediate product fits the default integer range. The (0,0) case divides by zero and overflow is not detected. This is a direct arithmetic helper, not a checked big-integer routine or interactive calculator command.",
+              "signature": "VALUE = lcm(A,B)",
+              "path": "src/rat.f90",
+              "line_start": 761,
+              "line_end": 767,
+              "declarations": [
+                {
+                  "path": "src/rat.f90",
+                  "line_start": 763,
+                  "line_end": 763
+                },
+                {
+                  "path": "src/assert.F90",
+                  "line_start": 1,
+                  "line_end": 19
+                },
+                {
+                  "path": "src/rat.f90",
+                  "line_start": 1,
+                  "line_end": 13
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "code": "C2",
+          "level": "source-reviewed",
+          "revision": "7708e4949f17511d81f4e7dd0271a500f0bc3631",
+          "reviewed_on": "2026-11-08",
+          "notes": "Direct real cube-root overload document kinds, generic names and scalar/elemental semantics. This is a pinned public-interface/source review, not a new numerical execution check or complete API audit. Existing hosted drivers and their verified problem scope are recorded separately.",
+          "evidence": [
+            {
+              "path": "src/rat.f90",
+              "url": "https://github.com/scivision/rpn-calculator-fortran/blob/7708e4949f17511d81f4e7dd0271a500f0bc3631/src/rat.f90",
+              "sha256": "2add4bee4850778b2bb39432749f19cae1f6649d6896bd0b8d003c619485f729"
+            },
+            {
+              "path": "src/funcs.f90",
+              "url": "https://github.com/scivision/rpn-calculator-fortran/blob/7708e4949f17511d81f4e7dd0271a500f0bc3631/src/funcs.f90",
+              "sha256": "45efe8c3beb31e519578af744301ddf25d90a8942432fd4def62ba3cc08d7084"
+            },
+            {
+              "path": "src/assert.F90",
+              "url": "https://github.com/scivision/rpn-calculator-fortran/blob/7708e4949f17511d81f4e7dd0271a500f0bc3631/src/assert.F90",
+              "sha256": "0cedd53f25196c50defaa3ed5bfdbda84e914d2bd8d2235d76c771ef176bffd5"
+            }
+          ],
+          "procedures": [
+            {
+              "procedure": "cuberoot",
+              "role": "public-entry-point",
+              "module": "funcs",
+              "summary": "Real overload of CUBEROOT preserves the sign of a real input via SIGN(ABS(X)**(1.0_WP/3.0_WP),X), so negative inputs have a real cube root. Pass REAL(WP), with WP from module ASSERT. The complex overload uses complex exponentiation and is a separate branch convention; this real signature does not document that overload. No numerical status or accuracy estimate is returned.",
+              "signature": "VALUE = cuberoot(X)",
+              "path": "src/funcs.f90",
+              "line_start": 229,
+              "line_end": 234,
+              "declarations": [
+                {
+                  "path": "src/funcs.f90",
+                  "line_start": 230,
+                  "line_end": 230
+                },
+                {
+                  "path": "src/assert.F90",
+                  "line_start": 1,
+                  "line_end": 19
+                },
+                {
+                  "path": "src/funcs.f90",
+                  "line_start": 15,
+                  "line_end": 21
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "code": "C4",
+          "level": "source-reviewed",
+          "revision": "7708e4949f17511d81f4e7dd0271a500f0bc3631",
+          "reviewed_on": "2026-11-08",
+          "notes": "Direct unnormalized real sinc overload document kinds, generic names and scalar/elemental semantics. This is a pinned public-interface/source review, not a new numerical execution check or complete API audit. Existing hosted drivers and their verified problem scope are recorded separately.",
+          "evidence": [
+            {
+              "path": "src/rat.f90",
+              "url": "https://github.com/scivision/rpn-calculator-fortran/blob/7708e4949f17511d81f4e7dd0271a500f0bc3631/src/rat.f90",
+              "sha256": "2add4bee4850778b2bb39432749f19cae1f6649d6896bd0b8d003c619485f729"
+            },
+            {
+              "path": "src/funcs.f90",
+              "url": "https://github.com/scivision/rpn-calculator-fortran/blob/7708e4949f17511d81f4e7dd0271a500f0bc3631/src/funcs.f90",
+              "sha256": "45efe8c3beb31e519578af744301ddf25d90a8942432fd4def62ba3cc08d7084"
+            },
+            {
+              "path": "src/assert.F90",
+              "url": "https://github.com/scivision/rpn-calculator-fortran/blob/7708e4949f17511d81f4e7dd0271a500f0bc3631/src/assert.F90",
+              "sha256": "0cedd53f25196c50defaa3ed5bfdbda84e914d2bd8d2235d76c771ef176bffd5"
+            }
+          ],
+          "procedures": [
+            {
+              "procedure": "sinc",
+              "role": "public-entry-point",
+              "module": "funcs",
+              "summary": "Real scalar overload of SINC returns SIN(X)/X with one at the zero limit; X is REAL(WP) and WP is the double kind exported by module ASSERT. This is the unnormalized sinc with a radian argument, not SIN(PI*X)/(PI*X). Use FUNCS::SINC rather than the private implementation name SINC_R; elemental array application is supported. The return carries no error estimate or full-range accuracy guarantee.",
+              "signature": "VALUE = sinc(X)",
+              "path": "src/funcs.f90",
+              "line_start": 269,
+              "line_end": 278,
+              "declarations": [
+                {
+                  "path": "src/funcs.f90",
+                  "line_start": 271,
+                  "line_end": 271
+                },
+                {
+                  "path": "src/assert.F90",
+                  "line_start": 1,
+                  "line_end": 19
+                },
+                {
+                  "path": "src/funcs.f90",
+                  "line_start": 24,
+                  "line_end": 44
                 }
               ]
             }
@@ -25784,6 +26890,177 @@
                   "path": "src/fortime.F90",
                   "line_start": 133,
                   "line_end": 157
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "fassert": {
+      "id": "github:degawa/fassert",
+      "repository": {
+        "owner": "degawa",
+        "name": "fassert",
+        "url": "https://github.com/degawa/fassert"
+      },
+      "license": {
+        "label": "MIT",
+        "spdx_expression": "MIT",
+        "revision": "678fa217df79af318cc537d3c69eab3b7cf68cb7",
+        "reviewed_on": "2026-11-08",
+        "notes": "Root LICENSE supplies Tomohiro Degawa MIT terms. This review scopes scalar REAL64 approximate comparison and message-unit selection, not all generated ranks/types or custom comparators.",
+        "evidence": [
+          {
+            "path": "LICENSE",
+            "url": "https://github.com/degawa/fassert/blob/678fa217df79af318cc537d3c69eab3b7cf68cb7/LICENSE",
+            "sha256": "9706c35a393c4902687c90ce2055c8130df6ce757bbc9174514e6fa6ab3c4f00"
+          },
+          {
+            "path": "README.md",
+            "url": "https://github.com/degawa/fassert/blob/678fa217df79af318cc537d3c69eab3b7cf68cb7/README.md",
+            "sha256": "f9e3d4e92d82b7da12e3b459d65ee1c06c15f5338527e260c82074f516265eaf"
+          },
+          {
+            "path": "src/approxEqual/assertApproxEqual.f90",
+            "url": "https://github.com/degawa/fassert/blob/678fa217df79af318cc537d3c69eab3b7cf68cb7/src/approxEqual/assertApproxEqual.f90",
+            "sha256": "b857c0d82d8cfff4602fc1a6a17f49aa474d0634962f5039a8a2eecf032637e2"
+          }
+        ]
+      },
+      "classifications": [
+        {
+          "code": "S3",
+          "level": "source-reviewed",
+          "revision": "678fa217df79af318cc537d3c69eab3b7cf68cb7",
+          "reviewed_on": "2026-11-08",
+          "notes": "Scalar double-precision assertion/expectation and reporting-unit interfaces document required tolerance/status actuals and terminating versus nonterminating behavior. This is a pinned public-interface/source review, not a new numerical execution check or complete API audit. Existing hosted drivers and their verified problem scope are recorded separately.",
+          "evidence": [
+            {
+              "path": "src/approxEqual/assertApproxEqual.f90",
+              "url": "https://github.com/degawa/fassert/blob/678fa217df79af318cc537d3c69eab3b7cf68cb7/src/approxEqual/assertApproxEqual.f90",
+              "sha256": "b857c0d82d8cfff4602fc1a6a17f49aa474d0634962f5039a8a2eecf032637e2"
+            },
+            {
+              "path": "src/approxEqual/expectApproxEqual.f90",
+              "url": "https://github.com/degawa/fassert/blob/678fa217df79af318cc537d3c69eab3b7cf68cb7/src/approxEqual/expectApproxEqual.f90",
+              "sha256": "17b3aab7725a1d14e98dca6423a27ec237dccd12082f82c907fd8d3df6512f18"
+            },
+            {
+              "path": "src/common/unit.f90",
+              "url": "https://github.com/degawa/fassert/blob/678fa217df79af318cc537d3c69eab3b7cf68cb7/src/common/unit.f90",
+              "sha256": "63c9096b088016f11c29c14c927bd4be0b1ef343a8733f315638a9c630592e47"
+            },
+            {
+              "path": "src/common/compare/approx/real.f90",
+              "url": "https://github.com/degawa/fassert/blob/678fa217df79af318cc537d3c69eab3b7cf68cb7/src/common/compare/approx/real.f90",
+              "sha256": "e62920de20a1ff2d5881ba18f2d1465ff0933363d66ccd16b40794af0cfb99d7"
+            },
+            {
+              "path": "src/approxEqual/implementation/toUnit/expectApproxEqualRealImplementaion.f90",
+              "url": "https://github.com/degawa/fassert/blob/678fa217df79af318cc537d3c69eab3b7cf68cb7/src/approxEqual/implementation/toUnit/expectApproxEqualRealImplementaion.f90",
+              "sha256": "ae8374ecc028ca515d70f0a0970c8caf4eb10a776003ba0a1a0eb74eec37b221"
+            },
+            {
+              "path": "src/fassert.f90",
+              "url": "https://github.com/degawa/fassert/blob/678fa217df79af318cc537d3c69eab3b7cf68cb7/src/fassert.f90",
+              "sha256": "41a17434eb7360615fd4893901e7d2db704463374a46eeededa8545c4e0130ac"
+            },
+            {
+              "path": "src/common/halt.f90",
+              "url": "https://github.com/degawa/fassert/blob/678fa217df79af318cc537d3c69eab3b7cf68cb7/src/common/halt.f90",
+              "sha256": "340425ee2821fe142b162058581501ecf579210b72d2216f502ab00f15aadc93"
+            }
+          ],
+          "procedures": [
+            {
+              "procedure": "assert_approx_equal",
+              "role": "public-entry-point",
+              "module": "fassert",
+              "summary": "Scalar REAL(REAL64) overload of ASSERT_APPROX_EQUAL takes a required CHARACTER TEST_NAME and required same-kind TOLERANCE. The comparison is ABS(ACTUAL-EXPECTED)<=TOLERANCE, an absolute threshold, not relative tolerance or digits/ULPs. Ordinary failure ERROR STOPs through HALT_ON_FAILURE; EXPECTED_FAILURE reverses the pass condition. VERBOSE/QUIET control reporting. Use EXPECT_APPROX_EQUAL when you need to receive failure and continue instead of terminating. Array/complex and message-capture overloads are separate signatures.",
+              "signature": "CALL assert_approx_equal(ACTUAL,EXPECTED,TEST_NAME,TOLERANCE,[VERBOSE],[EXPECTED_FAILURE],[QUIET])",
+              "path": "src/approxEqual/assertApproxEqual.f90",
+              "line_start": 83,
+              "line_end": 107,
+              "declarations": [
+                {
+                  "path": "src/approxEqual/assertApproxEqual.f90",
+                  "line_start": 88,
+                  "line_end": 100
+                },
+                {
+                  "path": "src/fassert.f90",
+                  "line_start": 1,
+                  "line_end": 37
+                },
+                {
+                  "path": "src/common/compare/approx/real.f90",
+                  "line_start": 26,
+                  "line_end": 36
+                },
+                {
+                  "path": "src/common/halt.f90",
+                  "line_start": 9,
+                  "line_end": 16
+                }
+              ]
+            },
+            {
+              "procedure": "expect_approx_equal",
+              "role": "public-entry-point",
+              "module": "fassert",
+              "summary": "Scalar REAL(REAL64) overload receives a REQUIRED logical STAT output and explicit absolute TOLERANCE, plus required TEST_NAME. False STAT reports an ordinary mismatch without the ASSERT wrapper termination; EXPECTED_FAILURE reverses the expected result. This particular overload writes diagnostics through the configured message unit; capturing text requires the separate OUTPUT_MESSAGE overload. A negative tolerance is not normalized or rejected, and IEEE exceptional values are not a promised special equivalence rule.",
+              "signature": "CALL expect_approx_equal(ACTUAL,EXPECTED,TEST_NAME,STAT,TOLERANCE,[VERBOSE],[EXPECTED_FAILURE],[QUIET])",
+              "path": "src/approxEqual/expectApproxEqual.f90",
+              "line_start": 109,
+              "line_end": 130,
+              "declarations": [
+                {
+                  "path": "src/approxEqual/expectApproxEqual.f90",
+                  "line_start": 112,
+                  "line_end": 128
+                },
+                {
+                  "path": "src/fassert.f90",
+                  "line_start": 1,
+                  "line_end": 37
+                },
+                {
+                  "path": "src/common/compare/approx/real.f90",
+                  "line_start": 26,
+                  "line_end": 36
+                },
+                {
+                  "path": "src/approxEqual/implementation/toUnit/expectApproxEqualRealImplementaion.f90",
+                  "line_start": 43,
+                  "line_end": 59
+                }
+              ]
+            },
+            {
+              "procedure": "set_assertion_message_unit",
+              "role": "public-entry-point",
+              "module": "fassert",
+              "summary": "Set the module-wide diagnostic unit to INTEGER(INT32) UNIT, normally an open output/scratch unit or ISO_FORTRAN_ENV output/error unit converted to that kind. No file is opened or ownership transferred; the caller keeps the unit live and closes it only after reporting ends. This changes shared reporting state, not an individual assertion object, and no IOSTAT/result is returned.",
+              "signature": "CALL set_assertion_message_unit(UNIT)",
+              "path": "src/common/unit.f90",
+              "line_start": 12,
+              "line_end": 18,
+              "declarations": [
+                {
+                  "path": "src/common/unit.f90",
+                  "line_start": 14,
+                  "line_end": 14
+                },
+                {
+                  "path": "src/fassert.f90",
+                  "line_start": 1,
+                  "line_end": 37
+                },
+                {
+                  "path": "src/common/compare/approx/real.f90",
+                  "line_start": 26,
+                  "line_end": 36
                 }
               ]
             }
@@ -28397,6 +29674,256 @@
         }
       ]
     },
+    "fortran-error-handler": {
+      "id": "github:samharrison7/fortran-error-handler",
+      "repository": {
+        "owner": "samharrison7",
+        "name": "fortran-error-handler",
+        "url": "https://github.com/samharrison7/fortran-error-handler"
+      },
+      "license": {
+        "label": "MIT",
+        "spdx_expression": "MIT",
+        "revision": "ab840882bb5036de00de8b2580e745fa5314d6fd",
+        "reviewed_on": "2026-11-08",
+        "notes": "Root LICENSE supplies Sam Harrison MIT terms. These ErrorInstance interfaces do not cover all ErrorHandler/Result behavior or imply that every critical error path was executed.",
+        "evidence": [
+          {
+            "path": "LICENSE",
+            "url": "https://github.com/samharrison7/fortran-error-handler/blob/ab840882bb5036de00de8b2580e745fa5314d6fd/LICENSE",
+            "sha256": "4f0908310c61b3796a52833bec3b38865001ca5ea6fba6e0130a029ab29b85e7"
+          },
+          {
+            "path": "README.md",
+            "url": "https://github.com/samharrison7/fortran-error-handler/blob/ab840882bb5036de00de8b2580e745fa5314d6fd/README.md",
+            "sha256": "9905555823086114e662c1fa8668f2c88a6505d9f18c6ea1dd31be64a8398efe"
+          },
+          {
+            "path": "src/ErrorInstance.f90",
+            "url": "https://github.com/samharrison7/fortran-error-handler/blob/ab840882bb5036de00de8b2580e745fa5314d6fd/src/ErrorInstance.f90",
+            "sha256": "a270e72c6883ceab3a9306f241b3e7fe9470647b0c5defacbdcc05e94b7fd51e"
+          }
+        ]
+      },
+      "classifications": [
+        {
+          "code": "R2",
+          "level": "source-reviewed",
+          "revision": "ab840882bb5036de00de8b2580e745fa5314d6fd",
+          "reviewed_on": "2026-11-08",
+          "notes": "Error-record construction, trace append and code/Boolean queries document default-error state and fixed-length storage. This is a pinned public-interface/source review, not a new numerical execution check or complete API audit. Existing hosted drivers and their verified problem scope are recorded separately.",
+          "evidence": [
+            {
+              "path": "src/ErrorInstance.f90",
+              "url": "https://github.com/samharrison7/fortran-error-handler/blob/ab840882bb5036de00de8b2580e745fa5314d6fd/src/ErrorInstance.f90",
+              "sha256": "a270e72c6883ceab3a9306f241b3e7fe9470647b0c5defacbdcc05e94b7fd51e"
+            }
+          ],
+          "procedures": [
+            {
+              "procedure": "ErrorInstance",
+              "role": "public-entry-point",
+              "module": "ErrorInstanceModule",
+              "summary": "Construct TYPE(ErrorInstance) using optional keyword CODE, MESSAGE, ISCRITICAL and TRACE(:). Defaults are code 1 (an error), empty message and critical true, so an empty constructor is not a no-error result: use CODE=0 explicitly for that. Messages and individual trace entries are stored in CHARACTER(256) fields and longer text is truncated. Constructing the record alone does not print or stop; ErrorHandler triggering is a separate operation.",
+              "signature": "VALUE = ErrorInstance([CODE],[MESSAGE],[ISCRITICAL],[TRACE])",
+              "path": "src/ErrorInstance.f90",
+              "line_start": 29,
+              "line_end": 50,
+              "declarations": [
+                {
+                  "path": "src/ErrorInstance.f90",
+                  "line_start": 30,
+                  "line_end": 34
+                },
+                {
+                  "path": "src/ErrorInstance.f90",
+                  "line_start": 1,
+                  "line_end": 25
+                }
+              ]
+            },
+            {
+              "procedure": "addToTrace",
+              "role": "public-entry-point",
+              "module": "ErrorInstanceModule",
+              "derived_type": "ErrorInstance",
+              "summary": "Declare TYPE(ErrorInstance) :: solver from ErrorInstanceModule. Append one trace message, allocating an empty trace array first if needed. Entries are stored as CHARACTER(256), so longer actuals truncate; this is a stored application trace rather than an automatically captured runtime backtrace. The pinned source records a historical GNU character-array bug and recommends at least -O1 for affected compilers; this source review does not establish every compiler workaround. No message is printed and no critical error is triggered by append alone. The passed object THIS is implicit in solver%; do not pass it again. Optional actuals shown in brackets can be supplied by keyword.",
+              "signature": "CALL solver%addToTrace(MESSAGE)",
+              "path": "src/ErrorInstance.f90",
+              "line_start": 56,
+              "line_end": 64,
+              "declarations": [
+                {
+                  "path": "src/ErrorInstance.f90",
+                  "line_start": 57,
+                  "line_end": 58
+                },
+                {
+                  "path": "src/ErrorInstance.f90",
+                  "line_start": 1,
+                  "line_end": 25
+                }
+              ]
+            },
+            {
+              "procedure": "getCode",
+              "role": "public-entry-point",
+              "module": "ErrorInstanceModule",
+              "derived_type": "ErrorInstance",
+              "summary": "Declare TYPE(ErrorInstance) :: solver from ErrorInstanceModule. Return this error record default-integer code. Code zero is the package no-error convention; nonzero signifies an error independently of the critical flag. A value is read from the stored object rather than generated from a system errno or automatically cleared on access. The passed object THIS is implicit in solver%; do not pass it again. Optional actuals shown in brackets can be supplied by keyword.",
+              "signature": "VALUE = solver%getCode()",
+              "path": "src/ErrorInstance.f90",
+              "line_start": 67,
+              "line_end": 71,
+              "declarations": [
+                {
+                  "path": "src/ErrorInstance.f90",
+                  "line_start": 68,
+                  "line_end": 69
+                },
+                {
+                  "path": "src/ErrorInstance.f90",
+                  "line_start": 1,
+                  "line_end": 25
+                }
+              ]
+            },
+            {
+              "procedure": "isError",
+              "role": "public-entry-point",
+              "module": "ErrorInstanceModule",
+              "derived_type": "ErrorInstance",
+              "summary": "Declare TYPE(ErrorInstance) :: solver from ErrorInstanceModule. Return logical true for a nonzero stored code and false for zero. This query does not print, throw or terminate even when the record ISCRITICAL flag is true; the handler trigger determines such actions separately. A default ErrorInstance has code 1 and therefore counts as an error. The passed object THIS is implicit in solver%; do not pass it again. Optional actuals shown in brackets can be supplied by keyword.",
+              "signature": "VALUE = solver%isError()",
+              "path": "src/ErrorInstance.f90",
+              "line_start": 74,
+              "line_end": 79,
+              "declarations": [
+                {
+                  "path": "src/ErrorInstance.f90",
+                  "line_start": 75,
+                  "line_end": 76
+                },
+                {
+                  "path": "src/ErrorInstance.f90",
+                  "line_start": 1,
+                  "line_end": 25
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "berkeley-assert": {
+      "id": "github:berkeleylab/assert",
+      "repository": {
+        "owner": "BerkeleyLab",
+        "name": "assert",
+        "url": "https://github.com/BerkeleyLab/assert"
+      },
+      "license": {
+        "label": "Berkeley Assert custom terms with enhancement provision",
+        "spdx_expression": null,
+        "revision": "eda03ce48da96c3118ec98d4498f4bd47c0b60ab",
+        "reviewed_on": "2026-11-08",
+        "notes": "Root LICENSE.txt contains BSD-like redistribution terms, DOE rights notices and a separate enhancement-contribution license provision, plus historical licenses. Preserve the complete current terms; do not substitute an unqualified BSD-3-Clause SPDX label for this pin.",
+        "evidence": [
+          {
+            "path": "LICENSE.txt",
+            "url": "https://github.com/BerkeleyLab/assert/blob/eda03ce48da96c3118ec98d4498f4bd47c0b60ab/LICENSE.txt",
+            "sha256": "b9795e859e0471717ad6754fa3b9042b986034cd3ec5581142c057e6532061d2"
+          },
+          {
+            "path": "README.md",
+            "url": "https://github.com/BerkeleyLab/assert/blob/eda03ce48da96c3118ec98d4498f4bd47c0b60ab/README.md",
+            "sha256": "b4bac8f10b2791e282b53ada949fa6409e0c89fcd11c19bb1eb92b567b05fd49"
+          },
+          {
+            "path": "src/assert_m.F90",
+            "url": "https://github.com/BerkeleyLab/assert/blob/eda03ce48da96c3118ec98d4498f4bd47c0b60ab/src/assert_m.F90",
+            "sha256": "0e78c62c92e8b0198772586a9cca3011f586c93c29b0d26b2b85ecfab4df8b50"
+          }
+        ]
+      },
+      "classifications": [
+        {
+          "code": "S3",
+          "level": "source-reviewed",
+          "revision": "eda03ce48da96c3118ec98d4498f4bd47c0b60ab",
+          "reviewed_on": "2026-11-08",
+          "notes": "Pure toggle-controlled and always-on assertions document required descriptions, library-build enforcement and terminating failure. This is a pinned public-interface/source review, not a new numerical execution check or complete API audit. Existing hosted drivers and their verified problem scope are recorded separately.",
+          "evidence": [
+            {
+              "path": "src/assert_m.F90",
+              "url": "https://github.com/BerkeleyLab/assert/blob/eda03ce48da96c3118ec98d4498f4bd47c0b60ab/src/assert_m.F90",
+              "sha256": "0e78c62c92e8b0198772586a9cca3011f586c93c29b0d26b2b85ecfab4df8b50"
+            }
+          ],
+          "procedures": [
+            {
+              "procedure": "assert",
+              "role": "public-entry-point",
+              "module": "assert_m",
+              "summary": "Pure assertion subroutine from module ASSERT_M (not ASSERTIONS_M from an older usage comment). Both logical ASSERTION and CHARACTER DESCRIPTION are required despite a comment suggesting the description may be absent. False conditions terminate only if this library was compiled with assertion enforcement enabled, for example ASSERTIONS=1; the hosted precompiled recipe enables it. Changing a consumer compile flag alone does not alter an already compiled library. This routine returns no pass/fail status for recovery.",
+              "signature": "CALL assert(ASSERTION,DESCRIPTION)",
+              "path": "src/assert_m.F90",
+              "line_start": 72,
+              "line_end": 86,
+              "declarations": [
+                {
+                  "path": "src/assert_m.F90",
+                  "line_start": 76,
+                  "line_end": 79
+                },
+                {
+                  "path": "src/assert_m.F90",
+                  "line_start": 12,
+                  "line_end": 42
+                },
+                {
+                  "path": "src/assert_m.F90",
+                  "line_start": 60,
+                  "line_end": 67
+                }
+              ]
+            },
+            {
+              "procedure": "assert_always",
+              "role": "public-entry-point",
+              "module": "assert_m",
+              "summary": "Always enforce the logical assertion regardless of the ASSERTIONS toggle used to compile the library. DESCRIPTION is required; FILE and LINE are optional diagnostic locations, with LINE used only when FILE is supplied. A false assertion constructs a message and ultimately ERROR STOPs, including after any configured error-stop callback returns; it is not a nonterminating expectation. True assertions return normally. Parallel callback/multi-image behavior is outside this scoped serial contract.",
+              "signature": "CALL assert_always(ASSERTION,DESCRIPTION,[FILE],[LINE])",
+              "path": "src/assert_m.F90",
+              "line_start": 88,
+              "line_end": 155,
+              "declarations": [
+                {
+                  "path": "src/assert_m.F90",
+                  "line_start": 91,
+                  "line_end": 94
+                },
+                {
+                  "path": "src/assert_m.F90",
+                  "line_start": 12,
+                  "line_end": 42
+                },
+                {
+                  "path": "src/assert_m.F90",
+                  "line_start": 60,
+                  "line_end": 67
+                },
+                {
+                  "path": "src/assert_m.F90",
+                  "line_start": 126,
+                  "line_end": 155
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
     "fortran-utils": {
       "id": "github:certik/fortran-utils",
       "repository": {
@@ -30783,6 +32310,7 @@
       "splpak",
       "forgex",
       "ferror",
+      "m_framework",
       "fitpack",
       "lsqr",
       "rklib",
@@ -30808,6 +32336,7 @@
       "pointsets",
       "flint",
       "fortran-string-to-real",
+      "ad_dnsvm",
       "integrate_fortran",
       "rndgen-fortran",
       "blas-interface",
@@ -30840,6 +32369,7 @@
       "nonlin",
       "maptran3d",
       "fortran-pcre2",
+      "ciaaw",
       "rngff",
       "fortran-zstd",
       "paramcard",
@@ -30854,6 +32384,7 @@
       "fortsa",
       "fortran-flann",
       "fortran_stb_image",
+      "forsudoku",
       "odepack",
       "kiss",
       "conmax",
@@ -30897,6 +32428,7 @@
       "bstrith",
       "hrweno",
       "fortran-simplify",
+      "ecx",
       "orbs",
       "rearrayfx",
       "amosf90",
@@ -30907,11 +32439,13 @@
       "argparse-f",
       "io_utilities",
       "uint-fortran",
+      "shunting-yard-fortran",
       "sqliteff",
       "erloff",
       "fortran-tokenizer",
       "integer_set",
       "smart-pointers",
+      "rpn-calculator-fortran",
       "nc4fortran",
       "array_range",
       "fortran-regex",
@@ -30921,6 +32455,7 @@
       "jeyemhex-regex",
       "string-utf-8",
       "fortime",
+      "fassert",
       "errstat",
       "slinked-list",
       "enclose",
@@ -30940,6 +32475,8 @@
       "fortran-unix",
       "fatode",
       "arpack-ng",
+      "fortran-error-handler",
+      "berkeley-assert",
       "fortran-utils",
       "fortran-tcl86",
       "fortranlib",
@@ -30963,16 +32500,12 @@
       "stdlib",
       "kinds",
       "fortran-astrodynamics-toolkit",
-      "m_framework",
       "mpfun2020-var1",
       "quaff",
       "neural-fortran",
       "lightkrylov",
-      "ad_dnsvm",
       "astro-fortran",
-      "ciaaw",
       "cairo-fortran",
-      "forsudoku",
       "parff",
       "graphstruc",
       "diffstruc",
@@ -30980,20 +32513,14 @@
       "featom",
       "fortrandf",
       "heatflow",
-      "ecx",
       "athena",
       "veggies",
-      "shunting-yard-fortran",
-      "rpn-calculator-fortran",
       "fundamental_constants",
       "kronrod",
-      "fassert",
       "coretran",
       "ftl",
       "vtmop",
       "slicot",
-      "fortran-error-handler",
-      "berkeley-assert",
       "fmm2d",
       "formal",
       "dftatom",
