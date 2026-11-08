@@ -2,7 +2,7 @@
   "schema_version": 1,
   "publisher": "fortran-gams-catalog-independent-reviews",
   "source_url": "https://beliavsky.github.io/fortran-gams-catalog/reviewed-metadata.json",
-  "source_snapshot_id": "sha256:533f45558474705096c284ef27a5ee785b21c2bf782030f4eaeb69bcebe1ae8d",
+  "source_snapshot_id": "sha256:078e789ea262ebc174bedf89e27cffe63aefd58455cf8cfd63647ff80103f74d",
   "packages": {
     "test-drive": {
       "id": "github:fortran-lang/test-drive",
@@ -11840,6 +11840,141 @@
         }
       ]
     },
+    "fortimize": {
+      "id": "github:fedebenelli/fortimize",
+      "repository": {
+        "owner": "fedebenelli",
+        "name": "ForTimize",
+        "url": "https://github.com/fedebenelli/ForTimize"
+      },
+      "license": {
+        "label": "MPL-2.0 (README); LGPL Nelder-Mead component",
+        "spdx_expression": null,
+        "revision": "3431b656cd86f89135d0f35bf6afdbd787d9daf3",
+        "reviewed_on": "2026-11-07",
+        "notes": "README declares MPL-2.0 but no complete root license grant file was identified in the pinned archive. The embedded NELMIN source explicitly says GNU LGPL without identifying a version. Preserve these separate declarations rather than infer one complete SPDX expression for the combined source.",
+        "evidence": [
+          {
+            "path": "README.md",
+            "url": "https://github.com/fedebenelli/ForTimize/blob/3431b656cd86f89135d0f35bf6afdbd787d9daf3/README.md",
+            "sha256": "b8fdde81f58ae023f5654a0a52f22c7a9c680efeac4213b3ec3071910a2b4d93"
+          },
+          {
+            "path": "src/minimize.f90",
+            "url": "https://github.com/fedebenelli/ForTimize/blob/3431b656cd86f89135d0f35bf6afdbd787d9daf3/src/minimize.f90",
+            "sha256": "fc82674ed06c2403f8743fca72cdca10f9451b89625c720d8b5f25992871ebe8"
+          }
+        ]
+      },
+      "classifications": [
+        {
+          "code": "G2",
+          "level": "source-reviewed",
+          "revision": "3431b656cd86f89135d0f35bf6afdbd787d9daf3",
+          "reviewed_on": "2026-11-07",
+          "notes": "The common minimization wrapper and Nelder-Mead method expose callback, option and termination-reporting limits. This is a pinned public-interface/source review, not a new numerical execution check or complete API audit. Existing hosted drivers and their verified problem scope are recorded separately.",
+          "evidence": [
+            {
+              "path": "src/minimize.f90",
+              "url": "https://github.com/fedebenelli/ForTimize/blob/3431b656cd86f89135d0f35bf6afdbd787d9daf3/src/minimize.f90",
+              "sha256": "fc82674ed06c2403f8743fca72cdca10f9451b89625c720d8b5f25992871ebe8"
+            },
+            {
+              "path": "src/gradient_free/nelder_mead.f90",
+              "url": "https://github.com/fedebenelli/ForTimize/blob/3431b656cd86f89135d0f35bf6afdbd787d9daf3/src/gradient_free/nelder_mead.f90",
+              "sha256": "431306637efd14f319efa02855d220c6964b98532966dfce4dc471b153a50a48"
+            },
+            {
+              "path": "src/ForTimize.f90",
+              "url": "https://github.com/fedebenelli/ForTimize/blob/3431b656cd86f89135d0f35bf6afdbd787d9daf3/src/ForTimize.f90",
+              "sha256": "b875875e4a86396866e2f79d2531ae68d1c72e9a7bd83c22c6a1072a60483976"
+            },
+            {
+              "path": "src/core.f90",
+              "url": "https://github.com/fedebenelli/ForTimize/blob/3431b656cd86f89135d0f35bf6afdbd787d9daf3/src/core.f90",
+              "sha256": "5a081533ebc68975000e6477005e3cba90195f685300b89bf99cd64c81dce188"
+            },
+            {
+              "path": "src/constants.f90",
+              "url": "https://github.com/fedebenelli/ForTimize/blob/3431b656cd86f89135d0f35bf6afdbd787d9daf3/src/constants.f90",
+              "sha256": "b90100b0a2ebfebe8772d1cf3e241593fd15e8e7dd82b5a4e3af695ecfae8ff6"
+            }
+          ],
+          "procedures": [
+            {
+              "procedure": "minimize",
+              "role": "public-entry-point",
+              "module": "ForTimize",
+              "summary": "Minimize through objective subroutine F(X,FVAL,[DF],[DATA]), using REAL(PR)=REAL64. X(:) is INOUT initial guess/final point and Y is the returned objective. Optional OPTIM selects an optimizer object; omission uses Nelder-Mead. The callback must declare optional gradient/data arguments and test PRESENT before using them. A derivative-free call does not provide DF. No convergence/status argument is returned by this convenience wrapper; evaluate residual/optimality requirements independently.",
+              "signature": "CALL minimize(F,X,Y,[OPTIM],[DATA])",
+              "path": "src/minimize.f90",
+              "line_start": 7,
+              "line_end": 29,
+              "declarations": [
+                {
+                  "path": "src/minimize.f90",
+                  "line_start": 11,
+                  "line_end": 19
+                },
+                {
+                  "path": "src/ForTimize.f90",
+                  "line_start": 28,
+                  "line_end": 33
+                },
+                {
+                  "path": "src/core.f90",
+                  "line_start": 10,
+                  "line_end": 17
+                },
+                {
+                  "path": "src/constants.f90",
+                  "line_start": 1,
+                  "line_end": 3
+                }
+              ]
+            },
+            {
+              "procedure": "optimize",
+              "role": "public-entry-point",
+              "module": "ForTimize",
+              "derived_type": "NelderMead",
+              "summary": "Declare TYPE(NelderMead) :: solver from ForTimize. Use a TYPE(NELDERMEAD) object exported through ForTimize. Set CONVERGENCE_TOLERANCE, KONVGE and KCOUNT to control the underlying simplex routine; optional STEP(:) must match X. MAX_ITERS is present in the type but is not passed to NELMIN in this pin. The internal IFAULT is discarded. Module-global callback/data pointers make calls non-reentrant; omitted DATA does not reset a previous saved data association. Keep supplied TARGET data and callback valid for execution and do not infer successful convergence merely from return. The passed object SELF is implicit in solver%; do not pass it again. Optional actuals shown in brackets can be supplied by keyword.",
+              "signature": "CALL solver%optimize(FOO,X,F,[DATA])",
+              "path": "src/gradient_free/nelder_mead.f90",
+              "line_start": 32,
+              "line_end": 65,
+              "declarations": [
+                {
+                  "path": "src/gradient_free/nelder_mead.f90",
+                  "line_start": 34,
+                  "line_end": 38
+                },
+                {
+                  "path": "src/ForTimize.f90",
+                  "line_start": 28,
+                  "line_end": 33
+                },
+                {
+                  "path": "src/core.f90",
+                  "line_start": 10,
+                  "line_end": 17
+                },
+                {
+                  "path": "src/constants.f90",
+                  "line_start": 1,
+                  "line_end": 3
+                },
+                {
+                  "path": "src/gradient_free/nelder_mead.f90",
+                  "line_start": 9,
+                  "line_end": 28
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
     "forimage": {
       "id": "github:gha3mi/forimage",
       "repository": {
@@ -13129,6 +13264,174 @@
         }
       ]
     },
+    "rngff": {
+      "id": "github:archaeologic-inc/rngff",
+      "repository": {
+        "owner": "Archaeologic-Inc",
+        "name": "rngff",
+        "url": "https://github.com/Archaeologic-Inc/rngff"
+      },
+      "license": {
+        "label": "MIT",
+        "spdx_expression": "MIT",
+        "revision": "8eccd1479f35159922a85db25a39bcd58a0c3faa",
+        "reviewed_on": "2026-11-07",
+        "notes": "Root LICENSE supplies Archaeologic, Inc. and Brad Richardson MIT terms, including the NRC development attribution; the native C backend is part of the reviewed archive.",
+        "evidence": [
+          {
+            "path": "LICENSE",
+            "url": "https://github.com/Archaeologic-Inc/rngff/blob/8eccd1479f35159922a85db25a39bcd58a0c3faa/LICENSE",
+            "sha256": "96406228df2e12d53ba934c68ba391734f67b36e04d328b9c99a8e10f7489c28"
+          },
+          {
+            "path": "README.md",
+            "url": "https://github.com/Archaeologic-Inc/rngff/blob/8eccd1479f35159922a85db25a39bcd58a0c3faa/README.md",
+            "sha256": "b2f41d0c1a4377473d246e85ee543abe3bb5be17de6b72470f65dae09f72c47e"
+          },
+          {
+            "path": "src/rngff/split_mix_m.f90",
+            "url": "https://github.com/Archaeologic-Inc/rngff/blob/8eccd1479f35159922a85db25a39bcd58a0c3faa/src/rngff/split_mix_m.f90",
+            "sha256": "0ae5616faaad740143b1489b21b65021571f2cc5b48b905cc1541ecf5e088e96"
+          }
+        ]
+      },
+      "classifications": [
+        {
+          "code": "L6",
+          "level": "source-reviewed",
+          "revision": "8eccd1479f35159922a85db25a39bcd58a0c3faa",
+          "reviewed_on": "2026-11-07",
+          "notes": "Seeded SplitMix construction, REAL64 uniform draws and polymorphic child streams expose owned generator state. This is a pinned public-interface/source review, not a new numerical execution check or complete API audit. Existing hosted drivers and their verified problem scope are recorded separately.",
+          "evidence": [
+            {
+              "path": "src/rngff/split_mix_m.f90",
+              "url": "https://github.com/Archaeologic-Inc/rngff/blob/8eccd1479f35159922a85db25a39bcd58a0c3faa/src/rngff/split_mix_m.f90",
+              "sha256": "0ae5616faaad740143b1489b21b65021571f2cc5b48b905cc1541ecf5e088e96"
+            },
+            {
+              "path": "src/rngff.f90",
+              "url": "https://github.com/Archaeologic-Inc/rngff/blob/8eccd1479f35159922a85db25a39bcd58a0c3faa/src/rngff.f90",
+              "sha256": "5fda49f9fc2a9c6d77bb351c55cde1a8d998f23330f34c1fbfbf18438b8d975c"
+            },
+            {
+              "path": "src/rngff/RNG_m.f90",
+              "url": "https://github.com/Archaeologic-Inc/rngff/blob/8eccd1479f35159922a85db25a39bcd58a0c3faa/src/rngff/RNG_m.f90",
+              "sha256": "eb4c943348867b74d4be50112229ca1d90ec6650ea33ee6f8361502150d5e650"
+            },
+            {
+              "path": "src/rngff/split_mix.c",
+              "url": "https://github.com/Archaeologic-Inc/rngff/blob/8eccd1479f35159922a85db25a39bcd58a0c3faa/src/rngff/split_mix.c",
+              "sha256": "52b0658d474629778c03447295555e0a4667b6a9b669a40b90730bd86f0e8da0"
+            }
+          ],
+          "procedures": [
+            {
+              "procedure": "split_mix_t",
+              "role": "public-entry-point",
+              "module": "rngff",
+              "summary": "Seeded SPLIT_MIX_T constructor returns the concrete generator from an INTEGER(INT64) SEED. Use the seeded overload for repeatable state initialization; the no-argument overload instead derives a seed from clock/date information. Seed this object before NEXT or SPLIT: the private state has no default initializer. This object has its own stream, independent of Fortran RANDOM_SEED/RANDOM_NUMBER. A fixed seed does not establish statistical suitability for every simulation.",
+              "signature": "VALUE = split_mix_t(SEED)",
+              "path": "src/rngff/split_mix_m.f90",
+              "line_start": 36,
+              "line_end": 50,
+              "declarations": [
+                {
+                  "path": "src/rngff/split_mix_m.f90",
+                  "line_start": 37,
+                  "line_end": 38
+                },
+                {
+                  "path": "src/rngff.f90",
+                  "line_start": 4,
+                  "line_end": 9
+                },
+                {
+                  "path": "src/rngff/split_mix_m.f90",
+                  "line_start": 4,
+                  "line_end": 34
+                },
+                {
+                  "path": "src/rngff/RNG_m.f90",
+                  "line_start": 10,
+                  "line_end": 17
+                }
+              ]
+            },
+            {
+              "procedure": "next",
+              "role": "public-entry-point",
+              "module": "rngff",
+              "derived_type": "split_mix_t",
+              "summary": "Declare TYPE(split_mix_t) :: solver from rngff. REAL64 overload of inherited generic NEXT advances the object and writes scalar HARVEST in [0,1). The C backend takes the upper 53 generated bits and scales by 2^-53. Use a REAL64 actual; selecting a REAL32 or integer actual chooses another overload. This is pseudorandom sampling, not cryptographic entropy, and there is no error/status argument. The passed object SELF is implicit in solver%; do not pass it again. Optional actuals shown in brackets can be supplied by keyword.",
+              "signature": "CALL solver%next(HARVEST)",
+              "path": "src/rngff/split_mix_m.f90",
+              "line_start": 145,
+              "line_end": 159,
+              "declarations": [
+                {
+                  "path": "src/rngff/split_mix_m.f90",
+                  "line_start": 146,
+                  "line_end": 147
+                },
+                {
+                  "path": "src/rngff.f90",
+                  "line_start": 4,
+                  "line_end": 9
+                },
+                {
+                  "path": "src/rngff/split_mix_m.f90",
+                  "line_start": 4,
+                  "line_end": 34
+                },
+                {
+                  "path": "src/rngff/RNG_m.f90",
+                  "line_start": 10,
+                  "line_end": 17
+                },
+                {
+                  "path": "src/rngff/split_mix.c",
+                  "line_start": 80,
+                  "line_end": 84
+                }
+              ]
+            },
+            {
+              "procedure": "split",
+              "role": "public-entry-point",
+              "module": "rngff",
+              "derived_type": "split_mix_t",
+              "summary": "Declare TYPE(split_mix_t) :: solver from rngff. Advance the parent and allocate a child in CLASS(SPLITABLE_RNG_T), ALLOCATABLE NEW. Declare the polymorphic base type from RNGFF rather than a fixed TYPE(SPLIT_MIX_T) output. Parent and child can subsequently be used through their generic NEXT bindings. Splitting is a generator operation, not a proof that a finite set of application streams has no statistical correlation; no worker/thread management is performed here. The passed object SELF is implicit in solver%; do not pass it again. Optional actuals shown in brackets can be supplied by keyword.",
+              "signature": "CALL solver%split(NEW)",
+              "path": "src/rngff/split_mix_m.f90",
+              "line_start": 88,
+              "line_end": 105,
+              "declarations": [
+                {
+                  "path": "src/rngff/split_mix_m.f90",
+                  "line_start": 89,
+                  "line_end": 90
+                },
+                {
+                  "path": "src/rngff.f90",
+                  "line_start": 4,
+                  "line_end": 9
+                },
+                {
+                  "path": "src/rngff/split_mix_m.f90",
+                  "line_start": 4,
+                  "line_end": 34
+                },
+                {
+                  "path": "src/rngff/RNG_m.f90",
+                  "line_start": 10,
+                  "line_end": 17
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
     "fortran-zstd": {
       "id": "github:interkosmos/fortran-zstd",
       "repository": {
@@ -13490,6 +13793,157 @@
         }
       ]
     },
+    "diffeq": {
+      "id": "github:jchristopherson/diffeq",
+      "repository": {
+        "owner": "jchristopherson",
+        "name": "diffeq",
+        "url": "https://github.com/jchristopherson/diffeq"
+      },
+      "license": {
+        "label": "MIT",
+        "spdx_expression": "MIT",
+        "revision": "989b320179c23aaff4bfe72994c90e9034f50c74",
+        "reviewed_on": "2026-11-07",
+        "notes": "Root LICENSE and source headers supply Jason Christopherson MIT terms. This scope covers explicit RK45, not every DAE/stiff/event method reexported by DIFFEQ.",
+        "evidence": [
+          {
+            "path": "LICENSE",
+            "url": "https://github.com/jchristopherson/diffeq/blob/989b320179c23aaff4bfe72994c90e9034f50c74/LICENSE",
+            "sha256": "1bf39c65ec480dfe78d849c8e2729868caa0d78e33506ef1115e04039f66b886"
+          },
+          {
+            "path": "README.md",
+            "url": "https://github.com/jchristopherson/diffeq/blob/989b320179c23aaff4bfe72994c90e9034f50c74/README.md",
+            "sha256": "5838dfd4d154d25aeb743a6a9fded6182e4ed27b8352f8b643c5dabb673b96f3"
+          },
+          {
+            "path": "src/singlestep/diffeq_singlestep.f90",
+            "url": "https://github.com/jchristopherson/diffeq/blob/989b320179c23aaff4bfe72994c90e9034f50c74/src/singlestep/diffeq_singlestep.f90",
+            "sha256": "03ae5db19429d31b28cef5d5b4f5101caa841df7be23ec8e5196b935a20f3528"
+          }
+        ]
+      },
+      "classifications": [
+        {
+          "code": "I1",
+          "level": "source-reviewed",
+          "revision": "989b320179c23aaff4bfe72994c90e9034f50c74",
+          "reviewed_on": "2026-11-07",
+          "notes": "The concrete RK45 inherited solve/result pair exposes an ODE callback container and saved-point result layout. This is a pinned public-interface/source review, not a new numerical execution check or complete API audit. Existing hosted drivers and their verified problem scope are recorded separately.",
+          "evidence": [
+            {
+              "path": "src/singlestep/diffeq_singlestep.f90",
+              "url": "https://github.com/jchristopherson/diffeq/blob/989b320179c23aaff4bfe72994c90e9034f50c74/src/singlestep/diffeq_singlestep.f90",
+              "sha256": "03ae5db19429d31b28cef5d5b4f5101caa841df7be23ec8e5196b935a20f3528"
+            },
+            {
+              "path": "src/diffeq_base.f90",
+              "url": "https://github.com/jchristopherson/diffeq/blob/989b320179c23aaff4bfe72994c90e9034f50c74/src/diffeq_base.f90",
+              "sha256": "b74288af7e3be05d936e179fcf55f8088f769ca1fe4394304bf2ea620702d5a3"
+            },
+            {
+              "path": "src/diffeq.f90",
+              "url": "https://github.com/jchristopherson/diffeq/blob/989b320179c23aaff4bfe72994c90e9034f50c74/src/diffeq.f90",
+              "sha256": "5da77ca4559d22b2d16f83051aad6f6ace4fa2ed1993a540cfb08b6b156f7540"
+            },
+            {
+              "path": "src/singlestep/explicit/diffeq_rk45.f90",
+              "url": "https://github.com/jchristopherson/diffeq/blob/989b320179c23aaff4bfe72994c90e9034f50c74/src/singlestep/explicit/diffeq_rk45.f90",
+              "sha256": "d3b7b2711968c1d14fbb9c45b9d7df14c1402557d61a540d041c43f0e101dc37"
+            }
+          ],
+          "procedures": [
+            {
+              "procedure": "solve",
+              "role": "public-entry-point",
+              "module": "diffeq",
+              "derived_type": "runge_kutta_45",
+              "summary": "Declare TYPE(runge_kutta_45) :: solver from diffeq. Inherited SOLVE binding used here through concrete TYPE(RUNGE_KUTTA_45), the Dormand-Prince explicit nonstiff integrator. SYS is TYPE(ODE_CONTAINER) with SYS%FCN associated to callback FCN(X,Y,DYDX,[ARGS]) of the linked REAL64 interface. X(:) gives ordered requested independent values (at least two); IV(:) gives the initial state. STORE_IV defaults true; optional ARGS is CLASS(*), INOUT, TARGET. Callback lifetime must span the solve. Configure tolerances through inherited methods; invalid dimensions/missing callbacks can ERROR STOP. No status dummy is returned. The passed object THIS is implicit in solver%; do not pass it again. Optional actuals shown in brackets can be supplied by keyword.",
+              "signature": "CALL solver%solve(SYS,X,IV,[STORE_IV],[ARGS])",
+              "path": "src/singlestep/diffeq_singlestep.f90",
+              "line_start": 250,
+              "line_end": 444,
+              "declarations": [
+                {
+                  "path": "src/singlestep/diffeq_singlestep.f90",
+                  "line_start": 252,
+                  "line_end": 270
+                },
+                {
+                  "path": "src/diffeq.f90",
+                  "line_start": 22,
+                  "line_end": 38
+                },
+                {
+                  "path": "src/singlestep/explicit/diffeq_rk45.f90",
+                  "line_start": 27,
+                  "line_end": 64
+                },
+                {
+                  "path": "src/diffeq_base.f90",
+                  "line_start": 45,
+                  "line_end": 61
+                },
+                {
+                  "path": "src/diffeq_base.f90",
+                  "line_start": 114,
+                  "line_end": 143
+                },
+                {
+                  "path": "src/diffeq_base.f90",
+                  "line_start": 272,
+                  "line_end": 283
+                }
+              ]
+            },
+            {
+              "procedure": "get_solution",
+              "role": "public-entry-point",
+              "module": "diffeq",
+              "derived_type": "runge_kutta_45",
+              "summary": "Declare TYPE(runge_kutta_45) :: solver from diffeq. After SOLVE, copy the saved results to an allocatable REAL64 matrix. Rows are saved points; column 1 is the independent variable and remaining columns are solution components in callback order. An empty buffer yields shape (0,0). Inspect allocation/shape and final independent value before assuming the requested endpoint was reached. This returns a copy, not a borrowed view, and should not be mistaken for a convergence/error status or a dense-output interpolator. The passed object THIS is implicit in solver%; do not pass it again. Optional actuals shown in brackets can be supplied by keyword.",
+              "signature": "VALUE = solver%get_solution()",
+              "path": "src/diffeq_base.f90",
+              "line_start": 653,
+              "line_end": 670,
+              "declarations": [
+                {
+                  "path": "src/diffeq_base.f90",
+                  "line_start": 660,
+                  "line_end": 663
+                },
+                {
+                  "path": "src/diffeq.f90",
+                  "line_start": 22,
+                  "line_end": 38
+                },
+                {
+                  "path": "src/singlestep/explicit/diffeq_rk45.f90",
+                  "line_start": 27,
+                  "line_end": 64
+                },
+                {
+                  "path": "src/diffeq_base.f90",
+                  "line_start": 45,
+                  "line_end": 61
+                },
+                {
+                  "path": "src/diffeq_base.f90",
+                  "line_start": 114,
+                  "line_end": 143
+                },
+                {
+                  "path": "src/diffeq_base.f90",
+                  "line_start": 272,
+                  "line_end": 283
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
     "fjsample": {
       "id": "github:rjabi/fjsample",
       "repository": {
@@ -13639,6 +14093,115 @@
                   "path": "src/types.f90",
                   "line_start": 1,
                   "line_end": 15
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "opti": {
+      "id": "github:konrad1991/opti",
+      "repository": {
+        "owner": "Konrad1991",
+        "name": "opti",
+        "url": "https://github.com/Konrad1991/opti"
+      },
+      "license": {
+        "label": "GPL-2.0-or-later",
+        "spdx_expression": "GPL-2.0-or-later",
+        "revision": "6fb22db21bd2338e00690ff3706be61a1f101101",
+        "reviewed_on": "2026-11-07",
+        "notes": "Root LICENSE is GNU GPL version 2 and the source explicitly permits version 2 or any later version; the manifest placeholder is not used as the grant.",
+        "evidence": [
+          {
+            "path": "LICENSE",
+            "url": "https://github.com/Konrad1991/opti/blob/6fb22db21bd2338e00690ff3706be61a1f101101/LICENSE",
+            "sha256": "b90ed8150a6d371c84b7dbaa680cd0e9893ef7c2558765e1e00930513efcfe3b"
+          },
+          {
+            "path": "README.md",
+            "url": "https://github.com/Konrad1991/opti/blob/6fb22db21bd2338e00690ff3706be61a1f101101/README.md",
+            "sha256": "c560bf9b6c4571bda623d46a90263fdb5b1061920fbdba6fd91f4ed890ca8c77"
+          },
+          {
+            "path": "src/swarm.f90",
+            "url": "https://github.com/Konrad1991/opti/blob/6fb22db21bd2338e00690ff3706be61a1f101101/src/swarm.f90",
+            "sha256": "1a0609d5466f6d7ae6179dab067b3d6327ffc2033d7dd96901922b45b1f64d3b"
+          }
+        ]
+      },
+      "classifications": [
+        {
+          "code": "G2i",
+          "level": "source-reviewed",
+          "revision": "6fb22db21bd2338e00690ff3706be61a1f101101",
+          "reviewed_on": "2026-11-07",
+          "notes": "Bounded particle-swarm initialization and optimization expose objective callbacks and topology choices. This is a pinned public-interface/source review, not a new numerical execution check or complete API audit. Existing hosted drivers and their verified problem scope are recorded separately.",
+          "evidence": [
+            {
+              "path": "src/swarm.f90",
+              "url": "https://github.com/Konrad1991/opti/blob/6fb22db21bd2338e00690ff3706be61a1f101101/src/swarm.f90",
+              "sha256": "1a0609d5466f6d7ae6179dab067b3d6327ffc2033d7dd96901922b45b1f64d3b"
+            },
+            {
+              "path": "src/particle_swarm.f90",
+              "url": "https://github.com/Konrad1991/opti/blob/6fb22db21bd2338e00690ff3706be61a1f101101/src/particle_swarm.f90",
+              "sha256": "99dbf107e8cdd418b72892545e7064b28fd67570174d072646a16e80ef1ed2a9"
+            }
+          ],
+          "procedures": [
+            {
+              "procedure": "initialise",
+              "role": "public-entry-point",
+              "module": "swarm",
+              "summary": "Return TYPE(SWARM_STRUCT) for positive N_SWARM/N_PARAMS and REAL(8) lower/upper bounds LB/UB of length N_PARAMS. FCT is a scalar REAL(8) objective FCT(INP,PROBLEM_SIZE), with default INTEGER size and an explicit-size input vector. The initializer samples positions and evaluates the objective, retaining a procedure pointer; keep the callback alive while using the swarm. REAL(8) is this pin compiler-kind convention, not a general kind-independent interface.",
+              "signature": "VALUE = initialise(N_SWARM,N_PARAMS,LB,UB,FCT)",
+              "path": "src/swarm.f90",
+              "line_start": 78,
+              "line_end": 129,
+              "declarations": [
+                {
+                  "path": "src/swarm.f90",
+                  "line_start": 79,
+                  "line_end": 93
+                },
+                {
+                  "path": "src/swarm.f90",
+                  "line_start": 23,
+                  "line_end": 51
+                },
+                {
+                  "path": "src/particle_swarm.f90",
+                  "line_start": 21,
+                  "line_end": 28
+                }
+              ]
+            },
+            {
+              "procedure": "optimizer",
+              "role": "public-entry-point",
+              "module": "psomod",
+              "summary": "Run bounded particle-swarm minimization and write a best parameter vector into required REAL(8) RESULT(N_PARAMS). N_SWARM, N_GENERATIONS and N_PARAMS are default integers; LB/UB must be ordered and conformable. FCT follows the linked scalar callback, not a subroutine with an output argument. Optional TOPO defaults 1 (star); 2 selects adaptive neighborhoods, using N_NEIGHBOURS (default 4). DESIRED_ERROR controls the implementation stopping logic; no separate convergence/status output is returned. Check the resulting objective yourself and do not treat a stochastic best point as a guaranteed global optimum.",
+              "signature": "CALL optimizer(N_SWARM,N_GENERATIONS,N_PARAMS,LB,UB,DESIRED_ERROR,FCT,RESULT,[TOPO],[N_NEIGHBOURS])",
+              "path": "src/particle_swarm.f90",
+              "line_start": 57,
+              "line_end": 279,
+              "declarations": [
+                {
+                  "path": "src/particle_swarm.f90",
+                  "line_start": 69,
+                  "line_end": 105
+                },
+                {
+                  "path": "src/swarm.f90",
+                  "line_start": 23,
+                  "line_end": 51
+                },
+                {
+                  "path": "src/particle_swarm.f90",
+                  "line_start": 21,
+                  "line_end": 28
                 }
               ]
             }
@@ -14389,6 +14952,151 @@
         }
       ]
     },
+    "sparse_fortran": {
+      "id": "github:euler-37/sparse_fortran",
+      "repository": {
+        "owner": "Euler-37",
+        "name": "sparse_fortran",
+        "url": "https://github.com/Euler-37/sparse_fortran"
+      },
+      "license": {
+        "label": "No license identified",
+        "spdx_expression": null,
+        "revision": "600f586a1ed099a22054ed283225787de36a31c1",
+        "reviewed_on": "2026-11-07",
+        "notes": "No LICENSE/COPYING or explicit source/README grant was identified in the pinned archive; the manifest contains only a license placeholder. Do not infer licensing from the public repository.",
+        "evidence": [
+          {
+            "path": "fpm.toml",
+            "url": "https://github.com/Euler-37/sparse_fortran/blob/600f586a1ed099a22054ed283225787de36a31c1/fpm.toml",
+            "sha256": "f90aef3c77d101392798c57c38ef1bb53a7f744c337520c8928f5e96db9b861b"
+          },
+          {
+            "path": "README.md",
+            "url": "https://github.com/Euler-37/sparse_fortran/blob/600f586a1ed099a22054ed283225787de36a31c1/README.md",
+            "sha256": "d8e2e81d634a2df124fe2eecba8c779753fece763760a2998aa285ba5df367a3"
+          },
+          {
+            "path": "src/sparse_csr_fortran.f90",
+            "url": "https://github.com/Euler-37/sparse_fortran/blob/600f586a1ed099a22054ed283225787de36a31c1/src/sparse_csr_fortran.f90",
+            "sha256": "f4ec0f92debf08c0d16c3beb4061cd7a81f8953428cac3f717ef25fab690e6f6"
+          }
+        ]
+      },
+      "classifications": [
+        {
+          "code": "N4",
+          "level": "source-reviewed",
+          "revision": "600f586a1ed099a22054ed283225787de36a31c1",
+          "reviewed_on": "2026-11-07",
+          "notes": "Sparse matrix initialization and entry replacement expose capacity, indexing and fixed zero-threshold policies. This is a pinned public-interface/source review, not a new numerical execution check or complete API audit. Existing hosted drivers and their verified problem scope are recorded separately.",
+          "evidence": [
+            {
+              "path": "src/sparse_csr_fortran.f90",
+              "url": "https://github.com/Euler-37/sparse_fortran/blob/600f586a1ed099a22054ed283225787de36a31c1/src/sparse_csr_fortran.f90",
+              "sha256": "f4ec0f92debf08c0d16c3beb4061cd7a81f8953428cac3f717ef25fab690e6f6"
+            },
+            {
+              "path": "fpm.toml",
+              "url": "https://github.com/Euler-37/sparse_fortran/blob/600f586a1ed099a22054ed283225787de36a31c1/fpm.toml",
+              "sha256": "f90aef3c77d101392798c57c38ef1bb53a7f744c337520c8928f5e96db9b861b"
+            }
+          ],
+          "procedures": [
+            {
+              "procedure": "sparse_init",
+              "role": "public-entry-point",
+              "module": "sparse_csr_fortran",
+              "derived_type": "sparse_csr",
+              "summary": "Declare TYPE(sparse_csr) :: solver from sparse_csr_fortran. Empty-matrix overload of SPARSE_INIT sets dimensions and capacity. DIMY defaults DIMX, CAPACITY defaults 1000, and ORDER defaults \"C\". Initialize a fresh object once; backing fields are otherwise uninitialized and repeated initialization can allocate already allocated arrays. \"C\" stores rows for the usual A*x product; the alternative storage path uses columns and its product method follows different dimensions. Require positive dimensions and a useful positive capacity before insertions. The passed object THIS is implicit in solver%; do not pass it again. Optional actuals shown in brackets can be supplied by keyword.",
+              "signature": "CALL solver%sparse_init(DIMX,[DIMY],[CAPACITY],[ORDER])",
+              "path": "src/sparse_csr_fortran.f90",
+              "line_start": 38,
+              "line_end": 56,
+              "declarations": [
+                {
+                  "path": "src/sparse_csr_fortran.f90",
+                  "line_start": 39,
+                  "line_end": 43
+                },
+                {
+                  "path": "src/sparse_csr_fortran.f90",
+                  "line_start": 1,
+                  "line_end": 29
+                }
+              ]
+            },
+            {
+              "procedure": "sparse_append",
+              "role": "public-entry-point",
+              "module": "sparse_csr_fortran",
+              "derived_type": "sparse_csr",
+              "summary": "Declare TYPE(sparse_csr) :: solver from sparse_csr_fortran. Set/update a one-based ROW,COL with REAL(8) VAL in an initialized matrix. Existing entries are replaced, not accumulated. Magnitudes <=1e-15 are treated as zero and remove an existing entry; this absolute threshold is built in. Check lower bounds yourself: the routine explicitly rejects indices above dimensions but does not fully validate nonpositive indices. Capacity growth has limited guards; avoid a zero/tiny initial capacity. No status output is returned. The passed object THIS is implicit in solver%; do not pass it again. Optional actuals shown in brackets can be supplied by keyword.",
+              "signature": "CALL solver%sparse_append(ROW,COL,VAL)",
+              "path": "src/sparse_csr_fortran.f90",
+              "line_start": 119,
+              "line_end": 171,
+              "declarations": [
+                {
+                  "path": "src/sparse_csr_fortran.f90",
+                  "line_start": 120,
+                  "line_end": 123
+                },
+                {
+                  "path": "src/sparse_csr_fortran.f90",
+                  "line_start": 1,
+                  "line_end": 29
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "code": "D1",
+          "level": "source-reviewed",
+          "revision": "600f586a1ed099a22054ed283225787de36a31c1",
+          "reviewed_on": "2026-11-07",
+          "notes": "The sparse matrix-vector product records storage-dependent orientation and dimensions. This is a pinned public-interface/source review, not a new numerical execution check or complete API audit. Existing hosted drivers and their verified problem scope are recorded separately.",
+          "evidence": [
+            {
+              "path": "src/sparse_csr_fortran.f90",
+              "url": "https://github.com/Euler-37/sparse_fortran/blob/600f586a1ed099a22054ed283225787de36a31c1/src/sparse_csr_fortran.f90",
+              "sha256": "f4ec0f92debf08c0d16c3beb4061cd7a81f8953428cac3f717ef25fab690e6f6"
+            },
+            {
+              "path": "fpm.toml",
+              "url": "https://github.com/Euler-37/sparse_fortran/blob/600f586a1ed099a22054ed283225787de36a31c1/fpm.toml",
+              "sha256": "f90aef3c77d101392798c57c38ef1bb53a7f744c337520c8928f5e96db9b861b"
+            }
+          ],
+          "procedures": [
+            {
+              "procedure": "sparse_product",
+              "role": "public-entry-point",
+              "module": "sparse_csr_fortran",
+              "derived_type": "sparse_csr",
+              "summary": "Declare TYPE(sparse_csr) :: solver from sparse_csr_fortran. Return an allocatable REAL(8) vector from the sparse product. For default ORDER=\"C\", input A(:) has length DIMY and output has length DIMX, computing matrix times vector. For the alternative column-storage branch, input length is DIMX and output DIMY, so its operation corresponds to the transposed orientation. Shape mismatches ERROR STOP. The matrix passed object is declared INOUT even though this body only reads its stored entries. The passed object THIS is implicit in solver%; do not pass it again. Optional actuals shown in brackets can be supplied by keyword.",
+              "signature": "VALUE = solver%sparse_product(A)",
+              "path": "src/sparse_csr_fortran.f90",
+              "line_start": 173,
+              "line_end": 203,
+              "declarations": [
+                {
+                  "path": "src/sparse_csr_fortran.f90",
+                  "line_start": 174,
+                  "line_end": 176
+                },
+                {
+                  "path": "src/sparse_csr_fortran.f90",
+                  "line_start": 1,
+                  "line_end": 29
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
     "forinv": {
       "id": "github:gha3mi/forinv",
       "repository": {
@@ -14464,6 +15172,142 @@
                   "path": "src/forinv.f90",
                   "line_start": 81,
                   "line_end": 98
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "forsolver": {
+      "id": "github:gha3mi/forsolver",
+      "repository": {
+        "owner": "gha3mi",
+        "name": "forsolver",
+        "url": "https://github.com/gha3mi/forsolver"
+      },
+      "license": {
+        "label": "BSD-3-Clause",
+        "spdx_expression": "BSD-3-Clause",
+        "revision": "6c0644b287cb49a7310d883415b9b9ba581d51c5",
+        "reviewed_on": "2026-11-07",
+        "notes": "Root LICENSE supplies Seyed Ali Ghasemi BSD three-clause terms; LAPACK and fordiff dependencies retain separate notices and precision/ABI requirements.",
+        "evidence": [
+          {
+            "path": "LICENSE",
+            "url": "https://github.com/gha3mi/forsolver/blob/6c0644b287cb49a7310d883415b9b9ba581d51c5/LICENSE",
+            "sha256": "2bed75d5b84af240b433822f9720fd7c2eb269cbc46a721c851df9ae94513210"
+          },
+          {
+            "path": "README.md",
+            "url": "https://github.com/gha3mi/forsolver/blob/6c0644b287cb49a7310d883415b9b9ba581d51c5/README.md",
+            "sha256": "54621926b48e7f1ca85d92c3c960b1a67556bc1c94414ba1773858e36b1418c0"
+          },
+          {
+            "path": "src/forsolver.f90",
+            "url": "https://github.com/gha3mi/forsolver/blob/6c0644b287cb49a7310d883415b9b9ba581d51c5/src/forsolver.f90",
+            "sha256": "209008df182f563b148781bf36ff0336bc969f1d54d9572bca03e7c2177416b9"
+          }
+        ]
+      },
+      "classifications": [
+        {
+          "code": "D2",
+          "level": "source-reviewed",
+          "revision": "6c0644b287cb49a7310d883415b9b9ba581d51c5",
+          "reviewed_on": "2026-11-07",
+          "notes": "The SOLVE generic wraps dense linear-system and least-squares methods. This is a pinned public-interface/source review, not a new numerical execution check or complete API audit. Existing hosted drivers and their verified problem scope are recorded separately.",
+          "evidence": [
+            {
+              "path": "src/forsolver.f90",
+              "url": "https://github.com/gha3mi/forsolver/blob/6c0644b287cb49a7310d883415b9b9ba581d51c5/src/forsolver.f90",
+              "sha256": "209008df182f563b148781bf36ff0336bc969f1d54d9572bca03e7c2177416b9"
+            },
+            {
+              "path": "src/forsolver_kinds.F90",
+              "url": "https://github.com/gha3mi/forsolver/blob/6c0644b287cb49a7310d883415b9b9ba581d51c5/src/forsolver_kinds.F90",
+              "sha256": "98cf23e1070baf3071954fe2136c50d71ccba84baac60e0849953b54de960618"
+            }
+          ],
+          "procedures": [
+            {
+              "procedure": "solve",
+              "role": "public-entry-point",
+              "module": "forsolver",
+              "summary": "Public SOLVE returns a REAL(RK) solution vector for matrix A and vector B, preserving inputs through internal copies. Optional METHOD accepts \"gesv\" (square solve) or \"gels\" (least squares); absent METHOD chooses by matrix shape. Use conformable square or overdetermined inputs: the underdetermined GELS input-copy path is not established safe in this pin. The public function returns no LAPACK INFO; native failures can ERROR STOP, and an unknown METHOD leaves no defined solution path. Import FORSOLVER::RK to match the build precision.",
+              "signature": "VALUE = solve(A,B,[METHOD])",
+              "path": "src/forsolver.f90",
+              "line_start": 52,
+              "line_end": 81,
+              "declarations": [
+                {
+                  "path": "src/forsolver.f90",
+                  "line_start": 55,
+                  "line_end": 59
+                },
+                {
+                  "path": "src/forsolver.f90",
+                  "line_start": 6,
+                  "line_end": 44
+                },
+                {
+                  "path": "src/forsolver_kinds.F90",
+                  "line_start": 1,
+                  "line_end": 18
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "code": "F1",
+          "level": "source-reviewed",
+          "revision": "6c0644b287cb49a7310d883415b9b9ba581d51c5",
+          "reviewed_on": "2026-11-07",
+          "notes": "The scalar nonlinear-solver overload dispatches initialized Newton/finite-difference methods through real callbacks. This is a pinned public-interface/source review, not a new numerical execution check or complete API audit. Existing hosted drivers and their verified problem scope are recorded separately.",
+          "evidence": [
+            {
+              "path": "src/forsolver.f90",
+              "url": "https://github.com/gha3mi/forsolver/blob/6c0644b287cb49a7310d883415b9b9ba581d51c5/src/forsolver.f90",
+              "sha256": "209008df182f563b148781bf36ff0336bc969f1d54d9572bca03e7c2177416b9"
+            },
+            {
+              "path": "src/forsolver_kinds.F90",
+              "url": "https://github.com/gha3mi/forsolver/blob/6c0644b287cb49a7310d883415b9b9ba581d51c5/src/forsolver_kinds.F90",
+              "sha256": "98cf23e1070baf3071954fe2136c50d71ccba84baac60e0849953b54de960618"
+            }
+          ],
+          "procedures": [
+            {
+              "procedure": "solve",
+              "role": "public-entry-point",
+              "module": "forsolver",
+              "derived_type": "nlsolver",
+              "summary": "Declare TYPE(nlsolver) :: solver from forsolver. Scalar real overload of NLSOLVER%SOLVE. First call solver%SET_OPTIONS() because the type scalar/string controls have no complete default initialization. F maps scalar REAL(RK) X to scalar REAL(RK); optional DFDX is a matching derivative function. For the default analytic Newton method supply DFDX; omission is appropriate only with a configured finite-difference method. X0 is the initial guess, X_SOL an output scalar. There is no convergence flag, so check F(X_SOL) against your requirement and respect iteration/tolerance settings. Use keywords when omitting DFDX before required X0/X_SOL. The passed object THIS is implicit in solver%; do not pass it again. Optional actuals shown in brackets can be supplied by keyword.",
+              "signature": "CALL solver%solve(F,[DFDX],X0,X_SOL)",
+              "path": "src/forsolver.f90",
+              "line_start": 194,
+              "line_end": 251,
+              "declarations": [
+                {
+                  "path": "src/forsolver.f90",
+                  "line_start": 196,
+                  "line_end": 216
+                },
+                {
+                  "path": "src/forsolver.f90",
+                  "line_start": 6,
+                  "line_end": 44
+                },
+                {
+                  "path": "src/forsolver_kinds.F90",
+                  "line_start": 1,
+                  "line_end": 18
+                },
+                {
+                  "path": "src/forsolver.f90",
+                  "line_start": 418,
+                  "line_end": 499
                 }
               ]
             }
@@ -15708,6 +16552,139 @@
         }
       ]
     },
+    "feq-parse": {
+      "id": "github:fluidnumerics/feq-parse",
+      "repository": {
+        "owner": "FluidNumerics",
+        "name": "feq-parse",
+        "url": "https://github.com/FluidNumerics/feq-parse"
+      },
+      "license": {
+        "label": "BSD-3-Clause",
+        "spdx_expression": "BSD-3-Clause",
+        "revision": "2e80c5940b128a52c5070a3f56909674fb85a379",
+        "reviewed_on": "2026-11-07",
+        "notes": "Root LICENSE and source headers contain the BSD three-clause grant for Fluid Numerics LLC, despite the manifest Other label.",
+        "evidence": [
+          {
+            "path": "LICENSE",
+            "url": "https://github.com/FluidNumerics/feq-parse/blob/2e80c5940b128a52c5070a3f56909674fb85a379/LICENSE",
+            "sha256": "0e2791cb490fd6ee9b98769d8d40aeae3d77acb03a318cc019cdf150d40d060e"
+          },
+          {
+            "path": "README.md",
+            "url": "https://github.com/FluidNumerics/feq-parse/blob/2e80c5940b128a52c5070a3f56909674fb85a379/README.md",
+            "sha256": "d6221482113b8da31e4d2aad6b5f11d10bb55792e3f2c633ce77532f4114f72e"
+          },
+          {
+            "path": "src/FEQParse.f90",
+            "url": "https://github.com/FluidNumerics/feq-parse/blob/2e80c5940b128a52c5070a3f56909674fb85a379/src/FEQParse.f90",
+            "sha256": "84e1aef284f03f20b4ff9cf65013537da71507d1527ac4a18dec85ad25746b61"
+          }
+        ]
+      },
+      "classifications": [
+        {
+          "code": "N3",
+          "level": "source-reviewed",
+          "revision": "2e80c5940b128a52c5070a3f56909674fb85a379",
+          "reviewed_on": "2026-11-07",
+          "notes": "Expression-parser construction and scalar/batched REAL64 evaluation expose variable ordering and result ranks. This is a pinned public-interface/source review, not a new numerical execution check or complete API audit. Existing hosted drivers and their verified problem scope are recorded separately.",
+          "evidence": [
+            {
+              "path": "src/FEQParse.f90",
+              "url": "https://github.com/FluidNumerics/feq-parse/blob/2e80c5940b128a52c5070a3f56909674fb85a379/src/FEQParse.f90",
+              "sha256": "84e1aef284f03f20b4ff9cf65013537da71507d1527ac4a18dec85ad25746b61"
+            }
+          ],
+          "procedures": [
+            {
+              "procedure": "EquationParser",
+              "role": "public-entry-point",
+              "module": "FEQParse",
+              "summary": "Construct TYPE(EQUATIONPARSER) from an expression/equation string and a character array of independent-variable names, whose order defines later X coordinates. It cleans/tokenizes the text and builds postfix storage. There is no returned validity/status flag; a constructor result by itself is not proof that arbitrary input parsed successfully. Use supported expressions and bounded complexity (the evaluation stack is fixed at 256) rather than treating this as a Fortran compiler or a general symbolic algebra parser.",
+              "signature": "VALUE = EquationParser(EQUATION,INDEPVARS)",
+              "path": "src/FEQParse.f90",
+              "line_start": 107,
+              "line_end": 143,
+              "declarations": [
+                {
+                  "path": "src/FEQParse.f90",
+                  "line_start": 108,
+                  "line_end": 110
+                },
+                {
+                  "path": "src/FEQParse.f90",
+                  "line_start": 27,
+                  "line_end": 41
+                },
+                {
+                  "path": "src/FEQParse.f90",
+                  "line_start": 68,
+                  "line_end": 104
+                }
+              ]
+            },
+            {
+              "procedure": "Evaluate",
+              "role": "public-entry-point",
+              "module": "FEQParse",
+              "derived_type": "EquationParser",
+              "summary": "Declare TYPE(EquationParser) :: solver from FEQParse. Scalar REAL64 EVALUATE overload accepts X(1:NINDEPVARS), ordered like constructor INDEPVARS, and returns one REAL64 value. It evaluates saved postfix tokens with a private stack. There is no IOSTAT/domain/error argument; validate expression construction and math-domain assumptions before use. The passed parser and X have no explicit INTENT attributes in this pin, so supply appropriate variables and do not infer purity or thread safety. The passed object PARSER is implicit in solver%; do not pass it again. Optional actuals shown in brackets can be supplied by keyword.",
+              "signature": "VALUE = solver%Evaluate(X)",
+              "path": "src/FEQParse.f90",
+              "line_start": 539,
+              "line_end": 632,
+              "declarations": [
+                {
+                  "path": "src/FEQParse.f90",
+                  "line_start": 540,
+                  "line_end": 542
+                },
+                {
+                  "path": "src/FEQParse.f90",
+                  "line_start": 27,
+                  "line_end": 41
+                },
+                {
+                  "path": "src/FEQParse.f90",
+                  "line_start": 68,
+                  "line_end": 104
+                }
+              ]
+            },
+            {
+              "procedure": "Evaluate",
+              "role": "public-entry-point",
+              "module": "FEQParse",
+              "derived_type": "EquationParser",
+              "summary": "Declare TYPE(EquationParser) :: solver from FEQParse. Vectorized REAL64 overload uses X(points,variables), with columns ordered like INDEPVARS, returning one value per point (the first dimension). This is a rank-two argument returning a rank-one result, distinct from the scalar overload. Supply SIZE(X,2)=NINDEPVARS; variable selection uses X(:,i). The routine has no domain/parse status output and should not be used with an incompletely constructed parser. The passed object PARSER is implicit in solver%; do not pass it again. Optional actuals shown in brackets can be supplied by keyword.",
+              "signature": "VALUE = solver%Evaluate(X)",
+              "path": "src/FEQParse.f90",
+              "line_start": 742,
+              "line_end": 849,
+              "declarations": [
+                {
+                  "path": "src/FEQParse.f90",
+                  "line_start": 743,
+                  "line_end": 745
+                },
+                {
+                  "path": "src/FEQParse.f90",
+                  "line_start": 27,
+                  "line_end": 41
+                },
+                {
+                  "path": "src/FEQParse.f90",
+                  "line_start": 68,
+                  "line_end": 104
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
     "fordot": {
       "id": "github:gha3mi/fordot",
       "repository": {
@@ -15911,6 +16888,185 @@
         }
       ]
     },
+    "hrweno": {
+      "id": "github:hugomvale/hr-weno",
+      "repository": {
+        "owner": "HugoMVale",
+        "name": "HR-WENO",
+        "url": "https://github.com/HugoMVale/HR-WENO"
+      },
+      "license": {
+        "label": "MIT (root); Apache-2.0 OR MIT (manifest)",
+        "spdx_expression": "MIT",
+        "revision": "2885105a7ba98351fed299b22e9bc0c67a809d2f",
+        "reviewed_on": "2026-11-07",
+        "notes": "Root LICENSE.md provides an MIT grant; the manifest additionally declares Apache-2.0 OR MIT. Record the supplied MIT terms without assuming a separate Apache grant file exists in this archive.",
+        "evidence": [
+          {
+            "path": "LICENSE.md",
+            "url": "https://github.com/HugoMVale/HR-WENO/blob/2885105a7ba98351fed299b22e9bc0c67a809d2f/LICENSE.md",
+            "sha256": "73fdb2a4fd18f33208572b2aa50b1747bb5d8850747c8fa776eb7e9b4050b685"
+          },
+          {
+            "path": "README.md",
+            "url": "https://github.com/HugoMVale/HR-WENO/blob/2885105a7ba98351fed299b22e9bc0c67a809d2f/README.md",
+            "sha256": "3337bfbffa2f22880af2131a1953a420a4d87354890d20faf672bb253d854b3e"
+          },
+          {
+            "path": "src/hrweno_weno.f90",
+            "url": "https://github.com/HugoMVale/HR-WENO/blob/2885105a7ba98351fed299b22e9bc0c67a809d2f/src/hrweno_weno.f90",
+            "sha256": "2fb3ff8e327d6bb8b12fc743dcdcb02c08ec9e2a1ea419f9f5660f8ddf037c1f"
+          }
+        ]
+      },
+      "classifications": [
+        {
+          "code": "I2",
+          "level": "source-reviewed",
+          "revision": "2885105a7ba98351fed299b22e9bc0c67a809d2f",
+          "reviewed_on": "2026-11-07",
+          "notes": "The WENO constructor/reconstruction pair provides a spatial building block for conservation-law methods. This is a pinned public-interface/source review, not a new numerical execution check or complete API audit. Existing hosted drivers and their verified problem scope are recorded separately.",
+          "evidence": [
+            {
+              "path": "src/hrweno_weno.f90",
+              "url": "https://github.com/HugoMVale/HR-WENO/blob/2885105a7ba98351fed299b22e9bc0c67a809d2f/src/hrweno_weno.f90",
+              "sha256": "2fb3ff8e327d6bb8b12fc743dcdcb02c08ec9e2a1ea419f9f5660f8ddf037c1f"
+            },
+            {
+              "path": "src/hrweno_tvdode.f90",
+              "url": "https://github.com/HugoMVale/HR-WENO/blob/2885105a7ba98351fed299b22e9bc0c67a809d2f/src/hrweno_tvdode.f90",
+              "sha256": "ef014c717105772adf8a05effce241add2fe35351d30814c1c73e7d213edce62"
+            },
+            {
+              "path": "src/hrweno_kinds.F90",
+              "url": "https://github.com/HugoMVale/HR-WENO/blob/2885105a7ba98351fed299b22e9bc0c67a809d2f/src/hrweno_kinds.F90",
+              "sha256": "1d22d5aa6affb148a554fb9499422e2d21e05282cab15f598a679eb30d3fdbc5"
+            },
+            {
+              "path": "fpm.toml",
+              "url": "https://github.com/HugoMVale/HR-WENO/blob/2885105a7ba98351fed299b22e9bc0c67a809d2f/fpm.toml",
+              "sha256": "4d593f0b513368583f47d65d8b52bf12f8cd319b7ca356fcf5d40fbe393a6f32"
+            }
+          ],
+          "procedures": [
+            {
+              "procedure": "weno",
+              "role": "public-entry-point",
+              "module": "hrweno_weno",
+              "summary": "Construct TYPE(WENO) for NCELLS>0 using HRWENO_KINDS::RK. K selects reconstruction order 2*K-1 with K=1,2,3. K is declared OPTIONAL but this pin later references the dummy directly, so always supply it explicitly, e.g. K=3. Optional EPS must exceed machine epsilon. Optional XEDGES has NCELLS+1 increasing edge coordinates, conceptual indices 0:NCELLS. Invalid inputs can ERROR STOP despite stored IERR/MSG fields; this review does not establish all nonuniform-grid configurations.",
+              "signature": "VALUE = weno(NCELLS,[K],[EPS],[XEDGES])",
+              "path": "src/hrweno_weno.f90",
+              "line_start": 54,
+              "line_end": 127,
+              "declarations": [
+                {
+                  "path": "src/hrweno_weno.f90",
+                  "line_start": 59,
+                  "line_end": 69
+                },
+                {
+                  "path": "src/hrweno_kinds.F90",
+                  "line_start": 1,
+                  "line_end": 19
+                },
+                {
+                  "path": "src/hrweno_weno.f90",
+                  "line_start": 24,
+                  "line_end": 50
+                }
+              ]
+            },
+            {
+              "procedure": "reconstruct",
+              "role": "public-entry-point",
+              "module": "hrweno_weno",
+              "derived_type": "weno",
+              "summary": "Declare TYPE(weno) :: solver from hrweno_weno. Reconstruct left/right cell-boundary values from REAL(RK) cell averages V(:). Preallocate VL(:)/VR(:) with NCELLS elements and use an initialized WENO object. VL(i) is the left boundary approached inside cell i, VR(i) the right. The implementation fills exterior stencil values by repeating endpoint data; it does not accept user ghost-cell arrays or enforce arbitrary physical/periodic boundary conditions. This is spatial reconstruction, not a complete conservation-law evolution solver. The passed object SELF is implicit in solver%; do not pass it again. Optional actuals shown in brackets can be supplied by keyword.",
+              "signature": "CALL solver%reconstruct(V,VL,VR)",
+              "path": "src/hrweno_weno.f90",
+              "line_start": 129,
+              "line_end": 219,
+              "declarations": [
+                {
+                  "path": "src/hrweno_weno.f90",
+                  "line_start": 152,
+                  "line_end": 159
+                },
+                {
+                  "path": "src/hrweno_kinds.F90",
+                  "line_start": 1,
+                  "line_end": 19
+                },
+                {
+                  "path": "src/hrweno_weno.f90",
+                  "line_start": 24,
+                  "line_end": 50
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "code": "I1",
+          "level": "source-reviewed",
+          "revision": "2885105a7ba98351fed299b22e9bc0c67a809d2f",
+          "reviewed_on": "2026-11-07",
+          "notes": "The explicit fixed-step TVD Runge-Kutta interface advances a supplied first-order ODE system. This is a pinned public-interface/source review, not a new numerical execution check or complete API audit. Existing hosted drivers and their verified problem scope are recorded separately.",
+          "evidence": [
+            {
+              "path": "src/hrweno_weno.f90",
+              "url": "https://github.com/HugoMVale/HR-WENO/blob/2885105a7ba98351fed299b22e9bc0c67a809d2f/src/hrweno_weno.f90",
+              "sha256": "2fb3ff8e327d6bb8b12fc743dcdcb02c08ec9e2a1ea419f9f5660f8ddf037c1f"
+            },
+            {
+              "path": "src/hrweno_tvdode.f90",
+              "url": "https://github.com/HugoMVale/HR-WENO/blob/2885105a7ba98351fed299b22e9bc0c67a809d2f/src/hrweno_tvdode.f90",
+              "sha256": "ef014c717105772adf8a05effce241add2fe35351d30814c1c73e7d213edce62"
+            },
+            {
+              "path": "src/hrweno_kinds.F90",
+              "url": "https://github.com/HugoMVale/HR-WENO/blob/2885105a7ba98351fed299b22e9bc0c67a809d2f/src/hrweno_kinds.F90",
+              "sha256": "1d22d5aa6affb148a554fb9499422e2d21e05282cab15f598a679eb30d3fdbc5"
+            },
+            {
+              "path": "fpm.toml",
+              "url": "https://github.com/HugoMVale/HR-WENO/blob/2885105a7ba98351fed299b22e9bc0c67a809d2f/fpm.toml",
+              "sha256": "4d593f0b513368583f47d65d8b52bf12f8cd319b7ca356fcf5d40fbe393a6f32"
+            }
+          ],
+          "procedures": [
+            {
+              "procedure": "integrate",
+              "role": "public-entry-point",
+              "module": "hrweno_tvdode",
+              "derived_type": "rktvd",
+              "summary": "Declare TYPE(rktvd) :: solver from hrweno_tvdode. First initialize TYPE(RKTVD) using RKTVD(FU,NEQ,ORDER), with ORDER 1..3 and a live callback FU(T,U,UDOT) of the linked REAL(RK) interface. U(:) and T are INOUT. Use nonzero DT directed toward TOUT; this is fixed-step integration, not adaptive error control. Optional ITASK=1 advances until TOUT is reached/passed; 2 takes one step. The final step is not shortened to land exactly on TOUT, so inspect returned T. U must match NEQ and the callback must fill UDOT(:). The passed object SELF is implicit in solver%; do not pass it again. Optional actuals shown in brackets can be supplied by keyword.",
+              "signature": "CALL solver%integrate(U,T,TOUT,DT,[ITASK])",
+              "path": "src/hrweno_tvdode.f90",
+              "line_start": 97,
+              "line_end": 178,
+              "declarations": [
+                {
+                  "path": "src/hrweno_tvdode.f90",
+                  "line_start": 108,
+                  "line_end": 121
+                },
+                {
+                  "path": "src/hrweno_kinds.F90",
+                  "line_start": 1,
+                  "line_end": 19
+                },
+                {
+                  "path": "src/hrweno_tvdode.f90",
+                  "line_start": 36,
+                  "line_end": 94
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
     "fortran-simplify": {
       "id": "github:jaiken17/fortran-simplify",
       "repository": {
@@ -16104,6 +17260,269 @@
                   "path": "src/rearrayfx.f90",
                   "line_start": 6,
                   "line_end": 24
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "amosf90": {
+      "id": "github:euler-37/amosf90",
+      "repository": {
+        "owner": "Euler-37",
+        "name": "amosf90",
+        "url": "https://github.com/Euler-37/amosf90"
+      },
+      "license": {
+        "label": "No project license identified",
+        "spdx_expression": null,
+        "revision": "b54a4d4a1d8f7c97acd180ed5bbaae8d089a9fa7",
+        "reviewed_on": "2026-11-07",
+        "notes": "The inspected archive has a placeholder manifest license and no project grant file/source declaration. AMOS numerical provenance alone is not used to infer this port licensing.",
+        "evidence": [
+          {
+            "path": "fpm.toml",
+            "url": "https://github.com/Euler-37/amosf90/blob/b54a4d4a1d8f7c97acd180ed5bbaae8d089a9fa7/fpm.toml",
+            "sha256": "cc48f55a82938f9f40b4d343d83480cabd919493f70bfb8d61cd7009a882f3fd"
+          },
+          {
+            "path": "README.md",
+            "url": "https://github.com/Euler-37/amosf90/blob/b54a4d4a1d8f7c97acd180ed5bbaae8d089a9fa7/README.md",
+            "sha256": "79405c9f94238802e5aa6ad7489b7b3310906e775512cc51da7eba1006572961"
+          },
+          {
+            "path": "src/amos.f90",
+            "url": "https://github.com/Euler-37/amosf90/blob/b54a4d4a1d8f7c97acd180ed5bbaae8d089a9fa7/src/amos.f90",
+            "sha256": "acffb85c0777b62444a99e2ac83c7c346777cc037f1a642f2704030d06d34797"
+          }
+        ]
+      },
+      "classifications": [
+        {
+          "code": "C10",
+          "level": "source-reviewed",
+          "revision": "b54a4d4a1d8f7c97acd180ed5bbaae8d089a9fa7",
+          "reviewed_on": "2026-11-07",
+          "notes": "The complex-argument I/J/K sequence interfaces expose noninteger orders, distinct scaling and AMOS status codes. This is a pinned public-interface/source review, not a new numerical execution check or complete API audit. Existing hosted drivers and their verified problem scope are recorded separately.",
+          "evidence": [
+            {
+              "path": "src/amos.f90",
+              "url": "https://github.com/Euler-37/amosf90/blob/b54a4d4a1d8f7c97acd180ed5bbaae8d089a9fa7/src/amos.f90",
+              "sha256": "acffb85c0777b62444a99e2ac83c7c346777cc037f1a642f2704030d06d34797"
+            },
+            {
+              "path": "src/amos_utils.f90",
+              "url": "https://github.com/Euler-37/amosf90/blob/b54a4d4a1d8f7c97acd180ed5bbaae8d089a9fa7/src/amos_utils.f90",
+              "sha256": "2dc278096b3618ac3148c0915fda9399203b45ee429084be49e7959517976801"
+            },
+            {
+              "path": "fpm.toml",
+              "url": "https://github.com/Euler-37/amosf90/blob/b54a4d4a1d8f7c97acd180ed5bbaae8d089a9fa7/fpm.toml",
+              "sha256": "cc48f55a82938f9f40b4d343d83480cabd919493f70bfb8d61cd7009a882f3fd"
+            }
+          ],
+          "procedures": [
+            {
+              "procedure": "f90_zbesi",
+              "role": "public-entry-point",
+              "module": "amos",
+              "summary": "Compute N>=1 consecutive modified Bessel I values starting at real nonnegative FNU for COMPLEX(8) Z. CY(N) is a caller-owned complex array; FNU is REAL(8), and KODE/N/NZ/IERR default INTEGER. KODE=1 requests unscaled values; 2 multiplies by EXP(-ABS(REAL(Z))). Check IERR before using CY: 0 normal, 3 computed with accuracy loss, other documented codes can mean no result. NZ counts underflowed components. Although CY/NZ are declared INOUT, they carry the computed sequence/status; this pin uses compiler kind 8 conventions.",
+              "signature": "CALL f90_zbesi(Z,FNU,KODE,N,CY,NZ,IERR)",
+              "path": "src/amos.f90",
+              "line_start": 4548,
+              "line_end": 4803,
+              "declarations": [
+                {
+                  "path": "src/amos.f90",
+                  "line_start": 4700,
+                  "line_end": 4708
+                },
+                {
+                  "path": "src/amos.f90",
+                  "line_start": 1,
+                  "line_end": 6
+                },
+                {
+                  "path": "src/amos_utils.f90",
+                  "line_start": 1,
+                  "line_end": 30
+                }
+              ]
+            },
+            {
+              "procedure": "f90_zbesj",
+              "role": "public-entry-point",
+              "module": "amos",
+              "summary": "Compute COMPLEX(8) J_(FNU+j-1)(Z), j=1..N, for REAL(8) FNU>=0 and N>=1. KODE=2 removes growth with EXP(-ABS(AIMAG(Z))); it is different from the I-family scaling. CY is length N, with NZ underflow information and IERR status. Do not consume output after fatal input/overflow/argument-reduction failure; distinguish IERR=3 accuracy loss from IERR=0. This is not restricted to integer orders or real arguments.",
+              "signature": "CALL f90_zbesj(Z,FNU,KODE,N,CY,NZ,IERR)",
+              "path": "src/amos.f90",
+              "line_start": 4806,
+              "line_end": 5058,
+              "declarations": [
+                {
+                  "path": "src/amos.f90",
+                  "line_start": 4953,
+                  "line_end": 4960
+                },
+                {
+                  "path": "src/amos.f90",
+                  "line_start": 1,
+                  "line_end": 6
+                },
+                {
+                  "path": "src/amos_utils.f90",
+                  "line_start": 1,
+                  "line_end": 30
+                }
+              ]
+            },
+            {
+              "procedure": "f90_zbesk",
+              "role": "public-entry-point",
+              "module": "amos",
+              "summary": "Compute N consecutive COMPLEX(8) modified Bessel K values at nonzero Z, beginning with REAL(8) FNU>=0. The principal cut-plane convention is documented in the source. KODE=1 is unscaled; KODE=2 returns EXP(Z)*K, not the real damping used for I or J. Supply CY(N) and inspect both IERR and NZ for accuracy/failure/underflow handling. No automatic allocation or error message string is provided.",
+              "signature": "CALL f90_zbesk(Z,FNU,KODE,N,CY,NZ,IERR)",
+              "path": "src/amos.f90",
+              "line_start": 5061,
+              "line_end": 5338,
+              "declarations": [
+                {
+                  "path": "src/amos.f90",
+                  "line_start": 5214,
+                  "line_end": 5220
+                },
+                {
+                  "path": "src/amos.f90",
+                  "line_start": 1,
+                  "line_end": 6
+                },
+                {
+                  "path": "src/amos_utils.f90",
+                  "line_start": 1,
+                  "line_end": 30
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "linalg_fortran": {
+      "id": "github:euler-37/linalg_fortran",
+      "repository": {
+        "owner": "Euler-37",
+        "name": "linalg_fortran",
+        "url": "https://github.com/Euler-37/linalg_fortran"
+      },
+      "license": {
+        "label": "No license identified",
+        "spdx_expression": null,
+        "revision": "30e7237ab54ca176e1c8dae4be2d9d44800e1f83",
+        "reviewed_on": "2026-11-07",
+        "notes": "No LICENSE/COPYING or explicit source/README grant was identified in the pinned archive; the manifest license is a placeholder. Native BLAS/LAPACK provenance does not supply a license for this wrapper.",
+        "evidence": [
+          {
+            "path": "fpm.toml",
+            "url": "https://github.com/Euler-37/linalg_fortran/blob/30e7237ab54ca176e1c8dae4be2d9d44800e1f83/fpm.toml",
+            "sha256": "4b68020b38a1e284722393ee9710006f88371b3b279e1fe76a0085153a77d930"
+          },
+          {
+            "path": "README.md",
+            "url": "https://github.com/Euler-37/linalg_fortran/blob/30e7237ab54ca176e1c8dae4be2d9d44800e1f83/README.md",
+            "sha256": "7c0034b11f4d76719f102a424b8257bc7870566d940efe77c30afc9469b2af25"
+          },
+          {
+            "path": "src/linalg_fortran.f90",
+            "url": "https://github.com/Euler-37/linalg_fortran/blob/30e7237ab54ca176e1c8dae4be2d9d44800e1f83/src/linalg_fortran.f90",
+            "sha256": "4ffa256e60df96dcaf51f283bef4f2e8f8138ffa9f5627e2fcadcd13298f8233"
+          }
+        ]
+      },
+      "classifications": [
+        {
+          "code": "D2",
+          "level": "source-reviewed",
+          "revision": "30e7237ab54ca176e1c8dae4be2d9d44800e1f83",
+          "reviewed_on": "2026-11-07",
+          "notes": "The singleton NOPASS inverse binding overwrites a dense REAL64 matrix and returns a logical flag. This is a pinned public-interface/source review, not a new numerical execution check or complete API audit. Existing hosted drivers and their verified problem scope are recorded separately.",
+          "evidence": [
+            {
+              "path": "src/linalg_fortran.f90",
+              "url": "https://github.com/Euler-37/linalg_fortran/blob/30e7237ab54ca176e1c8dae4be2d9d44800e1f83/src/linalg_fortran.f90",
+              "sha256": "4ffa256e60df96dcaf51f283bef4f2e8f8138ffa9f5627e2fcadcd13298f8233"
+            },
+            {
+              "path": "fpm.toml",
+              "url": "https://github.com/Euler-37/linalg_fortran/blob/30e7237ab54ca176e1c8dae4be2d9d44800e1f83/fpm.toml",
+              "sha256": "4b68020b38a1e284722393ee9710006f88371b3b279e1fe76a0085153a77d930"
+            }
+          ],
+          "procedures": [
+            {
+              "procedure": "inv",
+              "role": "public-entry-point",
+              "module": "linalg_fortran",
+              "derived_type": "linalg_t",
+              "summary": "Import the public singleton LINALG from LINALG_FORTRAN and call its NOPASS generic INV with a square REAL64 A(:,:). It overwrites A with the inverse on success and returns LOGICAL, not a new matrix. On failure A may already contain factors/partial data. The implementation rejects tiny absolute LU diagonals using a fixed 1e-12 threshold; this is not a condition-number estimate. LINALG_T is a private type name, so use the exported object instead of declaring that type.",
+              "signature": "VALUE = linalg%inv(A)",
+              "path": "src/linalg_fortran.f90",
+              "line_start": 489,
+              "line_end": 512,
+              "declarations": [
+                {
+                  "path": "src/linalg_fortran.f90",
+                  "line_start": 491,
+                  "line_end": 491
+                },
+                {
+                  "path": "src/linalg_fortran.f90",
+                  "line_start": 1,
+                  "line_end": 76
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "code": "D4",
+          "level": "source-reviewed",
+          "revision": "30e7237ab54ca176e1c8dae4be2d9d44800e1f83",
+          "reviewed_on": "2026-11-07",
+          "notes": "The symmetric eigensolver binding exposes triangle selection and overwritten eigenvector storage without INFO. This is a pinned public-interface/source review, not a new numerical execution check or complete API audit. Existing hosted drivers and their verified problem scope are recorded separately.",
+          "evidence": [
+            {
+              "path": "src/linalg_fortran.f90",
+              "url": "https://github.com/Euler-37/linalg_fortran/blob/30e7237ab54ca176e1c8dae4be2d9d44800e1f83/src/linalg_fortran.f90",
+              "sha256": "4ffa256e60df96dcaf51f283bef4f2e8f8138ffa9f5627e2fcadcd13298f8233"
+            },
+            {
+              "path": "fpm.toml",
+              "url": "https://github.com/Euler-37/linalg_fortran/blob/30e7237ab54ca176e1c8dae4be2d9d44800e1f83/fpm.toml",
+              "sha256": "4b68020b38a1e284722393ee9710006f88371b3b279e1fe76a0085153a77d930"
+            }
+          ],
+          "procedures": [
+            {
+              "procedure": "eigh",
+              "role": "public-entry-point",
+              "module": "linalg_fortran",
+              "derived_type": "linalg_t",
+              "summary": "Use the public LINALG singleton NOPASS EIGH binding for a square REAL64 symmetric A and preallocated REAL64 eigenvalues E(:) of matching order. A is overwritten with eigenvectors and E receives eigenvalues. Optional one-character UPLO defaults \"U\" and selects the supplied triangle; the other triangle is not a symmetry validation. The wrapper discards native DSYEV IFLAG, so independently check residuals/orthogonality and do not assume a normal return proves convergence. Do not pass a hidden object argument.",
+              "signature": "CALL linalg%eigh(A,E,[UPLO])",
+              "path": "src/linalg_fortran.f90",
+              "line_start": 672,
+              "line_end": 688,
+              "declarations": [
+                {
+                  "path": "src/linalg_fortran.f90",
+                  "line_start": 674,
+                  "line_end": 677
+                },
+                {
+                  "path": "src/linalg_fortran.f90",
+                  "line_start": 1,
+                  "line_end": 76
                 }
               ]
             }
@@ -17961,6 +19380,7 @@
       "utf8-f",
       "ryu_fortran",
       "iso_varying_string",
+      "fortimize",
       "forimage",
       "fastconv",
       "gaussjacobiquad",
@@ -17971,17 +19391,22 @@
       "nonlin",
       "maptran3d",
       "fortran-pcre2",
+      "rngff",
       "fortran-zstd",
       "paramcard",
       "strff",
+      "diffeq",
       "fjsample",
+      "opti",
       "interpolation",
       "fastmath",
       "fortsa",
       "kiss",
       "fortran_cubatures",
       "stiff3",
+      "sparse_fortran",
       "forinv",
+      "forsolver",
       "dcuhre",
       "foreig",
       "rkf45",
@@ -17993,10 +19418,14 @@
       "econ-toolchain",
       "m_la",
       "fglm",
+      "feq-parse",
       "fordot",
       "formatmul",
+      "hrweno",
       "fortran-simplify",
       "rearrayfx",
+      "amosf90",
+      "linalg_fortran",
       "fortran_vector",
       "fortran-regex",
       "fortime",
@@ -18029,17 +19458,13 @@
       "twopnt",
       "astro-fortran",
       "daskr",
-      "fortimize",
       "ncio",
       "h5fortran",
       "metis-fpm",
       "m_calculator",
       "befor64",
       "ciaaw",
-      "rngff",
-      "diffeq",
       "conmin",
-      "opti",
       "fortran_huffman",
       "fortran-flann",
       "fortran_stb_image",
@@ -18051,10 +19476,8 @@
       "graphstruc",
       "fortran-messagepack",
       "fmmap",
-      "sparse_fortran",
       "psqp",
       "optgra",
-      "forsolver",
       "y12m",
       "forlab",
       "libdogleg-f",
@@ -18073,15 +19496,11 @@
       "strith",
       "list",
       "friction",
-      "feq-parse",
       "bstrith",
       "heatflow",
-      "hrweno",
       "ecx",
       "athena",
       "orbs",
-      "amosf90",
-      "linalg_fortran",
       "scanner",
       "rojff",
       "argparse-f",
