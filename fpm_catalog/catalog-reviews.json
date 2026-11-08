@@ -2,7 +2,7 @@
   "schema_version": 1,
   "publisher": "fortran-gams-catalog-independent-reviews",
   "source_url": "https://beliavsky.github.io/fortran-gams-catalog/reviewed-metadata.json",
-  "source_snapshot_id": "sha256:06f3e29a3484ad6dc9de1d2c3e9d41125824093f555323f368293d71a3935e5f",
+  "source_snapshot_id": "sha256:b63e232b5b092aff10a50a7dfac5f9be181a80895b688a0a4a507192666e4443",
   "packages": {
     "test-drive": {
       "id": "github:fortran-lang/test-drive",
@@ -9793,6 +9793,139 @@
         }
       ]
     },
+    "quaff": {
+      "id": "github:everythingfunctional/quaff",
+      "repository": {
+        "owner": "everythingfunctional",
+        "name": "quaff",
+        "url": "https://github.com/everythingfunctional/quaff"
+      },
+      "license": {
+        "label": "MIT",
+        "spdx_expression": "MIT",
+        "revision": "f26da3d854045b79102d27bdb4e9f9b072444272",
+        "reviewed_on": "2026-11-08",
+        "notes": "Root LICENSE supplies Brad Richardson MIT terms. Parsing and string/error dependencies retain their own notices. This scope covers length parsing rather than every generated physical-quantity type.",
+        "evidence": [
+          {
+            "path": "LICENSE",
+            "url": "https://github.com/everythingfunctional/quaff/blob/f26da3d854045b79102d27bdb4e9f9b072444272/LICENSE",
+            "sha256": "025cc3fb2fb5d66c727029255e390cee34c35c0355f36f2fa608548424206eac"
+          },
+          {
+            "path": "README.md",
+            "url": "https://github.com/everythingfunctional/quaff/blob/f26da3d854045b79102d27bdb4e9f9b072444272/README.md",
+            "sha256": "a942b755e7026aa164a1c624e3bbe99b06bfe0aea6c40f33f55af64700f9058e"
+          },
+          {
+            "path": "src/quaff/length_m.f90",
+            "url": "https://github.com/everythingfunctional/quaff/blob/f26da3d854045b79102d27bdb4e9f9b072444272/src/quaff/length_m.f90",
+            "sha256": "bc26d880ca907c06a0e73f3e4efcc049bc55e26c7417bf8905a47501b5d91443"
+          }
+        ]
+      },
+      "classifications": [
+        {
+          "code": "A",
+          "level": "source-reviewed",
+          "revision": "f26da3d854045b79102d27bdb4e9f9b072444272",
+          "reviewed_on": "2026-11-08",
+          "notes": "Unit-aware length parsing and fallible-result inspection distinguish parse errors from valid zero lengths. This is a pinned public-interface/source review, not a new numerical execution check or complete API audit. Existing hosted drivers and their verified problem scope are recorded separately.",
+          "evidence": [
+            {
+              "path": "src/quaff/length_m.f90",
+              "url": "https://github.com/everythingfunctional/quaff/blob/f26da3d854045b79102d27bdb4e9f9b072444272/src/quaff/length_m.f90",
+              "sha256": "bc26d880ca907c06a0e73f3e4efcc049bc55e26c7417bf8905a47501b5d91443"
+            }
+          ],
+          "procedures": [
+            {
+              "procedure": "parse_length",
+              "role": "public-entry-point",
+              "module": "quaff_length_m",
+              "summary": "Character-string overload of PARSE_LENGTH returns TYPE(FALLIBLE_LENGTH_T), not a real number or a bare length. Text must include an understood unit, for example \"2 m\"; the default candidates are PROVIDED_UNITS. Inspect FAILED before extracting LENGTH; an invalid string produces stored diagnostics rather than a successful zero measurement. Parsing does not establish physical validity of a measurement.",
+              "signature": "VALUE = parse_length(STRING)",
+              "path": "src/quaff/length_m.f90",
+              "line_start": 260,
+              "line_end": 268,
+              "declarations": [
+                {
+                  "path": "src/quaff/length_m.f90",
+                  "line_start": 260,
+                  "line_end": 262
+                },
+                {
+                  "path": "src/quaff/length_m.f90",
+                  "line_start": 39,
+                  "line_end": 58
+                },
+                {
+                  "path": "src/quaff/length_m.f90",
+                  "line_start": 115,
+                  "line_end": 124
+                }
+              ]
+            },
+            {
+              "procedure": "failed",
+              "role": "public-entry-point",
+              "module": "quaff_length_m",
+              "derived_type": "fallible_length_t",
+              "summary": "Declare TYPE(fallible_length_t) :: solver from quaff_length_m. Logical query reporting whether the stored parse result has errors. Call this on the result returned by PARSE_LENGTH before consuming LENGTH; it does not print errors or stop execution. A success flag is a parsing/units result, not a numerical error bound. The passed object SELF is implicit in solver%; do not pass it again. Optional actuals shown in brackets can be supplied by keyword.",
+              "signature": "VALUE = solver%failed()",
+              "path": "src/quaff/length_m.f90",
+              "line_start": 571,
+              "line_end": 577,
+              "declarations": [
+                {
+                  "path": "src/quaff/length_m.f90",
+                  "line_start": 571,
+                  "line_end": 574
+                },
+                {
+                  "path": "src/quaff/length_m.f90",
+                  "line_start": 39,
+                  "line_end": 58
+                },
+                {
+                  "path": "src/quaff/length_m.f90",
+                  "line_start": 115,
+                  "line_end": 124
+                }
+              ]
+            },
+            {
+              "procedure": "length",
+              "role": "public-entry-point",
+              "module": "quaff_length_m",
+              "derived_type": "fallible_length_t",
+              "summary": "Declare TYPE(fallible_length_t) :: solver from quaff_length_m. Return the stored TYPE(LENGTH_T) value after checking that FAILED is false. This accessor itself does not reject an unsuccessful parse; a failed result can retain its default zero length. Physical values are stored in meters; use the public unit operators for conversions rather than assume a raw default-real result. The passed object SELF is implicit in solver%; do not pass it again. Optional actuals shown in brackets can be supplied by keyword.",
+              "signature": "VALUE = solver%length()",
+              "path": "src/quaff/length_m.f90",
+              "line_start": 579,
+              "line_end": 585,
+              "declarations": [
+                {
+                  "path": "src/quaff/length_m.f90",
+                  "line_start": 579,
+                  "line_end": 582
+                },
+                {
+                  "path": "src/quaff/length_m.f90",
+                  "line_start": 39,
+                  "line_end": 58
+                },
+                {
+                  "path": "src/quaff/length_m.f90",
+                  "line_start": 115,
+                  "line_end": 124
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
     "forpca": {
       "id": "github:gha3mi/forpca",
       "repository": {
@@ -18241,6 +18374,125 @@
         }
       ]
     },
+    "parff": {
+      "id": "github:everythingfunctional/parff",
+      "repository": {
+        "owner": "everythingfunctional",
+        "name": "parff",
+        "url": "https://github.com/everythingfunctional/parff"
+      },
+      "license": {
+        "label": "MIT",
+        "spdx_expression": "MIT",
+        "revision": "dbce6a04992fbc1e2d13b6c633480d3cd4bbe35c",
+        "reviewed_on": "2026-11-08",
+        "notes": "Root LICENSE supplies Brad Richardson MIT terms. Supporting string and error libraries have separate licenses. Private nested parser helpers are not catalog entry points.",
+        "evidence": [
+          {
+            "path": "LICENSE",
+            "url": "https://github.com/everythingfunctional/parff/blob/dbce6a04992fbc1e2d13b6c633480d3cd4bbe35c/LICENSE",
+            "sha256": "025cc3fb2fb5d66c727029255e390cee34c35c0355f36f2fa608548424206eac"
+          },
+          {
+            "path": "README.md",
+            "url": "https://github.com/everythingfunctional/parff/blob/dbce6a04992fbc1e2d13b6c633480d3cd4bbe35c/README.md",
+            "sha256": "ce154f65be2abbcc6b50c17ede5e30da920a4f1bc880fffd15341f76ac5e2f30"
+          },
+          {
+            "path": "src/parff/parse_result_m.f90",
+            "url": "https://github.com/everythingfunctional/parff/blob/dbce6a04992fbc1e2d13b6c633480d3cd4bbe35c/src/parff/parse_result_m.f90",
+            "sha256": "c3e43fd65b725ac45d22622f14d43ced452d802752eacc88dd2a8164807c49bb"
+          }
+        ]
+      },
+      "classifications": [
+        {
+          "code": "N3",
+          "level": "source-reviewed",
+          "revision": "dbce6a04992fbc1e2d13b6c633480d3cd4bbe35c",
+          "reviewed_on": "2026-11-08",
+          "notes": "Parser invocation and signed-integer callback document polymorphic results, callback declarations and trailing-input/overflow limits. This is a pinned public-interface/source review, not a new numerical execution check or complete API audit. Existing hosted drivers and their verified problem scope are recorded separately.",
+          "evidence": [
+            {
+              "path": "src/parff/parse_result_m.f90",
+              "url": "https://github.com/everythingfunctional/parff/blob/dbce6a04992fbc1e2d13b6c633480d3cd4bbe35c/src/parff/parse_result_m.f90",
+              "sha256": "c3e43fd65b725ac45d22622f14d43ced452d802752eacc88dd2a8164807c49bb"
+            },
+            {
+              "path": "src/parff/parsers_m.f90",
+              "url": "https://github.com/everythingfunctional/parff/blob/dbce6a04992fbc1e2d13b6c633480d3cd4bbe35c/src/parff/parsers_m.f90",
+              "sha256": "0130b06519355ae0c25ea38071ad0f267b0f9c226fc4e79ddc448a1d897134ae"
+            },
+            {
+              "path": "src/parff/parser_interfaces_m.f90",
+              "url": "https://github.com/everythingfunctional/parff/blob/dbce6a04992fbc1e2d13b6c633480d3cd4bbe35c/src/parff/parser_interfaces_m.f90",
+              "sha256": "147ba6fc2f011def0e8d6f96e5a941977b105ceac6a52e457399745afec9f842"
+            }
+          ],
+          "procedures": [
+            {
+              "procedure": "parse_with",
+              "role": "public-entry-point",
+              "module": "parff_parse_result_m",
+              "summary": "Character-string overload takes a procedure conforming to PARSER_I: a function of TYPE(STATE_T), returning TYPE(PARSER_OUTPUT_T). It returns TYPE(PARSE_RESULT_T). Check OK before SELECT TYPE on its allocated polymorphic PARSED value; inspect MESSAGE on failure. PARSE_WITH does not itself require complete consumption, so compose an end-of-input parser when trailing text must be rejected.",
+              "signature": "VALUE = parse_with(PARSER,STRING)",
+              "path": "src/parff/parse_result_m.f90",
+              "line_start": 23,
+              "line_end": 29,
+              "declarations": [
+                {
+                  "path": "src/parff/parse_result_m.f90",
+                  "line_start": 23,
+                  "line_end": 26
+                },
+                {
+                  "path": "src/parff/parse_result_m.f90",
+                  "line_start": 10,
+                  "line_end": 21
+                },
+                {
+                  "path": "src/parff/parser_interfaces_m.f90",
+                  "line_start": 18,
+                  "line_end": 25
+                }
+              ]
+            },
+            {
+              "procedure": "parse_integer",
+              "role": "public-entry-point",
+              "module": "parff_parsers_m",
+              "summary": "Parser callback suitable for PARSE_WITH, returning a polymorphic PARSED_INTEGER_T on success. THE_STATE is a parser state, not a CHARACTER string; ordinary callers can use PARSE_WITH(PARSE_INTEGER,text). The implementation reads a default INTEGER through a fixed 64-character intermediate with no IOSTAT, so do not assume arbitrary-length/arbitrary-precision input or recoverable overflow. It can leave trailing text; enforce end of input separately for whole-string validation.",
+              "signature": "VALUE = parse_integer(THE_STATE)",
+              "path": "src/parff/parsers_m.f90",
+              "line_start": 280,
+              "line_end": 367,
+              "declarations": [
+                {
+                  "path": "src/parff/parsers_m.f90",
+                  "line_start": 280,
+                  "line_end": 282
+                },
+                {
+                  "path": "src/parff/parse_result_m.f90",
+                  "line_start": 10,
+                  "line_end": 21
+                },
+                {
+                  "path": "src/parff/parser_interfaces_m.f90",
+                  "line_start": 18,
+                  "line_end": 25
+                },
+                {
+                  "path": "src/parff/parsers_m.f90",
+                  "line_start": 290,
+                  "line_end": 303
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
     "conmax": {
       "id": "github:jacobwilliams/conmax",
       "repository": {
@@ -18312,6 +18564,157 @@
                   "path": "src/conmax.f90",
                   "line_start": 375,
                   "line_end": 381
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "graphstruc": {
+      "id": "github:nedtaylor/graphstruc",
+      "repository": {
+        "owner": "nedtaylor",
+        "name": "graphstruc",
+        "url": "https://github.com/nedtaylor/graphstruc"
+      },
+      "license": {
+        "label": "MIT",
+        "spdx_expression": "MIT",
+        "revision": "51e18bedd638b935be8b9ac744b2e9f9e79213e7",
+        "reviewed_on": "2026-11-08",
+        "notes": "Root LICENSE supplies Ned Taylor MIT terms. This is a graph data-structure interface review, not a claim that the package provides a particular shortest-path or numerical sparse-solver algorithm.",
+        "evidence": [
+          {
+            "path": "LICENSE",
+            "url": "https://github.com/nedtaylor/graphstruc/blob/51e18bedd638b935be8b9ac744b2e9f9e79213e7/LICENSE",
+            "sha256": "48322f7e790c0c454fb12b3ed0fc7ea86c79c64b6218ece637cccd0ce5934560"
+          },
+          {
+            "path": "README.md",
+            "url": "https://github.com/nedtaylor/graphstruc/blob/51e18bedd638b935be8b9ac744b2e9f9e79213e7/README.md",
+            "sha256": "4b14c60889bc14c7f6385ad10d573a7cb09744354d2ba3035db6e90a34582294"
+          },
+          {
+            "path": "src/graphstruc/graphstruc_types.f90",
+            "url": "https://github.com/nedtaylor/graphstruc/blob/51e18bedd638b935be8b9ac744b2e9f9e79213e7/src/graphstruc/graphstruc_types.f90",
+            "sha256": "4bda7ffeacabd9a45415d11f2f5cf104f2b5a2da2f52ec03358e23d87973e77e"
+          }
+        ]
+      },
+      "classifications": [
+        {
+          "code": "N4",
+          "level": "source-reviewed",
+          "revision": "51e18bedd638b935be8b9ac744b2e9f9e79213e7",
+          "reviewed_on": "2026-11-08",
+          "notes": "Graph vertex, edge and graph constructors document single-precision features, directed encoding and populated-constructor restrictions. This is a pinned public-interface/source review, not a new numerical execution check or complete API audit. Existing hosted drivers and their verified problem scope are recorded separately.",
+          "evidence": [
+            {
+              "path": "src/graphstruc/graphstruc_types.f90",
+              "url": "https://github.com/nedtaylor/graphstruc/blob/51e18bedd638b935be8b9ac744b2e9f9e79213e7/src/graphstruc/graphstruc_types.f90",
+              "sha256": "4bda7ffeacabd9a45415d11f2f5cf104f2b5a2da2f52ec03358e23d87973e77e"
+            },
+            {
+              "path": "src/graphstruc/graphstruc_types_sub.f90",
+              "url": "https://github.com/nedtaylor/graphstruc/blob/51e18bedd638b935be8b9ac744b2e9f9e79213e7/src/graphstruc/graphstruc_types_sub.f90",
+              "sha256": "150ab88dec9a8651b95f0abd006488c0a43c210e565e106cad6877f1fe031c75"
+            }
+          ],
+          "procedures": [
+            {
+              "procedure": "vertex_type",
+              "role": "public-entry-point",
+              "module": "graphstruc_types",
+              "summary": "VERTEX_TYPE generic constructor requires a REAL(REAL32) feature vector; optional ID sets an application identifier. Returns an owned vertex value whose feature array is copied. Use consistent feature lengths across all vertices and positive unique identifiers when explicitly supplying them. The identifier is distinct from an arbitrary external native pointer.",
+              "signature": "VALUE = vertex_type(FEATURE,[ID])",
+              "path": "src/graphstruc/graphstruc_types.f90",
+              "line_start": 136,
+              "line_end": 148,
+              "declarations": [
+                {
+                  "path": "src/graphstruc/graphstruc_types.f90",
+                  "line_start": 136,
+                  "line_end": 147
+                },
+                {
+                  "path": "src/graphstruc/graphstruc_types.f90",
+                  "line_start": 12,
+                  "line_end": 26
+                },
+                {
+                  "path": "src/graphstruc/graphstruc_types.f90",
+                  "line_start": 28,
+                  "line_end": 44
+                },
+                {
+                  "path": "src/graphstruc/graphstruc_types_sub.f90",
+                  "line_start": 17,
+                  "line_end": 28
+                }
+              ]
+            },
+            {
+              "procedure": "edge_type",
+              "role": "public-entry-point",
+              "module": "graphstruc_types",
+              "summary": "EDGE_TYPE generic constructor takes INTEGER INDEX(2), with optional REAL(REAL32) weight/feature vector and logical directed flag. A directed edge is encoded by a negative second stored index. Supply a feature array, including an allocated zero-length vector if needed, when using edges in GRAPH_TYPE: the graph constructor queries SIZE(edge(1)%feature). Endpoints must refer to existing graph vertices; this constructor alone does not validate a complete graph.",
+              "signature": "VALUE = edge_type(INDEX,[WEIGHT],[FEATURE],[DIRECTED])",
+              "path": "src/graphstruc/graphstruc_types.f90",
+              "line_start": 152,
+              "line_end": 168,
+              "declarations": [
+                {
+                  "path": "src/graphstruc/graphstruc_types.f90",
+                  "line_start": 152,
+                  "line_end": 167
+                },
+                {
+                  "path": "src/graphstruc/graphstruc_types.f90",
+                  "line_start": 12,
+                  "line_end": 26
+                },
+                {
+                  "path": "src/graphstruc/graphstruc_types.f90",
+                  "line_start": 28,
+                  "line_end": 44
+                },
+                {
+                  "path": "src/graphstruc/graphstruc_types_sub.f90",
+                  "line_start": 31,
+                  "line_end": 52
+                }
+              ]
+            },
+            {
+              "procedure": "graph_type",
+              "role": "public-entry-point",
+              "module": "graphstruc_types",
+              "summary": "Construct a GRAPH_TYPE, using keyword optional arguments for clarity. An empty graph can be created with no arguments. For a populated graph at this pin, pass nonempty VERTEX and EDGE arrays with allocated, consistently sized feature vectors on every member, valid endpoints and unique IDs. The implementation accesses first elements and assigns EDGE inside its vertex-present branch, so do not infer safe support for present-empty arrays or a vertex-only constructor from OPTIONAL declarations. IS_SPARSE chooses adjacency storage, not a sparse linear solver.",
+              "signature": "VALUE = graph_type([VERTEX],[EDGE],[NAME],[DIRECTED],[IS_SPARSE])",
+              "path": "src/graphstruc/graphstruc_types.f90",
+              "line_start": 172,
+              "line_end": 190,
+              "declarations": [
+                {
+                  "path": "src/graphstruc/graphstruc_types.f90",
+                  "line_start": 172,
+                  "line_end": 189
+                },
+                {
+                  "path": "src/graphstruc/graphstruc_types.f90",
+                  "line_start": 12,
+                  "line_end": 26
+                },
+                {
+                  "path": "src/graphstruc/graphstruc_types.f90",
+                  "line_start": 28,
+                  "line_end": 44
+                },
+                {
+                  "path": "src/graphstruc/graphstruc_types_sub.f90",
+                  "line_start": 55,
+                  "line_end": 144
                 }
               ]
             }
@@ -21909,6 +22312,226 @@
         }
       ]
     },
+    "diffstruc": {
+      "id": "github:nedtaylor/diffstruc",
+      "repository": {
+        "owner": "nedtaylor",
+        "name": "diffstruc",
+        "url": "https://github.com/nedtaylor/diffstruc"
+      },
+      "license": {
+        "label": "MIT",
+        "spdx_expression": "MIT",
+        "revision": "88565f8e01792706edc0bd7e70dde957c26122a4",
+        "reviewed_on": "2026-11-08",
+        "notes": "Root LICENSE supplies Ned Taylor MIT terms. This review scopes selected ARRAY_TYPE bindings rather than certify every forward/reverse differentiation operator or tensor shape.",
+        "evidence": [
+          {
+            "path": "LICENSE",
+            "url": "https://github.com/nedtaylor/diffstruc/blob/88565f8e01792706edc0bd7e70dde957c26122a4/LICENSE",
+            "sha256": "a8a578e076f7c09146afd8e91671956d04192f1f5058c37699a153acdde68469"
+          },
+          {
+            "path": "README.md",
+            "url": "https://github.com/nedtaylor/diffstruc/blob/88565f8e01792706edc0bd7e70dde957c26122a4/README.md",
+            "sha256": "02367903aa70ad6e4968939e14ce11b6d639bc3773185c1a57bdab64010f4950"
+          },
+          {
+            "path": "src/diffstruc/diffstruc_types.f90",
+            "url": "https://github.com/nedtaylor/diffstruc/blob/88565f8e01792706edc0bd7e70dde957c26122a4/src/diffstruc/diffstruc_types.f90",
+            "sha256": "c73972ab532d8fa267a00da8c71fb9bfaa78d54757ec928cbbe41f91552c9236"
+          }
+        ]
+      },
+      "classifications": [
+        {
+          "code": "H1",
+          "level": "source-reviewed",
+          "revision": "88565f8e01792706edc0bd7e70dde957c26122a4",
+          "reviewed_on": "2026-11-08",
+          "notes": "Tracked array initialization, value replacement, reverse differentiation and extraction document batch shape, seed semantics and pointer lifetime requirements. This is a pinned public-interface/source review, not a new numerical execution check or complete API audit. Existing hosted drivers and their verified problem scope are recorded separately.",
+          "evidence": [
+            {
+              "path": "src/diffstruc/diffstruc_types.f90",
+              "url": "https://github.com/nedtaylor/diffstruc/blob/88565f8e01792706edc0bd7e70dde957c26122a4/src/diffstruc/diffstruc_types.f90",
+              "sha256": "c73972ab532d8fa267a00da8c71fb9bfaa78d54757ec928cbbe41f91552c9236"
+            },
+            {
+              "path": "src/diffstruc/diffstruc_types_sub.f90",
+              "url": "https://github.com/nedtaylor/diffstruc/blob/88565f8e01792706edc0bd7e70dde957c26122a4/src/diffstruc/diffstruc_types_sub.f90",
+              "sha256": "a79fe601b0c1bc5133b89a05953f8f6ccc658a313af9fe93a8124025d65c3dc9"
+            }
+          ],
+          "procedures": [
+            {
+              "procedure": "allocate",
+              "role": "public-entry-point",
+              "module": "diffstruc__types",
+              "derived_type": "array_type",
+              "summary": "Declare TYPE(array_type) :: solver from diffstruc__types. Initialize a fresh ARRAY_TYPE with allocated values. A supported simple path is SOURCE=a REAL(REAL32) rank-two array, supplied alone; last dimension is the sample/batch dimension. Alternatively supply positive ARRAY_SHAPE and initialize its values separately. Do not pass both arguments as though SOURCE were always a harmless initializer: the implementation has branch-specific checks. Reallocating a live object or passing neither optional argument is an error. Pointer graph ownership requires library lifecycle rules, not arbitrary shallow copies. The passed object THIS is implicit in solver%; do not pass it again. Optional actuals shown in brackets can be supplied by keyword.",
+              "signature": "CALL solver%allocate([ARRAY_SHAPE],[SOURCE])",
+              "path": "src/diffstruc/diffstruc_types.f90",
+              "line_start": 188,
+              "line_end": 192,
+              "declarations": [
+                {
+                  "path": "src/diffstruc/diffstruc_types.f90",
+                  "line_start": 188,
+                  "line_end": 191
+                },
+                {
+                  "path": "src/diffstruc/diffstruc_types.f90",
+                  "line_start": 21,
+                  "line_end": 73
+                },
+                {
+                  "path": "src/diffstruc/diffstruc_types.f90",
+                  "line_start": 93,
+                  "line_end": 116
+                },
+                {
+                  "path": "src/diffstruc/diffstruc_types_sub.f90",
+                  "line_start": 24,
+                  "line_end": 105
+                }
+              ]
+            },
+            {
+              "procedure": "set",
+              "role": "public-entry-point",
+              "module": "diffstruc__types",
+              "derived_type": "array_type",
+              "summary": "Declare TYPE(array_type) :: solver from diffstruc__types. Replace values on an already allocated object with REAL(REAL32) input matching the complete logical shape including batch dimension. The scoped path uses rank-two input with identical shape to VAL. The routine returns silently on its shape guard, with no status argument, so verify dimensions beforehand; it does not allocate a missing array or build a new differentiation operation. The passed object THIS is implicit in solver%; do not pass it again. Optional actuals shown in brackets can be supplied by keyword.",
+              "signature": "CALL solver%set(INPUT)",
+              "path": "src/diffstruc/diffstruc_types.f90",
+              "line_start": 234,
+              "line_end": 237,
+              "declarations": [
+                {
+                  "path": "src/diffstruc/diffstruc_types.f90",
+                  "line_start": 234,
+                  "line_end": 236
+                },
+                {
+                  "path": "src/diffstruc/diffstruc_types.f90",
+                  "line_start": 21,
+                  "line_end": 73
+                },
+                {
+                  "path": "src/diffstruc/diffstruc_types.f90",
+                  "line_start": 93,
+                  "line_end": 116
+                },
+                {
+                  "path": "src/diffstruc/diffstruc_types_sub.f90",
+                  "line_start": 387,
+                  "line_end": 412
+                }
+              ]
+            },
+            {
+              "procedure": "set_requires_grad",
+              "role": "public-entry-point",
+              "module": "diffstruc__types",
+              "derived_type": "array_type",
+              "summary": "Declare TYPE(array_type) :: solver from diffstruc__types. Set the required logical REQUIRES_GRAD flag on an input before constructing dependent graph operations. This controls derivative tracking; it does not calculate derivatives or supply a direction vector for forward mode. Retain input objects while the result graph refers to them, following the library ownership rules. The passed object THIS is implicit in solver%; do not pass it again. Optional actuals shown in brackets can be supplied by keyword.",
+              "signature": "CALL solver%set_requires_grad(REQUIRES_GRAD)",
+              "path": "src/diffstruc/diffstruc_types.f90",
+              "line_start": 306,
+              "line_end": 309,
+              "declarations": [
+                {
+                  "path": "src/diffstruc/diffstruc_types.f90",
+                  "line_start": 306,
+                  "line_end": 308
+                },
+                {
+                  "path": "src/diffstruc/diffstruc_types.f90",
+                  "line_start": 21,
+                  "line_end": 73
+                },
+                {
+                  "path": "src/diffstruc/diffstruc_types.f90",
+                  "line_start": 93,
+                  "line_end": 116
+                },
+                {
+                  "path": "src/diffstruc/diffstruc_types_sub.f90",
+                  "line_start": 1730,
+                  "line_end": 1737
+                }
+              ]
+            },
+            {
+              "procedure": "grad_reverse",
+              "role": "public-entry-point",
+              "module": "diffstruc__types",
+              "derived_type": "array_type",
+              "summary": "Declare TYPE(array_type) :: solver from diffstruc__types. Run reverse-mode propagation on a live result graph with tracked inputs. Request RESET_GRAPH=.true. for explicit reset semantics when appropriate; existing gradient state otherwise matters. A newly allocated result seed is filled with ones, corresponding to a sum of result components rather than a complete independently seeded Jacobian. Retrieve derivatives from tracked input GRAD objects after checking association. Pointer lifetimes/ownership and initialization are essential; this is not a stateless function of raw real arrays. The passed object THIS is implicit in solver%; do not pass it again. Optional actuals shown in brackets can be supplied by keyword.",
+              "signature": "CALL solver%grad_reverse([RESET_GRAPH])",
+              "path": "src/diffstruc/diffstruc_types.f90",
+              "line_start": 252,
+              "line_end": 255,
+              "declarations": [
+                {
+                  "path": "src/diffstruc/diffstruc_types.f90",
+                  "line_start": 252,
+                  "line_end": 254
+                },
+                {
+                  "path": "src/diffstruc/diffstruc_types.f90",
+                  "line_start": 21,
+                  "line_end": 73
+                },
+                {
+                  "path": "src/diffstruc/diffstruc_types.f90",
+                  "line_start": 93,
+                  "line_end": 116
+                },
+                {
+                  "path": "src/diffstruc/diffstruc_types_sub.f90",
+                  "line_start": 528,
+                  "line_end": 565
+                }
+              ]
+            },
+            {
+              "procedure": "extract",
+              "role": "public-entry-point",
+              "module": "diffstruc__types",
+              "derived_type": "array_type",
+              "summary": "Declare TYPE(array_type) :: solver from diffstruc__types. Copy values into a REAL(REAL32), ALLOCATABLE output of the matching declared rank. The simple documented path is rank two for a rank-two sample/batch input. INTENT(OUT) deallocates an existing actual on entry; the implementation allocates it by assignment. An unallocated source reports a warning and returns, so do not assume the output is then allocated. To read a derivative call the binding on an associated input%grad, not on the original input value. The passed object THIS is implicit in solver%; do not pass it again. Optional actuals shown in brackets can be supplied by keyword.",
+              "signature": "CALL solver%extract(OUTPUT)",
+              "path": "src/diffstruc/diffstruc_types.f90",
+              "line_start": 239,
+              "line_end": 242,
+              "declarations": [
+                {
+                  "path": "src/diffstruc/diffstruc_types.f90",
+                  "line_start": 239,
+                  "line_end": 241
+                },
+                {
+                  "path": "src/diffstruc/diffstruc_types.f90",
+                  "line_start": 21,
+                  "line_end": 73
+                },
+                {
+                  "path": "src/diffstruc/diffstruc_types.f90",
+                  "line_start": 93,
+                  "line_end": 116
+                },
+                {
+                  "path": "src/diffstruc/diffstruc_types_sub.f90",
+                  "line_start": 417,
+                  "line_end": 495
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
     "dnaoad-fpm": {
       "id": "github:fpenunuri/dnaoad-fpm",
       "repository": {
@@ -22182,6 +22805,118 @@
                   "path": "src/sotb/merged-PLBFGS.f90",
                   "line_start": 253,
                   "line_end": 321
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "gslib": {
+      "id": "github:exepulveda/gslib2.0",
+      "repository": {
+        "owner": "exepulveda",
+        "name": "gslib2.0",
+        "url": "https://github.com/exepulveda/gslib2.0"
+      },
+      "license": {
+        "label": "GSLIB Stanford notice plus wrapper MIT terms",
+        "spdx_expression": null,
+        "revision": "5c021000eb3da8703ced3ee9be145d6c0ecb2608",
+        "reviewed_on": "2026-11-08",
+        "notes": "LICENSE_original.txt grants copying, modification and redistribution with the Stanford notice preserved for original GSLIB code; root LICENSE supplies MIT terms for the later project. The selected src/legacy routines must retain their original notice rather than be assumed MIT-only.",
+        "evidence": [
+          {
+            "path": "LICENSE_original.txt",
+            "url": "https://github.com/exepulveda/gslib2.0/blob/5c021000eb3da8703ced3ee9be145d6c0ecb2608/LICENSE_original.txt",
+            "sha256": "fd94d56419210b6b98213a6ff7c4139d62240a58bc8a5741bbff853fe373723b"
+          },
+          {
+            "path": "README.md",
+            "url": "https://github.com/exepulveda/gslib2.0/blob/5c021000eb3da8703ced3ee9be145d6c0ecb2608/README.md",
+            "sha256": "c3ae9851f945be6dc10646007f9969ce3b376f44d73f0918ea86ee5c94e422aa"
+          },
+          {
+            "path": "src/legacy/gslib/cova3.f90",
+            "url": "https://github.com/exepulveda/gslib2.0/blob/5c021000eb3da8703ced3ee9be145d6c0ecb2608/src/legacy/gslib/cova3.f90",
+            "sha256": "51394c56d3e67747f10ef8bffe8d499b7e7f1e6392f51552721371a8a745439c"
+          },
+          {
+            "path": "LICENSE",
+            "url": "https://github.com/exepulveda/gslib2.0/blob/5c021000eb3da8703ced3ee9be145d6c0ecb2608/LICENSE",
+            "sha256": "153b6712660e44ec1415d0758fcb6d0b6b8ebf2162f53a66e5a195d35a356395"
+          }
+        ]
+      },
+      "classifications": [
+        {
+          "code": "E2",
+          "level": "source-reviewed",
+          "revision": "5c021000eb3da8703ced3ee9be145d6c0ecb2608",
+          "reviewed_on": "2026-11-08",
+          "notes": "Kriging covariance assembly and packed solve interfaces document mixed precision, destructive packed storage and the intended simple/ordinary-kriging scope. This is a pinned public-interface/source review, not a new numerical execution check or complete API audit. Existing hosted drivers and their verified problem scope are recorded separately.",
+          "evidence": [
+            {
+              "path": "src/legacy/gslib/cova3.f90",
+              "url": "https://github.com/exepulveda/gslib2.0/blob/5c021000eb3da8703ced3ee9be145d6c0ecb2608/src/legacy/gslib/cova3.f90",
+              "sha256": "51394c56d3e67747f10ef8bffe8d499b7e7f1e6392f51552721371a8a745439c"
+            },
+            {
+              "path": "src/legacy/gslib/ksol.f90",
+              "url": "https://github.com/exepulveda/gslib2.0/blob/5c021000eb3da8703ced3ee9be145d6c0ecb2608/src/legacy/gslib/ksol.f90",
+              "sha256": "e86a01d5faf662110b3fc917bf7fd5bc044f34ce2b00b3f3d36bf1ee1fc86d16"
+            },
+            {
+              "path": "LICENSE",
+              "url": "https://github.com/exepulveda/gslib2.0/blob/5c021000eb3da8703ced3ee9be145d6c0ecb2608/LICENSE",
+              "sha256": "153b6712660e44ec1415d0758fcb6d0b6b8ebf2162f53a66e5a195d35a356395"
+            },
+            {
+              "path": "LICENSE_original.txt",
+              "url": "https://github.com/exepulveda/gslib2.0/blob/5c021000eb3da8703ced3ee9be145d6c0ecb2608/LICENSE_original.txt",
+              "sha256": "fd94d56419210b6b98213a6ff7c4139d62240a58bc8a5741bbff853fe373723b"
+            }
+          ],
+          "procedures": [
+            {
+              "procedure": "cova3",
+              "role": "public-entry-point",
+              "summary": "External legacy covariance routine used to assemble kriging systems. Coordinates, C0/CC/AA, CMAX/COVA are default REAL through implicit typing; ROTMAT(MAXROT,3,3) is REAL*8, NST/IT and index/count arguments are default INTEGER. Set IVARG=1 for a single model, populate valid nested variogram arrays and anisotropy rotations, and match MAXNST/MAXROT capacities. Exponential parameter AA is the practical range in this implementation (EXP(-3*H/AA)), despite the header language about 3a. No argument-validation/status result is returned. This assembles covariances, not kriging predictions by itself.",
+              "signature": "CALL cova3(X1,Y1,Z1,X2,Y2,Z2,IVARG,NST,MAXNST,C0,IT,CC,AA,IROT,MAXROT,ROTMAT,CMAX,COVA)",
+              "path": "src/legacy/gslib/cova3.f90",
+              "line_start": 1,
+              "line_end": 127,
+              "declarations": [
+                {
+                  "path": "src/legacy/gslib/cova3.f90",
+                  "line_start": 53,
+                  "line_end": 56
+                },
+                {
+                  "path": "src/legacy/gslib/cova3.f90",
+                  "line_start": 14,
+                  "line_end": 50
+                }
+              ]
+            },
+            {
+              "procedure": "ksol",
+              "role": "public-entry-point",
+              "summary": "External legacy packed symmetric-system helper for simple/ordinary kriging; scope NRIGHT=NSB=1. A is REAL*8 packed upper triangle in column order, R/S are REAL*8 vectors of NEQ entries, and counts/ISING are default INTEGER via implicit typing. A and R are overwritten during elimination. Check ISING=0 before using S; NEQ<=1 returns -1 and a small pivot returns its position. The solver does not search for a maximal pivot, uses a fixed absolute threshold and is explicitly not recommended by its header for universal kriging. It is not a general robust symmetric-indefinite factorization.",
+              "signature": "CALL ksol(NRIGHT,NEQ,NSB,A,R,S,ISING)",
+              "path": "src/legacy/gslib/ksol.f90",
+              "line_start": 1,
+              "line_end": 137,
+              "declarations": [
+                {
+                  "path": "src/legacy/gslib/ksol.f90",
+                  "line_start": 41,
+                  "line_end": 42
+                },
+                {
+                  "path": "src/legacy/gslib/ksol.f90",
+                  "line_start": 9,
+                  "line_end": 37
                 }
               ]
             }
@@ -23695,6 +24430,162 @@
         }
       ]
     },
+    "heatflow": {
+      "id": "github:exequantcode/heatflow",
+      "repository": {
+        "owner": "ExeQuantCode",
+        "name": "HeatFlow",
+        "url": "https://github.com/ExeQuantCode/HeatFlow"
+      },
+      "license": {
+        "label": "GPL-3.0",
+        "spdx_expression": null,
+        "revision": "b0d930caad9160a15f0aeafa238c448f48f28d55",
+        "reviewed_on": "2026-11-08",
+        "notes": "Root LICENSE contains GPLv3 and README identifies GPLv3. Selected solver source includes legacy Numerical-Recipes-style helpers; root labeling alone is not an independent clearance of every borrowed component. Retain source notices and review provenance for redistribution. Complete application evolution/Cattaneo execution is outside the hosted sparse-solver check.",
+        "evidence": [
+          {
+            "path": "LICENSE",
+            "url": "https://github.com/ExeQuantCode/HeatFlow/blob/b0d930caad9160a15f0aeafa238c448f48f28d55/LICENSE",
+            "sha256": "ea172ab154a45ea534872998a23b5b80cbe9482a52b49297770fbd3dfafa8af2"
+          },
+          {
+            "path": "README.md",
+            "url": "https://github.com/ExeQuantCode/HeatFlow/blob/b0d930caad9160a15f0aeafa238c448f48f28d55/README.md",
+            "sha256": "bfe326623acc3ed2d73f5acfd62fc476ad02040abce2db9e77a4d1fee2adc149"
+          },
+          {
+            "path": "src/heatflow/mod_Sparse.f90",
+            "url": "https://github.com/ExeQuantCode/HeatFlow/blob/b0d930caad9160a15f0aeafa238c448f48f28d55/src/heatflow/mod_Sparse.f90",
+            "sha256": "b313d6445ede687a2c975bbefe6a7b3e3cdb5f64029ee4aa44b6380fbd84ac19"
+          }
+        ]
+      },
+      "classifications": [
+        {
+          "code": "D2",
+          "level": "source-reviewed",
+          "revision": "b0d930caad9160a15f0aeafa238c448f48f28d55",
+          "reviewed_on": "2026-11-08",
+          "notes": "Dense-to-coordinate storage, sparse matrix-vector product and BiCG solve document global matrix state, build-selected kinds and breakdown limitations. This is a pinned public-interface/source review, not a new numerical execution check or complete API audit. Existing hosted drivers and their verified problem scope are recorded separately.",
+          "evidence": [
+            {
+              "path": "src/heatflow/mod_Sparse.f90",
+              "url": "https://github.com/ExeQuantCode/HeatFlow/blob/b0d930caad9160a15f0aeafa238c448f48f28d55/src/heatflow/mod_Sparse.f90",
+              "sha256": "b313d6445ede687a2c975bbefe6a7b3e3cdb5f64029ee4aa44b6380fbd84ac19"
+            },
+            {
+              "path": "src/heatflow/mod_constants.f90",
+              "url": "https://github.com/ExeQuantCode/HeatFlow/blob/b0d930caad9160a15f0aeafa238c448f48f28d55/src/heatflow/mod_constants.f90",
+              "sha256": "76ae80b3d294b11305994f0697425a9f46030972b7474749776268a9aab0b2be"
+            },
+            {
+              "path": "src/heatflow/mod_SPtype.f90",
+              "url": "https://github.com/ExeQuantCode/HeatFlow/blob/b0d930caad9160a15f0aeafa238c448f48f28d55/src/heatflow/mod_SPtype.f90",
+              "sha256": "a98e81a2b4aa6239d4244df29f7ffab1c444a1dc94197287dbe5b1782f8f7b16"
+            },
+            {
+              "path": "src/heatflow/mod_global.f90",
+              "url": "https://github.com/ExeQuantCode/HeatFlow/blob/b0d930caad9160a15f0aeafa238c448f48f28d55/src/heatflow/mod_global.f90",
+              "sha256": "0bc7ea281e2b65c8c3bcaf54cc4d2f8c089385b647c194d95cef811d3fa19303"
+            }
+          ],
+          "procedures": [
+            {
+              "procedure": "SRSin",
+              "role": "public-entry-point",
+              "module": "solver",
+              "summary": "Convert a square REAL(REAL12) dense matrix to TYPE(SPRS2_DP) coordinate storage retaining entries with ABS(A)>THRESH. RA owns newly allocated pointer targets for values/row/column arrays; pass a fresh object and release its targets according to SPTYPE ownership, since this is not an automatic deep replacement. THRESH should be nonnegative for the intended sparsification. Use constants REAL12/INT12 and SPTYPE definitions from this build, not default kinds by assumption.",
+              "signature": "CALL SRSin(A,THRESH,RA)",
+              "path": "src/heatflow/mod_Sparse.f90",
+              "line_start": 273,
+              "line_end": 290,
+              "declarations": [
+                {
+                  "path": "src/heatflow/mod_Sparse.f90",
+                  "line_start": 273,
+                  "line_end": 279
+                },
+                {
+                  "path": "src/heatflow/mod_constants.f90",
+                  "line_start": 5,
+                  "line_end": 9
+                },
+                {
+                  "path": "src/heatflow/mod_SPtype.f90",
+                  "line_start": 5,
+                  "line_end": 24
+                }
+              ]
+            },
+            {
+              "procedure": "SRSax",
+              "role": "public-entry-point",
+              "module": "solver",
+              "summary": "Compute B=RA*X for initialized coordinate storage RA and distinct REAL(REAL12) vectors of length RA%N. B is caller-sized, overwritten, and not allocated by this routine. Row/column indices must be valid and pointer arrays consistent; the partial native bounds guard is not a general validator. This is a sparse matrix-vector product, not a linear-system solve.",
+              "signature": "CALL SRSax(RA,X,B)",
+              "path": "src/heatflow/mod_Sparse.f90",
+              "line_start": 293,
+              "line_end": 315,
+              "declarations": [
+                {
+                  "path": "src/heatflow/mod_Sparse.f90",
+                  "line_start": 293,
+                  "line_end": 299
+                },
+                {
+                  "path": "src/heatflow/mod_constants.f90",
+                  "line_start": 5,
+                  "line_end": 9
+                },
+                {
+                  "path": "src/heatflow/mod_SPtype.f90",
+                  "line_start": 5,
+                  "line_end": 24
+                }
+              ]
+            },
+            {
+              "procedure": "linbcg",
+              "role": "public-entry-point",
+              "module": "solver",
+              "summary": "Solve with the matrix stored in GLOBE_DATA%RA, not a matrix argument. Initialize consistent coordinate storage with nonzero ordered diagonal entries for the Jacobi preconditioner, supply B and an initial X of matching length, initialize ITER, and use ITOL=1 or 2, positive TOL and ITMAX. INTEGER(I4B) is build-selected and must match SPTYPE; REAL12 values use CONSTANTS. ERR/ITER need inspection, and independently check residuals: this pin has no separate convergence status, no robust breakdown checks and divides by norm(B), so zero RHS/exact-start cases are not generally safe. This does not initialize or run the complete heat-transport application.",
+              "signature": "CALL linbcg(B,X,ITOL,TOL,ITMAX,ITER,ERR)",
+              "path": "src/heatflow/mod_Sparse.f90",
+              "line_start": 372,
+              "line_end": 434,
+              "declarations": [
+                {
+                  "path": "src/heatflow/mod_Sparse.f90",
+                  "line_start": 372,
+                  "line_end": 380
+                },
+                {
+                  "path": "src/heatflow/mod_constants.f90",
+                  "line_start": 5,
+                  "line_end": 9
+                },
+                {
+                  "path": "src/heatflow/mod_Sparse.f90",
+                  "line_start": 436,
+                  "line_end": 467
+                },
+                {
+                  "path": "src/heatflow/mod_SPtype.f90",
+                  "line_start": 5,
+                  "line_end": 24
+                },
+                {
+                  "path": "src/heatflow/mod_global.f90",
+                  "line_start": 5,
+                  "line_end": 14
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
     "hrweno": {
       "id": "github:hugomvale/hr-weno",
       "repository": {
@@ -24107,6 +24998,122 @@
                   "path": "src/ecx_common.f90",
                   "line_start": 14,
                   "line_end": 28
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "athena": {
+      "id": "github:nedtaylor/athena",
+      "repository": {
+        "owner": "nedtaylor",
+        "name": "athena",
+        "url": "https://github.com/nedtaylor/athena"
+      },
+      "license": {
+        "label": "MIT",
+        "spdx_expression": "MIT",
+        "revision": "4b81aeac07113628c2c9a476648d5ac2a91b7c91",
+        "reviewed_on": "2026-11-08",
+        "notes": "Root LICENSE supplies ATHENA contributors MIT terms. These selected scoring routines are auxiliary model-evaluation interfaces, not a new validation of all neural-network layers or training paths.",
+        "evidence": [
+          {
+            "path": "LICENSE",
+            "url": "https://github.com/nedtaylor/athena/blob/4b81aeac07113628c2c9a476648d5ac2a91b7c91/LICENSE",
+            "sha256": "9a6c31b902573133094a26a8d7d1c1f8277da0f67f37cd393187b839153df2c7"
+          },
+          {
+            "path": "README.md",
+            "url": "https://github.com/nedtaylor/athena/blob/4b81aeac07113628c2c9a476648d5ac2a91b7c91/README.md",
+            "sha256": "4e3b7058f0d410869cb658cd3cd14ff8a2989d88de6c2f24410c6f33ba0ee2d8"
+          },
+          {
+            "path": "src/athena/athena_accuracy.f90",
+            "url": "https://github.com/nedtaylor/athena/blob/4b81aeac07113628c2c9a476648d5ac2a91b7c91/src/athena/athena_accuracy.f90",
+            "sha256": "fd687c1c4325aacc3e6905a512702657e3d3591a3b210efec2389a2da161bb1f"
+          }
+        ]
+      },
+      "classifications": [
+        {
+          "code": "K",
+          "level": "source-reviewed",
+          "revision": "4b81aeac07113628c2c9a476648d5ac2a91b7c91",
+          "reviewed_on": "2026-11-08",
+          "notes": "Model-evaluation scoring interfaces document columnwise results and the one-minus-error convention, separate from model training/inference. This is a pinned public-interface/source review, not a new numerical execution check or complete API audit. Existing hosted drivers and their verified problem scope are recorded separately.",
+          "evidence": [
+            {
+              "path": "src/athena/athena_accuracy.f90",
+              "url": "https://github.com/nedtaylor/athena/blob/4b81aeac07113628c2c9a476648d5ac2a91b7c91/src/athena/athena_accuracy.f90",
+              "sha256": "fd687c1c4325aacc3e6905a512702657e3d3591a3b210efec2389a2da161bb1f"
+            }
+          ],
+          "procedures": [
+            {
+              "procedure": "categorical_score",
+              "role": "public-entry-point",
+              "module": "athena__accuracy",
+              "summary": "Return REAL(REAL32) scores per column/sample from conformable rank-two PREDICTED and EXPECTED arrays. Each column is scored 1 or 0 by equality of the first MAXLOC class indices; this is not a scalar average accuracy and not a probability calibration metric. Use nonempty class axes and an intended tie policy; compute an aggregate explicitly if required.",
+              "signature": "VALUE = categorical_score(PREDICTED,EXPECTED)",
+              "path": "src/athena/athena_accuracy.f90",
+              "line_start": 30,
+              "line_end": 55,
+              "declarations": [
+                {
+                  "path": "src/athena/athena_accuracy.f90",
+                  "line_start": 30,
+                  "line_end": 40
+                },
+                {
+                  "path": "src/athena/athena_accuracy.f90",
+                  "line_start": 7,
+                  "line_end": 12
+                }
+              ]
+            },
+            {
+              "procedure": "mae_score",
+              "role": "public-entry-point",
+              "module": "athena__accuracy",
+              "summary": "Return a REAL(REAL32) vector, one score per sample column. Despite the name, the exact implementation is 1 - SUM(ABS(expected-predicted),DIM=1)/SIZE(expected,1), not raw mean absolute error. Inputs must be conformable with a nonempty first dimension; scores can be negative and are not clipped. No training or network evaluation is performed.",
+              "signature": "VALUE = mae_score(PREDICTED,EXPECTED)",
+              "path": "src/athena/athena_accuracy.f90",
+              "line_start": 60,
+              "line_end": 75,
+              "declarations": [
+                {
+                  "path": "src/athena/athena_accuracy.f90",
+                  "line_start": 60,
+                  "line_end": 70
+                },
+                {
+                  "path": "src/athena/athena_accuracy.f90",
+                  "line_start": 72,
+                  "line_end": 75
+                }
+              ]
+            },
+            {
+              "procedure": "mse_score",
+              "role": "public-entry-point",
+              "module": "athena__accuracy",
+              "summary": "Return one REAL(REAL32) score per sample column, computed as 1 - mean squared error over the first dimension. This is not raw MSE or an R-squared coefficient and can be negative. Caller supplies conformable nonempty rank-two model/reference values and chooses how to aggregate the vector. No finite-value or shape-recovery status is supplied.",
+              "signature": "VALUE = mse_score(PREDICTED,EXPECTED)",
+              "path": "src/athena/athena_accuracy.f90",
+              "line_start": 80,
+              "line_end": 96,
+              "declarations": [
+                {
+                  "path": "src/athena/athena_accuracy.f90",
+                  "line_start": 80,
+                  "line_end": 90
+                },
+                {
+                  "path": "src/athena/athena_accuracy.f90",
+                  "line_start": 92,
+                  "line_end": 96
                 }
               ]
             }
@@ -29662,6 +30669,127 @@
         }
       ]
     },
+    "coretran": {
+      "id": "github:leonfoks/coretran",
+      "repository": {
+        "owner": "leonfoks",
+        "name": "coretran",
+        "url": "https://github.com/leonfoks/coretran"
+      },
+      "license": {
+        "label": "BSD-3-Clause",
+        "spdx_expression": "BSD-3-Clause",
+        "revision": "204c4707f6680b6d7d1e4da39077d0fd3acfe37e",
+        "reviewed_on": "2026-11-08",
+        "notes": "Root LICENSE supplies Leon Foks three-clause BSD terms. These routines are scoped array utilities; optional external/native components retain their own terms.",
+        "evidence": [
+          {
+            "path": "LICENSE",
+            "url": "https://github.com/leonfoks/coretran/blob/204c4707f6680b6d7d1e4da39077d0fd3acfe37e/LICENSE",
+            "sha256": "d22ff7a6ea831b53f9fadcdb46262491ad6fcd64b70b0aebebbb0d454081fd6c"
+          },
+          {
+            "path": "README.md",
+            "url": "https://github.com/leonfoks/coretran/blob/204c4707f6680b6d7d1e4da39077d0fd3acfe37e/README.md",
+            "sha256": "386554da6682b3cd4b7624f62afd2a6a3a2e0d6725adf2df956c3e932943ba2d"
+          },
+          {
+            "path": "src/arrays/m_array1D.f90",
+            "url": "https://github.com/leonfoks/coretran/blob/204c4707f6680b6d7d1e4da39077d0fd3acfe37e/src/arrays/m_array1D.f90",
+            "sha256": "2ed71046d5ae16a8ab7d55fd3c8783971a2cb7f796b254fd12f3b29356b4eb64"
+          }
+        ]
+      },
+      "classifications": [
+        {
+          "code": "N6",
+          "level": "source-reviewed",
+          "revision": "204c4707f6680b6d7d1e4da39077d0fd3acfe37e",
+          "reviewed_on": "2026-11-08",
+          "notes": "Double-precision vector progression, differences and ordering query document allocation and nondecreasing-order conventions. This is a pinned public-interface/source review, not a new numerical execution check or complete API audit. Existing hosted drivers and their verified problem scope are recorded separately.",
+          "evidence": [
+            {
+              "path": "src/arrays/m_array1D.f90",
+              "url": "https://github.com/leonfoks/coretran/blob/204c4707f6680b6d7d1e4da39077d0fd3acfe37e/src/arrays/m_array1D.f90",
+              "sha256": "2ed71046d5ae16a8ab7d55fd3c8783971a2cb7f796b254fd12f3b29356b4eb64"
+            },
+            {
+              "path": "src/arrays/sm_array_d1D.f90",
+              "url": "https://github.com/leonfoks/coretran/blob/204c4707f6680b6d7d1e4da39077d0fd3acfe37e/src/arrays/sm_array_d1D.f90",
+              "sha256": "4fb259a00e4e2f299e3d5122fd8c4847fbb6d8b3712f3009d08475bb7ac964a7"
+            }
+          ],
+          "procedures": [
+            {
+              "procedure": "arange",
+              "role": "public-entry-point",
+              "module": "m_array1D",
+              "summary": "REAL(R64) overload of ARANGE fills a preallocated allocatable vector; it does not allocate RES. Allocate exactly N=INT((STP-START)/STEP)+1 elements, with default STEP=1, nonzero step and a valid nonnegative count. START/STP/STEP must use R64 from VARIABLEKIND for this overload. The last point follows this truncated count, not a guarantee to include an arbitrary floating endpoint. A size mismatch calls the library error handler.",
+              "signature": "CALL arange(RES,START,STP,[STEP])",
+              "path": "src/arrays/m_array1D.f90",
+              "line_start": 58,
+              "line_end": 64,
+              "declarations": [
+                {
+                  "path": "src/arrays/m_array1D.f90",
+                  "line_start": 58,
+                  "line_end": 63
+                },
+                {
+                  "path": "src/arrays/sm_array_d1D.f90",
+                  "line_start": 8,
+                  "line_end": 32
+                }
+              ]
+            },
+            {
+              "procedure": "diff",
+              "role": "public-entry-point",
+              "module": "m_array1D",
+              "summary": "REAL(R64) overload writes successive differences THIS(i+1)-THIS(i) to caller-sized RES. Allocate/declare RES with SIZE(THIS)-1 elements before calling; this is a vector difference utility, not a derivative divided by grid spacing or an allocating function. The implementation stops through its error handler for a size mismatch.",
+              "signature": "CALL diff(THIS,RES)",
+              "path": "src/arrays/m_array1D.f90",
+              "line_start": 124,
+              "line_end": 128,
+              "declarations": [
+                {
+                  "path": "src/arrays/m_array1D.f90",
+                  "line_start": 124,
+                  "line_end": 127
+                },
+                {
+                  "path": "src/arrays/sm_array_d1D.f90",
+                  "line_start": 35,
+                  "line_end": 47
+                }
+              ]
+            },
+            {
+              "procedure": "isSorted",
+              "role": "public-entry-point",
+              "module": "m_array1D",
+              "summary": "REAL(R64) overload returns logical true for nondecreasing input, allowing ties. It does not sort or return permutation indices. The implementation returns true for empty and singleton arrays; comparisons with NaN do not establish a meaningful total ordering, so handle exceptional values separately if relevant.",
+              "signature": "VALUE = isSorted(THIS)",
+              "path": "src/arrays/m_array1D.f90",
+              "line_start": 185,
+              "line_end": 189,
+              "declarations": [
+                {
+                  "path": "src/arrays/m_array1D.f90",
+                  "line_start": 185,
+                  "line_end": 188
+                },
+                {
+                  "path": "src/arrays/sm_array_d1D.f90",
+                  "line_start": 50,
+                  "line_end": 65
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
     "npy-for-fortran": {
       "id": "github:mredies/npy-for-fortran",
       "repository": {
@@ -31313,6 +32441,171 @@
                   "path": "src/sorting.f90",
                   "line_start": 10,
                   "line_end": 20
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "formal": {
+      "id": "github:berkeleylab/formal",
+      "repository": {
+        "owner": "BerkeleyLab",
+        "name": "formal",
+        "url": "https://github.com/BerkeleyLab/formal"
+      },
+      "license": {
+        "label": "Berkeley Formal custom terms with enhancement provision",
+        "spdx_expression": null,
+        "revision": "d28eee9b37b4b74abe7f21bb2ccbdfb5c17f3e8a",
+        "reviewed_on": "2026-11-08",
+        "notes": "Root LICENSE.txt supplies Berkeley terms with a separate enhancement-contribution license provision. Preserve the full terms instead of labeling them unqualified BSD-3-Clause. Julienne/assertion dependencies retain separate notices.",
+        "evidence": [
+          {
+            "path": "LICENSE.txt",
+            "url": "https://github.com/BerkeleyLab/formal/blob/d28eee9b37b4b74abe7f21bb2ccbdfb5c17f3e8a/LICENSE.txt",
+            "sha256": "e5d3a161ae9694f3a9b0549538f98af4d7264a8a729148d5c41784f368008e4f"
+          },
+          {
+            "path": "README.md",
+            "url": "https://github.com/BerkeleyLab/formal/blob/d28eee9b37b4b74abe7f21bb2ccbdfb5c17f3e8a/README.md",
+            "sha256": "2d5b93e77c41576664ac4dafaf8f49208b0866f09862c0b43e0fe85610a79eee"
+          },
+          {
+            "path": "src/formal/interpolator_1D_m.F90",
+            "url": "https://github.com/BerkeleyLab/formal/blob/d28eee9b37b4b74abe7f21bb2ccbdfb5c17f3e8a/src/formal/interpolator_1D_m.F90",
+            "sha256": "7f00129b0069e2811abb4e2f50a595b48e31725303fbab765b3a99ec9de6ab4a"
+          }
+        ]
+      },
+      "classifications": [
+        {
+          "code": "E1",
+          "level": "source-reviewed",
+          "revision": "d28eee9b37b4b74abe7f21bb2ccbdfb5c17f3e8a",
+          "reviewed_on": "2026-11-08",
+          "notes": "Staggered one-dimensional interpolation constructors and applications document supported orders, endpoint counts and a pinned spacing-storage limitation. This is a pinned public-interface/source review, not a new numerical execution check or complete API audit. Existing hosted drivers and their verified problem scope are recorded separately.",
+          "evidence": [
+            {
+              "path": "src/formal/interpolator_1D_m.F90",
+              "url": "https://github.com/BerkeleyLab/formal/blob/d28eee9b37b4b74abe7f21bb2ccbdfb5c17f3e8a/src/formal/interpolator_1D_m.F90",
+              "sha256": "7f00129b0069e2811abb4e2f50a595b48e31725303fbab765b3a99ec9de6ab4a"
+            },
+            {
+              "path": "src/formal/interpolator_1D_s.F90",
+              "url": "https://github.com/BerkeleyLab/formal/blob/d28eee9b37b4b74abe7f21bb2ccbdfb5c17f3e8a/src/formal/interpolator_1D_s.F90",
+              "sha256": "cde5b1a90a30f222ea523c58a6d312d2616c051f9b0b2bc0f51efd451bd57d4c"
+            }
+          ],
+          "procedures": [
+            {
+              "procedure": "centers_to_faces_1D_t",
+              "role": "public-entry-point",
+              "module": "interpolator_1D_m",
+              "summary": "Construct a CENTERS_TO_FACES_1D_T staggered-grid interpolation operator using default INTEGER ORDER/CELLS and default REAL DX. This pin implements only order 2 or 4 and ERROR STOPs otherwise. Use a positive adequately sized cell count for the selected boundary stencils. The stored private DX_ component is INTEGER at this pin even though the constructor takes REAL DX; do not infer general nonuniform-grid support or verified spacing-dependent behavior from this interface.",
+              "signature": "VALUE = centers_to_faces_1D_t(ORDER,CELLS,DX)",
+              "path": "src/formal/interpolator_1D_m.F90",
+              "line_start": 36,
+              "line_end": 42,
+              "declarations": [
+                {
+                  "path": "src/formal/interpolator_1D_m.F90",
+                  "line_start": 36,
+                  "line_end": 41
+                },
+                {
+                  "path": "src/formal/interpolator_1D_m.F90",
+                  "line_start": 9,
+                  "line_end": 32
+                },
+                {
+                  "path": "src/formal/interpolator_1D_s.F90",
+                  "line_start": 12,
+                  "line_end": 36
+                }
+              ]
+            },
+            {
+              "procedure": "face_values",
+              "role": "public-entry-point",
+              "module": "interpolator_1D_m",
+              "derived_type": "centers_to_faces_1D_t",
+              "summary": "Declare TYPE(centers_to_faces_1D_t) :: solver from interpolator_1D_m. Apply an initialized center-to-face operator to default REAL CENTERS_EXTENDED(:) of length CELLS+2, including the two endpoint values. Return an allocatable REAL vector of length CELLS+1. These are staggered interpolation/boundary closure values, not arbitrary scattered-data interpolation. Choose enough cells for every boundary stencil and satisfy the linked assertions. The passed object SELF is implicit in solver%; do not pass it again. Optional actuals shown in brackets can be supplied by keyword.",
+              "signature": "VALUE = solver%face_values(CENTERS_EXTENDED)",
+              "path": "src/formal/interpolator_1D_m.F90",
+              "line_start": 60,
+              "line_end": 66,
+              "declarations": [
+                {
+                  "path": "src/formal/interpolator_1D_m.F90",
+                  "line_start": 60,
+                  "line_end": 65
+                },
+                {
+                  "path": "src/formal/interpolator_1D_m.F90",
+                  "line_start": 9,
+                  "line_end": 32
+                },
+                {
+                  "path": "src/formal/interpolator_1D_s.F90",
+                  "line_start": 64,
+                  "line_end": 84
+                }
+              ]
+            },
+            {
+              "procedure": "faces_to_centers_1D_t",
+              "role": "public-entry-point",
+              "module": "interpolator_1D_m",
+              "summary": "Construct a FACES_TO_CENTERS_1D_T with supported ORDER 2 or 4, positive adequately sized CELLS and default REAL DX. This is the reverse staggered interpolation operator with its own endpoint closures, not an algebraic inverse of CENTERS_TO_FACES_1D_T. Unsupported orders terminate. The same private integer DX_ storage limitation applies.",
+              "signature": "VALUE = faces_to_centers_1D_t(ORDER,CELLS,DX)",
+              "path": "src/formal/interpolator_1D_m.F90",
+              "line_start": 48,
+              "line_end": 54,
+              "declarations": [
+                {
+                  "path": "src/formal/interpolator_1D_m.F90",
+                  "line_start": 48,
+                  "line_end": 53
+                },
+                {
+                  "path": "src/formal/interpolator_1D_m.F90",
+                  "line_start": 9,
+                  "line_end": 32
+                },
+                {
+                  "path": "src/formal/interpolator_1D_s.F90",
+                  "line_start": 38,
+                  "line_end": 62
+                }
+              ]
+            },
+            {
+              "procedure": "center_values_extended",
+              "role": "public-entry-point",
+              "module": "interpolator_1D_m",
+              "derived_type": "faces_to_centers_1D_t",
+              "summary": "Declare TYPE(faces_to_centers_1D_t) :: solver from interpolator_1D_m. Apply the initialized face-to-center operator to default REAL FACES(:) of length CELLS+1 and return an allocatable vector of length CELLS+2, with endpoint entries. Matching sizes and adequate stencil extent are caller requirements. Do not assume a round trip through both interpolation operators is identity or that this binding solves a PDE by itself. The passed object SELF is implicit in solver%; do not pass it again. Optional actuals shown in brackets can be supplied by keyword.",
+              "signature": "VALUE = solver%center_values_extended(FACES)",
+              "path": "src/formal/interpolator_1D_m.F90",
+              "line_start": 68,
+              "line_end": 74,
+              "declarations": [
+                {
+                  "path": "src/formal/interpolator_1D_m.F90",
+                  "line_start": 68,
+                  "line_end": 73
+                },
+                {
+                  "path": "src/formal/interpolator_1D_m.F90",
+                  "line_start": 9,
+                  "line_end": 32
+                },
+                {
+                  "path": "src/formal/interpolator_1D_s.F90",
+                  "line_start": 86,
+                  "line_end": 106
                 }
               ]
             }
@@ -36129,6 +37422,122 @@
         }
       ]
     },
+    "raffle": {
+      "id": "github:exequantcode/raffle",
+      "repository": {
+        "owner": "ExeQuantCode",
+        "name": "RAFFLE",
+        "url": "https://github.com/ExeQuantCode/RAFFLE"
+      },
+      "license": {
+        "label": "GPL-3.0",
+        "spdx_expression": null,
+        "revision": "c152a30a1eaf94965c047bcd1a7edca07873b56f",
+        "reviewed_on": "2026-11-08",
+        "notes": "Root LICENSE and README identify GNU GPL version 3 without an explicit later-version grant in these reviewed files. Preserve the complete license and notices. These geometry helpers do not establish all structure-generation/distribution capabilities.",
+        "evidence": [
+          {
+            "path": "LICENSE",
+            "url": "https://github.com/ExeQuantCode/RAFFLE/blob/c152a30a1eaf94965c047bcd1a7edca07873b56f/LICENSE",
+            "sha256": "3972dc9744f6499f0f9b2dbf76696f2ae7ad8af9b23dde66d6af86c9dfb36986"
+          },
+          {
+            "path": "README.md",
+            "url": "https://github.com/ExeQuantCode/RAFFLE/blob/c152a30a1eaf94965c047bcd1a7edca07873b56f/README.md",
+            "sha256": "73ef675d60135d8930a0362852c7b38d95c753de465a3737efb30a9f9ce70eea"
+          },
+          {
+            "path": "src/fortran/lib/mod_misc_linalg.f90",
+            "url": "https://github.com/ExeQuantCode/RAFFLE/blob/c152a30a1eaf94965c047bcd1a7edca07873b56f/src/fortran/lib/mod_misc_linalg.f90",
+            "sha256": "1deb02f504a1abc3994f31f23b1366444cb6ffc3f564e71d690ea0c40bb8b42b"
+          }
+        ]
+      },
+      "classifications": [
+        {
+          "code": "P",
+          "level": "source-reviewed",
+          "revision": "c152a30a1eaf94965c047bcd1a7edca07873b56f",
+          "reviewed_on": "2026-11-08",
+          "notes": "Cartesian vector cross product, distance and angle helpers distinguish ordinary geometry from periodic structure generation. This is a pinned public-interface/source review, not a new numerical execution check or complete API audit. Existing hosted drivers and their verified problem scope are recorded separately.",
+          "evidence": [
+            {
+              "path": "src/fortran/lib/mod_misc_linalg.f90",
+              "url": "https://github.com/ExeQuantCode/RAFFLE/blob/c152a30a1eaf94965c047bcd1a7edca07873b56f/src/fortran/lib/mod_misc_linalg.f90",
+              "sha256": "1deb02f504a1abc3994f31f23b1366444cb6ffc3f564e71d690ea0c40bb8b42b"
+            }
+          ],
+          "procedures": [
+            {
+              "procedure": "cross",
+              "role": "public-entry-point",
+              "module": "raffle__misc_linalg",
+              "summary": "Return the REAL(REAL32) three-component cross product of vectors A/B, each length three. This is an ordinary public module function with value result, not a periodic image search or a unit-normal operation. Input/output convention is Cartesian; no normalization is performed.",
+              "signature": "VALUE = cross(A,B)",
+              "path": "src/fortran/lib/mod_misc_linalg.f90",
+              "line_start": 47,
+              "line_end": 61,
+              "declarations": [
+                {
+                  "path": "src/fortran/lib/mod_misc_linalg.f90",
+                  "line_start": 47,
+                  "line_end": 55
+                },
+                {
+                  "path": "src/fortran/lib/mod_misc_linalg.f90",
+                  "line_start": 3,
+                  "line_end": 17
+                }
+              ]
+            },
+            {
+              "procedure": "get_distance",
+              "role": "public-entry-point",
+              "module": "raffle__misc_linalg",
+              "summary": "Return default-library REAL(REAL32) Euclidean distance between two Cartesian three-component points. This helper takes neither a lattice nor a periodic-boundary flag, so it does not apply minimum-image wrapping. Its direct squared-norm arithmetic is not a scaled overflow-resistant norm.",
+              "signature": "VALUE = get_distance(POINT1,POINT2)",
+              "path": "src/fortran/lib/mod_misc_linalg.f90",
+              "line_start": 66,
+              "line_end": 79,
+              "declarations": [
+                {
+                  "path": "src/fortran/lib/mod_misc_linalg.f90",
+                  "line_start": 66,
+                  "line_end": 74
+                },
+                {
+                  "path": "src/fortran/lib/mod_misc_linalg.f90",
+                  "line_start": 3,
+                  "line_end": 17
+                }
+              ]
+            },
+            {
+              "procedure": "get_angle",
+              "role": "public-entry-point",
+              "module": "raffle__misc_linalg",
+              "summary": "Two-vector overload of GET_ANGLE returns REAL(REAL32) radians from the normalized dot product, clamped at +/-1 before ACOS. Both three-component vectors must have nonzero norm; zero inputs lead to a zero denominator without a recoverable status. This differs from the three-point overload, which measures the angle at the middle point.",
+              "signature": "VALUE = get_angle(VECTOR1,VECTOR2)",
+              "path": "src/fortran/lib/mod_misc_linalg.f90",
+              "line_start": 84,
+              "line_end": 103,
+              "declarations": [
+                {
+                  "path": "src/fortran/lib/mod_misc_linalg.f90",
+                  "line_start": 84,
+                  "line_end": 92
+                },
+                {
+                  "path": "src/fortran/lib/mod_misc_linalg.f90",
+                  "line_start": 3,
+                  "line_end": 17
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
     "m_history": {
       "id": "github:urbanjost/m_history",
       "repository": {
@@ -37138,6 +38547,7 @@
       "nlesolver-fortran",
       "codata",
       "specialmatrices",
+      "quaff",
       "forpca",
       "neural-fortran",
       "polyroots-fortran",
@@ -37201,7 +38611,9 @@
       "forsudoku",
       "odepack",
       "kiss",
+      "parff",
       "conmax",
+      "graphstruc",
       "fortran-messagepack",
       "fmmap",
       "fortran_cubatures",
@@ -37228,8 +38640,10 @@
       "carlson-elliptic-integrals",
       "fortran-bessels",
       "dynamics",
+      "diffstruc",
       "dnaoad-fpm",
       "seiscope-optimization",
+      "gslib",
       "econ-toolchain",
       "m_la",
       "fglm",
@@ -37241,9 +38655,11 @@
       "fordot",
       "formatmul",
       "bstrith",
+      "heatflow",
       "hrweno",
       "fortran-simplify",
       "ecx",
+      "athena",
       "orbs",
       "rearrayfx",
       "amosf90",
@@ -37282,6 +38698,7 @@
       "kdtree2",
       "penf",
       "differentia",
+      "coretran",
       "npy-for-fortran",
       "delaunaysparse",
       "qnstop",
@@ -37295,6 +38712,7 @@
       "berkeley-assert",
       "fmm2d",
       "fortran-utils",
+      "formal",
       "dftatom",
       "m-system",
       "fortran-tcl86",
@@ -37327,6 +38745,7 @@
       "ennuf",
       "ftorch",
       "tsunami",
+      "raffle",
       "m_history",
       "fortran-curl",
       "m_cli",
@@ -37340,22 +38759,13 @@
       "stdlib",
       "kinds",
       "mpfun2020-var1",
-      "quaff",
       "lightkrylov",
-      "parff",
-      "graphstruc",
-      "diffstruc",
-      "gslib",
       "featom",
-      "heatflow",
-      "athena",
       "fundamental_constants",
       "kronrod",
-      "coretran",
       "ftl",
       "vtmop",
       "slicot",
-      "formal",
       "ntpoly",
       "gftl",
       "gftl-shared",
@@ -37366,7 +38776,6 @@
       "ddpcm",
       "dftd4",
       "pfunit",
-      "raffle",
       "plplot",
       "gtk-fortran"
     ]
