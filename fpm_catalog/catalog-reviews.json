@@ -2,7 +2,7 @@
   "schema_version": 1,
   "publisher": "fortran-gams-catalog-independent-reviews",
   "source_url": "https://beliavsky.github.io/fortran-gams-catalog/reviewed-metadata.json",
-  "source_snapshot_id": "sha256:1a10e9a3777e6bafc1c31728d9897f79f10cfe3bf220d03da2926e9f7c87339e",
+  "source_snapshot_id": "sha256:533f45558474705096c284ef27a5ee785b21c2bf782030f4eaeb69bcebe1ae8d",
   "packages": {
     "test-drive": {
       "id": "github:fortran-lang/test-drive",
@@ -5808,6 +5808,146 @@
         }
       ]
     },
+    "m_match": {
+      "id": "github:urbanjost/m_match",
+      "repository": {
+        "owner": "urbanjost",
+        "name": "M_match",
+        "url": "https://github.com/urbanjost/M_match"
+      },
+      "license": {
+        "label": "Unlicense (root); MIT (manifest)",
+        "spdx_expression": "Unlicense",
+        "revision": "8bfa9eb4b45a32e6e32234ce4dd6d883a032bb6b",
+        "reviewed_on": "2026-11-07",
+        "notes": "Root LICENSE is the Unlicense and source notices say Public Domain, while the manifest declares MIT. Preserve that discrepancy rather than silently substituting the manifest label.",
+        "evidence": [
+          {
+            "path": "LICENSE",
+            "url": "https://github.com/urbanjost/M_match/blob/8bfa9eb4b45a32e6e32234ce4dd6d883a032bb6b/LICENSE",
+            "sha256": "6b0382b16279f26ff69014300541967a356a666eb0b91b422f6862f6b7dad17e"
+          },
+          {
+            "path": "README.md",
+            "url": "https://github.com/urbanjost/M_match/blob/8bfa9eb4b45a32e6e32234ce4dd6d883a032bb6b/README.md",
+            "sha256": "2bbf20a916e0bea5a0d5d5ff01f43cfabb910eac126be82c7940714e4ef2f117"
+          },
+          {
+            "path": "src/M_match.f90",
+            "url": "https://github.com/urbanjost/M_match/blob/8bfa9eb4b45a32e6e32234ce4dd6d883a032bb6b/src/M_match.f90",
+            "sha256": "15c28d31dfcd9c8e37b34f0aed071d183753d918edf64e63aba575adbe423eee"
+          }
+        ]
+      },
+      "classifications": [
+        {
+          "code": "N3",
+          "level": "source-reviewed",
+          "revision": "8bfa9eb4b45a32e6e32234ce4dd6d883a032bb6b",
+          "reviewed_on": "2026-11-07",
+          "notes": "GETPAT encodes a bounded legacy regex into an integer pattern buffer. This is a pinned public-interface/source review, not a new numerical execution check or complete API audit. Existing hosted drivers and their verified problem scope are recorded separately.",
+          "evidence": [
+            {
+              "path": "src/M_match.f90",
+              "url": "https://github.com/urbanjost/M_match/blob/8bfa9eb4b45a32e6e32234ce4dd6d883a032bb6b/src/M_match.f90",
+              "sha256": "15c28d31dfcd9c8e37b34f0aed071d183753d918edf64e63aba575adbe423eee"
+            },
+            {
+              "path": "fpm.toml",
+              "url": "https://github.com/urbanjost/M_match/blob/8bfa9eb4b45a32e6e32234ce4dd6d883a032bb6b/fpm.toml",
+              "sha256": "b58d374572c82848be7b7c2c0004dc5fc6e16e6fb8ebee86db8bafe476b0a013"
+            }
+          ],
+          "procedures": [
+            {
+              "procedure": "getpat",
+              "role": "public-entry-point",
+              "module": "M_match",
+              "summary": "Character overload of GETPAT compiles ARG_STR into a caller-supplied default INTEGER PAT(MAXPAT), returning an INTEGER status/parse result. Check against the public ERR sentinel before using PAT. Input capacity is bounded by MAXARG-1; too-long input prints a diagnostic and STOPs. Import MAXPAT/MAXARG/ERR instead of hard-coding sizes. This is the module legacy regex syntax, not a PCRE or shell-glob parser.",
+              "signature": "VALUE = getpat(ARG_STR,PAT)",
+              "path": "src/M_match.f90",
+              "line_start": 304,
+              "line_end": 319,
+              "declarations": [
+                {
+                  "path": "src/M_match.f90",
+                  "line_start": 306,
+                  "line_end": 308
+                },
+                {
+                  "path": "src/M_match.f90",
+                  "line_start": 41,
+                  "line_end": 80
+                },
+                {
+                  "path": "src/M_match.f90",
+                  "line_start": 169,
+                  "line_end": 173
+                },
+                {
+                  "path": "src/M_match.f90",
+                  "line_start": 198,
+                  "line_end": 199
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "code": "N5",
+          "level": "source-reviewed",
+          "revision": "8bfa9eb4b45a32e6e32234ce4dd6d883a032bb6b",
+          "reviewed_on": "2026-11-07",
+          "notes": "MATCH searches text and reports integer yes/no flags. This is a pinned public-interface/source review, not a new numerical execution check or complete API audit. Existing hosted drivers and their verified problem scope are recorded separately.",
+          "evidence": [
+            {
+              "path": "src/M_match.f90",
+              "url": "https://github.com/urbanjost/M_match/blob/8bfa9eb4b45a32e6e32234ce4dd6d883a032bb6b/src/M_match.f90",
+              "sha256": "15c28d31dfcd9c8e37b34f0aed071d183753d918edf64e63aba575adbe423eee"
+            },
+            {
+              "path": "fpm.toml",
+              "url": "https://github.com/urbanjost/M_match/blob/8bfa9eb4b45a32e6e32234ce4dd6d883a032bb6b/fpm.toml",
+              "sha256": "b58d374572c82848be7b7c2c0004dc5fc6e16e6fb8ebee86db8bafe476b0a013"
+            }
+          ],
+          "procedures": [
+            {
+              "procedure": "match",
+              "role": "public-entry-point",
+              "module": "M_match",
+              "summary": "Character overload of MATCH searches LIN_STR using the encoded INTEGER PAT(MAXPAT) from a successful GETPAT. Return is integer YES or NO, not LOGICAL or the match position. Input conversion uses a fixed MAXLINE buffer, so keep text within its supported bound; the procedure has no truncation/error output. BPOS/EPOS and anchored AMATCH are separate facilities; do not interpret YES as a substring index. Pattern/data handling uses default-character units.",
+              "signature": "VALUE = match(LIN_STR,PAT)",
+              "path": "src/M_match.f90",
+              "line_start": 531,
+              "line_end": 540,
+              "declarations": [
+                {
+                  "path": "src/M_match.f90",
+                  "line_start": 535,
+                  "line_end": 537
+                },
+                {
+                  "path": "src/M_match.f90",
+                  "line_start": 41,
+                  "line_end": 80
+                },
+                {
+                  "path": "src/M_match.f90",
+                  "line_start": 169,
+                  "line_end": 173
+                },
+                {
+                  "path": "src/M_match.f90",
+                  "line_start": 198,
+                  "line_end": 199
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
     "m_list": {
       "id": "github:urbanjost/m_list",
       "repository": {
@@ -9197,6 +9337,177 @@
         }
       ]
     },
+    "fortran-sqlite3": {
+      "id": "github:interkosmos/fortran-sqlite3",
+      "repository": {
+        "owner": "interkosmos",
+        "name": "fortran-sqlite3",
+        "url": "https://github.com/interkosmos/fortran-sqlite3"
+      },
+      "license": {
+        "label": "ISC",
+        "spdx_expression": "ISC",
+        "revision": "f55f982df2b41cab579e0258cb8cc574236be349",
+        "reviewed_on": "2026-11-07",
+        "notes": "The pinned LICENCE supplies Philipp Engel ISC terms for the bindings. SQLite itself is a separate native dependency with separate provenance; the C compatibility wrapper is included as source evidence.",
+        "evidence": [
+          {
+            "path": "LICENCE",
+            "url": "https://github.com/interkosmos/fortran-sqlite3/blob/f55f982df2b41cab579e0258cb8cc574236be349/LICENCE",
+            "sha256": "62f139887bee51b2261d52bc32bec38e8c46c0398eb4b3f7d554b1266795106c"
+          },
+          {
+            "path": "README.md",
+            "url": "https://github.com/interkosmos/fortran-sqlite3/blob/f55f982df2b41cab579e0258cb8cc574236be349/README.md",
+            "sha256": "5afc4fb3822461cf50d13c784316085c2ca304830935dd774a4937f8dd337ea5"
+          },
+          {
+            "path": "src/sqlite3.F90",
+            "url": "https://github.com/interkosmos/fortran-sqlite3/blob/f55f982df2b41cab579e0258cb8cc574236be349/src/sqlite3.F90",
+            "sha256": "c3fb9d51750ad5731ac5ccba21261df056a35d67429d0f698bcc7e41c3cc57d7"
+          }
+        ]
+      },
+      "classifications": [
+        {
+          "code": "N1",
+          "level": "source-reviewed",
+          "revision": "f55f982df2b41cab579e0258cb8cc574236be349",
+          "reviewed_on": "2026-11-07",
+          "notes": "The SQLite connection/exec/close wrappers expose status, callback and handle-lifetime contracts. This is a pinned public-interface/source review, not a new numerical execution check or complete API audit. Existing hosted drivers and their verified problem scope are recorded separately.",
+          "evidence": [
+            {
+              "path": "src/sqlite3.F90",
+              "url": "https://github.com/interkosmos/fortran-sqlite3/blob/f55f982df2b41cab579e0258cb8cc574236be349/src/sqlite3.F90",
+              "sha256": "c3fb9d51750ad5731ac5ccba21261df056a35d67429d0f698bcc7e41c3cc57d7"
+            },
+            {
+              "path": "src/sqlite3_util.F90",
+              "url": "https://github.com/interkosmos/fortran-sqlite3/blob/f55f982df2b41cab579e0258cb8cc574236be349/src/sqlite3_util.F90",
+              "sha256": "b3d04e2d58fda6f590420d11f11776e83f1a960170affc1f5d36989bc1073dad"
+            },
+            {
+              "path": "src/sqlite3_macro.c",
+              "url": "https://github.com/interkosmos/fortran-sqlite3/blob/f55f982df2b41cab579e0258cb8cc574236be349/src/sqlite3_macro.c",
+              "sha256": "2492778d3b14da857f2e6e5bd5675ad052a35918ea5a37656c0c7eee3c301637"
+            },
+            {
+              "path": "LICENCE",
+              "url": "https://github.com/interkosmos/fortran-sqlite3/blob/f55f982df2b41cab579e0258cb8cc574236be349/LICENCE",
+              "sha256": "62f139887bee51b2261d52bc32bec38e8c46c0398eb4b3f7d554b1266795106c"
+            }
+          ],
+          "procedures": [
+            {
+              "procedure": "sqlite3_open",
+              "role": "public-entry-point",
+              "module": "sqlite3",
+              "summary": "Open/create a database using a Fortran CHARACTER FILE_NAME, returning a default INTEGER status and TYPE(C_PTR) DB. This wrapper adds the C terminator; do not append one yourself. \":memory:\" requests an in-memory database. Test the return against SQLITE_OK before queries. A failed open can still return an allocated handle that must be closed; no finalizer owns DB for you. Database files are confined to the current environment and sandbox lifetime.",
+              "signature": "VALUE = sqlite3_open(FILE_NAME,DB)",
+              "path": "src/sqlite3.F90",
+              "line_start": 1244,
+              "line_end": 1249,
+              "declarations": [
+                {
+                  "path": "src/sqlite3.F90",
+                  "line_start": 1245,
+                  "line_end": 1246
+                },
+                {
+                  "path": "src/sqlite3.F90",
+                  "line_start": 235,
+                  "line_end": 239
+                },
+                {
+                  "path": "src/sqlite3.F90",
+                  "line_start": 280,
+                  "line_end": 315
+                },
+                {
+                  "path": "src/sqlite3_util.F90",
+                  "line_start": 35,
+                  "line_end": 51
+                }
+              ]
+            },
+            {
+              "procedure": "sqlite3_exec",
+              "role": "public-entry-point",
+              "module": "sqlite3",
+              "summary": "Execute SQL using a valid DB handle. Required CALLBACK is TYPE(C_FUNPTR) and CLIENT_DATA TYPE(C_PTR); use C_NULL_FUNPTR/C_NULL_PTR for statements without row processing. With no callback SELECT rows are discarded, not printed automatically. An actual callback must be BIND(C) with the SQLite callback ABI and remain callable during execution. Optional ERRMSG is allocatable CHARACTER. Check the returned INTEGER against SQLITE_OK. In this pin the wrapper copies the native error string without freeing its allocation; prefer prepared-statement error handling for repeated failing queries.",
+              "signature": "VALUE = sqlite3_exec(DB,SQL,CALLBACK,CLIENT_DATA,[ERRMSG])",
+              "path": "src/sqlite3.F90",
+              "line_start": 1223,
+              "line_end": 1234,
+              "declarations": [
+                {
+                  "path": "src/sqlite3.F90",
+                  "line_start": 1224,
+                  "line_end": 1228
+                },
+                {
+                  "path": "src/sqlite3.F90",
+                  "line_start": 235,
+                  "line_end": 239
+                },
+                {
+                  "path": "src/sqlite3.F90",
+                  "line_start": 280,
+                  "line_end": 315
+                },
+                {
+                  "path": "src/sqlite3_util.F90",
+                  "line_start": 35,
+                  "line_end": 51
+                },
+                {
+                  "path": "src/sqlite3.F90",
+                  "line_start": 714,
+                  "line_end": 723
+                }
+              ]
+            },
+            {
+              "procedure": "sqlite3_close",
+              "role": "public-entry-point",
+              "module": "sqlite3",
+              "summary": "Close a TYPE(C_PTR) DB via the package C wrapper, returning INTEGER(C_INT). Finalize prepared statements and release blob/backup objects first, then check SQLITE_OK. The C wrapper sets DB to null regardless of the native close return; on SQLITE_BUSY the connection may remain allocated even though this variable loses its handle. Do not assume null DB proves a successful close. This differs from passing the handle by VALUE to the raw SQLite C function.",
+              "signature": "VALUE = sqlite3_close(DB)",
+              "path": "src/sqlite3.F90",
+              "line_start": 500,
+              "line_end": 505,
+              "declarations": [
+                {
+                  "path": "src/sqlite3.F90",
+                  "line_start": 503,
+                  "line_end": 504
+                },
+                {
+                  "path": "src/sqlite3.F90",
+                  "line_start": 235,
+                  "line_end": 239
+                },
+                {
+                  "path": "src/sqlite3.F90",
+                  "line_start": 280,
+                  "line_end": 315
+                },
+                {
+                  "path": "src/sqlite3_util.F90",
+                  "line_start": 35,
+                  "line_end": 51
+                },
+                {
+                  "path": "src/sqlite3_macro.c",
+                  "line_start": 27,
+                  "line_end": 34
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
     "geodesic-fortran": {
       "id": "github:jacobwilliams/geodesic-fortran",
       "repository": {
@@ -11034,6 +11345,142 @@
         }
       ]
     },
+    "ffilesystem": {
+      "id": "github:scivision/ffilesystem",
+      "repository": {
+        "owner": "scivision",
+        "name": "ffilesystem",
+        "url": "https://github.com/scivision/ffilesystem"
+      },
+      "license": {
+        "label": "MIT",
+        "spdx_expression": "MIT",
+        "revision": "6387e623aa19325a1078f63fa882eb257518d038",
+        "reviewed_on": "2026-11-07",
+        "notes": "Root LICENSE supplies Michael Hirsch MIT terms; the native C/C++ filesystem helpers and compiler interoperability support retain their own source notices.",
+        "evidence": [
+          {
+            "path": "LICENSE",
+            "url": "https://github.com/scivision/ffilesystem/blob/6387e623aa19325a1078f63fa882eb257518d038/LICENSE",
+            "sha256": "de5d760d5cab8f20c24bb9002e399ca9a640a4438d6ca7c8d84be663ccc096f5"
+          },
+          {
+            "path": "README.md",
+            "url": "https://github.com/scivision/ffilesystem/blob/6387e623aa19325a1078f63fa882eb257518d038/README.md",
+            "sha256": "b5f2774c55c9d8bbd3925a629d35bb12fac800108802ff361f0aaa723cf122a5"
+          },
+          {
+            "path": "src/fortran/filesystem.F90",
+            "url": "https://github.com/scivision/ffilesystem/blob/6387e623aa19325a1078f63fa882eb257518d038/src/fortran/filesystem.F90",
+            "sha256": "20c59ab20405fa593851eee29d72a393e299c6b1f8bbce30154aa64014b528da"
+          }
+        ]
+      },
+      "classifications": [
+        {
+          "code": "R",
+          "level": "source-reviewed",
+          "revision": "6387e623aa19325a1078f63fa882eb257518d038",
+          "reviewed_on": "2026-11-07",
+          "notes": "The filesystem facade exposes lexical path normalization, directory creation and existence queries. This is a pinned public-interface/source review, not a new numerical execution check or complete API audit. Existing hosted drivers and their verified problem scope are recorded separately.",
+          "evidence": [
+            {
+              "path": "src/fortran/filesystem.F90",
+              "url": "https://github.com/scivision/ffilesystem/blob/6387e623aa19325a1078f63fa882eb257518d038/src/fortran/filesystem.F90",
+              "sha256": "20c59ab20405fa593851eee29d72a393e299c6b1f8bbce30154aa64014b528da"
+            },
+            {
+              "path": "src/fortran/ifc0a.inc",
+              "url": "https://github.com/scivision/ffilesystem/blob/6387e623aa19325a1078f63fa882eb257518d038/src/fortran/ifc0a.inc",
+              "sha256": "24f9a2c9bc36f2faa9310630ceceef92f29f42e9831fbac11c1e3027850ebfd3"
+            },
+            {
+              "path": "src/fortran/ifc0b.inc",
+              "url": "https://github.com/scivision/ffilesystem/blob/6387e623aa19325a1078f63fa882eb257518d038/src/fortran/ifc0b.inc",
+              "sha256": "418f9acfb4ba762b297ed7b47a37399af5c7a1f321033d3274a10a45f5ad5214"
+            }
+          ],
+          "procedures": [
+            {
+              "procedure": "normal",
+              "role": "public-entry-point",
+              "module": "filesystem",
+              "summary": "Lexically normalize a CHARACTER path, returning allocatable CHARACTER through the included result declarations. This removes lexical dot/redundant components; it does not prove that a file exists, resolve symbolic links or grant sandbox access. Use NORMAL for path text, not as a security or file-opening check. The implementation delegates to the native filesystem helper and uses its platform path conventions.",
+              "signature": "VALUE = normal(PATH)",
+              "path": "src/fortran/filesystem.F90",
+              "line_start": 1199,
+              "line_end": 1206,
+              "declarations": [
+                {
+                  "path": "src/fortran/filesystem.F90",
+                  "line_start": 1201,
+                  "line_end": 1201
+                },
+                {
+                  "path": "src/fortran/filesystem.F90",
+                  "line_start": 5,
+                  "line_end": 18
+                },
+                {
+                  "path": "src/fortran/ifc0a.inc",
+                  "line_start": 1,
+                  "line_end": 8
+                },
+                {
+                  "path": "src/fortran/ifc0b.inc",
+                  "line_start": 1,
+                  "line_end": 1
+                }
+              ]
+            },
+            {
+              "procedure": "mkdir",
+              "role": "public-entry-point",
+              "module": "filesystem",
+              "summary": "Create a local directory and missing parents from CHARACTER PATH. Request optional LOGICAL OK and inspect it; without OK, failure can ERROR STOP after printing a diagnostic. The native helper performs the operation, so permissions and sandbox filesystem limits still apply. This does not create a remote directory or download any source.",
+              "signature": "CALL mkdir(PATH,[OK])",
+              "path": "src/fortran/filesystem.F90",
+              "line_start": 888,
+              "line_end": 903,
+              "declarations": [
+                {
+                  "path": "src/fortran/filesystem.F90",
+                  "line_start": 890,
+                  "line_end": 891
+                },
+                {
+                  "path": "src/fortran/filesystem.F90",
+                  "line_start": 5,
+                  "line_end": 18
+                }
+              ]
+            },
+            {
+              "procedure": "exists",
+              "role": "public-entry-point",
+              "module": "filesystem",
+              "summary": "Return LOGICAL indicating whether a local file or directory exists at PATH. The wrapper trims the path and null-terminates it for the native helper. A boolean existence query is not a separate error report, an atomic open or proof of read/write permission. Distinguish this from LEXISTS when working with symbolic links.",
+              "signature": "VALUE = exists(PATH)",
+              "path": "src/fortran/filesystem.F90",
+              "line_start": 933,
+              "line_end": 937,
+              "declarations": [
+                {
+                  "path": "src/fortran/filesystem.F90",
+                  "line_start": 935,
+                  "line_end": 935
+                },
+                {
+                  "path": "src/fortran/filesystem.F90",
+                  "line_start": 5,
+                  "line_end": 18
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
     "utf8-f": {
       "id": "github:st-maxwell/utf8-f",
       "repository": {
@@ -11904,6 +12351,115 @@
         }
       ]
     },
+    "fortran-zlib": {
+      "id": "github:interkosmos/fortran-zlib",
+      "repository": {
+        "owner": "interkosmos",
+        "name": "fortran-zlib",
+        "url": "https://github.com/interkosmos/fortran-zlib"
+      },
+      "license": {
+        "label": "ISC",
+        "spdx_expression": "ISC",
+        "revision": "d5afd62acc65bdde39f5f5d60eb85122d0f86a22",
+        "reviewed_on": "2026-11-07",
+        "notes": "LICENCE supplies Philipp Engel ISC terms for the Fortran bindings. Native zlib retains its own license; this finding is not a relicensing of the compression implementation.",
+        "evidence": [
+          {
+            "path": "LICENCE",
+            "url": "https://github.com/interkosmos/fortran-zlib/blob/d5afd62acc65bdde39f5f5d60eb85122d0f86a22/LICENCE",
+            "sha256": "f640cb2d26cf43723a1d31fac7568408a8bf4386ab6b2499aae6765235e2a015"
+          },
+          {
+            "path": "README.md",
+            "url": "https://github.com/interkosmos/fortran-zlib/blob/d5afd62acc65bdde39f5f5d60eb85122d0f86a22/README.md",
+            "sha256": "63b8971a0539bb675079b00611119769de9ae78be3cd5dd3c65f096fe02da784"
+          },
+          {
+            "path": "src/zlib.f90",
+            "url": "https://github.com/interkosmos/fortran-zlib/blob/d5afd62acc65bdde39f5f5d60eb85122d0f86a22/src/zlib.f90",
+            "sha256": "43f22ee5f7039c4c0951ac79dd1bcd0da1b09969efd9bf5333324797f7d33fe1"
+          }
+        ]
+      },
+      "classifications": [
+        {
+          "code": "N3",
+          "level": "source-reviewed",
+          "revision": "d5afd62acc65bdde39f5f5d60eb85122d0f86a22",
+          "reviewed_on": "2026-11-07",
+          "notes": "Zlib capacity estimation and explicit-level buffer compression distinguish allocated capacity, byte count and status. This is a pinned public-interface/source review, not a new numerical execution check or complete API audit. Existing hosted drivers and their verified problem scope are recorded separately.",
+          "evidence": [
+            {
+              "path": "src/zlib.f90",
+              "url": "https://github.com/interkosmos/fortran-zlib/blob/d5afd62acc65bdde39f5f5d60eb85122d0f86a22/src/zlib.f90",
+              "sha256": "43f22ee5f7039c4c0951ac79dd1bcd0da1b09969efd9bf5333324797f7d33fe1"
+            },
+            {
+              "path": "LICENCE",
+              "url": "https://github.com/interkosmos/fortran-zlib/blob/d5afd62acc65bdde39f5f5d60eb85122d0f86a22/LICENCE",
+              "sha256": "f640cb2d26cf43723a1d31fac7568408a8bf4386ab6b2499aae6765235e2a015"
+            }
+          ],
+          "procedures": [
+            {
+              "procedure": "compress_bound",
+              "role": "public-entry-point",
+              "module": "zlib",
+              "summary": "Return INTEGER(Z_ULONG) capacity sufficient for COMPRESS/COMPRESS2 on SOURCE_LEN bytes. Z_ULONG maps to C_LONG in this binding; use that exact kind and representable nonnegative byte counts. This computes a size, not compressed data, and allocates no buffer. Reserve the returned capacity before compression rather than assuming output is always smaller than input.",
+              "signature": "VALUE = compress_bound(SOURCE_LEN)",
+              "path": "src/zlib.f90",
+              "line_start": 133,
+              "line_end": 138,
+              "declarations": [
+                {
+                  "path": "src/zlib.f90",
+                  "line_start": 136,
+                  "line_end": 137
+                },
+                {
+                  "path": "src/zlib.f90",
+                  "line_start": 7,
+                  "line_end": 38
+                },
+                {
+                  "path": "src/zlib.f90",
+                  "line_start": 70,
+                  "line_end": 85
+                }
+              ]
+            },
+            {
+              "procedure": "compress2",
+              "role": "public-entry-point",
+              "module": "zlib",
+              "summary": "Compress SOURCE bytes into caller-owned DEST storage, returning INTEGER(C_INT) status. DEST_LEN is INTEGER(Z_ULONG), INOUT: initialize it to allocated capacity and use its updated byte count only after Z_OK. SOURCE_LEN has the same kind; LEVEL is INTEGER(C_INT), normally -1 or 0..9. Buffers are Z_BYTE/C_CHAR byte storage passed by address, not null-terminated text; do not trim or print compressed bytes as a string. This produces zlib-format data, not a .gz file, and does not allocate destination storage.",
+              "signature": "VALUE = compress2(DEST,DEST_LEN,SOURCE,SOURCE_LEN,LEVEL)",
+              "path": "src/zlib.f90",
+              "line_start": 121,
+              "line_end": 130,
+              "declarations": [
+                {
+                  "path": "src/zlib.f90",
+                  "line_start": 124,
+                  "line_end": 129
+                },
+                {
+                  "path": "src/zlib.f90",
+                  "line_start": 7,
+                  "line_end": 38
+                },
+                {
+                  "path": "src/zlib.f90",
+                  "line_start": 70,
+                  "line_end": 85
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
     "iapws": {
       "id": "github:milanskocic/iapws",
       "repository": {
@@ -12430,6 +12986,367 @@
                   "path": "src/enu.f90",
                   "line_start": 7,
                   "line_end": 32
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "fortran-pcre2": {
+      "id": "github:interkosmos/fortran-pcre2",
+      "repository": {
+        "owner": "interkosmos",
+        "name": "fortran-pcre2",
+        "url": "https://github.com/interkosmos/fortran-pcre2"
+      },
+      "license": {
+        "label": "ISC",
+        "spdx_expression": "ISC",
+        "revision": "44b2fe9aac30272496b51286da8b79a47880cd03",
+        "reviewed_on": "2026-11-07",
+        "notes": "LICENCE supplies Philipp Engel ISC terms for the bindings; the separately linked PCRE2 library retains its own license and version-dependent feature support.",
+        "evidence": [
+          {
+            "path": "LICENCE",
+            "url": "https://github.com/interkosmos/fortran-pcre2/blob/44b2fe9aac30272496b51286da8b79a47880cd03/LICENCE",
+            "sha256": "62f139887bee51b2261d52bc32bec38e8c46c0398eb4b3f7d554b1266795106c"
+          },
+          {
+            "path": "README.md",
+            "url": "https://github.com/interkosmos/fortran-pcre2/blob/44b2fe9aac30272496b51286da8b79a47880cd03/README.md",
+            "sha256": "fa269db61ec6c2f14c74b4324e610c2783e687d2e5b3e896a742e089d3f77d3b"
+          },
+          {
+            "path": "src/pcre2.F90",
+            "url": "https://github.com/interkosmos/fortran-pcre2/blob/44b2fe9aac30272496b51286da8b79a47880cd03/src/pcre2.F90",
+            "sha256": "3d4fbf0721961aae972ca7122d7c261b68867ecfec1a301d9c778a9c0b3b044a"
+          }
+        ]
+      },
+      "classifications": [
+        {
+          "code": "N5",
+          "level": "source-reviewed",
+          "revision": "44b2fe9aac30272496b51286da8b79a47880cd03",
+          "reviewed_on": "2026-11-07",
+          "notes": "PCRE2 pattern compilation, match-data allocation and matching use native handles and zero-based 8-bit offsets. This is a pinned public-interface/source review, not a new numerical execution check or complete API audit. Existing hosted drivers and their verified problem scope are recorded separately.",
+          "evidence": [
+            {
+              "path": "src/pcre2.F90",
+              "url": "https://github.com/interkosmos/fortran-pcre2/blob/44b2fe9aac30272496b51286da8b79a47880cd03/src/pcre2.F90",
+              "sha256": "3d4fbf0721961aae972ca7122d7c261b68867ecfec1a301d9c778a9c0b3b044a"
+            },
+            {
+              "path": "LICENCE",
+              "url": "https://github.com/interkosmos/fortran-pcre2/blob/44b2fe9aac30272496b51286da8b79a47880cd03/LICENCE",
+              "sha256": "62f139887bee51b2261d52bc32bec38e8c46c0398eb4b3f7d554b1266795106c"
+            }
+          ],
+          "procedures": [
+            {
+              "procedure": "pcre2_compile",
+              "role": "public-entry-point",
+              "module": "pcre2",
+              "summary": "Compile an 8-bit PCRE2 PATTERN, returning TYPE(C_PTR) code. LENGTH and ERROROFFSET use PCRE2_SIZE (byte/code-unit counts); OPTIONS uses C_UINT32_T, ERRORCODE C_INT. CCONTEXT is required: C_NULL_PTR selects default context. With explicit LENGTH no null terminator is needed. Check C_ASSOCIATED(code); on failure inspect ERRORCODE and zero-based ERROROFFSET. Free an owned successful code with PCRE2_CODE_FREE when finished. This compiles a regex, not Fortran source.",
+              "signature": "VALUE = pcre2_compile(PATTERN,LENGTH,OPTIONS,ERRORCODE,ERROROFFSET,CCONTEXT)",
+              "path": "src/pcre2.F90",
+              "line_start": 353,
+              "line_end": 363,
+              "declarations": [
+                {
+                  "path": "src/pcre2.F90",
+                  "line_start": 356,
+                  "line_end": 362
+                },
+                {
+                  "path": "src/pcre2.F90",
+                  "line_start": 9,
+                  "line_end": 46
+                },
+                {
+                  "path": "src/pcre2.F90",
+                  "line_start": 469,
+                  "line_end": 487
+                }
+              ]
+            },
+            {
+              "procedure": "pcre2_match_data_create",
+              "role": "public-entry-point",
+              "module": "pcre2",
+              "summary": "Allocate native match-result storage, returning TYPE(C_PTR). OVECSIZE is INTEGER(C_UINT32_T), the number of offset pairs, including the overall match plus capture groups; it is not the number of subject bytes. Required GCONTEXT can be C_NULL_PTR. Check association before matching, and later call PCRE2_MATCH_DATA_FREE. The handle does not own the compiled pattern and there is no Fortran automatic finalizer.",
+              "signature": "VALUE = pcre2_match_data_create(OVECSIZE,GCONTEXT)",
+              "path": "src/pcre2.F90",
+              "line_start": 406,
+              "line_end": 412,
+              "declarations": [
+                {
+                  "path": "src/pcre2.F90",
+                  "line_start": 409,
+                  "line_end": 411
+                },
+                {
+                  "path": "src/pcre2.F90",
+                  "line_start": 9,
+                  "line_end": 46
+                },
+                {
+                  "path": "src/pcre2.F90",
+                  "line_start": 469,
+                  "line_end": 487
+                }
+              ]
+            },
+            {
+              "procedure": "pcre2_match",
+              "role": "public-entry-point",
+              "module": "pcre2",
+              "summary": "Match compiled CODE against an 8-bit SUBJECT using an allocated MATCH_DATA handle and required MCONTEXT (C_NULL_PTR for default). LENGTH/STARTOFFSET are PCRE2_SIZE byte/code-unit counts, with STARTOFFSET zero-based. Return >0 means a match/capture count, zero means a match with insufficient capture-vector capacity, and <0 distinguishes no match from other errors. This is not a one-based substring index; obtain offsets through the match-data APIs. Reuse/free handles deliberately and apply UTF options explicitly when needed.",
+              "signature": "VALUE = pcre2_match(CODE,SUBJECT,LENGTH,STARTOFFSET,OPTIONS,MATCH_DATA,MCONTEXT)",
+              "path": "src/pcre2.F90",
+              "line_start": 392,
+              "line_end": 403,
+              "declarations": [
+                {
+                  "path": "src/pcre2.F90",
+                  "line_start": 395,
+                  "line_end": 402
+                },
+                {
+                  "path": "src/pcre2.F90",
+                  "line_start": 9,
+                  "line_end": 46
+                },
+                {
+                  "path": "src/pcre2.F90",
+                  "line_start": 469,
+                  "line_end": 487
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "fortran-zstd": {
+      "id": "github:interkosmos/fortran-zstd",
+      "repository": {
+        "owner": "interkosmos",
+        "name": "fortran-zstd",
+        "url": "https://github.com/interkosmos/fortran-zstd"
+      },
+      "license": {
+        "label": "ISC",
+        "spdx_expression": "ISC",
+        "revision": "4cb3e9f4a0db7c7ab24a8eeec06be9b471c52545",
+        "reviewed_on": "2026-11-07",
+        "notes": "LICENCE supplies Philipp Engel ISC terms for these bindings. The native Zstandard dependency retains its own licensing and ABI requirements.",
+        "evidence": [
+          {
+            "path": "LICENCE",
+            "url": "https://github.com/interkosmos/fortran-zstd/blob/4cb3e9f4a0db7c7ab24a8eeec06be9b471c52545/LICENCE",
+            "sha256": "5b8f95034f3e3a48f315ce398842d9f8683c234d03708b9a9ea23ca00c00c9b8"
+          },
+          {
+            "path": "README.md",
+            "url": "https://github.com/interkosmos/fortran-zstd/blob/4cb3e9f4a0db7c7ab24a8eeec06be9b471c52545/README.md",
+            "sha256": "6fd8bba401a9619beac6395d811170267eba74359a84d2e211085a86b96ce35d"
+          },
+          {
+            "path": "src/zstd.F90",
+            "url": "https://github.com/interkosmos/fortran-zstd/blob/4cb3e9f4a0db7c7ab24a8eeec06be9b471c52545/src/zstd.F90",
+            "sha256": "d7b14ba8c5146e88bc46986cbe70fa7e7743ba68902e5a88db62531058c9cae2"
+          }
+        ]
+      },
+      "classifications": [
+        {
+          "code": "N3",
+          "level": "source-reviewed",
+          "revision": "4cb3e9f4a0db7c7ab24a8eeec06be9b471c52545",
+          "reviewed_on": "2026-11-07",
+          "notes": "Zstandard single-shot compression exposes size_t capacities and an encoded size-or-error return. This is a pinned public-interface/source review, not a new numerical execution check or complete API audit. Existing hosted drivers and their verified problem scope are recorded separately.",
+          "evidence": [
+            {
+              "path": "src/zstd.F90",
+              "url": "https://github.com/interkosmos/fortran-zstd/blob/4cb3e9f4a0db7c7ab24a8eeec06be9b471c52545/src/zstd.F90",
+              "sha256": "d7b14ba8c5146e88bc46986cbe70fa7e7743ba68902e5a88db62531058c9cae2"
+            },
+            {
+              "path": "LICENCE",
+              "url": "https://github.com/interkosmos/fortran-zstd/blob/4cb3e9f4a0db7c7ab24a8eeec06be9b471c52545/LICENCE",
+              "sha256": "5b8f95034f3e3a48f315ce398842d9f8683c234d03708b9a9ea23ca00c00c9b8"
+            }
+          ],
+          "procedures": [
+            {
+              "procedure": "zstd_compress_bound",
+              "role": "public-entry-point",
+              "module": "zstd",
+              "summary": "Return INTEGER(C_SIZE_T) destination capacity bound for a source of SRC_SIZE bytes. Allocate actual storage separately and ensure counts fit its byte extent. This is a bound for single-shot ZSTD_COMPRESS, not a promise that compressed output is smaller than input or a known decompressed size. The binding passes the size by VALUE to the native library.",
+              "signature": "VALUE = zstd_compress_bound(SRC_SIZE)",
+              "path": "src/zstd.F90",
+              "line_start": 176,
+              "line_end": 180,
+              "declarations": [
+                {
+                  "path": "src/zstd.F90",
+                  "line_start": 178,
+                  "line_end": 179
+                },
+                {
+                  "path": "src/zstd.F90",
+                  "line_start": 6,
+                  "line_end": 42
+                },
+                {
+                  "path": "src/zstd.F90",
+                  "line_start": 590,
+                  "line_end": 607
+                }
+              ]
+            },
+            {
+              "procedure": "zstd_compress",
+              "role": "public-entry-point",
+              "module": "zstd",
+              "summary": "Single-shot compression returns INTEGER(C_SIZE_T), interpreted as compressed byte length OR an encoded error. Call ZSTD_IS_ERROR(result) before using it as a length; ZSTD_GET_ERROR_NAME returns a copied Fortran diagnostic string. DST_CAPACITY and SRC_SIZE are C_SIZE_T byte counts; COMPRESSION_LEVEL is C_INT. DST and SRC are assumed-type buffer storage declared INOUT, not C_PTR values. Supply contiguous, mutable byte buffers of sufficient extent and do not pass the address of a pointer variable as the data itself. No output allocation or file writing occurs.",
+              "signature": "VALUE = zstd_compress(DST,DST_CAPACITY,SRC,SRC_SIZE,COMPRESSION_LEVEL)",
+              "path": "src/zstd.F90",
+              "line_start": 152,
+              "line_end": 161,
+              "declarations": [
+                {
+                  "path": "src/zstd.F90",
+                  "line_start": 155,
+                  "line_end": 160
+                },
+                {
+                  "path": "src/zstd.F90",
+                  "line_start": 6,
+                  "line_end": 42
+                },
+                {
+                  "path": "src/zstd.F90",
+                  "line_start": 590,
+                  "line_end": 607
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "paramcard": {
+      "id": "github:tueda/paramcard",
+      "repository": {
+        "owner": "tueda",
+        "name": "paramcard",
+        "url": "https://github.com/tueda/paramcard"
+      },
+      "license": {
+        "label": "MIT",
+        "spdx_expression": "MIT",
+        "revision": "ffd6bfc0066f3aaa493333179a01257011b77f78",
+        "reviewed_on": "2026-11-07",
+        "notes": "Root LICENSE supplies Takahiro Ueda MIT terms; preserve the package utility/parser source notices.",
+        "evidence": [
+          {
+            "path": "LICENSE",
+            "url": "https://github.com/tueda/paramcard/blob/ffd6bfc0066f3aaa493333179a01257011b77f78/LICENSE",
+            "sha256": "8ff755694a125f5b00d97ce8a4b4155dbf76a57f8a0965798920682284c4d66c"
+          },
+          {
+            "path": "README.md",
+            "url": "https://github.com/tueda/paramcard/blob/ffd6bfc0066f3aaa493333179a01257011b77f78/README.md",
+            "sha256": "25231880388fa6eaf03848c2a599c8afd1eefaacde1d3be9db289154343a9b54"
+          },
+          {
+            "path": "src/paramcard.f90",
+            "url": "https://github.com/tueda/paramcard/blob/ffd6bfc0066f3aaa493333179a01257011b77f78/src/paramcard.f90",
+            "sha256": "2f89eac1daede8f7fcfb3185c62a199aa46b93cad56b8ad85f991097ca0b8fc4"
+          }
+        ]
+      },
+      "classifications": [
+        {
+          "code": "N3",
+          "level": "source-reviewed",
+          "revision": "ffd6bfc0066f3aaa493333179a01257011b77f78",
+          "reviewed_on": "2026-11-07",
+          "notes": "Parameter-card parsing, REAL64 retrieval and validation summaries expose defaults and global usage tracking. This is a pinned public-interface/source review, not a new numerical execution check or complete API audit. Existing hosted drivers and their verified problem scope are recorded separately.",
+          "evidence": [
+            {
+              "path": "src/paramcard.f90",
+              "url": "https://github.com/tueda/paramcard/blob/ffd6bfc0066f3aaa493333179a01257011b77f78/src/paramcard.f90",
+              "sha256": "2f89eac1daede8f7fcfb3185c62a199aa46b93cad56b8ad85f991097ca0b8fc4"
+            }
+          ],
+          "procedures": [
+            {
+              "procedure": "paramcard_parse",
+              "role": "public-entry-point",
+              "module": "paramcard",
+              "summary": "Parse one CHARACTER assignment such as \"TOLERANCE = 1.0e-8\" into the module global parameter store. The library canonicalizes parameter names and supports its documented parameter-card syntax. This does not return a status; malformed/empty input can ERROR STOP. Initialization may also process saved/process arguments; this is not a pure or independently reentrant parser object. Use PARAMCARD_GET for typed retrieval, rather than expecting this subroutine to assign a Fortran variable directly.",
+              "signature": "CALL paramcard_parse(STR)",
+              "path": "src/paramcard.f90",
+              "line_start": 772,
+              "line_end": 800,
+              "declarations": [
+                {
+                  "path": "src/paramcard.f90",
+                  "line_start": 775,
+                  "line_end": 776
+                },
+                {
+                  "path": "src/paramcard.f90",
+                  "line_start": 263,
+                  "line_end": 289
+                }
+              ]
+            },
+            {
+              "procedure": "paramcard_get",
+              "role": "public-entry-point",
+              "module": "paramcard",
+              "summary": "REAL64 overload of PARAMCARD_GET retrieves NAME into VARIABLE. Optional DEFAULT_VALUE is used when the parameter is absent; a present malformed number still ERROR STOPs, and absence without a default is fatal. Retrieval records usage and summary information. REAL64 is from ISO_FORTRAN_ENV; this overload has no IOSTAT/FOUND output and does not treat a numeric zero as a missing-value signal.",
+              "signature": "CALL paramcard_get(NAME,VARIABLE,[DEFAULT_VALUE])",
+              "path": "src/paramcard.f90",
+              "line_start": 638,
+              "line_end": 681,
+              "declarations": [
+                {
+                  "path": "src/paramcard.f90",
+                  "line_start": 641,
+                  "line_end": 646
+                },
+                {
+                  "path": "src/paramcard.f90",
+                  "line_start": 263,
+                  "line_end": 289
+                }
+              ]
+            },
+            {
+              "procedure": "paramcard_summary",
+              "role": "public-entry-point",
+              "module": "paramcard",
+              "summary": "Write the retrieval log to optional connected UNIT (default OUTPUT_UNIT). ONLY_CHANGED defaults false, SHOW_DEFAULT true, CHECK_UNUSED true and PREFIX empty. CHECK_UNUSED=true can ERROR STOP when parameters were supplied but never consumed; it is a validation step as well as printing. Set CHECK_UNUSED=.false. for a purely diagnostic intermediate summary. The log describes parameters retrieved so far, not a promise that all supplied values have been type-checked.",
+              "signature": "CALL paramcard_summary([UNIT],[ONLY_CHANGED],[SHOW_DEFAULT],[CHECK_UNUSED],[PREFIX])",
+              "path": "src/paramcard.f90",
+              "line_start": 683,
+              "line_end": 770,
+              "declarations": [
+                {
+                  "path": "src/paramcard.f90",
+                  "line_start": 686,
+                  "line_end": 697
+                },
+                {
+                  "path": "src/paramcard.f90",
+                  "line_start": 263,
+                  "line_end": 289
                 }
               ]
             }
@@ -15318,6 +16235,126 @@
         }
       ]
     },
+    "fortran-regex": {
+      "id": "github:perazz/fortran-regex",
+      "repository": {
+        "owner": "perazz",
+        "name": "fortran-regex",
+        "url": "https://github.com/perazz/fortran-regex"
+      },
+      "license": {
+        "label": "MIT",
+        "spdx_expression": "MIT",
+        "revision": "96ab33fe003862a28cec91ddd170ac0e86c26c87",
+        "reviewed_on": "2026-11-07",
+        "notes": "Root LICENSE supplies Federico Perini MIT terms; preserve the source tiny-regex provenance and implementation limitations.",
+        "evidence": [
+          {
+            "path": "LICENSE",
+            "url": "https://github.com/perazz/fortran-regex/blob/96ab33fe003862a28cec91ddd170ac0e86c26c87/LICENSE",
+            "sha256": "a7834f71a17069edcd6daa85ab5e0b92619644ba7a2a35ab34be78eca3ed9b7c"
+          },
+          {
+            "path": "README.md",
+            "url": "https://github.com/perazz/fortran-regex/blob/96ab33fe003862a28cec91ddd170ac0e86c26c87/README.md",
+            "sha256": "cd8807fbfdd7f5c8b762ab96ab451c89c36c57017072cf0c0a1cecd1b17768dc"
+          },
+          {
+            "path": "src/regex.f90",
+            "url": "https://github.com/perazz/fortran-regex/blob/96ab33fe003862a28cec91ddd170ac0e86c26c87/src/regex.f90",
+            "sha256": "e1e2414b77fb03400bf0c7b187d0924dde6016b695c4e98f8c36c1bdcac5a81d"
+          }
+        ]
+      },
+      "classifications": [
+        {
+          "code": "N3",
+          "level": "source-reviewed",
+          "revision": "96ab33fe003862a28cec91ddd170ac0e86c26c87",
+          "reviewed_on": "2026-11-07",
+          "notes": "PARSE_PATTERN constructs the package bounded regex representation. This is a pinned public-interface/source review, not a new numerical execution check or complete API audit. Existing hosted drivers and their verified problem scope are recorded separately.",
+          "evidence": [
+            {
+              "path": "src/regex.f90",
+              "url": "https://github.com/perazz/fortran-regex/blob/96ab33fe003862a28cec91ddd170ac0e86c26c87/src/regex.f90",
+              "sha256": "e1e2414b77fb03400bf0c7b187d0924dde6016b695c4e98f8c36c1bdcac5a81d"
+            }
+          ],
+          "procedures": [
+            {
+              "procedure": "parse_pattern",
+              "role": "public-entry-point",
+              "module": "regex_module",
+              "summary": "Return TYPE(REGEX_PATTERN) from CHARACTER(KIND=RCK) PATTERN. This compiles the package compact syntax for reuse by REGEX; it is not a PCRE2-compatible implementation. Token and character-class capacities are fixed (MAX_REGEXP_OBJECTS/MAX_CHAR_CLASS_LEN) and no separate error actual is returned. The source marks inverted character classes as broken in this pin; keep patterns within the demonstrated supported subset and handle invalid/empty patterns before consuming match results.",
+              "signature": "VALUE = parse_pattern(PATTERN)",
+              "path": "src/regex.f90",
+              "line_start": 470,
+              "line_end": 475,
+              "declarations": [
+                {
+                  "path": "src/regex.f90",
+                  "line_start": 470,
+                  "line_end": 471
+                },
+                {
+                  "path": "src/regex.f90",
+                  "line_start": 18,
+                  "line_end": 32
+                },
+                {
+                  "path": "src/regex.f90",
+                  "line_start": 86,
+                  "line_end": 112
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "code": "N5",
+          "level": "source-reviewed",
+          "revision": "96ab33fe003862a28cec91ddd170ac0e86c26c87",
+          "reviewed_on": "2026-11-07",
+          "notes": "The compiled-pattern REGEX overload searches with explicit index/length conventions. This is a pinned public-interface/source review, not a new numerical execution check or complete API audit. Existing hosted drivers and their verified problem scope are recorded separately.",
+          "evidence": [
+            {
+              "path": "src/regex.f90",
+              "url": "https://github.com/perazz/fortran-regex/blob/96ab33fe003862a28cec91ddd170ac0e86c26c87/src/regex.f90",
+              "sha256": "e1e2414b77fb03400bf0c7b187d0924dde6016b695c4e98f8c36c1bdcac5a81d"
+            }
+          ],
+          "procedures": [
+            {
+              "procedure": "regex",
+              "role": "public-entry-point",
+              "module": "regex_module",
+              "summary": "Compiled-pattern overload of public REGEX returns a default INTEGER one-based index, zero for no match, or -1 for an empty/invalid compiled pattern. STRING is CHARACTER(KIND=RCK), PATTERN TYPE(REGEX_PATTERN), LENGTH a required output, and BACK a required logical selecting reverse search when true. LENGTH is not assigned on every invalid-pattern path; consume it only after a successful match. Character units are not Unicode grapheme indices. This reuses a parsed pattern rather than reparsing a raw pattern string.",
+              "signature": "VALUE = regex(STRING,PATTERN,LENGTH,BACK)",
+              "path": "src/regex.f90",
+              "line_start": 678,
+              "line_end": 726,
+              "declarations": [
+                {
+                  "path": "src/regex.f90",
+                  "line_start": 679,
+                  "line_end": 682
+                },
+                {
+                  "path": "src/regex.f90",
+                  "line_start": 18,
+                  "line_end": 32
+                },
+                {
+                  "path": "src/regex.f90",
+                  "line_start": 86,
+                  "line_end": 112
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
     "fortime": {
       "id": "github:gha3mi/fortime",
       "repository": {
@@ -15906,6 +16943,167 @@
         }
       ]
     },
+    "config-fortran": {
+      "id": "github:jannisteunissen/config_fortran",
+      "repository": {
+        "owner": "jannisteunissen",
+        "name": "config_fortran",
+        "url": "https://github.com/jannisteunissen/config_fortran"
+      },
+      "license": {
+        "label": "GNU GPL version 3 license text",
+        "spdx_expression": "GPL-3.0-only",
+        "revision": "106354774b2e6138161952f434c69e7913fa2000",
+        "reviewed_on": "2026-11-07",
+        "notes": "Root LICENSE supplies GNU GPL version 3. No separate project-specific later-version election was identified in the inspected source/README; preserve upstream notices.",
+        "evidence": [
+          {
+            "path": "LICENSE",
+            "url": "https://github.com/jannisteunissen/config_fortran/blob/106354774b2e6138161952f434c69e7913fa2000/LICENSE",
+            "sha256": "589ed823e9a84c56feb95ac58e7cf384626b9cbf4fda2a907bc36e103de1bad2"
+          },
+          {
+            "path": "README.md",
+            "url": "https://github.com/jannisteunissen/config_fortran/blob/106354774b2e6138161952f434c69e7913fa2000/README.md",
+            "sha256": "fc9ffc762e104080054c11ab2d8713baa0d971c943288f161e35ea7a6e26c570"
+          },
+          {
+            "path": "m_config.f90",
+            "url": "https://github.com/jannisteunissen/config_fortran/blob/106354774b2e6138161952f434c69e7913fa2000/m_config.f90",
+            "sha256": "568f6e007b8c9ed2e911bfc99a850c79b7873e91afd7e9396ab0f4f80a8cf838"
+          }
+        ]
+      },
+      "classifications": [
+        {
+          "code": "N3",
+          "level": "source-reviewed",
+          "revision": "106354774b2e6138161952f434c69e7913fa2000",
+          "reviewed_on": "2026-11-07",
+          "notes": "Configuration registration, file parsing and typed scalar retrieval expose defaults, required values and stopping error paths. This is a pinned public-interface/source review, not a new numerical execution check or complete API audit. Existing hosted drivers and their verified problem scope are recorded separately.",
+          "evidence": [
+            {
+              "path": "m_config.f90",
+              "url": "https://github.com/jannisteunissen/config_fortran/blob/106354774b2e6138161952f434c69e7913fa2000/m_config.f90",
+              "sha256": "568f6e007b8c9ed2e911bfc99a850c79b7873e91afd7e9396ab0f4f80a8cf838"
+            }
+          ],
+          "procedures": [
+            {
+              "procedure": "CFG_add",
+              "role": "public-entry-point",
+              "module": "m_config",
+              "summary": "REAL(KIND(0D0)) scalar overload of CFG_ADD registers VAR_NAME with a default REAL_DATA and required descriptive COMMENT in TYPE(CFG_T) CFG. Optional REQUIRED=true means a user value must be supplied; the default is not sufficient to satisfy that requirement. Names and configuration text have fixed module limits. The object is INOUT and this is registration, not returning the final parsed value. The private kind DP need not be imported; use the matching double-precision kind.",
+              "signature": "CALL CFG_add(CFG,VAR_NAME,REAL_DATA,COMMENT,[REQUIRED])",
+              "path": "m_config.f90",
+              "line_start": 960,
+              "line_end": 975,
+              "declarations": [
+                {
+                  "path": "m_config.f90",
+                  "line_start": 961,
+                  "line_end": 964
+                },
+                {
+                  "path": "m_config.f90",
+                  "line_start": 5,
+                  "line_end": 18
+                },
+                {
+                  "path": "m_config.f90",
+                  "line_start": 89,
+                  "line_end": 102
+                },
+                {
+                  "path": "m_config.f90",
+                  "line_start": 113,
+                  "line_end": 140
+                },
+                {
+                  "path": "m_config.f90",
+                  "line_start": 211,
+                  "line_end": 220
+                }
+              ]
+            },
+            {
+              "procedure": "CFG_read_file",
+              "role": "public-entry-point",
+              "module": "m_config",
+              "summary": "Read a local text configuration file into TYPE(CFG_T). Registered variables acquire file-supplied values; the module can also retain untyped stored text for later registration. Call CFG_ADD/CFG_GET consistently with the names and declared types. File, parse and conversion failures use HANDLE_ERROR and ERROR STOP rather than a returned IOSTAT. Input line/array/name limits are finite; this is not a URL loader.",
+              "signature": "CALL CFG_read_file(CFG,FILENAME)",
+              "path": "m_config.f90",
+              "line_start": 245,
+              "line_end": 291,
+              "declarations": [
+                {
+                  "path": "m_config.f90",
+                  "line_start": 246,
+                  "line_end": 247
+                },
+                {
+                  "path": "m_config.f90",
+                  "line_start": 5,
+                  "line_end": 18
+                },
+                {
+                  "path": "m_config.f90",
+                  "line_start": 89,
+                  "line_end": 102
+                },
+                {
+                  "path": "m_config.f90",
+                  "line_start": 113,
+                  "line_end": 140
+                },
+                {
+                  "path": "m_config.f90",
+                  "line_start": 211,
+                  "line_end": 220
+                }
+              ]
+            },
+            {
+              "procedure": "CFG_get",
+              "role": "public-entry-point",
+              "module": "m_config",
+              "summary": "REAL(KIND(0D0)) scalar overload of CFG_GET retrieves RES and marks the variable used, so CFG is INOUT even for lookup. Registration/type/size and REQUIRED checks run before retrieval; an absent, mismatched or unsupplied required variable can ERROR STOP. There is no FOUND/STAT output or implicit numeric zero fallback. This is the scalar overload, not allocatable array retrieval.",
+              "signature": "CALL CFG_get(CFG,VAR_NAME,RES)",
+              "path": "m_config.f90",
+              "line_start": 1159,
+              "line_end": 1167,
+              "declarations": [
+                {
+                  "path": "m_config.f90",
+                  "line_start": 1160,
+                  "line_end": 1162
+                },
+                {
+                  "path": "m_config.f90",
+                  "line_start": 5,
+                  "line_end": 18
+                },
+                {
+                  "path": "m_config.f90",
+                  "line_start": 89,
+                  "line_end": 102
+                },
+                {
+                  "path": "m_config.f90",
+                  "line_start": 113,
+                  "line_end": 140
+                },
+                {
+                  "path": "m_config.f90",
+                  "line_start": 211,
+                  "line_end": 220
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
     "kdtree2": {
       "id": "github:jmhodges/kdtree2",
       "repository": {
@@ -16169,6 +17367,110 @@
                   "path": "src/differentia_derivative.f90",
                   "line_start": 21,
                   "line_end": 47
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "npy-for-fortran": {
+      "id": "github:mredies/npy-for-fortran",
+      "repository": {
+        "owner": "MRedies",
+        "name": "NPY-for-Fortran",
+        "url": "https://github.com/MRedies/NPY-for-Fortran"
+      },
+      "license": {
+        "label": "MIT",
+        "spdx_expression": "MIT",
+        "revision": "b76d22c6ece4e820d31d71825b2f774d060cd288",
+        "reviewed_on": "2026-11-07",
+        "notes": "Root LICENSE supplies Matthias Redies MIT terms. These two direct NPY writers do not require the external zip command used by the separate NPZ routines.",
+        "evidence": [
+          {
+            "path": "LICENSE",
+            "url": "https://github.com/MRedies/NPY-for-Fortran/blob/b76d22c6ece4e820d31d71825b2f774d060cd288/LICENSE",
+            "sha256": "c23fcd25a56cacafa02b7373070b51c29809e4a1ae4b63f0d07c623316eb97cb"
+          },
+          {
+            "path": "README.md",
+            "url": "https://github.com/MRedies/NPY-for-Fortran/blob/b76d22c6ece4e820d31d71825b2f774d060cd288/README.md",
+            "sha256": "0aa60a505f9128dc83d69ac0354b7317663d9b0f118bfe7f3f73b7b41c8d9a2f"
+          },
+          {
+            "path": "src/npy.f90",
+            "url": "https://github.com/MRedies/NPY-for-Fortran/blob/b76d22c6ece4e820d31d71825b2f774d060cd288/src/npy.f90",
+            "sha256": "c7c5122f465ff645a54515acfa49fac51df11360d884d2d2a70526e89504c564"
+          }
+        ]
+      },
+      "classifications": [
+        {
+          "code": "N1",
+          "level": "source-reviewed",
+          "revision": "b76d22c6ece4e820d31d71825b2f774d060cd288",
+          "reviewed_on": "2026-11-07",
+          "notes": "The real-kind-8 vector/matrix SAVE_NPY overloads write typed binary NumPy arrays with explicit shape/order headers. This is a pinned public-interface/source review, not a new numerical execution check or complete API audit. Existing hosted drivers and their verified problem scope are recorded separately.",
+          "evidence": [
+            {
+              "path": "src/npy.f90",
+              "url": "https://github.com/MRedies/NPY-for-Fortran/blob/b76d22c6ece4e820d31d71825b2f774d060cd288/src/npy.f90",
+              "sha256": "c7c5122f465ff645a54515acfa49fac51df11360d884d2d2a70526e89504c564"
+            }
+          ],
+          "procedures": [
+            {
+              "procedure": "save_npy",
+              "role": "public-entry-point",
+              "module": "m_npy",
+              "summary": "REAL(8) vector overload of SAVE_NPY writes the exact FILENAME supplied, without appending an extension. It writes a NumPy v2 stream header and native binary values with dtype advertised as little-endian <f8. Use a little-endian, eight-byte real build consistent with that header; kind number 8 is a compiler convention, not a portable REAL64 declaration. No IOSTAT argument is exposed. The routine uses fixed unit 23, so avoid concurrent/reentrant calls or an already connected unit and use a fresh output path.",
+              "signature": "CALL save_npy(FILENAME,VEC)",
+              "path": "src/npy.f90",
+              "line_start": 972,
+              "line_end": 993,
+              "declarations": [
+                {
+                  "path": "src/npy.f90",
+                  "line_start": 974,
+                  "line_end": 975
+                },
+                {
+                  "path": "src/npy.f90",
+                  "line_start": 1,
+                  "line_end": 33
+                },
+                {
+                  "path": "src/npy.f90",
+                  "line_start": 1271,
+                  "line_end": 1299
+                }
+              ]
+            },
+            {
+              "procedure": "save_npy",
+              "role": "public-entry-point",
+              "module": "m_npy",
+              "summary": "REAL(8) matrix overload of SAVE_NPY writes MTX(:,:) and its two-dimensional shape with fortran_order=True, preserving Fortran column-major storage without transposing. This is an uncompressed .npy array, not an .npz archive or Python plotting request. The exact filename, fixed unit, native-byte-order and missing IOSTAT limitations match the vector overload. Read it with NumPy rather than expecting a human-readable text table.",
+              "signature": "CALL save_npy(FILENAME,MTX)",
+              "path": "src/npy.f90",
+              "line_start": 949,
+              "line_end": 970,
+              "declarations": [
+                {
+                  "path": "src/npy.f90",
+                  "line_start": 951,
+                  "line_end": 952
+                },
+                {
+                  "path": "src/npy.f90",
+                  "line_start": 1,
+                  "line_end": 33
+                },
+                {
+                  "path": "src/npy.f90",
+                  "line_start": 1271,
+                  "line_end": 1299
                 }
               ]
             }
@@ -16612,6 +17914,7 @@
       "forcolormap",
       "rational_number",
       "fortran_test_helper",
+      "m_match",
       "m_list",
       "m_color",
       "fmin",
@@ -16638,6 +17941,7 @@
       "specialmatrices",
       "forpca",
       "polyroots-fortran",
+      "fortran-sqlite3",
       "geodesic-fortran",
       "simulated-annealing",
       "odrpack95",
@@ -16653,6 +17957,7 @@
       "specfunc-fullerton",
       "lib_statistics",
       "nlopt-f",
+      "ffilesystem",
       "utf8-f",
       "ryu_fortran",
       "iso_varying_string",
@@ -16660,10 +17965,14 @@
       "fastconv",
       "gaussjacobiquad",
       "kissfft-f",
+      "fortran-zlib",
       "iapws",
       "linalg",
       "nonlin",
       "maptran3d",
+      "fortran-pcre2",
+      "fortran-zstd",
+      "paramcard",
       "strff",
       "fjsample",
       "interpolation",
@@ -16689,12 +17998,15 @@
       "fortran-simplify",
       "rearrayfx",
       "fortran_vector",
+      "fortran-regex",
       "fortime",
       "lookup-table-fortran",
       "rng-fortran",
       "fortran-fast-float",
+      "config-fortran",
       "kdtree2",
       "differentia",
+      "npy-for-fortran",
       "fortran-utils",
       "fortranlib"
     ],
@@ -16704,7 +18016,6 @@
       "pyplot-fortran",
       "stdlib",
       "kinds",
-      "m_match",
       "fortran-astrodynamics-toolkit",
       "m_framework",
       "mpfun2020-var1",
@@ -16713,25 +18024,19 @@
       "quaff",
       "neural-fortran",
       "lightkrylov",
-      "fortran-sqlite3",
       "flint",
       "ad_dnsvm",
       "twopnt",
       "astro-fortran",
       "daskr",
-      "ffilesystem",
       "fortimize",
       "ncio",
       "h5fortran",
       "metis-fpm",
       "m_calculator",
       "befor64",
-      "fortran-zlib",
-      "fortran-pcre2",
       "ciaaw",
       "rngff",
-      "fortran-zstd",
-      "paramcard",
       "diffeq",
       "conmin",
       "opti",
@@ -16794,7 +18099,6 @@
       "fundamental_constants",
       "array_range",
       "kronrod",
-      "fortran-regex",
       "fed",
       "any",
       "for_fifo_queue",
@@ -16804,10 +18108,8 @@
       "errstat",
       "slinked-list",
       "enclose",
-      "config-fortran",
       "penf",
       "coretran",
-      "npy-for-fortran",
       "ftl",
       "delaunaysparse",
       "qnstop",

@@ -43,7 +43,7 @@ interfaces. Package details also show review scope, limitations and explicitly
 unchecked calling sketches. Signatures link to pinned argument declarations.
 The broader catalog remains the source for these reviews; new reviews need to be
 recorded there before they can appear here. Matching independent reviews currently
-cover 125 selected packages: PowellOpt, lbfgsb, fmin, minpack, quadpack, pchip,
+cover 135 selected packages: PowellOpt, lbfgsb, fmin, minpack, quadpack, pchip,
 fftpack, specfun, specfunc-fullerton, carlson-elliptic-integrals, fortran-bessels,
 polyroots-fortran, lsmr, minres, kiss, fstats, forinv, foreig, forsvd, fordot,
 formatmul, fjsample, fortsa, lib_statistics, econ-toolchain, roots-fortran,
@@ -62,8 +62,9 @@ functional-fortran, fortran-fast-float, fortran-string-to-real, fortran-shlex,
 forgex, test-drive, fortran_test_helper, ferror, fortime, argv-fortran,
 popen-fortran, m_sort, m_list, m_color, flist, m_strings, m_io, m_time, m_cli2,
 m_attr, jonquil, strff, iso_varying_string, utf8-f, ryu_fortran, fhash, kissfft-f,
-maptran3d, m_la, fortran-simplify, forwarddiff, dnaoad-fpm, fglm, fortran_vector
-and rearrayfx.
+maptran3d, m_la, fortran-simplify, forwarddiff, dnaoad-fpm, fglm, fortran_vector,
+rearrayfx, ffilesystem, npy-for-fortran, fortran-sqlite3, fortran-zlib,
+fortran-zstd, fortran-pcre2, fortran-regex, m_match, config-fortran and paramcard.
 Package detail pages show calling sequences
 directly, with links to argument, callback and precision declarations; cards keep
 their interfaces expandable. Each sequence links to matching checked examples
