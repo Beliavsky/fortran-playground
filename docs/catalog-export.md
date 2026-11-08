@@ -43,7 +43,7 @@ interfaces. Package details also show review scope, limitations and explicitly
 unchecked calling sketches. Signatures link to pinned argument declarations.
 The broader catalog remains the source for these reviews; new reviews need to be
 recorded there before they can appear here. Matching independent reviews currently
-cover 175 selected packages: PowellOpt, lbfgsb, fmin, minpack, quadpack, pchip,
+cover 185 selected packages: PowellOpt, lbfgsb, fmin, minpack, quadpack, pchip,
 fftpack, specfun, specfunc-fullerton, carlson-elliptic-integrals, fortran-bessels,
 polyroots-fortran, lsmr, minres, kiss, fstats, forinv, foreig, forsvd, fordot,
 formatmul, fjsample, fortsa, lib_statistics, econ-toolchain, roots-fortran,
@@ -69,8 +69,9 @@ sparse_fortran, amosf90, linalg_fortran, feq-parse, hrweno, diffeq, collections,
 array_range, enclose, errstat, fed, for_fifo_queue, fortran-tokenizer and
 uint-fortran, scifortran, qdutillib, forlab, nafpack, odepack, friction, dynamics,
 nufft1d, nufft2d, conmin, pyplot-fortran, befor64, fortran_stb_image, fmmap,
-fortran-messagepack, h5fortran, nc4fortran, io-fortran-library, fortran_huffman
-and ncio.
+fortran-messagepack, h5fortran, nc4fortran, io-fortran-library, fortran_huffman,
+ncio, argparse-f, io_utilities, rojff, sqliteff, erloff, smart-pointers, any,
+slinked-list, string-utf-8 and jeyemhex-regex.
 Package detail pages show calling sequences
 directly, with links to argument, callback and precision declarations; cards keep
 their interfaces expandable. Each sequence links to matching checked examples

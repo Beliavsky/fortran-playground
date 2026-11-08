@@ -2,7 +2,7 @@
   "schema_version": 1,
   "publisher": "fortran-gams-catalog-independent-reviews",
   "source_url": "https://beliavsky.github.io/fortran-gams-catalog/reviewed-metadata.json",
-  "source_snapshot_id": "sha256:48e608156a39000d0bf34040371ace53b87e9fc5a52f632cf5af7584067ed051",
+  "source_snapshot_id": "sha256:ac92c5687ea9b8f419a1773d5805d1afa4b5e5ebc7f530294d5716ad5b1e61c6",
   "packages": {
     "test-drive": {
       "id": "github:fortran-lang/test-drive",
@@ -20052,6 +20052,434 @@
         }
       ]
     },
+    "rojff": {
+      "id": "github:everythingfunctional/rojff",
+      "repository": {
+        "owner": "everythingfunctional",
+        "name": "rojff",
+        "url": "https://github.com/everythingfunctional/rojff"
+      },
+      "license": {
+        "label": "MIT",
+        "spdx_expression": "MIT",
+        "revision": "9f68e5aa4c12b32720d4224f1ac279bfd7d77b93",
+        "reviewed_on": "2026-11-07",
+        "notes": "Root LICENSE supplies Brad Richardson MIT terms. erloff, strff and other dependencies retain their separate notices.",
+        "evidence": [
+          {
+            "path": "LICENSE",
+            "url": "https://github.com/everythingfunctional/rojff/blob/9f68e5aa4c12b32720d4224f1ac279bfd7d77b93/LICENSE",
+            "sha256": "06fb118a3be0075209b1cf2ebfedac894f1ee3582f2f6d2b948bdd02d598ef04"
+          },
+          {
+            "path": "README.md",
+            "url": "https://github.com/everythingfunctional/rojff/blob/9f68e5aa4c12b32720d4224f1ac279bfd7d77b93/README.md",
+            "sha256": "fda9fe9b43dbdf0482363897edfc0f2bd2d0cfdfa6988d742ba0873a4d247a64"
+          },
+          {
+            "path": "src/rojff/parser/parser_m.f90",
+            "url": "https://github.com/everythingfunctional/rojff/blob/9f68e5aa4c12b32720d4224f1ac279bfd7d77b93/src/rojff/parser/parser_m.f90",
+            "sha256": "45e104f8a23d863175fe364656d7979bd307ee158a2d9dd74cf34fb61f5e9364"
+          }
+        ]
+      },
+      "classifications": [
+        {
+          "code": "N3",
+          "level": "source-reviewed",
+          "revision": "9f68e5aa4c12b32720d4224f1ac279bfd7d77b93",
+          "reviewed_on": "2026-11-07",
+          "notes": "Fallible JSON string parsing, error inspection and compact serialization distinguish wrapper status from polymorphic value ownership. This is a pinned public-interface/source review, not a new numerical execution check or complete API audit. Existing hosted drivers and their verified problem scope are recorded separately.",
+          "evidence": [
+            {
+              "path": "src/rojff/parser/parser_m.f90",
+              "url": "https://github.com/everythingfunctional/rojff/blob/9f68e5aa4c12b32720d4224f1ac279bfd7d77b93/src/rojff/parser/parser_m.f90",
+              "sha256": "45e104f8a23d863175fe364656d7979bd307ee158a2d9dd74cf34fb61f5e9364"
+            },
+            {
+              "path": "src/rojff/fallible/value_m.f90",
+              "url": "https://github.com/everythingfunctional/rojff/blob/9f68e5aa4c12b32720d4224f1ac279bfd7d77b93/src/rojff/fallible/value_m.f90",
+              "sha256": "a4bdc04806817e0fbb6bcab87eded203dcead00640cd40916daaf93a9a8521b6"
+            },
+            {
+              "path": "src/rojff/json_types/value_m.f90",
+              "url": "https://github.com/everythingfunctional/rojff/blob/9f68e5aa4c12b32720d4224f1ac279bfd7d77b93/src/rojff/json_types/value_m.f90",
+              "sha256": "84492c4656ddc33a51d661bb9307215bee813458fe991ab446a07b3c27a69600"
+            },
+            {
+              "path": "src/rojff.f90",
+              "url": "https://github.com/everythingfunctional/rojff/blob/9f68e5aa4c12b32720d4224f1ac279bfd7d77b93/src/rojff.f90",
+              "sha256": "b501384089bf07f5829a32572fb13b03fe9499c1b13ad950e00fcd284815115f"
+            },
+            {
+              "path": "src/rojff/parser/parser_s.f90",
+              "url": "https://github.com/everythingfunctional/rojff/blob/9f68e5aa4c12b32720d4224f1ac279bfd7d77b93/src/rojff/parser/parser_s.f90",
+              "sha256": "ddfdfbd6a9e62ddadc33dff778951709930bbd7a7491fa6eb0c548de95692a9a"
+            },
+            {
+              "path": "src/rojff/fallible/value_s.f90",
+              "url": "https://github.com/everythingfunctional/rojff/blob/9f68e5aa4c12b32720d4224f1ac279bfd7d77b93/src/rojff/fallible/value_s.f90",
+              "sha256": "499016c5409e598a9f9088c23549e8c72fe8ba4e4d590fe3b55457e424a25189"
+            },
+            {
+              "path": "src/rojff/json_types/value_s.f90",
+              "url": "https://github.com/everythingfunctional/rojff/blob/9f68e5aa4c12b32720d4224f1ac279bfd7d77b93/src/rojff/json_types/value_s.f90",
+              "sha256": "eb64b55b64c0753977d4bc7f841cb3288ab7cd1004b4a479ab812b0c6a8a1bfe"
+            }
+          ],
+          "procedures": [
+            {
+              "procedure": "parse_json_from_string",
+              "role": "public-entry-point",
+              "module": "rojff",
+              "summary": "Parse CHARACTER STRING and return TYPE(FALLIBLE_JSON_VALUE_T). Check result%FAILED() and ALLOCATED(result%VALUE_) before accessing the polymorphic JSON value. Errors are held in result%ERRORS; a returned wrapper alone is not success. The JSON value has its own owned allocatable storage. This parser interface is not an intrinsic namelist reader and does not populate arbitrary Fortran user types automatically.",
+              "signature": "VALUE = parse_json_from_string(STRING)",
+              "path": "src/rojff/parser/parser_m.f90",
+              "line_start": 18,
+              "line_end": 22,
+              "declarations": [
+                {
+                  "path": "src/rojff/parser/parser_m.f90",
+                  "line_start": 20,
+                  "line_end": 22
+                },
+                {
+                  "path": "src/rojff.f90",
+                  "line_start": 1,
+                  "line_end": 48
+                },
+                {
+                  "path": "src/rojff/fallible/value_m.f90",
+                  "line_start": 1,
+                  "line_end": 19
+                },
+                {
+                  "path": "src/rojff/parser/parser_s.f90",
+                  "line_start": 54,
+                  "line_end": 69
+                }
+              ]
+            },
+            {
+              "procedure": "failed",
+              "role": "public-entry-point",
+              "module": "rojff",
+              "derived_type": "fallible_json_value_t",
+              "summary": "Declare TYPE(fallible_json_value_t) :: solver from rojff. Return LOGICAL indicating whether the saved error list HAS_ANY entries. Call after a fallible operation. This does not clear errors or return the parsed value, and does not independently test VALUE_ allocation. Error-list formatting is supplied by the separate erloff dependency. The passed object SELF is implicit in solver%; do not pass it again. Optional actuals shown in brackets can be supplied by keyword.",
+              "signature": "VALUE = solver%failed()",
+              "path": "src/rojff/fallible/value_m.f90",
+              "line_start": 57,
+              "line_end": 61,
+              "declarations": [
+                {
+                  "path": "src/rojff/fallible/value_m.f90",
+                  "line_start": 59,
+                  "line_end": 60
+                },
+                {
+                  "path": "src/rojff.f90",
+                  "line_start": 1,
+                  "line_end": 48
+                },
+                {
+                  "path": "src/rojff/fallible/value_m.f90",
+                  "line_start": 1,
+                  "line_end": 19
+                },
+                {
+                  "path": "src/rojff/fallible/value_s.f90",
+                  "line_start": 34,
+                  "line_end": 36
+                }
+              ]
+            },
+            {
+              "procedure": "to_compact_string",
+              "role": "public-entry-point",
+              "module": "rojff",
+              "derived_type": "json_value_t",
+              "summary": "Call the inherited binding on a concrete/allocated polymorphic JSON value. Return allocated CHARACTER compact JSON serialization of the dynamic JSON value through its writer binding. For a successful parsed wrapper the call is parsed%VALUE_%TO_COMPACT_STRING(). JSON_VALUE_T is abstract: use a concrete subtype or a populated CLASS(JSON_VALUE_T) allocation, not TYPE(JSON_VALUE_T). This returns text without saving a file or a separate status argument. The passed object SELF is implicit in solver%; do not pass it again. Optional actuals shown in brackets can be supplied by keyword.",
+              "signature": "VALUE = solver%to_compact_string()",
+              "path": "src/rojff/json_types/value_m.f90",
+              "line_start": 51,
+              "line_end": 55,
+              "declarations": [
+                {
+                  "path": "src/rojff/json_types/value_m.f90",
+                  "line_start": 53,
+                  "line_end": 54
+                },
+                {
+                  "path": "src/rojff/json_types/value_m.f90",
+                  "line_start": 1,
+                  "line_end": 19
+                },
+                {
+                  "path": "src/rojff/json_types/value_s.f90",
+                  "line_start": 7,
+                  "line_end": 12
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "argparse-f": {
+      "id": "github:0382/argparse-f",
+      "repository": {
+        "owner": "0382",
+        "name": "argparse-f",
+        "url": "https://github.com/0382/argparse-f"
+      },
+      "license": {
+        "label": "MIT",
+        "spdx_expression": "MIT",
+        "revision": "435cc1676d6064162a3c36b91f1aa50d926fdd45",
+        "reviewed_on": "2026-11-07",
+        "notes": "Root LICENSE and source supply the MIT grant credited to 0382 and argparse-f contributors.",
+        "evidence": [
+          {
+            "path": "LICENSE",
+            "url": "https://github.com/0382/argparse-f/blob/435cc1676d6064162a3c36b91f1aa50d926fdd45/LICENSE",
+            "sha256": "0c24a51a815bf6c9970d81cd76ca614def0783522224bf78f67414efccf8af18"
+          },
+          {
+            "path": "README.md",
+            "url": "https://github.com/0382/argparse-f/blob/435cc1676d6064162a3c36b91f1aa50d926fdd45/README.md",
+            "sha256": "1b2137488c45b05f12452c21c19da9a5bfe0d2cbb0a0f724d8aee800d836bc6f"
+          },
+          {
+            "path": "src/argparse-f.f90",
+            "url": "https://github.com/0382/argparse-f/blob/435cc1676d6064162a3c36b91f1aa50d926fdd45/src/argparse-f.f90",
+            "sha256": "8223c2b84b512164df7a70b8b3583b8abddd3b24bd979874fe9a518c8692526a"
+          }
+        ]
+      },
+      "classifications": [
+        {
+          "code": "N3",
+          "level": "source-reviewed",
+          "revision": "435cc1676d6064162a3c36b91f1aa50d926fdd45",
+          "reviewed_on": "2026-11-07",
+          "notes": "Integer option registration, process argument parsing and typed retrieval document initialization and stopping error behavior. This is a pinned public-interface/source review, not a new numerical execution check or complete API audit. Existing hosted drivers and their verified problem scope are recorded separately.",
+          "evidence": [
+            {
+              "path": "src/argparse-f.f90",
+              "url": "https://github.com/0382/argparse-f/blob/435cc1676d6064162a3c36b91f1aa50d926fdd45/src/argparse-f.f90",
+              "sha256": "8223c2b84b512164df7a70b8b3583b8abddd3b24bd979874fe9a518c8692526a"
+            }
+          ],
+          "procedures": [
+            {
+              "procedure": "add_option_integer",
+              "role": "public-entry-point",
+              "module": "argparse",
+              "derived_type": "argparser",
+              "summary": "Declare TYPE(argparser) :: solver from argparse. Register a default-INTEGER option with SHORT_NAME, LONG_NAME, HELP and a REQUIRED DEFAULT value. Construct the parser with ARGPARSER(DESCRIPTION) first; a bare declaration leaves counters uninitialized. Register options before PARSE. Names are checked under the pinned short/long-name rules and stored in fixed-size fields. This call registers metadata/default text, not a pointer to a user variable. The passed object THIS is implicit in solver%; do not pass it again. Optional actuals shown in brackets can be supplied by keyword.",
+              "signature": "CALL solver%add_option_integer(SHORT_NAME,LONG_NAME,HELP,DEFAULT)",
+              "path": "src/argparse-f.f90",
+              "line_start": 612,
+              "line_end": 623,
+              "declarations": [
+                {
+                  "path": "src/argparse-f.f90",
+                  "line_start": 613,
+                  "line_end": 617
+                },
+                {
+                  "path": "src/argparse-f.f90",
+                  "line_start": 66,
+                  "line_end": 116
+                },
+                {
+                  "path": "src/argparse-f.f90",
+                  "line_start": 119,
+                  "line_end": 133
+                }
+              ]
+            },
+            {
+              "procedure": "parse",
+              "role": "public-entry-point",
+              "module": "argparse",
+              "derived_type": "argparser",
+              "summary": "Declare TYPE(argparser) :: solver from argparse. Read the actual process command arguments with COMMAND_ARGUMENT_COUNT/GET_COMMAND_ARGUMENT and populate registered option/argument values. No argument-array input or recoverable status is exposed. Help/parse failures can print and STOP, so return alone is not a structured success report. Input token/value buffers are fixed length. Construct and configure the parser first, then retrieve typed values; program arguments must be supplied through the runner separately. The passed object THIS is implicit in solver%; do not pass it again. Optional actuals shown in brackets can be supplied by keyword.",
+              "signature": "CALL solver%parse()",
+              "path": "src/argparse-f.f90",
+              "line_start": 143,
+              "line_end": 289,
+              "declarations": [
+                {
+                  "path": "src/argparse-f.f90",
+                  "line_start": 144,
+                  "line_end": 148
+                },
+                {
+                  "path": "src/argparse-f.f90",
+                  "line_start": 66,
+                  "line_end": 116
+                },
+                {
+                  "path": "src/argparse-f.f90",
+                  "line_start": 119,
+                  "line_end": 133
+                }
+              ]
+            },
+            {
+              "procedure": "get_option_integer",
+              "role": "public-entry-point",
+              "module": "argparse",
+              "derived_type": "argparser",
+              "summary": "Declare TYPE(argparser) :: solver from argparse. Return a default INTEGER for a previously registered integer option, using its parsed or default value. NAME must identify an existing option of the correct type; it is not the value itself. Type/name checks and internal formatted READ provide no IOSTAT dummy to the caller. Call PARSE first when command-line overrides are wanted. Real/double/string getters are different bindings. The passed object THIS is implicit in solver%; do not pass it again. Optional actuals shown in brackets can be supplied by keyword.",
+              "signature": "VALUE = solver%get_option_integer(NAME)",
+              "path": "src/argparse-f.f90",
+              "line_start": 840,
+              "line_end": 847,
+              "declarations": [
+                {
+                  "path": "src/argparse-f.f90",
+                  "line_start": 841,
+                  "line_end": 843
+                },
+                {
+                  "path": "src/argparse-f.f90",
+                  "line_start": 66,
+                  "line_end": 116
+                },
+                {
+                  "path": "src/argparse-f.f90",
+                  "line_start": 119,
+                  "line_end": 133
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "io_utilities": {
+      "id": "github:arjenmarkus/io_utilities",
+      "repository": {
+        "owner": "arjenmarkus",
+        "name": "io_utilities",
+        "url": "https://github.com/arjenmarkus/io_utilities"
+      },
+      "license": {
+        "label": "MIT",
+        "spdx_expression": "MIT",
+        "revision": "f0551aad0b46aa7aac1c442a3c576ecc90028f72",
+        "reviewed_on": "2026-11-07",
+        "notes": "Root LICENSE supplies Arjen Markus MIT terms. This scope covers KEYVARS rather than every command/progress/format utility.",
+        "evidence": [
+          {
+            "path": "LICENSE",
+            "url": "https://github.com/arjenmarkus/io_utilities/blob/f0551aad0b46aa7aac1c442a3c576ecc90028f72/LICENSE",
+            "sha256": "bbd9d505e2e9500b52c7556c80f05f58aab83edc7461766a17f489a3b44c9d5a"
+          },
+          {
+            "path": "README.md",
+            "url": "https://github.com/arjenmarkus/io_utilities/blob/f0551aad0b46aa7aac1c442a3c576ecc90028f72/README.md",
+            "sha256": "09b0372c0fcac0a122d274bd1c454ec181b38166ff2899e1d380bd2d0f5c235c"
+          },
+          {
+            "path": "src/keyvars.f90",
+            "url": "https://github.com/arjenmarkus/io_utilities/blob/f0551aad0b46aa7aac1c442a3c576ecc90028f72/src/keyvars.f90",
+            "sha256": "cc25737533ca307437f6e2706a400d07048fc80c4cc564d1f5a84758a7288970"
+          }
+        ]
+      },
+      "classifications": [
+        {
+          "code": "N1",
+          "level": "source-reviewed",
+          "revision": "f0551aad0b46aa7aac1c442a3c576ecc90028f72",
+          "reviewed_on": "2026-11-07",
+          "notes": "Typed configuration descriptors, file ingestion and template output expose pointer targets and incomplete/error record behavior. This is a pinned public-interface/source review, not a new numerical execution check or complete API audit. Existing hosted drivers and their verified problem scope are recorded separately.",
+          "evidence": [
+            {
+              "path": "src/keyvars.f90",
+              "url": "https://github.com/arjenmarkus/io_utilities/blob/f0551aad0b46aa7aac1c442a3c576ecc90028f72/src/keyvars.f90",
+              "sha256": "cc25737533ca307437f6e2706a400d07048fc80c4cc564d1f5a84758a7288970"
+            }
+          ],
+          "procedures": [
+            {
+              "procedure": "keyvar",
+              "role": "public-entry-point",
+              "module": "keyvars",
+              "summary": "Integer KEYVAR overload returns TYPE(KEYVAR_DATA) holding an association to TARGET PVAR. Keep the actual variable a live TARGET for the whole descriptor lifetime; this is a reference, not a stored independent default. Initialize PVAR before reading configuration so omitted keys have a defined value. NAME/DESCRIPTION are stored in bounded fields and SECTION defaults \"*\".",
+              "signature": "VALUE = keyvar(NAME,PVAR,DESCRIPTION)",
+              "path": "src/keyvars.f90",
+              "line_start": 179,
+              "line_end": 189,
+              "declarations": [
+                {
+                  "path": "src/keyvars.f90",
+                  "line_start": 180,
+                  "line_end": 183
+                },
+                {
+                  "path": "src/keyvars.f90",
+                  "line_start": 14,
+                  "line_end": 34
+                }
+              ]
+            },
+            {
+              "procedure": "get_values",
+              "role": "public-entry-point",
+              "module": "keyvars",
+              "summary": "Read key/value text into the variables referenced by ARGS(:). It also processes command arguments which can change the filename, print help or write an input template and stop. Missing files STOP; malformed/unknown records can print diagnostics and be ignored, without a returned aggregate status. Parsing buffers/keys are bounded. Keep referenced TARGETs alive, initialize defaults and check required values afterward.",
+              "signature": "CALL get_values(FILENAME_IN,ARGS)",
+              "path": "src/keyvars.f90",
+              "line_start": 45,
+              "line_end": 167,
+              "declarations": [
+                {
+                  "path": "src/keyvars.f90",
+                  "line_start": 46,
+                  "line_end": 47
+                },
+                {
+                  "path": "src/keyvars.f90",
+                  "line_start": 14,
+                  "line_end": 34
+                },
+                {
+                  "path": "src/keyvars.f90",
+                  "line_start": 239,
+                  "line_end": 281
+                }
+              ]
+            },
+            {
+              "procedure": "write_input_file",
+              "role": "public-entry-point",
+              "module": "keyvars",
+              "summary": "Write a NEW configuration template for a nonempty ARGS descriptor array. Output contains names/descriptions and literal \" = ...\" placeholders, not current values or a runnable configuration. Existing output files cause diagnostics and STOP rather than overwrite. No IOSTAT argument is returned. Fill placeholders before using the file with GET_VALUES.",
+              "signature": "CALL write_input_file(FILENAME,ARGS)",
+              "path": "src/keyvars.f90",
+              "line_start": 309,
+              "line_end": 334,
+              "declarations": [
+                {
+                  "path": "src/keyvars.f90",
+                  "line_start": 310,
+                  "line_end": 311
+                },
+                {
+                  "path": "src/keyvars.f90",
+                  "line_start": 14,
+                  "line_end": 34
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
     "uint-fortran": {
       "id": "github:shinobuamasaki/uint-fortran",
       "repository": {
@@ -20206,6 +20634,290 @@
                   "path": "src/uint32_m.f90",
                   "line_start": 1,
                   "line_end": 19
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "sqliteff": {
+      "id": "github:everythingfunctional/sqliteff",
+      "repository": {
+        "owner": "everythingfunctional",
+        "name": "sqliteff",
+        "url": "https://github.com/everythingfunctional/sqliteff"
+      },
+      "license": {
+        "label": "MIT",
+        "spdx_expression": "MIT",
+        "revision": "9b377c976698a7da671536e5e2539146ab734ca6",
+        "reviewed_on": "2026-11-07",
+        "notes": "Root LICENSE supplies Brad Richardson MIT terms. Native SQLite and iso_varying_string retain their own terms. This scope covers the character overloads rather than statement binding lifetimes.",
+        "evidence": [
+          {
+            "path": "LICENSE",
+            "url": "https://github.com/everythingfunctional/sqliteff/blob/9b377c976698a7da671536e5e2539146ab734ca6/LICENSE",
+            "sha256": "025cc3fb2fb5d66c727029255e390cee34c35c0355f36f2fa608548424206eac"
+          },
+          {
+            "path": "README.md",
+            "url": "https://github.com/everythingfunctional/sqliteff/blob/9b377c976698a7da671536e5e2539146ab734ca6/README.md",
+            "sha256": "6e6048e64a015fc76b427a49e9066f264031eb49effb6772f396d7c06218d103"
+          },
+          {
+            "path": "src/sqliteff.f90",
+            "url": "https://github.com/everythingfunctional/sqliteff/blob/9b377c976698a7da671536e5e2539146ab734ca6/src/sqliteff.f90",
+            "sha256": "4f6be391fe0f69efeed3b520c7694c25ef55f87975f88032040a5441520d183a"
+          }
+        ]
+      },
+      "classifications": [
+        {
+          "code": "N1",
+          "level": "source-reviewed",
+          "revision": "9b377c976698a7da671536e5e2539146ab734ca6",
+          "reviewed_on": "2026-11-07",
+          "notes": "SQLite database open, non-row SQL execution and explicit close document native status and handle ownership. This is a pinned public-interface/source review, not a new numerical execution check or complete API audit. Existing hosted drivers and their verified problem scope are recorded separately.",
+          "evidence": [
+            {
+              "path": "src/sqliteff.f90",
+              "url": "https://github.com/everythingfunctional/sqliteff/blob/9b377c976698a7da671536e5e2539146ab734ca6/src/sqliteff.f90",
+              "sha256": "4f6be391fe0f69efeed3b520c7694c25ef55f87975f88032040a5441520d183a"
+            }
+          ],
+          "procedures": [
+            {
+              "procedure": "sqliteff_open",
+              "role": "public-entry-point",
+              "module": "sqliteff",
+              "summary": "Character SQLITEFF_OPEN overload opens a database into TYPE(SQLITEDATABASE_T) and returns default-INTEGER native status. Use SQLITE_OK for success; \":memory:\" requests an in-memory database. The wrapper performs C string termination, so supply ordinary CHARACTER rather than a manual C pointer. The type has no automatic close/finalizer; keep one owning handle and close explicitly. Do not execute SQL before checking open success.",
+              "signature": "VALUE = sqliteff_open(FILENAME,CONNECTION)",
+              "path": "src/sqliteff.f90",
+              "line_start": 364,
+              "line_end": 383,
+              "declarations": [
+                {
+                  "path": "src/sqliteff.f90",
+                  "line_start": 365,
+                  "line_end": 367
+                },
+                {
+                  "path": "src/sqliteff.f90",
+                  "line_start": 1,
+                  "line_end": 66
+                }
+              ]
+            },
+            {
+              "procedure": "sqliteff_exec",
+              "role": "public-entry-point",
+              "module": "sqliteff",
+              "summary": "Execute CHARACTER COMMAND on an open connection and return integer status plus required TYPE(VARYING_STRING) ERRMSG. Check SQLITE_OK and use ISO_VARYING_STRING::CHAR to obtain character error text if needed. This method does not return SELECT rows; use prepared statement/STEP/column access for row retrieval. The wrapper message buffer is bounded to 1000 C characters. Avoid assuming a zero status/value/string convention beyond native SQLite constants.",
+              "signature": "VALUE = sqliteff_exec(CONNECTION,COMMAND,ERRMSG)",
+              "path": "src/sqliteff.f90",
+              "line_start": 294,
+              "line_end": 322,
+              "declarations": [
+                {
+                  "path": "src/sqliteff.f90",
+                  "line_start": 295,
+                  "line_end": 298
+                },
+                {
+                  "path": "src/sqliteff.f90",
+                  "line_start": 1,
+                  "line_end": 66
+                }
+              ]
+            },
+            {
+              "procedure": "sqliteff_close",
+              "role": "public-entry-point",
+              "module": "sqliteff",
+              "summary": "Close the native database and return integer status. Finalize prepared statements before closing and check the returned status; a close attempt is not automatically proof that the handle was released. There is no ownership-sharing wrapper, finalizer or automatic cleanup of arbitrary copied database objects. After successful close do not execute/reclose through an aliased copy.",
+              "signature": "VALUE = sqliteff_close(CONNECTION)",
+              "path": "src/sqliteff.f90",
+              "line_start": 170,
+              "line_end": 184,
+              "declarations": [
+                {
+                  "path": "src/sqliteff.f90",
+                  "line_start": 171,
+                  "line_end": 172
+                },
+                {
+                  "path": "src/sqliteff.f90",
+                  "line_start": 1,
+                  "line_end": 66
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "erloff": {
+      "id": "github:everythingfunctional/erloff",
+      "repository": {
+        "owner": "everythingfunctional",
+        "name": "erloff",
+        "url": "https://github.com/everythingfunctional/erloff"
+      },
+      "license": {
+        "label": "MIT",
+        "spdx_expression": "MIT",
+        "revision": "73dfdbf54dafadb42e4705c45824b93917a20965",
+        "reviewed_on": "2026-11-07",
+        "notes": "Root LICENSE supplies Brad Richardson MIT terms. Formatting dependencies retain their own license notices.",
+        "evidence": [
+          {
+            "path": "LICENSE",
+            "url": "https://github.com/everythingfunctional/erloff/blob/73dfdbf54dafadb42e4705c45824b93917a20965/LICENSE",
+            "sha256": "025cc3fb2fb5d66c727029255e390cee34c35c0355f36f2fa608548424206eac"
+          },
+          {
+            "path": "README.md",
+            "url": "https://github.com/everythingfunctional/erloff/blob/73dfdbf54dafadb42e4705c45824b93917a20965/README.md",
+            "sha256": "df2831a859ca475da5de8ce772235fb765ef0a324e006a0be0d8acc5d32de147"
+          },
+          {
+            "path": "src/erloff/error_list_m.f90",
+            "url": "https://github.com/everythingfunctional/erloff/blob/73dfdbf54dafadb42e4705c45824b93917a20965/src/erloff/error_list_m.f90",
+            "sha256": "85b56db1c92c4904cf924abb982dda0227bb1c8ca77376322b89941124ec716f"
+          }
+        ]
+      },
+      "classifications": [
+        {
+          "code": "R3",
+          "level": "source-reviewed",
+          "revision": "73dfdbf54dafadb42e4705c45824b93917a20965",
+          "reviewed_on": "2026-11-07",
+          "notes": "Owned error-list construction, value-returning accumulation and formatting expose non-mutating and varying-string semantics. This is a pinned public-interface/source review, not a new numerical execution check or complete API audit. Existing hosted drivers and their verified problem scope are recorded separately.",
+          "evidence": [
+            {
+              "path": "src/erloff/error_list_m.f90",
+              "url": "https://github.com/everythingfunctional/erloff/blob/73dfdbf54dafadb42e4705c45824b93917a20965/src/erloff/error_list_m.f90",
+              "sha256": "85b56db1c92c4904cf924abb982dda0227bb1c8ca77376322b89941124ec716f"
+            },
+            {
+              "path": "src/erloff.f90",
+              "url": "https://github.com/everythingfunctional/erloff/blob/73dfdbf54dafadb42e4705c45824b93917a20965/src/erloff.f90",
+              "sha256": "cb94932c804d7ee48edb3617a6fae7ac3b2883e9476322ba1fda76477ebe1a15"
+            }
+          ],
+          "procedures": [
+            {
+              "procedure": "error_list_t",
+              "role": "public-entry-point",
+              "module": "erloff",
+              "summary": "Construct TYPE(ERROR_LIST_T) from an existing concrete ERROR_T or subtype (such as FATAL_T), copied into an owned error-item allocation. It does not raise or print the error. A default-declared list represents no errors; this constructor creates a one-error list. Message/type/context construction is supplied through the separate public error/message constructors.",
+              "signature": "VALUE = error_list_t(ERROR)",
+              "path": "src/erloff/error_list_m.f90",
+              "line_start": 108,
+              "line_end": 113,
+              "declarations": [
+                {
+                  "path": "src/erloff/error_list_m.f90",
+                  "line_start": 109,
+                  "line_end": 110
+                },
+                {
+                  "path": "src/erloff.f90",
+                  "line_start": 1,
+                  "line_end": 23
+                },
+                {
+                  "path": "src/erloff/error_list_m.f90",
+                  "line_start": 1,
+                  "line_end": 26
+                },
+                {
+                  "path": "src/erloff/error_list_m.f90",
+                  "line_start": 93,
+                  "line_end": 106
+                },
+                {
+                  "path": "src/erloff/error_list_m.f90",
+                  "line_start": 432,
+                  "line_end": 437
+                }
+              ]
+            },
+            {
+              "procedure": "with_error_appended",
+              "role": "public-entry-point",
+              "module": "erloff",
+              "derived_type": "error_list_t",
+              "summary": "Declare TYPE(error_list_t) :: solver from erloff. Return a NEW ERROR_LIST_T containing the previous errors followed by the supplied ERROR_T/subtype. The receiver is INTENT(IN) and is not modified. Retain the result, e.g. list=list%WITH_ERROR_APPENDED(error); discarding it leaves the original unchanged. This supports error accumulation, not automatic exception propagation or process termination. The passed object SELF is implicit in solver%; do not pass it again. Optional actuals shown in brackets can be supplied by keyword.",
+              "signature": "VALUE = solver%with_error_appended(ERROR)",
+              "path": "src/erloff/error_list_m.f90",
+              "line_start": 157,
+              "line_end": 167,
+              "declarations": [
+                {
+                  "path": "src/erloff/error_list_m.f90",
+                  "line_start": 158,
+                  "line_end": 160
+                },
+                {
+                  "path": "src/erloff.f90",
+                  "line_start": 1,
+                  "line_end": 23
+                },
+                {
+                  "path": "src/erloff/error_list_m.f90",
+                  "line_start": 1,
+                  "line_end": 26
+                },
+                {
+                  "path": "src/erloff/error_list_m.f90",
+                  "line_start": 93,
+                  "line_end": 106
+                },
+                {
+                  "path": "src/erloff/error_list_m.f90",
+                  "line_start": 432,
+                  "line_end": 437
+                }
+              ]
+            },
+            {
+              "procedure": "to_string",
+              "role": "public-entry-point",
+              "module": "erloff",
+              "derived_type": "error_list_t",
+              "summary": "Declare TYPE(error_list_t) :: solver from erloff. Return TYPE(VARYING_STRING), not allocatable CHARACTER, joining saved error-item text with newlines. Use ISO_VARYING_STRING::CHAR when a character actual is needed. An empty/default list produces empty text. Formatting neither consumes/clears errors nor writes them to a unit; HAS_ANY/SIZE inspect presence separately. The passed object SELF is implicit in solver%; do not pass it again. Optional actuals shown in brackets can be supplied by keyword.",
+              "signature": "VALUE = solver%to_string()",
+              "path": "src/erloff/error_list_m.f90",
+              "line_start": 527,
+              "line_end": 536,
+              "declarations": [
+                {
+                  "path": "src/erloff/error_list_m.f90",
+                  "line_start": 528,
+                  "line_end": 529
+                },
+                {
+                  "path": "src/erloff.f90",
+                  "line_start": 1,
+                  "line_end": 23
+                },
+                {
+                  "path": "src/erloff/error_list_m.f90",
+                  "line_start": 1,
+                  "line_end": 26
+                },
+                {
+                  "path": "src/erloff/error_list_m.f90",
+                  "line_start": 93,
+                  "line_end": 106
+                },
+                {
+                  "path": "src/erloff/error_list_m.f90",
+                  "line_start": 432,
+                  "line_end": 437
                 }
               ]
             }
@@ -20509,6 +21221,169 @@
                   "path": "src/integer32_set.f90",
                   "line_start": 1,
                   "line_end": 24
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "smart-pointers": {
+      "id": "github:sourceryinstitute/smart-pointers",
+      "repository": {
+        "owner": "sourceryinstitute",
+        "name": "smart-pointers",
+        "url": "https://github.com/sourceryinstitute/smart-pointers"
+      },
+      "license": {
+        "label": "BSD-3-Clause",
+        "spdx_expression": "BSD-3-Clause",
+        "revision": "35130adc4be4384a14b2369e5edd36d4665cd994",
+        "reviewed_on": "2026-11-07",
+        "notes": "Root LICENSE supplies Sourcery Institute and named contributors BSD three-clause terms. These annotations identify public low-level counter interfaces; they do not claim every ownership/finalization path is safe.",
+        "evidence": [
+          {
+            "path": "LICENSE",
+            "url": "https://github.com/sourceryinstitute/smart-pointers/blob/35130adc4be4384a14b2369e5edd36d4665cd994/LICENSE",
+            "sha256": "4b15afc5d2bcc2e6cb7da6bc98d636bdb376d06293b3a5f4d49a621b82e3d320"
+          },
+          {
+            "path": "README.md",
+            "url": "https://github.com/sourceryinstitute/smart-pointers/blob/35130adc4be4384a14b2369e5edd36d4665cd994/README.md",
+            "sha256": "bf4ff8f42e2bc072f0d6e04394353a232c210b41e616407e70a063a4c9781a2e"
+          },
+          {
+            "path": "src/smart_pointer/sp_reference_counter_m.f90",
+            "url": "https://github.com/sourceryinstitute/smart-pointers/blob/35130adc4be4384a14b2369e5edd36d4665cd994/src/smart_pointer/sp_reference_counter_m.f90",
+            "sha256": "bdee453c281bc9d12a7eb551679ab288e934a4b13bbc0856c6bfc7b758c55540"
+          }
+        ]
+      },
+      "classifications": [
+        {
+          "code": "N4",
+          "level": "source-reviewed",
+          "revision": "35130adc4be4384a14b2369e5edd36d4665cd994",
+          "reviewed_on": "2026-11-07",
+          "notes": "Reference-counted resource construction/query/release record cloning requirements and the explicit last-release cleanup limitation. This is a pinned public-interface/source review, not a new numerical execution check or complete API audit. Existing hosted drivers and their verified problem scope are recorded separately.",
+          "evidence": [
+            {
+              "path": "src/smart_pointer/sp_reference_counter_m.f90",
+              "url": "https://github.com/sourceryinstitute/smart-pointers/blob/35130adc4be4384a14b2369e5edd36d4665cd994/src/smart_pointer/sp_reference_counter_m.f90",
+              "sha256": "bdee453c281bc9d12a7eb551679ab288e934a4b13bbc0856c6bfc7b758c55540"
+            },
+            {
+              "path": "src/smart_pointer/sp_reference_counter_s.f90",
+              "url": "https://github.com/sourceryinstitute/smart-pointers/blob/35130adc4be4384a14b2369e5edd36d4665cd994/src/smart_pointer/sp_reference_counter_s.f90",
+              "sha256": "777b00eddb9796e472892613a20c7bff2ac5cfbaadd78f8b87658da1759e99c7"
+            },
+            {
+              "path": "src/smart_pointer/sp_resource_m.f90",
+              "url": "https://github.com/sourceryinstitute/smart-pointers/blob/35130adc4be4384a14b2369e5edd36d4665cd994/src/smart_pointer/sp_resource_m.f90",
+              "sha256": "b9c57d153a2b5a720f4e74cfd720c407a63fccbda2dab852872f59949d023910"
+            }
+          ],
+          "procedures": [
+            {
+              "procedure": "sp_reference_counter_t",
+              "role": "public-entry-point",
+              "module": "sp_reference_counter_m",
+              "summary": "Construct the lower-level SP_REFERENCE_COUNTER_T from a concrete extension of abstract SP_RESOURCE_T implementing the deferred impure-elemental FREE binding. It allocates a polymorphic SOURCE= copy and starts the shared count at one; pointer components follow ordinary Fortran copy/alias rules. This is not an intrinsic-value smart pointer or a borrowed pointer to the input object. Resource-copy/free semantics must be defined by the concrete extension.",
+              "signature": "VALUE = sp_reference_counter_t(OBJECT)",
+              "path": "src/smart_pointer/sp_reference_counter_m.f90",
+              "line_start": 23,
+              "line_end": 27,
+              "declarations": [
+                {
+                  "path": "src/smart_pointer/sp_reference_counter_m.f90",
+                  "line_start": 25,
+                  "line_end": 26
+                },
+                {
+                  "path": "src/smart_pointer/sp_reference_counter_m.f90",
+                  "line_start": 1,
+                  "line_end": 29
+                },
+                {
+                  "path": "src/smart_pointer/sp_resource_m.f90",
+                  "line_start": 1,
+                  "line_end": 21
+                },
+                {
+                  "path": "src/smart_pointer/sp_reference_counter_s.f90",
+                  "line_start": 12,
+                  "line_end": 16
+                }
+              ]
+            },
+            {
+              "procedure": "reference_count",
+              "role": "public-entry-point",
+              "module": "sp_reference_counter_m",
+              "derived_type": "sp_reference_counter_t",
+              "summary": "Declare TYPE(sp_reference_counter_t) :: solver from sp_reference_counter_m. Return the shared integer count for an initialized live reference counter. A default-declared counter has null pointer fields, so this is not a safe default-state query; the implementation asserts association. Defined assignment shares the counter, but this review does not establish safe self-assignment/replacement or concurrent updates. Use the constructor and concrete resource ownership rules. The passed object SELF is implicit in solver%; do not pass it again. Optional actuals shown in brackets can be supplied by keyword.",
+              "signature": "VALUE = solver%reference_count()",
+              "path": "src/smart_pointer/sp_reference_counter_m.f90",
+              "line_start": 33,
+              "line_end": 37,
+              "declarations": [
+                {
+                  "path": "src/smart_pointer/sp_reference_counter_m.f90",
+                  "line_start": 35,
+                  "line_end": 36
+                },
+                {
+                  "path": "src/smart_pointer/sp_reference_counter_m.f90",
+                  "line_start": 1,
+                  "line_end": 29
+                },
+                {
+                  "path": "src/smart_pointer/sp_resource_m.f90",
+                  "line_start": 1,
+                  "line_end": 21
+                },
+                {
+                  "path": "src/smart_pointer/sp_reference_counter_s.f90",
+                  "line_start": 7,
+                  "line_end": 10
+                }
+              ]
+            },
+            {
+              "procedure": "release",
+              "role": "public-entry-point",
+              "module": "sp_reference_counter_m",
+              "derived_type": "sp_reference_counter_t",
+              "summary": "Declare TYPE(sp_reference_counter_t) :: solver from sp_reference_counter_m. Decrement a live counter; on the last reference it calls the owned resource FREE binding and deallocates the resource/count. Important source limitation: the last-release branch does not nullify the freed pointer components in this pin, while finalization checks pointer association and can release again. Do not treat explicit last RELEASE followed by ordinary cleanup or repeated release as a safe destruction recipe. The automatic finalizer is a distinct lifetime path; this is an interface review, not a verified memory-safety guarantee. The passed object SELF is implicit in solver%; do not pass it again. Optional actuals shown in brackets can be supplied by keyword.",
+              "signature": "CALL solver%release()",
+              "path": "src/smart_pointer/sp_reference_counter_m.f90",
+              "line_start": 44,
+              "line_end": 47,
+              "declarations": [
+                {
+                  "path": "src/smart_pointer/sp_reference_counter_m.f90",
+                  "line_start": 46,
+                  "line_end": 46
+                },
+                {
+                  "path": "src/smart_pointer/sp_reference_counter_m.f90",
+                  "line_start": 1,
+                  "line_end": 29
+                },
+                {
+                  "path": "src/smart_pointer/sp_resource_m.f90",
+                  "line_start": 1,
+                  "line_end": 21
+                },
+                {
+                  "path": "src/smart_pointer/sp_reference_counter_s.f90",
+                  "line_start": 23,
+                  "line_end": 36
+                },
+                {
+                  "path": "src/smart_pointer/sp_reference_counter_m.f90",
+                  "line_start": 59,
+                  "line_end": 62
                 }
               ]
             }
@@ -21093,6 +21968,168 @@
         }
       ]
     },
+    "any": {
+      "id": "github:degawa/any",
+      "repository": {
+        "owner": "degawa",
+        "name": "any",
+        "url": "https://github.com/degawa/any"
+      },
+      "license": {
+        "label": "MIT",
+        "spdx_expression": "MIT",
+        "revision": "b9eb5e3fdc8f162ae8f2c5d8d026537ed2397830",
+        "reviewed_on": "2026-11-07",
+        "notes": "Root LICENSE supplies Tomohiro Degawa MIT terms. Review scope is the listed extraction methods, not all ranks/kinds or mutation paths.",
+        "evidence": [
+          {
+            "path": "LICENSE",
+            "url": "https://github.com/degawa/any/blob/b9eb5e3fdc8f162ae8f2c5d8d026537ed2397830/LICENSE",
+            "sha256": "9706c35a393c4902687c90ce2055c8130df6ce757bbc9174514e6fa6ab3c4f00"
+          },
+          {
+            "path": "README.md",
+            "url": "https://github.com/degawa/any/blob/b9eb5e3fdc8f162ae8f2c5d8d026537ed2397830/README.md",
+            "sha256": "f8fa94f5bdc623802b31f07850b15b87be49c57f92d23d9142db9d56c8881ee6"
+          },
+          {
+            "path": "src/any_t.f90",
+            "url": "https://github.com/degawa/any/blob/b9eb5e3fdc8f162ae8f2c5d8d026537ed2397830/src/any_t.f90",
+            "sha256": "23cc98fef6ccc1165e25ec69423bb0090519086067d15f31d7a093b271a6dc86"
+          }
+        ]
+      },
+      "classifications": [
+        {
+          "code": "N4",
+          "level": "source-reviewed",
+          "revision": "b9eb5e3fdc8f162ae8f2c5d8d026537ed2397830",
+          "reviewed_on": "2026-11-07",
+          "notes": "Exact-type scalar/vector extraction and polymorphic vector copying record rank-slot initialization and unchecked reassignment limits. This is a pinned public-interface/source review, not a new numerical execution check or complete API audit. Existing hosted drivers and their verified problem scope are recorded separately.",
+          "evidence": [
+            {
+              "path": "src/any_t.f90",
+              "url": "https://github.com/degawa/any/blob/b9eb5e3fdc8f162ae8f2c5d8d026537ed2397830/src/any_t.f90",
+              "sha256": "23cc98fef6ccc1165e25ec69423bb0090519086067d15f31d7a093b271a6dc86"
+            }
+          ],
+          "procedures": [
+            {
+              "procedure": "as_int32",
+              "role": "public-entry-point",
+              "module": "any_t",
+              "summary": "Return scalar INTEGER(INT32) from the scalar slot of a CLASS(ANY_TYPE) buffer. Populate a fresh buffer with an exactly matching INT32 scalar via its defined assignment first. This getter is not numeric conversion: wrong kind/rank or an unpopulated slot has no recoverable status and can leave the result undefined. Same-rank reassignment allocates without first deallocating in this pin; do not assume arbitrary replacement is supported.",
+              "signature": "VALUE = as_int32(THIS)",
+              "path": "src/any_t.f90",
+              "line_start": 4125,
+              "line_end": 4133,
+              "declarations": [
+                {
+                  "path": "src/any_t.f90",
+                  "line_start": 4127,
+                  "line_end": 4130
+                },
+                {
+                  "path": "src/any_t.f90",
+                  "line_start": 1,
+                  "line_end": 6
+                },
+                {
+                  "path": "src/any_t.f90",
+                  "line_start": 201,
+                  "line_end": 242
+                },
+                {
+                  "path": "src/any_t.f90",
+                  "line_start": 1244,
+                  "line_end": 1253
+                },
+                {
+                  "path": "src/any_t.f90",
+                  "line_start": 1320,
+                  "line_end": 1330
+                }
+              ]
+            },
+            {
+              "procedure": "as_real64_rank1",
+              "role": "public-entry-point",
+              "module": "any_t",
+              "summary": "Return an allocatable REAL64 vector copy from the rank-one slot. Populate a fresh ANY_TYPE by assigning a REAL64 vector; scalar REAL64, REAL32 vectors or other dynamic types do not select a conversion. A mismatch can leave output unallocated; there is no status output. The caller owns the returned copy, not the buffer storage. Repeatedly assigning into an allocated rank-one slot is not guarded by the implementation.",
+              "signature": "VALUE = as_real64_rank1(THIS)",
+              "path": "src/any_t.f90",
+              "line_start": 4664,
+              "line_end": 4672,
+              "declarations": [
+                {
+                  "path": "src/any_t.f90",
+                  "line_start": 4666,
+                  "line_end": 4669
+                },
+                {
+                  "path": "src/any_t.f90",
+                  "line_start": 1,
+                  "line_end": 6
+                },
+                {
+                  "path": "src/any_t.f90",
+                  "line_start": 201,
+                  "line_end": 242
+                },
+                {
+                  "path": "src/any_t.f90",
+                  "line_start": 1244,
+                  "line_end": 1253
+                },
+                {
+                  "path": "src/any_t.f90",
+                  "line_start": 1320,
+                  "line_end": 1330
+                }
+              ]
+            },
+            {
+              "procedure": "get_component_rk1",
+              "role": "public-entry-point",
+              "module": "any_t",
+              "derived_type": "any_type",
+              "summary": "Declare TYPE(any_type) :: solver from any_t. Return an allocated CLASS(*) vector copy using ALLOCATE(SOURCE=stored rank-one slot). It is not a pointer/view; use SELECT TYPE on the result for typed access. Require an initialized rank-one slot before calling because allocation from an unallocated source is not checked. The ordinary Fortran copy can retain pointer-component aliases for user-defined payload types. The passed object THIS is implicit in solver%; do not pass it again. Optional actuals shown in brackets can be supplied by keyword.",
+              "signature": "VALUE = solver%get_component_rk1()",
+              "path": "src/any_t.f90",
+              "line_start": 912,
+              "line_end": 920,
+              "declarations": [
+                {
+                  "path": "src/any_t.f90",
+                  "line_start": 914,
+                  "line_end": 917
+                },
+                {
+                  "path": "src/any_t.f90",
+                  "line_start": 1,
+                  "line_end": 6
+                },
+                {
+                  "path": "src/any_t.f90",
+                  "line_start": 201,
+                  "line_end": 242
+                },
+                {
+                  "path": "src/any_t.f90",
+                  "line_start": 1244,
+                  "line_end": 1253
+                },
+                {
+                  "path": "src/any_t.f90",
+                  "line_start": 1320,
+                  "line_end": 1330
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
     "for_fifo_queue": {
       "id": "github:jordan4ibanez/for_fifo_queue",
       "repository": {
@@ -21277,6 +22314,258 @@
                   "path": "src/fifo_queue.c",
                   "line_start": 128,
                   "line_end": 135
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "jeyemhex-regex": {
+      "id": "github:jeyemhex/fortran-regex",
+      "repository": {
+        "owner": "jeyemhex",
+        "name": "fortran-regex",
+        "url": "https://github.com/jeyemhex/fortran-regex"
+      },
+      "license": {
+        "label": "LGPL-2.1 root; MIT source notices",
+        "spdx_expression": null,
+        "revision": "2ca0043837a86a4f77df494ddad2240c1b70e576",
+        "reviewed_on": "2026-11-07",
+        "notes": "Root LICENSE is LGPL 2.1 and the manifest says LGPL, while inspected regex/helper source headers say MIT. Preserve both declarations rather than infer a single unqualified SPDX expression for the fork.",
+        "evidence": [
+          {
+            "path": "LICENSE",
+            "url": "https://github.com/jeyemhex/fortran-regex/blob/2ca0043837a86a4f77df494ddad2240c1b70e576/LICENSE",
+            "sha256": "20c17d8b8c48a600800dfd14f95d5cb9ff47066a9641ddeab48dc54aec96e331"
+          },
+          {
+            "path": "README.md",
+            "url": "https://github.com/jeyemhex/fortran-regex/blob/2ca0043837a86a4f77df494ddad2240c1b70e576/README.md",
+            "sha256": "8e3435616a353847677c27c5d8e0d9252c06cbd3817fa4d1ef122c56701ae2df"
+          },
+          {
+            "path": "src/regex.f90",
+            "url": "https://github.com/jeyemhex/fortran-regex/blob/2ca0043837a86a4f77df494ddad2240c1b70e576/src/regex.f90",
+            "sha256": "0c4353791ee919da9418a127f43eb6fa3869e1539127edcc1dffb204b0392aa2"
+          }
+        ]
+      },
+      "classifications": [
+        {
+          "code": "N3",
+          "level": "source-reviewed",
+          "revision": "2ca0043837a86a4f77df494ddad2240c1b70e576",
+          "reviewed_on": "2026-11-07",
+          "notes": "Regex match, split and replace record fixed-length storage, no-separator behavior and aborting syntax errors. This is a pinned public-interface/source review, not a new numerical execution check or complete API audit. Existing hosted drivers and their verified problem scope are recorded separately.",
+          "evidence": [
+            {
+              "path": "src/regex.f90",
+              "url": "https://github.com/jeyemhex/fortran-regex/blob/2ca0043837a86a4f77df494ddad2240c1b70e576/src/regex.f90",
+              "sha256": "0c4353791ee919da9418a127f43eb6fa3869e1539127edcc1dffb204b0392aa2"
+            },
+            {
+              "path": "src/utils_mod.f90",
+              "url": "https://github.com/jeyemhex/fortran-regex/blob/2ca0043837a86a4f77df494ddad2240c1b70e576/src/utils_mod.f90",
+              "sha256": "cb2ecd7cdf5c25cf219e08ea4593bf1526c889c006270c41200dcecb82f30410"
+            },
+            {
+              "path": "src/states_mod.f90",
+              "url": "https://github.com/jeyemhex/fortran-regex/blob/2ca0043837a86a4f77df494ddad2240c1b70e576/src/states_mod.f90",
+              "sha256": "aec2fefe3a0fa0457700172adca8f3850f72752d8e635b4e6d96f119f92ca0ad"
+            },
+            {
+              "path": "fpm.toml",
+              "url": "https://github.com/jeyemhex/fortran-regex/blob/2ca0043837a86a4f77df494ddad2240c1b70e576/fpm.toml",
+              "sha256": "af13ebab48a53159ba910e0d6e4666315c34ad0b992845e6f877d37fa84de060"
+            }
+          ],
+          "procedures": [
+            {
+              "procedure": "re_match",
+              "role": "public-entry-point",
+              "module": "regex",
+              "summary": "Return LOGICAL for the implemented regex matcher on CHARACTER RE/STR. Both pattern and subject are TRIMmed, so trailing blanks are not preserved. Empty patterns and syntax failures can abort through THROW_ERROR rather than return a status; the supported grammar is the pinned engine subset, not a PCRE/POSIX compatibility guarantee. Each call builds and frees its own NFA, with fixed parser buffers.",
+              "signature": "VALUE = re_match(RE,STR)",
+              "path": "src/regex.f90",
+              "line_start": 36,
+              "line_end": 75,
+              "declarations": [
+                {
+                  "path": "src/regex.f90",
+                  "line_start": 54,
+                  "line_end": 56
+                },
+                {
+                  "path": "src/regex.f90",
+                  "line_start": 19,
+                  "line_end": 33
+                }
+              ]
+            },
+            {
+              "procedure": "re_split",
+              "role": "public-entry-point",
+              "module": "regex",
+              "summary": "Split on a consuming separator pattern into an allocatable CHARACTER(LEN=fixed) OUTPUT(:). Declare an adequate element length before the call: allocation specifies the extent, not a deferred character length, and longer pieces can truncate to that length. If no separator is counted the routine returns before allocating/replacing OUTPUT; an earlier allocation may remain. Check allocation and do not infer a fresh one-element result. No status output is provided.",
+              "signature": "CALL re_split(RE,STR,OUTPUT)",
+              "path": "src/regex.f90",
+              "line_start": 122,
+              "line_end": 207,
+              "declarations": [
+                {
+                  "path": "src/regex.f90",
+                  "line_start": 142,
+                  "line_end": 144
+                },
+                {
+                  "path": "src/regex.f90",
+                  "line_start": 19,
+                  "line_end": 33
+                }
+              ]
+            },
+            {
+              "procedure": "re_replace",
+              "role": "public-entry-point",
+              "module": "regex",
+              "summary": "Return replaced text in CHARACTER(LEN=PF_BUFF_SIZE), not an automatically sized allocation. REPL is replacement text under this engine implementation; no general capture-expansion semantics are promised. Account for fixed-result truncation/padding, use bounded input/output and TRIM only when appropriate. Pattern/subject scanning trims trailing subject blanks. Invalid patterns can abort; there is no IOSTAT/error-result argument.",
+              "signature": "VALUE = re_replace(RE,REPL,STR)",
+              "path": "src/regex.f90",
+              "line_start": 210,
+              "line_end": 275,
+              "declarations": [
+                {
+                  "path": "src/regex.f90",
+                  "line_start": 231,
+                  "line_end": 234
+                },
+                {
+                  "path": "src/regex.f90",
+                  "line_start": 19,
+                  "line_end": 33
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "string-utf-8": {
+      "id": "github:guntherwillems/fortran-string-utf-8",
+      "repository": {
+        "owner": "guntherwillems",
+        "name": "fortran-string-utf-8",
+        "url": "https://github.com/guntherwillems/fortran-string-utf-8"
+      },
+      "license": {
+        "label": "MIT",
+        "spdx_expression": "MIT",
+        "revision": "69751115936d5a89439555ddeb1d57537a562e64",
+        "reviewed_on": "2026-11-07",
+        "notes": "Root LICENSE supplies Gunther Willems MIT terms. This is not a claim of complete Unicode conformance or malformed-input validation.",
+        "evidence": [
+          {
+            "path": "LICENSE",
+            "url": "https://github.com/guntherwillems/fortran-string-utf-8/blob/69751115936d5a89439555ddeb1d57537a562e64/LICENSE",
+            "sha256": "56389c6ae17c5b2a4a2053fedb4399c6c4be17a564a74de634746a2e1819946e"
+          },
+          {
+            "path": "README.md",
+            "url": "https://github.com/guntherwillems/fortran-string-utf-8/blob/69751115936d5a89439555ddeb1d57537a562e64/README.md",
+            "sha256": "fb7d3c1593571637dd248f12f7a7428b0cc7c1bfbd99be6b95a37b594ed7b1fc"
+          },
+          {
+            "path": "src/string_utf_8.f90",
+            "url": "https://github.com/guntherwillems/fortran-string-utf-8/blob/69751115936d5a89439555ddeb1d57537a562e64/src/string_utf_8.f90",
+            "sha256": "3aaf269cdfb147365f9b288005fdc719316a968846a2b43fa73d2b20b179a72f"
+          }
+        ]
+      },
+      "classifications": [
+        {
+          "code": "N3",
+          "level": "source-reviewed",
+          "revision": "69751115936d5a89439555ddeb1d57537a562e64",
+          "reviewed_on": "2026-11-07",
+          "notes": "UTF-8 byte segmentation, reassembly and code-point-array slicing document representation and validation limits. This is a pinned public-interface/source review, not a new numerical execution check or complete API audit. Existing hosted drivers and their verified problem scope are recorded separately.",
+          "evidence": [
+            {
+              "path": "src/string_utf_8.f90",
+              "url": "https://github.com/guntherwillems/fortran-string-utf-8/blob/69751115936d5a89439555ddeb1d57537a562e64/src/string_utf_8.f90",
+              "sha256": "3aaf269cdfb147365f9b288005fdc719316a968846a2b43fa73d2b20b179a72f"
+            }
+          ],
+          "procedures": [
+            {
+              "procedure": "chars_array",
+              "role": "public-entry-point",
+              "module": "string_utf_8",
+              "summary": "Split valid UTF-8 encoded default CHARACTER bytes into an allocatable CHAR_UTF array. Each element CHAR stores one code point encoded as its original byte sequence, not a UTF-32 integer or a user-perceived grapheme cluster. The implementation recognizes leading/continuation byte prefixes without full UTF-8 validation; malformed/leading-continuation input is outside this scope. No status output or Unicode normalization is performed.",
+              "signature": "VALUE = chars_array(CHR)",
+              "path": "src/string_utf_8.f90",
+              "line_start": 45,
+              "line_end": 105,
+              "declarations": [
+                {
+                  "path": "src/string_utf_8.f90",
+                  "line_start": 47,
+                  "line_end": 49
+                },
+                {
+                  "path": "src/string_utf_8.f90",
+                  "line_start": 16,
+                  "line_end": 32
+                }
+              ]
+            },
+            {
+              "procedure": "chars",
+              "role": "public-entry-point",
+              "module": "string_utf_8",
+              "summary": "Concatenate CHAR_UTF(:)%CHAR byte strings into allocated CHARACTER text. This is the inverse assembly step for a valid array from CHARS_ARRAY, not decoding to another Fortran character kind. Empty input yields empty text. Each component must be allocated; there is no validation/status channel for manually constructed invalid elements.",
+              "signature": "VALUE = chars(STR)",
+              "path": "src/string_utf_8.f90",
+              "line_start": 110,
+              "line_end": 124,
+              "declarations": [
+                {
+                  "path": "src/string_utf_8.f90",
+                  "line_start": 112,
+                  "line_end": 114
+                },
+                {
+                  "path": "src/string_utf_8.f90",
+                  "line_start": 16,
+                  "line_end": 32
+                }
+              ]
+            },
+            {
+              "procedure": "substr",
+              "role": "public-entry-point",
+              "module": "string_utf_8",
+              "summary": "Return an allocatable CHAR_UTF slice using code-point-array positions. START_INDEX is one-based; negative starts count from the end. Omitted LENGTH extends toward the end, negative LENGTH selects backward but returns elements in original order. Zero/out-of-range start or zero length yields an empty slice; bounds are clipped by the linked helper. These are code-point positions, not UTF-8 byte offsets or grapheme indexes.",
+              "signature": "VALUE = substr(STR,START_INDEX,[LENGTH])",
+              "path": "src/string_utf_8.f90",
+              "line_start": 135,
+              "line_end": 157,
+              "declarations": [
+                {
+                  "path": "src/string_utf_8.f90",
+                  "line_start": 136,
+                  "line_end": 139
+                },
+                {
+                  "path": "src/string_utf_8.f90",
+                  "line_start": 16,
+                  "line_end": 32
+                },
+                {
+                  "path": "src/string_utf_8.f90",
+                  "line_start": 318,
+                  "line_end": 366
                 }
               ]
             }
@@ -21552,6 +22841,144 @@
                   "path": "src/constant/status.f90",
                   "line_start": 1,
                   "line_end": 26
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "slinked-list": {
+      "id": "github:zoziha/slinked-list",
+      "repository": {
+        "owner": "zoziha",
+        "name": "slinked-list",
+        "url": "https://github.com/zoziha/slinked-list"
+      },
+      "license": {
+        "label": "MIT",
+        "spdx_expression": "MIT",
+        "revision": "aa04fcb392466e52277200d7380913fe071fe620",
+        "reviewed_on": "2026-11-07",
+        "notes": "Root LICENSE supplies ZUO Zhihua MIT terms. This scope covers list lifetime operations rather than iterator mutation.",
+        "evidence": [
+          {
+            "path": "LICENSE",
+            "url": "https://github.com/zoziha/slinked-list/blob/aa04fcb392466e52277200d7380913fe071fe620/LICENSE",
+            "sha256": "81d265388a1f51db85fae480886117d2d5f774acca1d312a15feebe3855a52df"
+          },
+          {
+            "path": "README.md",
+            "url": "https://github.com/zoziha/slinked-list/blob/aa04fcb392466e52277200d7380913fe071fe620/README.md",
+            "sha256": "01932557596e03db89b8f4da9cb7f7ff010c07b77c09cca5e6d5bee9d95b80a9"
+          },
+          {
+            "path": "src/sll_linked_list.f90",
+            "url": "https://github.com/zoziha/slinked-list/blob/aa04fcb392466e52277200d7380913fe071fe620/src/sll_linked_list.f90",
+            "sha256": "292aa0f950a72cbbe7b7203a324a3b71e618f1915b85ad63ae4e479d30945f5a"
+          }
+        ]
+      },
+      "classifications": [
+        {
+          "code": "N4",
+          "level": "source-reviewed",
+          "revision": "aa04fcb392466e52277200d7380913fe071fe620",
+          "reviewed_on": "2026-11-07",
+          "notes": "Singly linked list append, logical emptying and explicit cleanup distinguish owned payload copies from retained node storage. This is a pinned public-interface/source review, not a new numerical execution check or complete API audit. Existing hosted drivers and their verified problem scope are recorded separately.",
+          "evidence": [
+            {
+              "path": "src/sll_linked_list.f90",
+              "url": "https://github.com/zoziha/slinked-list/blob/aa04fcb392466e52277200d7380913fe071fe620/src/sll_linked_list.f90",
+              "sha256": "292aa0f950a72cbbe7b7203a324a3b71e618f1915b85ad63ae4e479d30945f5a"
+            },
+            {
+              "path": "src/sll_node.f90",
+              "url": "https://github.com/zoziha/slinked-list/blob/aa04fcb392466e52277200d7380913fe071fe620/src/sll_node.f90",
+              "sha256": "a1c19a030622822592ee5c57fca5b0915bdff22afe72ab9ad6e1f49b7fef87f1"
+            }
+          ],
+          "procedures": [
+            {
+              "procedure": "push_back",
+              "role": "public-entry-point",
+              "module": "sll_linked_list",
+              "derived_type": "sll",
+              "summary": "Declare TYPE(sll) :: solver from sll_linked_list. Append scalar CLASS(*) DATA to an initialized/default SLL. The node allocates a SOURCE= copy, not an association to the scalar actual; normal pointer-component aliasing rules still apply. After EMPTY the list can reuse retained nodes. No allocation/status result is returned. Avoid intrinsic copying of a live list: HEAD/TAIL are pointers and copies share the same chain. The passed object SELF is implicit in solver%; do not pass it again. Optional actuals shown in brackets can be supplied by keyword.",
+              "signature": "CALL solver%push_back(DATA)",
+              "path": "src/sll_linked_list.f90",
+              "line_start": 22,
+              "line_end": 48,
+              "declarations": [
+                {
+                  "path": "src/sll_linked_list.f90",
+                  "line_start": 23,
+                  "line_end": 24
+                },
+                {
+                  "path": "src/sll_linked_list.f90",
+                  "line_start": 1,
+                  "line_end": 17
+                },
+                {
+                  "path": "src/sll_node.f90",
+                  "line_start": 9,
+                  "line_end": 42
+                }
+              ]
+            },
+            {
+              "procedure": "empty",
+              "role": "public-entry-point",
+              "module": "sll_linked_list",
+              "derived_type": "sll",
+              "summary": "Declare TYPE(sll) :: solver from sll_linked_list. Logically clear the list by resetting length/tail, retaining the allocated chain, payloads and capacity for reuse. This is not resource destruction and can retain data until replaced or explicitly finalized. SIZE() becomes zero; SIZE(CAPACITY=.TRUE.) describes retained capacity. Use SLL_FINALIZER to release node allocations when done. The passed object SELF is implicit in solver%; do not pass it again. Optional actuals shown in brackets can be supplied by keyword.",
+              "signature": "CALL solver%empty()",
+              "path": "src/sll_linked_list.f90",
+              "line_start": 51,
+              "line_end": 58,
+              "declarations": [
+                {
+                  "path": "src/sll_linked_list.f90",
+                  "line_start": 52,
+                  "line_end": 52
+                },
+                {
+                  "path": "src/sll_linked_list.f90",
+                  "line_start": 1,
+                  "line_end": 17
+                },
+                {
+                  "path": "src/sll_node.f90",
+                  "line_start": 9,
+                  "line_end": 42
+                }
+              ]
+            },
+            {
+              "procedure": "sll_finalizer",
+              "role": "public-entry-point",
+              "module": "sll_linked_list",
+              "summary": "Explicitly traverse and free an SLL chain/payloads, nullify the tail and reset length/capacity. Despite its name, this routine is not a FINAL binding in the SLL type: CALL SLL_FINALIZER(list) yourself. Do not finalize shallow copies of the same live chain separately. No recoverable status is returned; node payloads follow their own Fortran finalization semantics.",
+              "signature": "CALL sll_finalizer(SELF)",
+              "path": "src/sll_linked_list.f90",
+              "line_start": 93,
+              "line_end": 111,
+              "declarations": [
+                {
+                  "path": "src/sll_linked_list.f90",
+                  "line_start": 94,
+                  "line_end": 95
+                },
+                {
+                  "path": "src/sll_linked_list.f90",
+                  "line_start": 1,
+                  "line_end": 17
+                },
+                {
+                  "path": "src/sll_node.f90",
+                  "line_start": 9,
+                  "line_end": 42
                 }
               ]
             }
@@ -23535,16 +24962,26 @@
       "linalg_fortran",
       "fortran_vector",
       "scanner",
+      "rojff",
+      "argparse-f",
+      "io_utilities",
       "uint-fortran",
+      "sqliteff",
+      "erloff",
       "fortran-tokenizer",
       "integer_set",
+      "smart-pointers",
       "nc4fortran",
       "array_range",
       "fortran-regex",
       "fed",
+      "any",
       "for_fifo_queue",
+      "jeyemhex-regex",
+      "string-utf-8",
       "fortime",
       "errstat",
+      "slinked-list",
       "enclose",
       "lookup-table-fortran",
       "rng-fortran",
@@ -23604,22 +25041,12 @@
       "ecx",
       "athena",
       "orbs",
-      "rojff",
-      "argparse-f",
-      "io_utilities",
       "veggies",
       "shunting-yard-fortran",
-      "sqliteff",
-      "erloff",
-      "smart-pointers",
       "rpn-calculator-fortran",
       "fundamental_constants",
       "kronrod",
-      "any",
-      "jeyemhex-regex",
-      "string-utf-8",
       "fassert",
-      "slinked-list",
       "penf",
       "coretran",
       "ftl",
