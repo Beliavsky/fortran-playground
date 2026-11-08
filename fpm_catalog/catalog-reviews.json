@@ -2,7 +2,7 @@
   "schema_version": 1,
   "publisher": "fortran-gams-catalog-independent-reviews",
   "source_url": "https://beliavsky.github.io/fortran-gams-catalog/reviewed-metadata.json",
-  "source_snapshot_id": "sha256:fb15c09108fc52c9b757cd218b1772fb62b1bfda53a74687246caa007f3c63de",
+  "source_snapshot_id": "sha256:59907216f11913a81b29f4a6423465314398b4771134ed1a8f0d3797a03e3f4e",
   "packages": {
     "test-drive": {
       "id": "github:fortran-lang/test-drive",
@@ -18204,6 +18204,162 @@
         }
       ]
     },
+    "libdogleg-f": {
+      "id": "github:ivan-pi/libdogleg-f",
+      "repository": {
+        "owner": "ivan-pi",
+        "name": "libdogleg-f",
+        "url": "https://github.com/ivan-pi/libdogleg-f"
+      },
+      "license": {
+        "label": "LGPL-3.0-or-later",
+        "spdx_expression": "LGPL-3.0-or-later",
+        "revision": "32b65ae4f880a052768c05d24c24b79920710681",
+        "reviewed_on": "2026-11-08",
+        "notes": "Selected source headers and manifest expressly state LGPL version 3 or later; COPYING.LESSER and COPYING supply the license texts. Native libdogleg/SuiteSparse dependencies retain separate terms.",
+        "evidence": [
+          {
+            "path": "COPYING.LESSER",
+            "url": "https://github.com/ivan-pi/libdogleg-f/blob/32b65ae4f880a052768c05d24c24b79920710681/COPYING.LESSER",
+            "sha256": "e3a994d82e644b03a792a930f574002658412f62407f5fee083f2555c5f23118"
+          },
+          {
+            "path": "README.md",
+            "url": "https://github.com/ivan-pi/libdogleg-f/blob/32b65ae4f880a052768c05d24c24b79920710681/README.md",
+            "sha256": "112af180b6f275c50ce4f7ffacd7fbe931ed6559e28ca87002f74cf7a7c7b067"
+          },
+          {
+            "path": "src/dogleg.f90",
+            "url": "https://github.com/ivan-pi/libdogleg-f/blob/32b65ae4f880a052768c05d24c24b79920710681/src/dogleg.f90",
+            "sha256": "55621942815cfc47627fde148cbb04f851501970b78a1f34314648ccbfef4ad9"
+          }
+        ]
+      },
+      "classifications": [
+        {
+          "code": "G1b1b",
+          "level": "source-reviewed",
+          "revision": "32b65ae4f880a052768c05d24c24b79920710681",
+          "reviewed_on": "2026-11-08",
+          "notes": "Dense trust-region least-squares parameters, analytic-Jacobian optimization and derivative diagnostics document C callback layout and context-return limitations. This is a pinned public-interface/source review, not a new numerical execution check or complete API audit. Existing hosted drivers and their verified problem scope are recorded separately.",
+          "evidence": [
+            {
+              "path": "src/dogleg.f90",
+              "url": "https://github.com/ivan-pi/libdogleg-f/blob/32b65ae4f880a052768c05d24c24b79920710681/src/dogleg.f90",
+              "sha256": "55621942815cfc47627fde148cbb04f851501970b78a1f34314648ccbfef4ad9"
+            },
+            {
+              "path": "src/dogleg_callback.f90",
+              "url": "https://github.com/ivan-pi/libdogleg-f/blob/32b65ae4f880a052768c05d24c24b79920710681/src/dogleg_callback.f90",
+              "sha256": "409b7fd2a226a157ce535edbb32df00dac12a8763772aa9c72d5421536622d68"
+            },
+            {
+              "path": "src/dogleg_c.F90",
+              "url": "https://github.com/ivan-pi/libdogleg-f/blob/32b65ae4f880a052768c05d24c24b79920710681/src/dogleg_c.F90",
+              "sha256": "15ab989ad40cefc52583803a4d5e78594c0c7a4d885d7e0ae3ae62d60775b77a"
+            },
+            {
+              "path": "COPYING",
+              "url": "https://github.com/ivan-pi/libdogleg-f/blob/32b65ae4f880a052768c05d24c24b79920710681/COPYING",
+              "sha256": "3972dc9744f6499f0f9b2dbf76696f2ae7ad8af9b23dde66d6af86c9dfb36986"
+            }
+          ],
+          "procedures": [
+            {
+              "procedure": "dl_getDefaultParameters",
+              "role": "public-entry-point",
+              "module": "dogleg",
+              "summary": "Fill TYPE(DL_PARAMETERS2_T) with native libdogleg defaults before editing fields or passing it to the parameterized DL_OPTIMIZE overload. The actual has TARGET semantics in the wrapper and its fields use C-interoperable kinds from the native parameter type. This routine initializes parameters only, with no status or problem validation. Native libdogleg must be linked; do not substitute an uninitialized bare parameter object.",
+              "signature": "CALL dl_getDefaultParameters(PARAMETERS)",
+              "path": "src/dogleg.f90",
+              "line_start": 78,
+              "line_end": 81,
+              "declarations": [
+                {
+                  "path": "src/dogleg.f90",
+                  "line_start": 79,
+                  "line_end": 79
+                },
+                {
+                  "path": "src/dogleg.f90",
+                  "line_start": 18,
+                  "line_end": 77
+                },
+                {
+                  "path": "src/dogleg_callback.f90",
+                  "line_start": 24,
+                  "line_end": 46
+                },
+                {
+                  "path": "src/dogleg_c.F90",
+                  "line_start": 18,
+                  "line_end": 73
+                }
+              ]
+            },
+            {
+              "procedure": "dl_optimize",
+              "role": "public-entry-point",
+              "module": "dogleg",
+              "summary": "Parameterized dense nonlinear least-squares overload. REAL(C_DOUBLE) contiguous P(:) is the initial state then updated state; NMEAS is residual count and must be at least SIZE(P). Required F fills residual X(nmeas) and analytic J(nstate,nmeas), the transpose layout relative to many mathematical Jacobians. OPTIMUM is a real scalar native objective return, not an integer convergence code. Supply initialized PARAMETERS by keyword when omitting FPARAMS. Important pinned lifetime limitation: a returned native context handle is stored only in a local CTX_HANDLE and not copied back to CTX, including when CTX is requested; this review does not establish leak-free context recovery/cleanup or reuse. Do not infer native success or memory safety merely from a finite OPTIMUM.",
+              "signature": "CALL dl_optimize(OPTIMUM,P,NMEAS,F,[FPARAMS],PARAMETERS,[CTX])",
+              "path": "src/dogleg.f90",
+              "line_start": 142,
+              "line_end": 175,
+              "declarations": [
+                {
+                  "path": "src/dogleg.f90",
+                  "line_start": 145,
+                  "line_end": 151
+                },
+                {
+                  "path": "src/dogleg.f90",
+                  "line_start": 18,
+                  "line_end": 77
+                },
+                {
+                  "path": "src/dogleg_callback.f90",
+                  "line_start": 24,
+                  "line_end": 46
+                }
+              ]
+            },
+            {
+              "procedure": "dl_testGradient",
+              "role": "public-entry-point",
+              "module": "dogleg",
+              "summary": "Check the selected derivative component VAR for the dense residual callback at P, without optimizing. Use the same C_DOUBLE input and callback residual/J(nstate,nmeas) contract as DL_OPTIMIZE. VAR is passed directly to the native C API, so use its zero-based state-component convention. Optional FPARAMS is polymorphic user data, not a derivative tolerance. The native test emits diagnostic comparison output; this wrapper exposes no numerical error-result/status dummy, so a returning call alone is not a passed derivative test. Important ABI limitation: the pinned DOGLEG_C declaration of the native gradient tester lacks VALUE on its C_FUNPTR callback dummy. That callback boundary is not established safe by this source review; do not treat this entry as a verified runnable gradient-check recipe.",
+              "signature": "CALL dl_testGradient(VAR,P,NMEAS,F,[FPARAMS])",
+              "path": "src/dogleg.f90",
+              "line_start": 177,
+              "line_end": 195,
+              "declarations": [
+                {
+                  "path": "src/dogleg.f90",
+                  "line_start": 178,
+                  "line_end": 182
+                },
+                {
+                  "path": "src/dogleg.f90",
+                  "line_start": 18,
+                  "line_end": 77
+                },
+                {
+                  "path": "src/dogleg_callback.f90",
+                  "line_start": 24,
+                  "line_end": 46
+                },
+                {
+                  "path": "src/dogleg_c.F90",
+                  "line_start": 138,
+                  "line_end": 155
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
     "nafpack": {
       "id": "github:minard-jules/nafpack",
       "repository": {
@@ -19910,6 +20066,162 @@
                   "path": "src/dualzn_mod.f90",
                   "line_start": 14,
                   "line_end": 25
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "seiscope-optimization": {
+      "id": "github:ofmla/seiscope_opt_toolbox_w_ctypes",
+      "repository": {
+        "owner": "ofmla",
+        "name": "seiscope_opt_toolbox_w_ctypes",
+        "url": "https://github.com/ofmla/seiscope_opt_toolbox_w_ctypes"
+      },
+      "license": {
+        "label": "MIT wrapper and BSD-3-Clause SEISCOPE source notices",
+        "spdx_expression": null,
+        "revision": "74a25c29d13c506e16f8025eb13a2cf396dc23c0",
+        "reviewed_on": "2026-11-08",
+        "notes": "Root LICENSE.md supplies Oscar Mojica MIT wrapper terms; selected original toolbox files contain the SEISCOPE II three-clause BSD notice. Retain both component notices rather than label the entire implementation MIT-only.",
+        "evidence": [
+          {
+            "path": "LICENSE.md",
+            "url": "https://github.com/ofmla/seiscope_opt_toolbox_w_ctypes/blob/74a25c29d13c506e16f8025eb13a2cf396dc23c0/LICENSE.md",
+            "sha256": "441c863eb96a7690f7d5c563cd93c9af72ffbbecd39e6c6baa17843cd057b284"
+          },
+          {
+            "path": "README.md",
+            "url": "https://github.com/ofmla/seiscope_opt_toolbox_w_ctypes/blob/74a25c29d13c506e16f8025eb13a2cf396dc23c0/README.md",
+            "sha256": "973ec6aef892d977620f59f622ccc654362d8eafc61d15804c663fd10b402573"
+          },
+          {
+            "path": "src/sotb/merged-common.f90",
+            "url": "https://github.com/ofmla/seiscope_opt_toolbox_w_ctypes/blob/74a25c29d13c506e16f8025eb13a2cf396dc23c0/src/sotb/merged-common.f90",
+            "sha256": "ac75f2252dff415e234855f8ce00c86b1143c1bb680c7cffc5097bea6b0123d2"
+          }
+        ]
+      },
+      "classifications": [
+        {
+          "code": "G1b1b",
+          "level": "source-reviewed",
+          "revision": "74a25c29d13c506e16f8025eb13a2cf396dc23c0",
+          "reviewed_on": "2026-11-08",
+          "notes": "Gradient-based reverse-communication setup and preconditioned descent/L-BFGS calls document integer request flags and saved work state. This is a pinned public-interface/source review, not a new numerical execution check or complete API audit. Existing hosted drivers and their verified problem scope are recorded separately.",
+          "evidence": [
+            {
+              "path": "src/sotb/merged-common.f90",
+              "url": "https://github.com/ofmla/seiscope_opt_toolbox_w_ctypes/blob/74a25c29d13c506e16f8025eb13a2cf396dc23c0/src/sotb/merged-common.f90",
+              "sha256": "ac75f2252dff415e234855f8ce00c86b1143c1bb680c7cffc5097bea6b0123d2"
+            },
+            {
+              "path": "src/sotb/merged-PSTD.f90",
+              "url": "https://github.com/ofmla/seiscope_opt_toolbox_w_ctypes/blob/74a25c29d13c506e16f8025eb13a2cf396dc23c0/src/sotb/merged-PSTD.f90",
+              "sha256": "9e85fcf8da38cb340ce8cdd5fd7961781ca4d23bc4ad00c26fbd460625b344f3"
+            },
+            {
+              "path": "src/sotb/merged-PLBFGS.f90",
+              "url": "https://github.com/ofmla/seiscope_opt_toolbox_w_ctypes/blob/74a25c29d13c506e16f8025eb13a2cf396dc23c0/src/sotb/merged-PLBFGS.f90",
+              "sha256": "4b5343c5286933d1a56f6f3f8a1a7b6f6dbf8626de91f1721ae70cf6295247ac"
+            },
+            {
+              "path": "src/seiscope_optimization_toolbox.f90",
+              "url": "https://github.com/ofmla/seiscope_opt_toolbox_w_ctypes/blob/74a25c29d13c506e16f8025eb13a2cf396dc23c0/src/seiscope_optimization_toolbox.f90",
+              "sha256": "db9a870a82a0969dbe92c17e9d43435039c95d6773f36e45d08fca21c0bfd8aa"
+            },
+            {
+              "path": "src/sotb/mdle_typedef.f90",
+              "url": "https://github.com/ofmla/seiscope_opt_toolbox_w_ctypes/blob/74a25c29d13c506e16f8025eb13a2cf396dc23c0/src/sotb/mdle_typedef.f90",
+              "sha256": "83446a67824fd0a1cdf366202d9b41226ff95040dc3211cdde05c681e6cdb455"
+            }
+          ],
+          "procedures": [
+            {
+              "procedure": "set_inputs",
+              "role": "public-entry-point",
+              "module": "seiscope_optimization_toolbox",
+              "summary": "Initialize OPTIM_TYPE counters, stopping/settings and line-search controls before a solve. FCOST and NITER_MAX are required C_FLOAT/C_INT values, while the remaining options can be supplied by keyword; PRINT_FLAG=0 avoids optional iteration log files. Evaluate the initial objective/gradient yourself before setting up and starting reverse communication. This is a settings routine with no validation/status output, not an objective callback registration or optimization call. Source comments about older character flags do not describe this wrapper pin.",
+              "signature": "CALL set_inputs(OPTIM,FCOST,NITER_MAX,[ALPHA],[NLS_MAX],[CONV],[PRINT_FLAG],[L],[NITER_MAX_CG],[DEBUG])",
+              "path": "src/sotb/merged-common.f90",
+              "line_start": 67,
+              "line_end": 164,
+              "declarations": [
+                {
+                  "path": "src/sotb/merged-common.f90",
+                  "line_start": 74,
+                  "line_end": 83
+                },
+                {
+                  "path": "src/seiscope_optimization_toolbox.f90",
+                  "line_start": 1,
+                  "line_end": 23
+                },
+                {
+                  "path": "src/sotb/mdle_typedef.f90",
+                  "line_start": 32,
+                  "line_end": 82
+                }
+              ]
+            },
+            {
+              "procedure": "PSTD",
+              "role": "public-entry-point",
+              "module": "seiscope_optimization_toolbox",
+              "summary": "Preconditioned steepest descent through INTEGER(C_INT) reverse-communication FLAG: begin with 0 plus objective, GRAD and GRAD_PRECO at X; when FLAG=1 recompute all required values at returned X and call again; FLAG=3 is a new-step notification to continue; 2/4 terminate by stopping test/line-search failure. These are integers, not INIT/GRAD strings from older comments. Use default-real/C_FLOAT arrays under this build and initialized OPTIM_TYPE from SET_INPUTS. Optional bounds must match N and be supplied consistently. Module SAVE/allocatable work makes a solver run stateful: do not interleave independent runs. A stopping return is not a certified optimum.",
+              "signature": "CALL PSTD(N,X,FCOST,GRAD,GRAD_PRECO,OPTIM,FLAG,[LB],[UB])",
+              "path": "src/sotb/merged-PSTD.f90",
+              "line_start": 127,
+              "line_end": 201,
+              "declarations": [
+                {
+                  "path": "src/sotb/merged-PSTD.f90",
+                  "line_start": 132,
+                  "line_end": 139
+                },
+                {
+                  "path": "src/seiscope_optimization_toolbox.f90",
+                  "line_start": 1,
+                  "line_end": 23
+                },
+                {
+                  "path": "src/sotb/mdle_typedef.f90",
+                  "line_start": 32,
+                  "line_end": 82
+                }
+              ]
+            },
+            {
+              "procedure": "PLBFGS",
+              "role": "public-entry-point",
+              "module": "seiscope_optimization_toolbox",
+              "summary": "Preconditioned limited-memory BFGS uses the same integer FLAG protocol as PSTD, plus FLAG=5 requests application of the caller preconditioner to Q_PLB in place, followed by re-entry. Initialize OPTIM with positive memory length L, start FLAG=0 and provide objective/gradient/preconditioned gradient at initial X. FLAG=1 requests new objective/gradient, 3 continues, and 2/4 stop; preserve X, OPTIM and state between calls. Local module workspaces are not per-object or safely interleavable. Do not treat this as a single-call optimizer or pass a character communication flag.",
+              "signature": "CALL PLBFGS(N,X,FCOST,GRAD,GRAD_PRECO,Q_PLB,OPTIM,FLAG,[LB],[UB])",
+              "path": "src/sotb/merged-PLBFGS.f90",
+              "line_start": 235,
+              "line_end": 325,
+              "declarations": [
+                {
+                  "path": "src/sotb/merged-PLBFGS.f90",
+                  "line_start": 240,
+                  "line_end": 249
+                },
+                {
+                  "path": "src/seiscope_optimization_toolbox.f90",
+                  "line_start": 1,
+                  "line_end": 23
+                },
+                {
+                  "path": "src/sotb/mdle_typedef.f90",
+                  "line_start": 32,
+                  "line_end": 82
+                },
+                {
+                  "path": "src/sotb/merged-PLBFGS.f90",
+                  "line_start": 253,
+                  "line_end": 321
                 }
               ]
             }
@@ -26689,6 +27001,464 @@
         }
       ]
     },
+    "poisfft": {
+      "id": "github:ladaf/poisfft",
+      "repository": {
+        "owner": "LadaF",
+        "name": "PoisFFT",
+        "url": "https://github.com/LadaF/PoisFFT"
+      },
+      "license": {
+        "label": "GPL version 2 text; version choice not resolved",
+        "spdx_expression": null,
+        "revision": "7e7ebcd75130553ef2cf58548ec519933a3d3426",
+        "reviewed_on": "2026-11-08",
+        "notes": "Root LICENCE.GPL supplies GPL version 2 text. This finding records that text without inferring an uninspected later-version permission. FFTW/PFFT dependencies retain their separate terms.",
+        "evidence": [
+          {
+            "path": "LICENCE.GPL",
+            "url": "https://github.com/LadaF/PoisFFT/blob/7e7ebcd75130553ef2cf58548ec519933a3d3426/LICENCE.GPL",
+            "sha256": "f46409d4822b2457b39bbd0e7881eecb396130eb8320b7748fa7e9488970aa6d"
+          },
+          {
+            "path": "src/poisfft-inc.f90",
+            "url": "https://github.com/LadaF/PoisFFT/blob/7e7ebcd75130553ef2cf58548ec519933a3d3426/src/poisfft-inc.f90",
+            "sha256": "9ce3fb97ce0e771e308e6b53a393f3530f9aa0736103709e7ed4a8f7b7dc3c45"
+          }
+        ]
+      },
+      "classifications": [
+        {
+          "code": "I2",
+          "level": "source-reviewed",
+          "revision": "7e7ebcd75130553ef2cf58548ec519933a3d3426",
+          "reviewed_on": "2026-11-08",
+          "notes": "Serial double-precision 2-D FFT Poisson construction, execution and explicit cleanup document homogeneous dispatch and native ownership. This is a pinned public-interface/source review, not a new numerical execution check or complete API audit. Existing hosted drivers and their verified problem scope are recorded separately.",
+          "evidence": [
+            {
+              "path": "src/poisfft-inc.f90",
+              "url": "https://github.com/LadaF/PoisFFT/blob/7e7ebcd75130553ef2cf58548ec519933a3d3426/src/poisfft-inc.f90",
+              "sha256": "9ce3fb97ce0e771e308e6b53a393f3530f9aa0736103709e7ed4a8f7b7dc3c45"
+            },
+            {
+              "path": "src/poisfft.f90",
+              "url": "https://github.com/LadaF/PoisFFT/blob/7e7ebcd75130553ef2cf58548ec519933a3d3426/src/poisfft.f90",
+              "sha256": "a32086eaac4091c179806d0931151f357feb6d00bbad6f2d3c2acb1a176c3ce4"
+            },
+            {
+              "path": "src/precisions.f90",
+              "url": "https://github.com/LadaF/PoisFFT/blob/7e7ebcd75130553ef2cf58548ec519933a3d3426/src/precisions.f90",
+              "sha256": "074b72fd8868551e41f5d6bedfe810824870e9de762a8c06a4d120ed60501713"
+            },
+            {
+              "path": "src/parameters.f90",
+              "url": "https://github.com/LadaF/PoisFFT/blob/7e7ebcd75130553ef2cf58548ec519933a3d3426/src/parameters.f90",
+              "sha256": "98a5bb34387d4124113cd0b0b9fbf34a70043acad2f5cf69780dc52087953e78"
+            }
+          ],
+          "procedures": [
+            {
+              "procedure": "PoisFFT_Solver2D",
+              "role": "public-entry-point",
+              "module": "PoisFFT_DP",
+              "summary": "Construct TYPE(POISFFT_SOLVER2D) via the generic from POISFFT_DP; use REAL(DRP) lengths from POISFFT_PRECISIONS, positive NXYZ(2)/LXYZ(2), and four boundary selectors. This review scopes a serial uniform-grid solve with ALL boundary selectors periodic, or all of the supported homogeneous Dirichlet/Neumann families; mixed faces are not dispatched by the linked 2-D EXECUTE. APPROXIMATION selects spectral/discrete conventions through POISFFT_PARAMETERS. Omit distributed-grid/MPI optionals for the serial build. Construction allocates FFTW plans/workspace and exposes no status dummy. Keep a single owner: intrinsic copies share native plans and pointer workspace.",
+              "signature": "VALUE = PoisFFT_Solver2D(NXYZ,LXYZ,BCS,[APPROXIMATION],[GNXYZ],[OFFS],[MPI_COMM],[NTHREADS],[PLANNING])",
+              "path": "src/poisfft-inc.f90",
+              "line_start": 1235,
+              "line_end": 1296,
+              "declarations": [
+                {
+                  "path": "src/poisfft-inc.f90",
+                  "line_start": 1239,
+                  "line_end": 1247
+                },
+                {
+                  "path": "src/poisfft.f90",
+                  "line_start": 1,
+                  "line_end": 18
+                },
+                {
+                  "path": "src/poisfft-inc.f90",
+                  "line_start": 1,
+                  "line_end": 76
+                },
+                {
+                  "path": "src/precisions.f90",
+                  "line_start": 1,
+                  "line_end": 13
+                },
+                {
+                  "path": "src/parameters.f90",
+                  "line_start": 1,
+                  "line_end": 18
+                },
+                {
+                  "path": "src/poisfft-inc.f90",
+                  "line_start": 1364,
+                  "line_end": 1404
+                }
+              ]
+            },
+            {
+              "procedure": "Execute",
+              "role": "public-entry-point",
+              "module": "PoisFFT_DP",
+              "summary": "Execute the configured 2-D Poisson solve using a live TYPE(POISFFT_SOLVER2D), returning PHI from REAL(DRP) RHS. For the basic no-ghost case allocate both arrays to exactly NXYZ; the implementation infers symmetric padding from shape and does not validate arbitrary array layouts. The selected transform/grid convention must match the constructor; periodic data must have compatible zero mean and the solution has a constant nullspace. Do not alias PHI and RHS or assume unsupported mixed boundary configurations produce initialized output. No IERROR/status dummy is returned.",
+              "signature": "CALL Execute(D,PHI,RHS)",
+              "path": "src/poisfft-inc.f90",
+              "line_start": 1364,
+              "line_end": 1404,
+              "declarations": [
+                {
+                  "path": "src/poisfft-inc.f90",
+                  "line_start": 1365,
+                  "line_end": 1367
+                },
+                {
+                  "path": "src/poisfft.f90",
+                  "line_start": 1,
+                  "line_end": 18
+                },
+                {
+                  "path": "src/poisfft-inc.f90",
+                  "line_start": 1,
+                  "line_end": 76
+                },
+                {
+                  "path": "src/precisions.f90",
+                  "line_start": 1,
+                  "line_end": 13
+                },
+                {
+                  "path": "src/parameters.f90",
+                  "line_start": 1,
+                  "line_end": 18
+                }
+              ]
+            },
+            {
+              "procedure": "Finalize",
+              "role": "public-entry-point",
+              "module": "PoisFFT_DP",
+              "summary": "Explicitly free this solver FFTW plans and associated real/complex work arrays via the FINALIZE generic. This is a public free subroutine CALL FINALIZE(solver), not a type-bound automatic FINAL declaration. Use it once for the owning initialized solver, avoid shallow copies and do not assume repeated cleanup or subsequent EXECUTE is safe. Native/resource state must be reconstructed before another solve.",
+              "signature": "CALL Finalize(D)",
+              "path": "src/poisfft-inc.f90",
+              "line_start": 1410,
+              "line_end": 1419,
+              "declarations": [
+                {
+                  "path": "src/poisfft-inc.f90",
+                  "line_start": 1411,
+                  "line_end": 1411
+                },
+                {
+                  "path": "src/poisfft.f90",
+                  "line_start": 1,
+                  "line_end": 18
+                },
+                {
+                  "path": "src/poisfft-inc.f90",
+                  "line_start": 1,
+                  "line_end": 76
+                },
+                {
+                  "path": "src/precisions.f90",
+                  "line_start": 1,
+                  "line_end": 13
+                },
+                {
+                  "path": "src/parameters.f90",
+                  "line_start": 1,
+                  "line_end": 18
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "fortran-lmdb": {
+      "id": "github:interkosmos/fortran-lmdb",
+      "repository": {
+        "owner": "interkosmos",
+        "name": "fortran-lmdb",
+        "url": "https://github.com/interkosmos/fortran-lmdb"
+      },
+      "license": {
+        "label": "ISC",
+        "spdx_expression": "ISC",
+        "revision": "34bb1dc10e11fd470e4643135fa31fccacef7cd7",
+        "reviewed_on": "2026-11-08",
+        "notes": "Root LICENCE supplies Philipp Engel ISC terms for the Fortran binding; native LMDB has its own terms. Platform preprocessor selections determine MODE/unsigned interoperability and are part of the build contract.",
+        "evidence": [
+          {
+            "path": "LICENCE",
+            "url": "https://github.com/interkosmos/fortran-lmdb/blob/34bb1dc10e11fd470e4643135fa31fccacef7cd7/LICENCE",
+            "sha256": "5b8f95034f3e3a48f315ce398842d9f8683c234d03708b9a9ea23ca00c00c9b8"
+          },
+          {
+            "path": "README.md",
+            "url": "https://github.com/interkosmos/fortran-lmdb/blob/34bb1dc10e11fd470e4643135fa31fccacef7cd7/README.md",
+            "sha256": "c2b1b00a04b82546bd8de1c53f09341e8e4c2e3b53c2da0bb83b6f84d108fdec"
+          },
+          {
+            "path": "src/lmdb.F90",
+            "url": "https://github.com/interkosmos/fortran-lmdb/blob/34bb1dc10e11fd470e4643135fa31fccacef7cd7/src/lmdb.F90",
+            "sha256": "40301b4a9c67d0267ea6951542151c4c2b39ab137d3f83f3e0bf6ff38181a4ff"
+          }
+        ]
+      },
+      "classifications": [
+        {
+          "code": "N4",
+          "level": "source-reviewed",
+          "revision": "34bb1dc10e11fd470e4643135fa31fccacef7cd7",
+          "reviewed_on": "2026-11-08",
+          "notes": "Memory-mapped database environment/transaction setup and explicit cleanup document native pointers, path setup and ownership. This is a pinned public-interface/source review, not a new numerical execution check or complete API audit. Existing hosted drivers and their verified problem scope are recorded separately.",
+          "evidence": [
+            {
+              "path": "src/lmdb.F90",
+              "url": "https://github.com/interkosmos/fortran-lmdb/blob/34bb1dc10e11fd470e4643135fa31fccacef7cd7/src/lmdb.F90",
+              "sha256": "40301b4a9c67d0267ea6951542151c4c2b39ab137d3f83f3e0bf6ff38181a4ff"
+            }
+          ],
+          "procedures": [
+            {
+              "procedure": "mdb_env_create",
+              "role": "public-entry-point",
+              "module": "lmdb",
+              "summary": "Allocate a native LMDB environment and return it in TYPE(C_PTR) ENV; INTEGER(C_INT) function result 0 means success. Creation alone does not open a database path or begin a transaction. Check return status before using ENV, retain a single owning handle and eventually call MDB_ENV_CLOSE even if opening later fails. Native LMDB and matching platform-dependent binding kinds must be available.",
+              "signature": "VALUE = mdb_env_create(ENV)",
+              "path": "src/lmdb.F90",
+              "line_start": 486,
+              "line_end": 491,
+              "declarations": [
+                {
+                  "path": "src/lmdb.F90",
+                  "line_start": 489,
+                  "line_end": 490
+                },
+                {
+                  "path": "src/lmdb.F90",
+                  "line_start": 36,
+                  "line_end": 97
+                },
+                {
+                  "path": "src/lmdb.F90",
+                  "line_start": 210,
+                  "line_end": 256
+                }
+              ]
+            },
+            {
+              "procedure": "mdb_env_open",
+              "role": "public-entry-point",
+              "module": "lmdb",
+              "summary": "Open a created LMDB environment at caller CHARACTER PATH, with default INTEGER FLAGS/MODE in this convenience wrapper. It appends a C terminator and converts MODE to MDB_MODE_T. Under normal directory mode, create the directory first; MDB_NOSUBDIR changes file/path interpretation. The function returns an integer native status (0 success), not a handle. Configure map size and named-database limits beforehand when needed. This does file-backed work in the local/sandbox filesystem, not browser storage.",
+              "signature": "VALUE = mdb_env_open(ENV,PATH,FLAGS,MODE)",
+              "path": "src/lmdb.F90",
+              "line_start": 923,
+              "line_end": 930,
+              "declarations": [
+                {
+                  "path": "src/lmdb.F90",
+                  "line_start": 924,
+                  "line_end": 927
+                },
+                {
+                  "path": "src/lmdb.F90",
+                  "line_start": 36,
+                  "line_end": 97
+                },
+                {
+                  "path": "src/lmdb.F90",
+                  "line_start": 210,
+                  "line_end": 256
+                }
+              ]
+            },
+            {
+              "procedure": "mdb_txn_begin",
+              "role": "public-entry-point",
+              "module": "lmdb",
+              "summary": "Begin a transaction on an open ENV. ENV/PARENT are TYPE(C_PTR) VALUE actuals: use C_NULL_PTR for a top-level parent; TXN is an output TYPE(C_PTR). FLAGS is INTEGER(C_UNSIGNED), including the build-selected unsigned/fallback convention, rather than this wrapper converting arbitrary default integers. Check returned INTEGER(C_INT)=0. MDB_RDONLY requests a read transaction; a write transaction is a different ownership/concurrency context. Every successful transaction must be committed or aborted before closing ENV. Returned mapped data pointers must not outlive their transaction.",
+              "signature": "VALUE = mdb_txn_begin(ENV,PARENT,FLAGS,TXN)",
+              "path": "src/lmdb.F90",
+              "line_start": 737,
+              "line_end": 745,
+              "declarations": [
+                {
+                  "path": "src/lmdb.F90",
+                  "line_start": 740,
+                  "line_end": 744
+                },
+                {
+                  "path": "src/lmdb.F90",
+                  "line_start": 36,
+                  "line_end": 97
+                },
+                {
+                  "path": "src/lmdb.F90",
+                  "line_start": 210,
+                  "line_end": 256
+                }
+              ]
+            },
+            {
+              "procedure": "mdb_txn_abort",
+              "role": "public-entry-point",
+              "module": "lmdb",
+              "summary": "Abort one live transaction, rolling back uncommitted writes and releasing native resources, then set this TXN actual to C_NULL_PTR. Do not abort after COMMIT or through a copied handle; only this actual is nullified. The wrapper exposes no status and does not check that an arbitrary pointer denotes a live transaction. Finish transactions before closing the owning environment.",
+              "signature": "CALL mdb_txn_abort(TXN)",
+              "path": "src/lmdb.F90",
+              "line_start": 981,
+              "line_end": 986,
+              "declarations": [
+                {
+                  "path": "src/lmdb.F90",
+                  "line_start": 982,
+                  "line_end": 982
+                },
+                {
+                  "path": "src/lmdb.F90",
+                  "line_start": 36,
+                  "line_end": 97
+                },
+                {
+                  "path": "src/lmdb.F90",
+                  "line_start": 210,
+                  "line_end": 256
+                }
+              ]
+            },
+            {
+              "procedure": "mdb_env_close",
+              "role": "public-entry-point",
+              "module": "lmdb",
+              "summary": "Close a valid created/open environment after outstanding transactions and dependent uses end. This convenience wrapper calls native cleanup and nullifies the supplied ENV. It is not a transaction commit or an ownership-aware reference-counted close: aliases remain dangling and concurrent users must already be finished. Do not rely on scope exit or closing a copied handle to manage lifetime.",
+              "signature": "CALL mdb_env_close(ENV)",
+              "path": "src/lmdb.F90",
+              "line_start": 916,
+              "line_end": 921,
+              "declarations": [
+                {
+                  "path": "src/lmdb.F90",
+                  "line_start": 917,
+                  "line_end": 917
+                },
+                {
+                  "path": "src/lmdb.F90",
+                  "line_start": 36,
+                  "line_end": 97
+                },
+                {
+                  "path": "src/lmdb.F90",
+                  "line_start": 210,
+                  "line_end": 256
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "arpack-ng": {
+      "id": "github:opencollab/arpack-ng",
+      "repository": {
+        "owner": "opencollab",
+        "name": "arpack-ng",
+        "url": "https://github.com/opencollab/arpack-ng"
+      },
+      "license": {
+        "label": "BSD-3-Clause",
+        "spdx_expression": "BSD-3-Clause",
+        "revision": "66faef9e09bb35f5acafe02960885050acc46fa0",
+        "reviewed_on": "2026-11-08",
+        "notes": "Root COPYING supplies the BSD three-clause grant covering ARPACK/P_ARPACK with Rice University, ARPACK-NG and contributor notices. This review scopes serial real symmetric routines and preserves the native BLAS/integer ABI requirement.",
+        "evidence": [
+          {
+            "path": "COPYING",
+            "url": "https://github.com/opencollab/arpack-ng/blob/66faef9e09bb35f5acafe02960885050acc46fa0/COPYING",
+            "sha256": "0926566f9f406178d1214f8cc796e166b1213dd7c05e0c5b461a8b8ac9e50bbe"
+          },
+          {
+            "path": "README.md",
+            "url": "https://github.com/opencollab/arpack-ng/blob/66faef9e09bb35f5acafe02960885050acc46fa0/README.md",
+            "sha256": "0fe6280bc258c239836933dff2c033c14d0d8e84333364d20d09a01f234a4667"
+          },
+          {
+            "path": "SRC/dsaupd.f",
+            "url": "https://github.com/opencollab/arpack-ng/blob/66faef9e09bb35f5acafe02960885050acc46fa0/SRC/dsaupd.f",
+            "sha256": "f617f514a1aa92a5f3068a59926fb4d543cf4d28b21602d1b2db386aa4ba5ac4"
+          }
+        ]
+      },
+      "classifications": [
+        {
+          "code": "D4a1",
+          "level": "source-reviewed",
+          "revision": "66faef9e09bb35f5acafe02960885050acc46fa0",
+          "reviewed_on": "2026-11-08",
+          "notes": "Serial symmetric double-precision reverse communication and extraction document matrix-vector requests, shared workspace and convergence counts. This is a pinned public-interface/source review, not a new numerical execution check or complete API audit. Existing hosted drivers and their verified problem scope are recorded separately.",
+          "evidence": [
+            {
+              "path": "SRC/dsaupd.f",
+              "url": "https://github.com/opencollab/arpack-ng/blob/66faef9e09bb35f5acafe02960885050acc46fa0/SRC/dsaupd.f",
+              "sha256": "f617f514a1aa92a5f3068a59926fb4d543cf4d28b21602d1b2db386aa4ba5ac4"
+            },
+            {
+              "path": "SRC/dseupd.f",
+              "url": "https://github.com/opencollab/arpack-ng/blob/66faef9e09bb35f5acafe02960885050acc46fa0/SRC/dseupd.f",
+              "sha256": "481d9ce754f20627739d6389104fa50911b7ecc60b6027ee2a2baafad2b6835b"
+            }
+          ],
+          "procedures": [
+            {
+              "procedure": "dsaupd",
+              "role": "public-entry-point",
+              "summary": "External double-precision symmetric ARPACK iteration, not a one-shot matrix eigensolver. For the basic standard symmetric mode use BMAT=\"I\", IDO=0, INFO=0 for a random start, IPARAM(1)=1 for exact shifts, IPARAM(3)>0 for a budget and IPARAM(7)=1. Require 0<NEV<NCV<=N, V(LDV,NCV), LDV>=N, RESID(N), WORKD(3*N), IPARAM(11), IPNTR(11) and WORKL length >=NCV*(NCV+8). On IDO=-1/1 apply A to WORKD starting at IPNTR(1), writing WORKD at IPNTR(2); IDO=2 requests B*x (identity in this scope). Re-enter without disturbing saved work until IDO=99, then inspect INFO and IPARAM(5) before DSEUPD. Use a linked BLAS/ARPACK matching default-integer ABI; generalized/shift-invert modes require additional operator rules.",
+              "signature": "CALL dsaupd(IDO,BMAT,N,WHICH,NEV,TOL,RESID,NCV,V,LDV,IPARAM,IPNTR,WORKD,WORKL,LWORKL,INFO)",
+              "path": "SRC/dsaupd.f",
+              "line_start": 408,
+              "line_end": 690,
+              "declarations": [
+                {
+                  "path": "SRC/dsaupd.f",
+                  "line_start": 423,
+                  "line_end": 434
+                },
+                {
+                  "path": "SRC/dsaupd.f",
+                  "line_start": 1,
+                  "line_end": 210
+                }
+              ]
+            },
+            {
+              "procedure": "dseupd",
+              "role": "public-entry-point",
+              "summary": "Extract converged real symmetric Ritz values and optionally vectors after the DSAUPD loop. Preserve the same BMAT, WHICH, NEV, TOL, RESID, NCV, V, IPARAM/IPNTR and work arrays from that completed iteration; do not initialize new workspace for this step. In basic mode 1 use HOWMNY=\"A\", RVEC=.TRUE. for vectors, D(NEV), Z(LDZ,NEV), LDZ>=N and SELECT(NCV). SIGMA is relevant to transformed modes rather than a standard-mode shift request. Check extraction INFO separately from iteration INFO and use only the converged count, IPARAM(5). Values may be ordered differently from intermediate iteration data. This call does not supply the A*x operation or restart DSAUPD.",
+              "signature": "CALL dseupd(RVEC,HOWMNY,SELECT,D,Z,LDZ,SIGMA,BMAT,N,WHICH,NEV,TOL,RESID,NCV,V,LDV,IPARAM,IPNTR,WORKD,WORKL,LWORKL,INFO)",
+              "path": "SRC/dseupd.f",
+              "line_start": 218,
+              "line_end": 867,
+              "declarations": [
+                {
+                  "path": "SRC/dseupd.f",
+                  "line_start": 236,
+                  "line_end": 250
+                },
+                {
+                  "path": "SRC/dseupd.f",
+                  "line_start": 1,
+                  "line_end": 171
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
     "fortran-utils": {
       "id": "github:certik/fortran-utils",
       "repository": {
@@ -27389,6 +28159,77 @@
         }
       ]
     },
+    "propack": {
+      "id": "github:scipy/propack",
+      "repository": {
+        "owner": "scipy",
+        "name": "PROPACK",
+        "url": "https://github.com/scipy/PROPACK"
+      },
+      "license": {
+        "label": "BSD-3-Clause",
+        "spdx_expression": "BSD-3-Clause",
+        "revision": "36f95269ecee6ae42af0c00707b3c3cf3f869a35",
+        "reviewed_on": "2026-11-08",
+        "notes": "Root license.txt supplies the PROPACK three-clause BSD grant credited to Rasmus Munk Larsen/Stanford. Bundled BLAS/LAPACK retain their notices. Only historical double DLANSVD is reviewed here.",
+        "evidence": [
+          {
+            "path": "license.txt",
+            "url": "https://github.com/scipy/PROPACK/blob/36f95269ecee6ae42af0c00707b3c3cf3f869a35/license.txt",
+            "sha256": "06e688f0ce45483c0671f8d887588e5452a993aecd557d2aee3b3b98e399ba67"
+          },
+          {
+            "path": "README.md",
+            "url": "https://github.com/scipy/PROPACK/blob/36f95269ecee6ae42af0c00707b3c3cf3f869a35/README.md",
+            "sha256": "d41b296e47b0b2a2803091887a485db1c9f33e33dac3b3b8ea28e3c90797e084"
+          },
+          {
+            "path": "double/dlansvd.F",
+            "url": "https://github.com/scipy/PROPACK/blob/36f95269ecee6ae42af0c00707b3c3cf3f869a35/double/dlansvd.F",
+            "sha256": "82ce6f20413580bd6def15c7db80e80a34a3c6f5a2e54ced5a6a9e448ae4fc1f"
+          }
+        ]
+      },
+      "classifications": [
+        {
+          "code": "D6",
+          "level": "source-reviewed",
+          "revision": "36f95269ecee6ae42af0c00707b3c3cf3f869a35",
+          "reviewed_on": "2026-11-08",
+          "notes": "Partial double-precision SVD via explicit forward/transpose operator callback documents starting vectors, leading dimensions and work limits. This is a pinned public-interface/source review, not a new numerical execution check or complete API audit. Existing hosted drivers and their verified problem scope are recorded separately.",
+          "evidence": [
+            {
+              "path": "double/dlansvd.F",
+              "url": "https://github.com/scipy/PROPACK/blob/36f95269ecee6ae42af0c00707b3c3cf3f869a35/double/dlansvd.F",
+              "sha256": "82ce6f20413580bd6def15c7db80e80a34a3c6f5a2e54ced5a6a9e448ae4fc1f"
+            }
+          ],
+          "procedures": [
+            {
+              "procedure": "dlansvd",
+              "role": "public-entry-point",
+              "summary": "External double-precision Lanczos SVD computes selected leading singular triplets using APROD(TRANSA,M,N,X,Y,DPARM,IPARM). Implement both A*x for TRANSA=\"N\" and transpose A*x for \"T\" with the linked callback contract; no dense matrix actual is passed. Set JOBU/JOBV to Y or N, K<=MIN(KMAX,M,N), U(LDU,KMAX+1), LDU>=M, V(LDV,KMAX), LDV>=N, SIGMA/BND at least K, and initialize the U starting column (zero requests a random start). Allocate WORK/IWORK to the documented JOB-dependent bounds and initialize DOPTION/IOPTION. K can be updated to the computed count. Inspect INFO/BND and singular-vector residuals; INFO=-1 indicates unconverged requests, positive INFO may indicate a smaller invariant subspace. This scope does not cover restarted/complex variants or arbitrary option/workspace choices.",
+              "signature": "CALL dlansvd(JOBU,JOBV,M,N,K,KMAX,APROD,U,LDU,SIGMA,BND,V,LDV,TOLIN,WORK,LWORK,IWORK,LIWORK,DOPTION,IOPTION,INFO,DPARM,IPARM)",
+              "path": "double/dlansvd.F",
+              "line_start": 1,
+              "line_end": 291,
+              "declarations": [
+                {
+                  "path": "double/dlansvd.F",
+                  "line_start": 98,
+                  "line_end": 104
+                },
+                {
+                  "path": "double/dlansvd.F",
+                  "line_start": 10,
+                  "line_end": 85
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
     "scifortran": {
       "id": "github:scifortran/scifortran",
       "repository": {
@@ -27501,6 +28342,662 @@
                   "path": "src/SF_INTEGRATE/SF_INTEGRATE.f90",
                   "line_start": 158,
                   "line_end": 194
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "fgsl": {
+      "id": "github:reinh-bader/fgsl",
+      "repository": {
+        "owner": "reinh-bader",
+        "name": "fgsl",
+        "url": "https://github.com/reinh-bader/fgsl"
+      },
+      "license": {
+        "label": "GPL version 2 text; version choice not resolved",
+        "spdx_expression": null,
+        "revision": "27a3e7cc0809623bcfde680c39a6fdcf0f590c4c",
+        "reviewed_on": "2026-11-08",
+        "notes": "Root LICENSE supplies GPL version 2 text. This scoped finding does not infer a later-version grant from the generic license template; native GSL is a separately licensed dependency. The public routines live in included .finc source files of module FGSL.",
+        "evidence": [
+          {
+            "path": "LICENSE",
+            "url": "https://github.com/reinh-bader/fgsl/blob/27a3e7cc0809623bcfde680c39a6fdcf0f590c4c/LICENSE",
+            "sha256": "db296f2f7f35bca3a174efb0eb392b3b17bd94b341851429a3dff411b1c2fc73"
+          },
+          {
+            "path": "api/integration.finc",
+            "url": "https://github.com/reinh-bader/fgsl/blob/27a3e7cc0809623bcfde680c39a6fdcf0f590c4c/api/integration.finc",
+            "sha256": "23e69e3b8988a70a4d0e941c79ec8d9e155b8af036d8fd1c5b6e8c2d11b78eac"
+          }
+        ]
+      },
+      "classifications": [
+        {
+          "code": "H2a1",
+          "level": "source-reviewed",
+          "revision": "27a3e7cc0809623bcfde680c39a6fdcf0f590c4c",
+          "reviewed_on": "2026-11-08",
+          "notes": "Adaptive finite-interval quadrature with a C callback, workspace lifecycle and explicit function cleanup documents error-handler and aliasing contracts. This is a pinned public-interface/source review, not a new numerical execution check or complete API audit. Existing hosted drivers and their verified problem scope are recorded separately.",
+          "evidence": [
+            {
+              "path": "api/integration.finc",
+              "url": "https://github.com/reinh-bader/fgsl/blob/27a3e7cc0809623bcfde680c39a6fdcf0f590c4c/api/integration.finc",
+              "sha256": "23e69e3b8988a70a4d0e941c79ec8d9e155b8af036d8fd1c5b6e8c2d11b78eac"
+            },
+            {
+              "path": "api/math.finc",
+              "url": "https://github.com/reinh-bader/fgsl/blob/27a3e7cc0809623bcfde680c39a6fdcf0f590c4c/api/math.finc",
+              "sha256": "90c551b68b380d2ccf11de1296d5af699609383302786a3466fe9c6937757fac"
+            },
+            {
+              "path": "fgsl.F90",
+              "url": "https://github.com/reinh-bader/fgsl/blob/27a3e7cc0809623bcfde680c39a6fdcf0f590c4c/fgsl.F90",
+              "sha256": "b4fdf9b6ecf777be9165f4811988644cd12530cfba7365ca867cea2e07c758c0"
+            }
+          ],
+          "procedures": [
+            {
+              "procedure": "fgsl_function_init",
+              "role": "public-entry-point",
+              "module": "fgsl",
+              "summary": "Wrap a C-interoperable FUNC callback and TYPE(C_PTR) PARAMS into TYPE(FGSL_FUNCTION). FUNC must be BIND(C), accept REAL(C_DOUBLE),VALUE X and TYPE(C_PTR),VALUE PARAMS, and return REAL(C_DOUBLE); an ordinary assumed-shape Fortran callback is not interchangeable. Use C_NULL_PTR when no user data is needed, or C_LOC of a live interoperable TARGET. Keep callback/data alive until all evaluations finish and free the wrapper explicitly with FGSL_FUNCTION_FREE.",
+              "signature": "VALUE = fgsl_function_init(FUNC,PARAMS)",
+              "path": "api/math.finc",
+              "line_start": 71,
+              "line_end": 86,
+              "declarations": [
+                {
+                  "path": "api/math.finc",
+                  "line_start": 72,
+                  "line_end": 81
+                },
+                {
+                  "path": "fgsl.F90",
+                  "line_start": 67,
+                  "line_end": 76
+                },
+                {
+                  "path": "fgsl.F90",
+                  "line_start": 481,
+                  "line_end": 499
+                }
+              ]
+            },
+            {
+              "procedure": "fgsl_integration_workspace_alloc",
+              "role": "public-entry-point",
+              "module": "fgsl",
+              "summary": "Allocate TYPE(FGSL_INTEGRATION_WORKSPACE) for N subintervals using INTEGER(FGSL_SIZE_T). Use positive capacity, check FGSL_WELL_DEFINED on native-backed allocations, retain one owning wrapper and free after use. No independent Fortran allocation-status dummy is provided. This is adaptive integration scratch space, not the integrand or an output value, and shallow copies do not establish shared ownership.",
+              "signature": "VALUE = fgsl_integration_workspace_alloc(N)",
+              "path": "api/integration.finc",
+              "line_start": 17,
+              "line_end": 22,
+              "declarations": [
+                {
+                  "path": "api/integration.finc",
+                  "line_start": 18,
+                  "line_end": 19
+                },
+                {
+                  "path": "fgsl.F90",
+                  "line_start": 67,
+                  "line_end": 76
+                },
+                {
+                  "path": "fgsl.F90",
+                  "line_start": 481,
+                  "line_end": 499
+                }
+              ]
+            },
+            {
+              "procedure": "fgsl_integration_qags",
+              "role": "public-entry-point",
+              "module": "fgsl",
+              "summary": "Adaptive finite-interval Gauss-Kronrod integration with extrapolation. Pass initialized FGSL_FUNCTION, REAL(FGSL_DOUBLE) endpoints/tolerances, INTEGER(FGSL_SIZE_T) LIMIT no larger than allocated workspace capacity, and receive RESULT/ABSERR plus INTEGER(FGSL_INT) function status. Configure GSL error handling before use (FGSL_SET_ERROR_HANDLER_OFF returns the previous handler) if failures should return rather than invoke the native default abort handler. Check FGSL_SUCCESS and the estimate; ABSERR is an estimate, not a rigorous bound. QAGS can handle integrable endpoint singular behavior but is not a universal treatment for every discontinuity/singularity.",
+              "signature": "VALUE = fgsl_integration_qags(F,A,B,EPSABS,EPSREL,LIMIT,WORKSPACE,RESULT,ABSERR)",
+              "path": "api/integration.finc",
+              "line_start": 41,
+              "line_end": 52,
+              "declarations": [
+                {
+                  "path": "api/integration.finc",
+                  "line_start": 43,
+                  "line_end": 48
+                },
+                {
+                  "path": "fgsl.F90",
+                  "line_start": 67,
+                  "line_end": 76
+                },
+                {
+                  "path": "fgsl.F90",
+                  "line_start": 481,
+                  "line_end": 499
+                }
+              ]
+            },
+            {
+              "procedure": "fgsl_integration_workspace_free",
+              "role": "public-entry-point",
+              "module": "fgsl",
+              "summary": "Free a live owning integration workspace after the last integration. The pin checks native pointer association but does not nullify the saved pointer after freeing, so do not repeat FREE or use a shallow alias afterward. No finalization/ownership-sharing guarantee is supplied by this standalone call. This frees workspace only; the FGSL_FUNCTION wrapper needs its own cleanup.",
+              "signature": "CALL fgsl_integration_workspace_free(W)",
+              "path": "api/integration.finc",
+              "line_start": 23,
+              "line_end": 27,
+              "declarations": [
+                {
+                  "path": "api/integration.finc",
+                  "line_start": 24,
+                  "line_end": 24
+                },
+                {
+                  "path": "fgsl.F90",
+                  "line_start": 67,
+                  "line_end": 76
+                },
+                {
+                  "path": "fgsl.F90",
+                  "line_start": 481,
+                  "line_end": 499
+                }
+              ]
+            },
+            {
+              "procedure": "fgsl_function_free",
+              "role": "public-entry-point",
+              "module": "fgsl",
+              "summary": "Explicitly release the native-backed FGSL_FUNCTION wrapper after callbacks are no longer needed. It does not free caller-owned PARAMS data. The pin passes the saved pointer to native cleanup without nullifying it; use a single owner and do not repeat cleanup or evaluate via aliases afterward. Free this separately from the adaptive integration workspace.",
+              "signature": "CALL fgsl_function_free(SFUNC)",
+              "path": "api/math.finc",
+              "line_start": 126,
+              "line_end": 129,
+              "declarations": [
+                {
+                  "path": "api/math.finc",
+                  "line_start": 127,
+                  "line_end": 127
+                },
+                {
+                  "path": "fgsl.F90",
+                  "line_start": 67,
+                  "line_end": 76
+                },
+                {
+                  "path": "fgsl.F90",
+                  "line_start": 481,
+                  "line_end": 499
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "fdict": {
+      "id": "github:zerothi/fdict",
+      "repository": {
+        "owner": "zerothi",
+        "name": "fdict",
+        "url": "https://github.com/zerothi/fdict"
+      },
+      "license": {
+        "label": "MPL-2.0",
+        "spdx_expression": "MPL-2.0",
+        "revision": "6ac903d4c0c524d45b948281a18b9656936c0197",
+        "reviewed_on": "2026-11-08",
+        "notes": "Root LICENSE supplies Mozilla Public License 2.0; dictionary.fypp carries project notices. Generated sources derive from these templates and must retain applicable notices. This scope does not audit every payload specialization.",
+        "evidence": [
+          {
+            "path": "LICENSE",
+            "url": "https://github.com/zerothi/fdict/blob/6ac903d4c0c524d45b948281a18b9656936c0197/LICENSE",
+            "sha256": "fab3dd6bdab226f1c08630b1dd917e11fcb4ec5e1e020e2c16f83a0a13863e85"
+          },
+          {
+            "path": "README.md",
+            "url": "https://github.com/zerothi/fdict/blob/6ac903d4c0c524d45b948281a18b9656936c0197/README.md",
+            "sha256": "8657f78e4ea688cf44fb136f8d08eafa4d279f772f7a9f49f66d11af8fd3cd84"
+          },
+          {
+            "path": "src/dictionary.fypp",
+            "url": "https://github.com/zerothi/fdict/blob/6ac903d4c0c524d45b948281a18b9656936c0197/src/dictionary.fypp",
+            "sha256": "9c468bd4e3887e551c1fa58c1e68a15c4c7474818eff22fee6bd61c5d3e4f5d3"
+          }
+        ]
+      },
+      "classifications": [
+        {
+          "code": "N4",
+          "level": "source-reviewed",
+          "revision": "6ac903d4c0c524d45b948281a18b9656936c0197",
+          "reviewed_on": "2026-11-08",
+          "notes": "Dictionary copy, linked-entry count and deletion document template source, intrinsic-copy hazards and payload ownership. This is a pinned public-interface/source review, not a new numerical execution check or complete API audit. Existing hosted drivers and their verified problem scope are recorded separately.",
+          "evidence": [
+            {
+              "path": "src/dictionary.fypp",
+              "url": "https://github.com/zerothi/fdict/blob/6ac903d4c0c524d45b948281a18b9656936c0197/src/dictionary.fypp",
+              "sha256": "9c468bd4e3887e551c1fa58c1e68a15c4c7474818eff22fee6bd61c5d3e4f5d3"
+            }
+          ],
+          "procedures": [
+            {
+              "procedure": "copy",
+              "role": "public-entry-point",
+              "module": "dictionary",
+              "summary": "COPY generic duplicates entries from FROM into TO after first deleting TO. Require distinct independently owned dictionaries: self-copy or shallow aliases can destroy the source before traversal. This is the package copy routine, not intrinsic derived-type assignment of pointer components. Payloads are copied via .KV. and variable helpers; this scoped review does not promise deep ownership of every pointer-bearing or nested user payload. The linked upstream source is Fypp template input whose named interface is stable in generated module DICTIONARY.",
+              "signature": "CALL copy(FROM,TO)",
+              "path": "src/dictionary.fypp",
+              "line_start": 631,
+              "line_end": 656,
+              "declarations": [
+                {
+                  "path": "src/dictionary.fypp",
+                  "line_start": 632,
+                  "line_end": 633
+                },
+                {
+                  "path": "src/dictionary.fypp",
+                  "line_start": 63,
+                  "line_end": 108
+                },
+                {
+                  "path": "src/dictionary.fypp",
+                  "line_start": 216,
+                  "line_end": 229
+                }
+              ]
+            },
+            {
+              "procedure": "llen",
+              "role": "public-entry-point",
+              "module": "dictionary",
+              "summary": "LLEN generic traverses dictionary entries and returns default INTEGER count. Unlike cached LEN, it counts linked nodes; the dictionary is declared INTENT(INOUT) in the interface even though this body traverses without editing values. A default/empty dictionary counts zero. This exposes neither a list of keys nor a numerical array length, and traversing arbitrary dangling/shallow-aliased structures is outside the contract. The source link targets the pre-generation Fypp file.",
+              "signature": "VALUE = llen(THIS)",
+              "path": "src/dictionary.fypp",
+              "line_start": 666,
+              "line_end": 676,
+              "declarations": [
+                {
+                  "path": "src/dictionary.fypp",
+                  "line_start": 667,
+                  "line_end": 669
+                },
+                {
+                  "path": "src/dictionary.fypp",
+                  "line_start": 63,
+                  "line_end": 108
+                },
+                {
+                  "path": "src/dictionary.fypp",
+                  "line_start": 216,
+                  "line_end": 229
+                }
+              ]
+            },
+            {
+              "procedure": "delete",
+              "role": "public-entry-point",
+              "module": "dictionary",
+              "summary": "DELETE generic removes a named key or the whole dictionary when KEY is omitted. Optional DEALLOC defaults true and controls destruction of associated payloads; use explicit ownership rules for borrowed data or aliases. After removing all entries the owning dictionary is empty. This call does not make independently copied pointer aliases valid; do not delete the same shared chain through multiple shallow copies. Debug builds can STOP on inconsistent internal length. Interface links refer to upstream Fypp source, not generated line numbers.",
+              "signature": "CALL delete(THIS,[KEY],[DEALLOC])",
+              "path": "src/dictionary.fypp",
+              "line_start": 727,
+              "line_end": 830,
+              "declarations": [
+                {
+                  "path": "src/dictionary.fypp",
+                  "line_start": 728,
+                  "line_end": 730
+                },
+                {
+                  "path": "src/dictionary.fypp",
+                  "line_start": 63,
+                  "line_end": 108
+                },
+                {
+                  "path": "src/dictionary.fypp",
+                  "line_start": 216,
+                  "line_end": 229
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "flibcpp": {
+      "id": "github:swig-fortran/flibcpp",
+      "repository": {
+        "owner": "swig-fortran",
+        "name": "flibcpp",
+        "url": "https://github.com/swig-fortran/flibcpp"
+      },
+      "license": {
+        "label": "MIT",
+        "spdx_expression": "MIT",
+        "revision": "334b2250230afbb419402ca2f1c0649c3b12a693",
+        "reviewed_on": "2026-11-08",
+        "notes": "Root LICENSE supplies Oak Ridge National Laboratory/UT-Battelle MIT terms; generated Fortran headers identify SWIG provenance. The linked C++ wrapper library must match the generated bindings.",
+        "evidence": [
+          {
+            "path": "LICENSE",
+            "url": "https://github.com/swig-fortran/flibcpp/blob/334b2250230afbb419402ca2f1c0649c3b12a693/LICENSE",
+            "sha256": "3af94266d494abf41c091871b8ad1d1fbbaf55f9e4f5ac66ad98fc144858a8b1"
+          },
+          {
+            "path": "README.md",
+            "url": "https://github.com/swig-fortran/flibcpp/blob/334b2250230afbb419402ca2f1c0649c3b12a693/README.md",
+            "sha256": "20b7ea054d94879672c6c4ae3372ff56bd8b6fae15fd713bc8ee5de2a95c2069"
+          },
+          {
+            "path": "src/flc_algorithm.f90",
+            "url": "https://github.com/swig-fortran/flibcpp/blob/334b2250230afbb419402ca2f1c0649c3b12a693/src/flc_algorithm.f90",
+            "sha256": "60fa72366cca9f6d1e3a4610ff7e7973d7badcfacb4782108b84908ea5e461fb"
+          }
+        ]
+      },
+      "classifications": [
+        {
+          "code": "N6",
+          "level": "source-reviewed",
+          "revision": "334b2250230afbb419402ca2f1c0649c3b12a693",
+          "reviewed_on": "2026-11-08",
+          "notes": "In-place integer sorting and indirect sorting document raw contiguous arrays, index kinds and permutation conventions. This is a pinned public-interface/source review, not a new numerical execution check or complete API audit. Existing hosted drivers and their verified problem scope are recorded separately.",
+          "evidence": [
+            {
+              "path": "src/flc_algorithm.f90",
+              "url": "https://github.com/swig-fortran/flibcpp/blob/334b2250230afbb419402ca2f1c0649c3b12a693/src/flc_algorithm.f90",
+              "sha256": "60fa72366cca9f6d1e3a4610ff7e7973d7badcfacb4782108b84908ea5e461fb"
+            },
+            {
+              "path": "test/test_algorithm.F90",
+              "url": "https://github.com/swig-fortran/flibcpp/blob/334b2250230afbb419402ca2f1c0649c3b12a693/test/test_algorithm.F90",
+              "sha256": "47b1c910ebe10e315c21cac1b1f44f855be48653f6f9f3b5808b6ad26d47f9e7"
+            }
+          ],
+          "procedures": [
+            {
+              "procedure": "sort",
+              "role": "public-entry-point",
+              "module": "flc_algorithm",
+              "summary": "SORT generic for INTEGER(C_INT32_T) rank-one TARGET DATA sorts in place through the C++ wrapper. Supply contiguous writable storage; the wrapper forwards a raw pointer/element count and does not describe Fortran strides. Other integer/real/comparator overloads are separate. The result is ascending under the default comparator, but equal-value stability is not promised and no status dummy is returned. This is a synchronous call, not a retained container owning the array.",
+              "signature": "CALL sort(DATA)",
+              "path": "src/flc_algorithm.f90",
+              "line_start": 655,
+              "line_end": 662,
+              "declarations": [
+                {
+                  "path": "src/flc_algorithm.f90",
+                  "line_start": 657,
+                  "line_end": 657
+                },
+                {
+                  "path": "src/flc_algorithm.f90",
+                  "line_start": 11,
+                  "line_end": 50
+                },
+                {
+                  "path": "src/flc_algorithm.f90",
+                  "line_start": 73,
+                  "line_end": 79
+                }
+              ]
+            },
+            {
+              "procedure": "argsort",
+              "role": "public-entry-point",
+              "module": "flc_algorithm",
+              "summary": "ARGSORT generic for INTEGER(C_INT32_T) DATA produces INTEGER(INDEX_INT) indices into the original array without sorting DATA. Preallocate IDX to exactly SIZE(DATA), use contiguous TARGET storage and apply returned one-based positions as DATA(IDX). Mismatched output sizes are not a safe resize request. Equal-key permutation order is not guaranteed stable; use the native wrapper library matching the generated Fortran bindings. No status output is exposed.",
+              "signature": "CALL argsort(DATA,IDX)",
+              "path": "src/flc_algorithm.f90",
+              "line_start": 905,
+              "line_end": 915,
+              "declarations": [
+                {
+                  "path": "src/flc_algorithm.f90",
+                  "line_start": 907,
+                  "line_end": 908
+                },
+                {
+                  "path": "src/flc_algorithm.f90",
+                  "line_start": 11,
+                  "line_end": 50
+                },
+                {
+                  "path": "src/flc_algorithm.f90",
+                  "line_start": 73,
+                  "line_end": 79
+                },
+                {
+                  "path": "test/test_algorithm.F90",
+                  "line_start": 139,
+                  "line_end": 160
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "code": "N5",
+          "level": "source-reviewed",
+          "revision": "334b2250230afbb419402ca2f1c0649c3b12a693",
+          "reviewed_on": "2026-11-08",
+          "notes": "Ordered integer binary lookup documents the integer position/zero sentinel rather than a Boolean return. This is a pinned public-interface/source review, not a new numerical execution check or complete API audit. Existing hosted drivers and their verified problem scope are recorded separately.",
+          "evidence": [
+            {
+              "path": "src/flc_algorithm.f90",
+              "url": "https://github.com/swig-fortran/flibcpp/blob/334b2250230afbb419402ca2f1c0649c3b12a693/src/flc_algorithm.f90",
+              "sha256": "60fa72366cca9f6d1e3a4610ff7e7973d7badcfacb4782108b84908ea5e461fb"
+            },
+            {
+              "path": "test/test_algorithm.F90",
+              "url": "https://github.com/swig-fortran/flibcpp/blob/334b2250230afbb419402ca2f1c0649c3b12a693/test/test_algorithm.F90",
+              "sha256": "47b1c910ebe10e315c21cac1b1f44f855be48653f6f9f3b5808b6ad26d47f9e7"
+            }
+          ],
+          "procedures": [
+            {
+              "procedure": "binary_search",
+              "role": "public-entry-point",
+              "module": "flc_algorithm",
+              "summary": "BINARY_SEARCH generic for ascending INTEGER(C_INT32_T) DATA and same-kind VALUE returns INTEGER(INDEX_INT): zero means not found; positive means a ONE-BASED matching position. This is not the Boolean result of C++ std::binary_search. DATA must already be ordered under the same comparator; duplicate-match selection is not a first/last-position promise. Use contiguous TARGET input and check the result before indexing; this interface has no separate status.",
+              "signature": "VALUE = binary_search(DATA,VALUE)",
+              "path": "src/flc_algorithm.f90",
+              "line_start": 1001,
+              "line_end": 1015,
+              "declarations": [
+                {
+                  "path": "src/flc_algorithm.f90",
+                  "line_start": 1004,
+                  "line_end": 1006
+                },
+                {
+                  "path": "src/flc_algorithm.f90",
+                  "line_start": 11,
+                  "line_end": 50
+                },
+                {
+                  "path": "src/flc_algorithm.f90",
+                  "line_start": 73,
+                  "line_end": 79
+                },
+                {
+                  "path": "test/test_algorithm.F90",
+                  "line_start": 188,
+                  "line_end": 198
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "fortran-curl": {
+      "id": "github:interkosmos/fortran-curl",
+      "repository": {
+        "owner": "interkosmos",
+        "name": "fortran-curl",
+        "url": "https://github.com/interkosmos/fortran-curl"
+      },
+      "license": {
+        "label": "ISC",
+        "spdx_expression": "ISC",
+        "revision": "f29cc78fdc7701bc221a82af9bbd9ed04ef52158",
+        "reviewed_on": "2026-11-08",
+        "notes": "Root LICENCE supplies Philipp Engel ISC terms for the binding. Native libcurl and optional transfer-related dependencies retain their separate terms; these annotations concern offline URL parsing.",
+        "evidence": [
+          {
+            "path": "LICENCE",
+            "url": "https://github.com/interkosmos/fortran-curl/blob/f29cc78fdc7701bc221a82af9bbd9ed04ef52158/LICENCE",
+            "sha256": "0bfadaddcce38eea34951ebe5eb038e158ad6d828088b8f4b2f78f06f5f7fdc9"
+          },
+          {
+            "path": "README.md",
+            "url": "https://github.com/interkosmos/fortran-curl/blob/f29cc78fdc7701bc221a82af9bbd9ed04ef52158/README.md",
+            "sha256": "4938fde8d86f889db9655b555b015047fb728ddf1ac719cd0a059820fd8cf763"
+          },
+          {
+            "path": "src/curl_urlapi.f90",
+            "url": "https://github.com/interkosmos/fortran-curl/blob/f29cc78fdc7701bc221a82af9bbd9ed04ef52158/src/curl_urlapi.f90",
+            "sha256": "fd3649de2aefaf557e30673e8925d17a5fa26fb8fe2a43e82d72661ef9366d9d"
+          }
+        ]
+      },
+      "classifications": [
+        {
+          "code": "N3",
+          "level": "source-reviewed",
+          "revision": "f29cc78fdc7701bc221a82af9bbd9ed04ef52158",
+          "reviewed_on": "2026-11-08",
+          "notes": "Offline URL handle creation, component set/get and explicit cleanup document terminated strings, flags and unverified error paths. This is a pinned public-interface/source review, not a new numerical execution check or complete API audit. Existing hosted drivers and their verified problem scope are recorded separately.",
+          "evidence": [
+            {
+              "path": "src/curl_urlapi.f90",
+              "url": "https://github.com/interkosmos/fortran-curl/blob/f29cc78fdc7701bc221a82af9bbd9ed04ef52158/src/curl_urlapi.f90",
+              "sha256": "fd3649de2aefaf557e30673e8925d17a5fa26fb8fe2a43e82d72661ef9366d9d"
+            },
+            {
+              "path": "src/curl_util.f90",
+              "url": "https://github.com/interkosmos/fortran-curl/blob/f29cc78fdc7701bc221a82af9bbd9ed04ef52158/src/curl_util.f90",
+              "sha256": "e3e13d2f3de8cb4cf61df8c7b625e4649ad81a3aa683f59d3cdf3e5debb1eae7"
+            }
+          ],
+          "procedures": [
+            {
+              "procedure": "curl_url",
+              "role": "public-entry-point",
+              "module": "curl_urlapi",
+              "summary": "Allocate a native CURLU URL-parser handle as TYPE(C_PTR). Check C_ASSOCIATED before setting/getting components and eventually call CURL_URL_CLEANUP once. This performs offline URL parsing/manipulation, not a transfer or a way around sandbox network restrictions. Native libcurl must export the URL API; allocation and handle ownership are not managed by automatic Fortran finalization.",
+              "signature": "VALUE = curl_url()",
+              "path": "src/curl_urlapi.f90",
+              "line_start": 86,
+              "line_end": 90,
+              "declarations": [
+                {
+                  "path": "src/curl_urlapi.f90",
+                  "line_start": 89,
+                  "line_end": 89
+                },
+                {
+                  "path": "src/curl_urlapi.f90",
+                  "line_start": 7,
+                  "line_end": 16
+                },
+                {
+                  "path": "src/curl_urlapi.f90",
+                  "line_start": 49,
+                  "line_end": 90
+                }
+              ]
+            },
+            {
+              "procedure": "curl_url_set",
+              "role": "public-entry-point",
+              "module": "curl_urlapi",
+              "summary": "Set a URL component on a live handle; WHAT selects CURLUPART_URL/HOST/PATH/etc. The convenience wrapper accepts ordinary CHARACTER PART and adds the C terminator; FLAGS is an optional default integer, zero when omitted. Check integer result CURLUE_OK=0 before assuming a change succeeded. This changes parsed state only and never fetches the URL. Native escaping/validation behavior depends on the selector and flags, not browser URL-field behavior.",
+              "signature": "VALUE = curl_url_set(HANDLE,WHAT,PART,[FLAGS])",
+              "path": "src/curl_urlapi.f90",
+              "line_start": 157,
+              "line_end": 169,
+              "declarations": [
+                {
+                  "path": "src/curl_urlapi.f90",
+                  "line_start": 158,
+                  "line_end": 162
+                },
+                {
+                  "path": "src/curl_urlapi.f90",
+                  "line_start": 7,
+                  "line_end": 16
+                },
+                {
+                  "path": "src/curl_urlapi.f90",
+                  "line_start": 49,
+                  "line_end": 90
+                }
+              ]
+            },
+            {
+              "procedure": "curl_url_get",
+              "role": "public-entry-point",
+              "module": "curl_urlapi",
+              "summary": "Retrieve an existing URL component into allocatable CHARACTER PART; the wrapper copies and frees the native returned string. Check result CURLUE_OK and use flags for the desired decoding/default rules. Important pinned limitation: conversion and CURL_FREE run regardless of return code, using the native output pointer without an explicit initial value. This review scopes successful gets of known-present parts and does not establish safe handling for every missing-part/error path. Native handles remain separately owned; do not free the allocated Fortran string with CURL_FREE.",
+              "signature": "VALUE = curl_url_get(HANDLE,WHAT,PART,[FLAGS])",
+              "path": "src/curl_urlapi.f90",
+              "line_start": 139,
+              "line_end": 154,
+              "declarations": [
+                {
+                  "path": "src/curl_urlapi.f90",
+                  "line_start": 140,
+                  "line_end": 144
+                },
+                {
+                  "path": "src/curl_urlapi.f90",
+                  "line_start": 7,
+                  "line_end": 16
+                },
+                {
+                  "path": "src/curl_urlapi.f90",
+                  "line_start": 49,
+                  "line_end": 90
+                },
+                {
+                  "path": "src/curl_util.f90",
+                  "line_start": 27,
+                  "line_end": 55
+                }
+              ]
+            },
+            {
+              "procedure": "curl_url_cleanup",
+              "role": "public-entry-point",
+              "module": "curl_urlapi",
+              "summary": "Release a live CURLU parser handle once after all operations. The C binding takes TYPE(C_PTR),VALUE with INTENT(IN), so it does not nullify the caller variable; set your handle to C_NULL_PTR afterward if it will remain in scope. Do not duplicate ownership by intrinsic pointer assignment or call cleanup again through an alias. This frees the parser, not an easy/multi transfer handle.",
+              "signature": "CALL curl_url_cleanup(HANDLE)",
+              "path": "src/curl_urlapi.f90",
+              "line_start": 131,
+              "line_end": 135,
+              "declarations": [
+                {
+                  "path": "src/curl_urlapi.f90",
+                  "line_start": 134,
+                  "line_end": 134
+                },
+                {
+                  "path": "src/curl_urlapi.f90",
+                  "line_start": 7,
+                  "line_end": 16
+                },
+                {
+                  "path": "src/curl_urlapi.f90",
+                  "line_start": 49,
+                  "line_end": 90
                 }
               ]
             }
@@ -27962,6 +29459,7 @@
       "foreig",
       "rkf45",
       "forlab",
+      "libdogleg-f",
       "nafpack",
       "fishpack",
       "spherepack",
@@ -27973,6 +29471,7 @@
       "fortran-bessels",
       "dynamics",
       "dnaoad-fpm",
+      "seiscope-optimization",
       "econ-toolchain",
       "m_la",
       "fglm",
@@ -28022,12 +29521,20 @@
       "npy-for-fortran",
       "delaunaysparse",
       "qnstop",
+      "poisfft",
+      "fortran-lmdb",
+      "arpack-ng",
       "fortran-utils",
       "fortranlib",
       "m-process",
       "nufft1d",
       "nufft2d",
+      "propack",
       "scifortran",
+      "fgsl",
+      "fdict",
+      "flibcpp",
+      "fortran-curl",
       "m_cli",
       "fortran-modbus"
     ],
@@ -28052,10 +29559,8 @@
       "forsudoku",
       "parff",
       "graphstruc",
-      "libdogleg-f",
       "dde_solver",
       "diffstruc",
-      "seiscope-optimization",
       "gslib",
       "featom",
       "fortrandf",
@@ -28070,14 +29575,11 @@
       "fassert",
       "coretran",
       "ftl",
-      "poisfft",
-      "fortran-lmdb",
       "fortran-lua54",
       "fortran-unix",
       "vtmop",
       "fatode",
       "slicot",
-      "arpack-ng",
       "fortran-error-handler",
       "berkeley-assert",
       "fmm2d",
@@ -28088,7 +29590,6 @@
       "fiats",
       "julienne",
       "aotus",
-      "propack",
       "qcontainers",
       "stdlib-os",
       "m_draw",
@@ -28106,9 +29607,6 @@
       "pflogger",
       "flook",
       "ogpf",
-      "fgsl",
-      "fdict",
-      "flibcpp",
       "libmbd",
       "dtfft",
       "dbcsr",
@@ -28121,7 +29619,6 @@
       "pfunit",
       "raffle",
       "m_history",
-      "fortran-curl",
       "plplot",
       "gtk-fortran",
       "fycollections",
