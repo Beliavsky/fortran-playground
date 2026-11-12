@@ -1,0 +1,21 @@
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; connect-src 'self' https://*.modal.run; style-src 'self'; object-src 'none'; base-uri 'none'">
+<title>Fortran API documentation</title><link rel="stylesheet" href="../style.css"></head>
+<body><main><header><h1>Fortran API documentation</h1>
+<p>Generate a searchable API reference with FORD. Existing modules, procedures, arguments and documentation comments are extracted from source; missing explanations are not written for you.</p>
+<p><a href="../fpm/">FPM playground</a> · <a href="https://forddocs.readthedocs.io/en/stable/">About FORD</a></p></header>
+<form id="documentation-form">
+<p><label for="url">Public GitHub repository</label> <input id="url" type="url" required size="55" placeholder="https://github.com/owner/repository"></p>
+<p><label for="revision">Revision</label> <input id="revision" maxlength="200" placeholder="Branch, tag or commit; blank uses HEAD"></p>
+<p><label for="subdirectory">Package directory (optional)</label> <input id="subdirectory" maxlength="200" placeholder="Repository-relative directory"></p>
+<button id="generate" type="submit" disabled>Generate API documentation</button>
+</form>
+<p id="status" role="status">Checking documentation service…</p>
+<p id="results" hidden><a id="view" target="_blank" rel="noopener noreferrer">Open documentation</a> · <a id="zip">Download documentation ZIP</a></p>
+<details id="generation-log" hidden><summary>Generation log and warnings</summary><pre id="diagnostics"></pre></details>
+<p>Experimental: no preprocessing, source INCLUDE directives, external dependency documentation or repository-specific FORD settings. Files under vendor and third-party directories are excluded. Some packages need custom settings and will not work with this pilot. Nothing is compiled or executed.</p>
+<p>Generation is limited to 120 seconds, 1,500 source files and 32 MiB of source. Generated documentation is cached by source snapshot, revision, settings and FORD version.</p>
+<p>Local alternative: install <code>ford==7.0.13</code>, then run <code>python xford.py PATH --serve</code> in a checkout of this playground. PATH can also be a public GitHub repository URL.</p>
+</main><script type="module" src="documentation.mjs"></script></body></html>

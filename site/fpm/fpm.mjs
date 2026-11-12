@@ -960,3 +960,12 @@ await initialize();
 globalThis.addEventListener?.('hashchange', async () => {
   if (location.hash.startsWith('#state=')) await loadSharedState(location.hash);
 });
+
+// Resolve from the loaded package fields at click time, including custom URLs.
+get('generate-documentation').addEventListener('click', event => {
+  const link = event.currentTarget;
+  const params = new URLSearchParams(Object.fromEntries(['url', 'revision', 'subdirectory'].map(name =>
+    [name, get(name === 'url' ? 'package-url' : name).value.trim()])));
+  const base = localExecution ? '/documentation/' : '../documentation/';
+  link.href = base + '?' + params + (localExecution ? '#session=' + encodeURIComponent(localToken) : '');
+});

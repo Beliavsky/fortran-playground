@@ -834,5 +834,15 @@ if (legacyService) {
 await get('download-project').listeners.click();
 const preprocessedZip = Buffer.from(await downloads.at(-1).blob.arrayBuffer()).toString('utf8');
 assert.ok(preprocessedZip.includes('"preprocess": true'));
+get('package-url').value = 'https://github.com/owner/repo';
+get('revision').value = 'a'.repeat(40);
+get('subdirectory').value = 'packages/one';
+get('generate-documentation').listeners.click({currentTarget:get('generate-documentation')});
+const documentationLink = new URL(get('generate-documentation').href, 'https://example.test/fpm/');
+assert.equal(documentationLink.searchParams.get('url'), 'https://github.com/owner/repo');
+assert.equal(documentationLink.searchParams.get('revision'), 'a'.repeat(40));
+assert.equal(documentationLink.searchParams.get('subdirectory'), 'packages/one');
+assert.equal(documentationLink.hash, localExecution ? '#session=private' : '');
+
 globalThis.setTimeout = originalTimeout;
 console.log('FPM UI: workflows, targets, stdin, results, no automatic submissions, and error recovery passed.');

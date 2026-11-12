@@ -1,0 +1,58 @@
+{
+  "ford": "7.0.13",
+  "recipe": "ford-public-v5",
+  "online": {
+    "repository": "jacobwilliams/roots-fortran",
+    "revision": "85dc6b98404a61d49944939414f7f56c3f32edd1",
+    "source_files": 4,
+    "cached": true,
+    "key": "e881e4c397529a269ff87e8ec85c8d76a7401bb602a10eaa6d2560b4fae6d2e9"
+  },
+  "online_checks": [
+    "health",
+    "generation",
+    "cache reuse",
+    "HTML",
+    "search JavaScript MIME",
+    "bundled assets",
+    "offline asset references",
+    "ZIP metadata",
+    "sandbox headers"
+  ],
+  "local_initial_pilot": [
+    {
+      "repository": "jacobwilliams/roots-fortran",
+      "revision": "85dc6b98404a61d49944939414f7f56c3f32edd1",
+      "ford": "7.0.13",
+      "recipe": "ford-public-v3",
+      "source_files": 4,
+      "key": "6f3b6934045c79c3c49ee407be33d48b28e7f0784fa3bc56385d6f9f8ad92f2c",
+      "ok": true,
+      "cache_reused": true,
+      "seconds": 46.053
+    },
+    {
+      "repository": "jacobwilliams/bspline-fortran",
+      "revision": "047c724451aeee7f883c0d5acba3f7bd22a5de01",
+      "ford": "7.0.13",
+      "recipe": "ford-public-v3",
+      "source_files": 19,
+      "key": "91db914d5036543ca2513bd891dede565810d0a9e77f896dca1207c8520f4e1b",
+      "ok": true,
+      "cache_reused": true,
+      "seconds": 92.737
+    },
+    {
+      "repository": "jacobwilliams/quadrature-fortran",
+      "revision": "1d208fc59569a97b1c2abf9c45f7c352dcc7b318",
+      "ford": "7.0.13",
+      "recipe": "ford-public-v3",
+      "source_files": 2,
+      "key": "ee7d65358bc416af64ff3caccdf74b03ffa448a752a0b4c428a25cc17fb6049d",
+      "ok": true,
+      "cache_reused": true,
+      "seconds": 22.654
+    }
+  ],
+  "notes": "Local package measurements preceded the final asset/CORS cleanup and INCLUDE parser guard; each record names its recipe. Final recipe was checked with real FORD unit tests and the online roots-fortran job. No compilation or numerical validation."
+}

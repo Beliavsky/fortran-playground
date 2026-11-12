@@ -63,6 +63,7 @@ class LocalServer(ThreadingHTTPServer):
         self.token = secrets.token_urlsafe(32)
         self.jobs = {}
         self.lock = threading.Lock()
+        self.documentation_lock = threading.Lock()
         super().__init__(('127.0.0.1', port), Handler)
         self.origin = f'http://127.0.0.1:{self.server_port}'
 
@@ -316,14 +317,18 @@ class Handler(BaseHTTPRequestHandler):
     def log_message(self, *args):
         pass
 
-    def reply(self, status, value, content_type='application/json; charset=utf-8'):
+    def reply(self, status, value, content_type='application/json; charset=utf-8', documentation=False):
         body = json.dumps(value).encode('utf-8') if isinstance(value, (dict, list)) else value
         self.send_response(status)
         # CodeMirror measures and positions editor elements with inline styles.
         for key, value in {'Content-Type': content_type, 'Content-Length': str(len(body)), 'Cache-Control': 'no-store',
             'X-Content-Type-Options': 'nosniff', 'Referrer-Policy': 'no-referrer',
             'Content-Security-Policy': "default-src 'self'; script-src 'self'; img-src 'self' data:; style-src 'self' 'unsafe-inline'; connect-src 'self'; object-src 'none'; base-uri 'none'; frame-ancestors 'none'"}.items():
+            if documentation and key == 'Content-Security-Policy':
+                value = "sandbox allow-scripts allow-forms; default-src 'self' 'unsafe-inline' data:; connect-src 'none'; form-action 'self'"
             self.send_header(key, value)
+        if documentation:
+            self.send_header('Access-Control-Allow-Origin', '*')
         self.end_headers()
         try:
             self.wfile.write(body)
@@ -356,6 +361,26 @@ class Handler(BaseHTTPRequestHandler):
             elif parsed.path == '/api/fpm/catalog/health':
                 from local_fpm_catalog import health
                 self.reply(200, health(self.server))
+            elif parsed.path == '/api/documentation/health':
+                import importlib.metadata
+                try:
+                    from ford_docs import FORD_VERSION
+                    available = importlib.metadata.version('ford') == FORD_VERSION
+                except importlib.metadata.PackageNotFoundError:
+                    available = False
+                self.reply(200, {'ok': available, 'ford': '7.0.13',
+                    'error': '' if available else 'Install documentation support: python -m pip install ford==7.0.13'})
+            elif parsed.path.startswith('/documentation/view/'):
+                import mimetypes
+                from ford_docs import artifact
+                key, separator, name = parsed.path.removeprefix('/documentation/view/').partition('/')
+                if not separator: raise ValueError('Invalid documentation path')
+                path = artifact(self.server.workspace / '.fortran-docs', key, name)
+                self.reply(200, path.read_bytes(), mimetypes.guess_type(path.name)[0] or 'application/octet-stream', documentation=True)
+            elif parsed.path in ('/documentation/', '/documentation/index.html', '/documentation/documentation.mjs'):
+                name = 'documentation.mjs' if parsed.path.endswith('.mjs') else 'index.html'
+                self.reply(200, (HOSTED_ASSETS / 'documentation' / name).read_bytes(),
+                    'text/javascript; charset=utf-8' if name.endswith('.mjs') else 'text/html; charset=utf-8')
             elif parsed.path == '/api/files':
                 self.reply(200, {'files': self.server.file_list()})
             elif parsed.path == '/api/source':
@@ -414,6 +439,18 @@ class Handler(BaseHTTPRequestHandler):
             path = urlsplit(self.path).path
             if path in ('/api/format', '/api/check'):
                 self.reply(200, self.server.source_tool(path.removeprefix('/api/'), data))
+            elif path == '/api/documentation':
+                from ford_docs import github_documentation
+                # A separate lock keeps two documentation requests from
+                # launching generators at once, without occupying compiler jobs.
+                if not self.server.documentation_lock.acquire(blocking=False):
+                    self.reply(409, {'error': 'Documentation generation is already active'})
+                else:
+                    try:
+                        result = github_documentation(data, self.server.workspace / '.fortran-docs')
+                        self.reply(200, {'ok': True, **result})
+                    finally:
+                        self.server.documentation_lock.release()
             elif path == '/api/jobs':
                 identifier = self.server.submit(data)
                 self.reply(202 if identifier else 409, {'id': identifier} if identifier else {'error': 'A local comparison is already active'})

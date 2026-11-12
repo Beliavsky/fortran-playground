@@ -686,3 +686,5 @@ Then push any related frontend changes. Compile-only, retained builds, compiler-
 Session tokens are acquired at runtime and kept in memory. The frontend has no duplicate compiler/backend code, browser Python runtime, or transpiler pin. The service advertises compiler availability, presets, limits, and runtime revision, and enforces source limits and sandbox restrictions. Compiled helpers retain fixed build options and are not portable to ofort; future library or interpreter capabilities need explicit backend support and tests.
 
 The editor wrapper, shared styles, asset builder, bundling script, and public service URL originated in the [Python-to-Fortran playground repository](https://github.com/Beliavsky/python-to-fortran-playground). This Fortran frontend is separate from the original playground. CodeMirror is MIT-licensed; the bundler includes its license in the built assets.
+
+API documentation can be generated locally or through the independent FORD pilot. See [FORD documentation generation](docs/ford-documentation.md).

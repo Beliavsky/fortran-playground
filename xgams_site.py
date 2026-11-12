@@ -1,7 +1,7 @@
 """Generate static GAMS browsing pages from the portable software catalog."""
 from html import escape
 from pathlib import Path
-from urllib.parse import quote
+from urllib.parse import quote, urlencode
 from xml.sax.saxutils import escape as xml_escape
 
 from catalog_export import BASE_URL, ROOT, owner_display_name
@@ -372,6 +372,7 @@ def generate_gams_site(destination, feed, *, asset_version=None, reviews=None):
         source = repository + '/tree/' + revision
         playground = project.get('playground')
         actions = [link(repository, 'Repository'), link(source, 'Pinned source ('+revision[:12]+')')]
+        actions.append(link('../../../documentation/?'+urlencode({'url': repository, 'revision': revision}), 'Generate API documentation with FORD'))
         if playground:
             actions.append(link(playground['url'], 'Try in playground'))
             actions.append(link('https://github.com/Beliavsky/fortran-playground/blob/main/'+playground['example']['path'], 'Checked package example'))
