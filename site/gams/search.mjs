@@ -35,3 +35,16 @@ export function initializeSearch(doc = document, win = window) {
 }
 
 if (typeof document !== 'undefined') initializeSearch();
+
+if (typeof document !== 'undefined') {
+let argumentTouch = false;
+document.addEventListener?.('pointerdown', event => {argumentTouch = event.pointerType === 'touch';});
+document.addEventListener?.('click', event => {
+  const argument = event.target.closest?.('.argument-intent');
+  if (argumentTouch && argument) {event.preventDefault(); argument.focus();}
+});
+document.addEventListener?.('keydown', event => {
+  if (event.key === 'Escape' && document.activeElement?.matches?.('.argument-intent')) document.activeElement.blur();
+});
+
+}

@@ -56,3 +56,10 @@ summary { cursor: pointer; color: var(--accent); }
 footer { border-top: 1px solid var(--line); padding: 24px 0 38px; color: var(--muted); font-size: .85rem; }
 @media (max-width: 700px) { .class-list, .package-grid { grid-template-columns: 1fr; } .shell { width: calc(100% - 28px); } .intro { padding-top: 28px; } .class-section { padding: 20px; } }
 @media (prefers-color-scheme: dark) { :root { --bg: #111e2b; --paper: #1a2b3b; --ink: #e4ecf4; --muted: #b0c0d1; --line: #385065; --accent: #8ac5ff; --header: #0c1925; } }
+
+.argument-intent { position:relative; }
+.argument-intent:focus-visible { outline:2px solid var(--accent); }
+.argument-intent:hover::after,.argument-intent:focus::after { content:attr(data-intent-description); position:absolute; left:0; top:100%; z-index:5; padding:.4rem; border:1px solid var(--line); border-radius:.2rem; background:var(--paper); color:var(--ink); width:max-content; max-width:min(32rem,80vw); white-space:pre-wrap; max-height:20rem; overflow:auto; overflow-wrap:anywhere; font-size:.85rem; font-weight:400; font-style:normal; }
+.argument-details dt { font-weight:600; margin-top:.8rem; }
+.argument-details dd { margin-left:1rem; }
+.argument-comment { white-space:pre-wrap; }

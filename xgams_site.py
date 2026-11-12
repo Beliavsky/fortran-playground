@@ -1,5 +1,6 @@
 """Generate static GAMS browsing pages from the portable software catalog."""
 from html import escape
+from catalog_argument_intents import signature_markup, argument_details_markup
 from pathlib import Path
 from urllib.parse import quote, urlencode
 from xml.sax.saxutils import escape as xml_escape
@@ -169,8 +170,9 @@ def generate_gams_site(destination, feed, *, asset_version=None, reviews=None):
                     label = 'Usage (click for constant declarations)' if is_data else 'Usage (click for argument declarations)'
                     if is_template:
                         label = 'Usage (click for template instantiation)'
-                    item += '<p>' + label + ':</p><pre><code>' + link(
-                        url, procedure['signature']) + '</code></pre>'
+                    item += '<p>' + label + ':</p><pre><code><a href="'+e(url)+'">'+signature_markup(procedure)+'</a></code></pre>'
+                    if detailed:
+                        item += argument_details_markup(procedure, repository+'/blob/'+claim['revision']+'/')
                     if detailed:
                         for declaration in procedure['declarations'][1:]:
                             url = repository + '/blob/' + claim['revision'] + '/' + quote(declaration['path'], safe='/')

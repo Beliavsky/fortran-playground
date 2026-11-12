@@ -6,6 +6,7 @@ import json
 from pathlib import Path, PurePosixPath
 import re
 from urllib.parse import urlsplit
+from catalog_argument_intents import validate_arguments
 
 PUBLISHER = 'fortran-gams-catalog-independent-reviews'
 FEED_URL = 'https://beliavsky.github.io/fortran-gams-catalog/reviewed-metadata.json'
@@ -92,6 +93,7 @@ def validate_project(project):
                     raise ValueError('Procedure ranges must refer to pinned evidence.')
             if procedure.get('signature') and not procedure.get('declarations'):
                 raise ValueError('Signatures need argument declarations.')
+            validate_arguments(procedure, paths)
             if 'usage' in procedure:
                 text(procedure['usage'])
                 if procedure.get('usage_kind') != 'calling-sketch':
