@@ -171,12 +171,10 @@ def generate_gams_site(destination, feed, *, asset_version=None, reviews=None):
                     declaration = procedure['declarations'][0]
                     url = repository + '/blob/' + claim['revision'] + '/' + quote(declaration['path'], safe='/')
                     url += f'#L{declaration["line_start"]}-L{declaration["line_end"]}'
-                    label = 'Usage (click for constant declarations)' if is_data else 'Usage (click for argument declarations)'
+                    label = 'Usage (click for constant declarations)' if is_data else 'Usage (argument declarations)'
                     if is_template:
                         label = 'Usage (click for template instantiation)'
-                    item += '<p>' + label + ':</p><pre><code class="calling-sequence"><a href="'+e(url)+'">'+signature_markup(procedure)+'</a></code></pre>'+optional_notation_markup(procedure)
-                    if detailed:
-                        item += argument_details_markup(procedure, repository+'/blob/'+claim['revision']+'/')
+                    item += '<div class="usage-heading"><p>' + label + ':</p>' + argument_details_markup(procedure, repository+'/blob/'+claim['revision']+'/') + '</div><pre><code class="calling-sequence"><a href="'+e(url)+'">'+signature_markup(procedure)+'</a></code></pre>'+optional_notation_markup(procedure)
                     if detailed:
                         for declaration in procedure['declarations'][1:]:
                             url = repository + '/blob/' + claim['revision'] + '/' + quote(declaration['path'], safe='/')

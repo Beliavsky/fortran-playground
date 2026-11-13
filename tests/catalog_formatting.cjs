@@ -3,7 +3,18 @@ const fs = require('node:fs');
 const vm = require('node:vm');
 const context = {};
 vm.runInNewContext(fs.readFileSync(process.argv[2] || 'assets/formatting.js', 'utf8'), context);
-const {normalizeFortran, normalizeDescription, initializeFormatting} = context.FortranCatalogFormatting;
+const {normalizeFortran, normalizeDeclaration, normalizeDescription, initializeFormatting} = context.FortranCatalogFormatting;
+for (const [source, expected] of [
+  ['REAL,INTENT(OUT)::X(:,:)', 'real, intent(out) :: x(:, :)'],
+  ['REAL    ::    X', 'real :: x'],
+  ['REAL X', 'real :: x'],
+  ['DOUBLE PRECISION X', 'double precision :: x'],
+  ['REAL*8 X', 'real*8 :: x'],
+  ['CHARACTER(LEN=*) X', 'character(len=*) :: x'],
+  ["CHARACTER X='::' ! Keep COMMENT", "character :: x='::' ! Keep COMMENT"],
+  ["CHARACTER(LEN=4)::X='A::B'", "character(len=4) :: x='A::B'"],
+  ['OPTIONAL X', 'optional :: x']
+]) assert.equal(normalizeDeclaration(source), expected);
 assert.equal(normalizeFortran('CALL Solve(A,B,   C)'), 'call solve(a, b, c)');
 assert.equal(normalizeFortran('REAL(WP),ALLOCATABLE,INTENT(OUT) :: X(:,:)'), 'real(wp), allocatable, intent(out) :: x(:, :)');
 assert.equal(normalizeFortran(`CALL F('Keep,UPPER','it''s,Exact', "A,""B") ! Keep,COMMENT`),
@@ -21,7 +32,9 @@ function fixture(stored, denied=false) {
   // A comma and its whitespace straddle annotation nodes; strings and comments
   // also cross nodes, so formatting each span separately would corrupt them.
   const nodes=["CALL F(", "[X]", ",", "  Y, 'Keep,UP", "PER') ! Exact, COMMENT 😀"].map(data=>({data}));
-  const declarations=[{data:'REAL(WP), INTENT(OUT) :: X(:,:)'}];
+  const declarations=[{data:'REAL(WP), INTENT(OUT)::X(:,:), Y'}];
+  declarations.classList={contains(name) {return name==='declaration-code';}};
+  declarations.getAttribute=()=> 'REAL(WP), INTENT(OUT)::X(:,:)';
   const example={data:'CALL F(X,Y)'};
   const attrs={'data-intent-description':desc,'data-argument-label':'X',
     'data-code-ranges':JSON.stringify([[first,first+9],[last,last+13]])};
@@ -47,7 +60,7 @@ for (const denied of [false,true]) {
   assert.equal(f.attrs.title,f.attrs['aria-label']);
   f.control.checked=true;f.control.change();
   assert.equal(f.nodes.map(n=>n.data).join(''),f.original);
-  assert.equal(f.declarations[0].data,'REAL(WP), INTENT(OUT) :: X(:,:)');
+  assert.equal(f.declarations[0].data,'REAL(WP), INTENT(OUT)::X(:,:), Y');
   assert.equal(f.attrs.title,'X: '+desc);
   if (!denied) assert.equal(f.storage.get('fortran-catalog-original-formatting'),'true');
   f.control.checked=false;f.control.change();

@@ -70,3 +70,11 @@ footer { border-top: 1px solid var(--line); padding: 24px 0 38px; color: var(--m
 .formatting-controls label { display:flex; align-items:center; gap:.4rem; }
 
 .formatting-controls input { flex:0 0 auto; min-width:0; width:auto; padding:0; }
+
+.usage-heading {display:flex; align-items:baseline; gap:.75rem; flex-wrap:wrap;}
+.usage-heading > p {margin:0;}
+.usage-heading > details {flex:1; min-width:16rem;}
+.argument-details > summary {cursor:pointer; width:fit-content; padding:.25rem .6rem; border:1px solid currentColor; border-radius:.3rem;}
+.argument-details > summary .hide-declarations {display:none;}
+.argument-details[open] > summary .show-declarations {display:none;}
+.argument-details[open] > summary .hide-declarations {display:inline;}

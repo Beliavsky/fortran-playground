@@ -37,12 +37,67 @@
 
   function normalizeFortran(text) {return normalizedPieces(text).join('');}
 
+  function normalizeDeclaration(text) {
+    // Work on code alone: quoted selectors and comments are not spacing targets.
+    const chars = Array.from(text), pieces = normalizedPieces(text);
+    let quote = '', comment = false, separator = false;
+    for (let i = 0; i < chars.length; i++) {
+      const c = chars[i];
+      if (c === '\n' || c === '\r') {comment = false; continue;}
+      if (comment) continue;
+      if (quote) {
+        if (c === quote) {if (chars[i + 1] === quote) {i++; continue;} quote = '';}
+        continue;
+      }
+      if (c === "'" || c === '"') {quote = c; continue;}
+      if (c === '!') {comment = true; continue;}
+      if (c === ':' && chars[i + 1] === ':') {
+        separator = true;
+        let before = i - 1, after = i + 2;
+        while (chars[before] === ' ' || chars[before] === '\t') pieces[before--] = '';
+        while (chars[after] === ' ' || chars[after] === '\t') pieces[after++] = '';
+        pieces[i] = ' :: '; pieces[++i] = '';
+      }
+    }
+    let result = pieces.join('');
+    // Legacy declarations omit ::. Read a balanced type/attribute selector.
+    if (!separator) {
+      const head = /^(\s*(?:double\s+precision|double\s+complex|integer|real|complex|logical|character|type|class|procedure|external|dimension|allocatable|pointer|optional|target|value|contiguous|intent)\b)/i.exec(result);
+      if (head) {
+        let i = head[0].length;
+        while (/^[ \t]$/.test(result[i] || '')) i++;
+        if (result[i] === '*') {
+          i++;
+          while (/^[ \t]$/.test(result[i] || '')) i++;
+          const size = /^[a-z0-9_]+/i.exec(result.slice(i));
+          if (size) i += size[0].length;
+        }
+        if (result[i] !== '(' && !result.slice(head[0].length, i).includes('*')) {
+          const rest = result.slice(head[0].length).trimStart();
+          if (/^[a-z]/i.test(rest)) return result.slice(0, head[0].length).trimEnd() + ' :: ' + rest;
+        }
+        if (result[i] === '(') {
+          let depth = 0, quote = '';
+          for (; i < result.length; i++) {
+            const c = result[i];
+            if (quote) {if (c === quote) {if (result[i + 1] === quote) {i++; continue;} quote = '';}}
+            else if (c === "'" || c === '"') quote = c;
+            else if (c === '(') depth++;
+            else if (c === ')' && --depth === 0) {i++; break;}
+          }
+        }
+        if (/^[ \t]+[a-z]/i.test(result.slice(i))) result = result.slice(0, i).trimEnd() + ' :: ' + result.slice(i).trimStart();
+      }
+    }
+    return result;
+  }
+
   function normalizeDescription(text, ranges) {
     const chars = Array.from(text), parts = [];
     let previous = 0;
     for (const [first, last] of ranges) {
       if (!Number.isInteger(first) || !Number.isInteger(last) || first < previous || last < first || last > chars.length) return text;
-      parts.push(chars.slice(previous, first).join(''), normalizeFortran(chars.slice(first, last).join('')));
+      parts.push(chars.slice(previous, first).join(''), normalizeDeclaration(chars.slice(first, last).join('')));
       previous = last;
     }
     return parts.join('') + chars.slice(previous).join('');
@@ -56,7 +111,14 @@
       const nodes = [], walker = doc.createTreeWalker(root, 4); // SHOW_TEXT
       let node;
       while ((node = walker.nextNode())) nodes.push({node, original: node.data});
-      const pieces = normalizedPieces(nodes.map(item => item.original).join(''));
+      const originalText = nodes.map(item => item.original).join('');
+      const declaration = root.getAttribute && root.getAttribute('data-normalized-code');
+      if (root.classList && root.classList.contains('declaration-code')) {
+        // Declaration blocks contain plain text, so a projected declaration can
+        // replace a shared source line while the exact original stays available.
+        return nodes.map((item, index) => ({...item, normalized: index === 0 ? normalizeDeclaration(declaration || originalText) : ''}));
+      }
+      const pieces = normalizedPieces(originalText);
       let position = 0;
       for (const item of nodes) {
         const length = Array.from(item.original).length;
@@ -91,6 +153,6 @@
     apply();
   }
 
-  global.FortranCatalogFormatting = {normalizeFortran, normalizeDescription, initializeFormatting};
+  global.FortranCatalogFormatting = {normalizeFortran, normalizeDeclaration, normalizeDescription, initializeFormatting};
   if (typeof document !== 'undefined') initializeFormatting(document, global);
 })(globalThis);

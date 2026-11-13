@@ -298,7 +298,7 @@ def signature_markup(procedure):
             continue
         parts.append(fragment(previous,start))
         description=('; '.join('intent('+v['intent']+') when '+v['condition'] for v in argument['variants'])
-                     if intent=='conditional' else 'intent('+intent+')' if intent else 'No explicit INTENT recorded')
+                     if intent=='conditional' else 'intent('+intent+')' if intent else 'Declaration unavailable.')
         code_ranges=[]
         if detail:
             blocks=[]
@@ -323,7 +323,7 @@ def signature_markup(procedure):
             for index,length in declaration_blocks:
                 first=sum(len(block)+2 for block in blocks[:index])
                 code_ranges.append([first,first+length])
-            represented=(intent in {'in','out','inout'} and displayed_intents=={intent}) or (intent is None and bool(displayed_intents))
+            represented=(intent in {'in','out','inout'} and displayed_intents=={intent}) or (intent is None)
             description='\n\n'.join(blocks)+('' if represented else '\n\n'+description)
         label = escape(name+': '+description, quote=True)
         parts.append(f'<span class="argument-intent" data-argument-intent="{intent or "unspecified"}" '
@@ -338,15 +338,18 @@ def signature_markup(procedure):
 def argument_details_markup(procedure, source_url):
     details=procedure.get('argument_details',[])
     if not details:return ''
-    result='<details class="argument-details"><summary>Argument declarations and source comments</summary><dl>'
-    for argument in details:
+    result='<details class="argument-details"><summary><span class="show-declarations">Show declarations</span><span class="hide-declarations">Hide declarations</span></summary><dl>'
+    order={(index,name.casefold()):position for position,(index,_,_,name) in enumerate(usage_tokens(procedure))}
+    for argument in sorted(details,key=lambda a:order.get((a.get('call_index',0),a['name'].casefold()),len(order))):
         name=argument['name']
         if argument.get('implementation'):name+='; specific procedure '+argument['implementation']
         if argument.get('dummy'):name+=' (source dummy: '+argument['dummy']+')'
         if 'call_index' in argument:name+='; call '+str(argument['call_index']+1)
         result+='<dt><code class="declaration-code">'+escape(name)+'</code></dt><dd>'
         for declaration in argument['declarations']:
-            result+='<pre><code class="declaration-code">'+escape(declaration['text'])+'</code></pre>'
+            projected=individual_declaration(declaration['text'],argument.get('dummy',argument['name']))
+            normalized=' data-normalized-code="'+escape(projected,quote=True)+'"' if projected else ''
+            result+='<pre><code class="declaration-code"'+normalized+'>'+escape(declaration['text'])+'</code></pre>'
             if declaration.get('shared'):result+='<p>Shared declaration; associated comments may describe several arguments.</p>'
             for comment in declaration.get('comments',[]):
                 result+='<p class="argument-comment">'+escape(comment['text'])+' '+source_link(comment,source_url)+'</p>'

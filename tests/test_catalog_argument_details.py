@@ -35,6 +35,9 @@ class ArgumentDetailsTests(unittest.TestCase):
         self.assertIn('Shared comment: Both matrices',markup)
         expanded=argument_details_markup(procedure,'https://example.test/')
         self.assertIn('x(n,m), y(n,m)',expanded)
+        self.assertIn('data-normalized-code="real(wp), intent(in) :: x(n,m)"',expanded)
+        self.assertIn('Show declarations',expanded)
+        self.assertIn('Hide declarations',expanded)
 
     def test_imported_declarations_comments_escaping_and_source_links(self):
         feed,_=fixture();procedure=feed['projects'][0]['classifications'][0]['procedures'][0]
@@ -48,6 +51,7 @@ class ArgumentDetailsTests(unittest.TestCase):
         self.assertIn('allocatable',markup);self.assertIn('Allocated solution.',markup)
         self.assertNotIn('<script>',markup)
         self.assertIn('data-argument-intent="unspecified"',markup)
+        self.assertNotIn('No explicit INTENT',markup)
         detail=argument_details_markup(procedure,'https://github.com/example/solver/blob/'+'a'*40+'/')
         self.assertIn('#L12-L12',detail);self.assertIn('&lt;script&gt;',detail)
         declaration['comments'][0]['path']='not-in-evidence'
