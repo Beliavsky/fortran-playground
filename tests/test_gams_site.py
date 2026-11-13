@@ -1978,6 +1978,8 @@ class GamsSiteTests(unittest.TestCase):
             index = (destination/'index.html').read_text(encoding='utf-8')
             self.assertIn('<h1>Fortran packages by GAMS classification</h1>', index)
             self.assertIn('catalog.css?v=abc123', index)
+            self.assertIn('formatting.js?v=abc123', index)
+            self.assertIn('id="original-formatting"', index)
             self.assertIn('data-search=', index)
             self.assertIn('fortran-lapack', index)
             self.assertIn('D2/', Page(index).links)

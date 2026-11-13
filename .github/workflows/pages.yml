@@ -27,6 +27,7 @@ jobs:
       - run: npm test
       - run: npm run test:fixes
       - run: node tests/gams_search.mjs
+      - run: node tests/catalog_formatting.cjs site/gams/formatting.js
       - run: python -m unittest discover -s tests
       - run: python xsite.py
       - uses: actions/upload-pages-artifact@v4

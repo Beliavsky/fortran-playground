@@ -103,6 +103,7 @@ def generate_gams_site(destination, feed, *, asset_version=None, reviews=None):
   <title>{e(title)} | Fortran GAMS catalog</title>
   <link rel="canonical" href="{e(url)}">
   <link rel="stylesheet" href="{prefix}catalog.css{asset_suffix}">
+  <script defer src="{prefix}formatting.js{asset_suffix}"></script>
   <script type="module" src="{prefix}search.mjs{asset_suffix}"></script>
 </head>
 <body>
@@ -111,6 +112,9 @@ def generate_gams_site(destination, feed, *, asset_version=None, reviews=None):
   <a class="brand" href="{prefix or './'}">FORTRAN SOFTWARE CATALOG</a>
   <nav aria-label="Main navigation">{link(prefix or './', 'Browse GAMS')} {link(prefix+'authors/', 'Browse owners')} {link(prefix+'../fpm/', 'FPM playground')} {link(prefix+'../', 'Fortran playground')}</nav>
 </div></header>
+<div class="shell formatting-controls"><label><input type="checkbox" id="original-formatting" aria-describedby="formatting-help"> Original formatting</label>
+<span id="formatting-help">Default: lowercase code and one space after commas. Display only; comments, strings and examples keep their original text.</span></div>
+<noscript><p class="shell">Display formatting requires JavaScript; original text is shown.</p></noscript>
 <main id="content" class="shell">{body}</main>
 <footer class="shell"><p>Classifications maintained by the playground, using the {link('https://gams.nist.gov/cgi-bin/serve.cgi', 'NIST GAMS scheme')} and {link('https://netlib.org/misc/gams.html', 'Netlib detailed taxonomy')}.</p>
 <p>{link(prefix+'../catalog/catalog-v1.json', 'Download catalog data')} · {link('https://github.com/Beliavsky/fortran-playground', 'Source and corrections')}</p></footer>
@@ -170,7 +174,7 @@ def generate_gams_site(destination, feed, *, asset_version=None, reviews=None):
                     label = 'Usage (click for constant declarations)' if is_data else 'Usage (click for argument declarations)'
                     if is_template:
                         label = 'Usage (click for template instantiation)'
-                    item += '<p>' + label + ':</p><pre><code><a href="'+e(url)+'">'+signature_markup(procedure)+'</a></code></pre>'+optional_notation_markup(procedure)
+                    item += '<p>' + label + ':</p><pre><code class="calling-sequence"><a href="'+e(url)+'">'+signature_markup(procedure)+'</a></code></pre>'+optional_notation_markup(procedure)
                     if detailed:
                         item += argument_details_markup(procedure, repository+'/blob/'+claim['revision']+'/')
                     if detailed:

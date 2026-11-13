@@ -1,5 +1,6 @@
 """Optional, source-reviewed argument annotations for usage signatures."""
 from html import escape
+import json
 import re
 
 INTENTS = {'in', 'out', 'inout', 'conditional'}
@@ -298,13 +299,16 @@ def signature_markup(procedure):
         parts.append(fragment(previous,start))
         description=('; '.join('intent('+v['intent']+') when '+v['condition'] for v in argument['variants'])
                      if intent=='conditional' else 'intent('+intent+')' if intent else 'No explicit INTENT recorded')
+        code_ranges=[]
         if detail:
             blocks=[]
+            declaration_blocks=[]
             displayed_intents=set()
             if detail.get('implementation'):blocks.append('Specific procedure: '+detail['implementation'])
             for d in detail['declarations']:
                 block=(individual_declaration(d['text'],detail.get('dummy',detail['name']))
                        if d.get('shared') else d['text'])
+                if block:declaration_blocks.append((len(blocks),len(block)))
                 block=block or 'Declaration available in source details.'
                 # Read only declaration code, not comments or quoted examples.
                 code=re.sub(r"'(?:[^']|'')*'|\"(?:[^\"]|\"\")*\"", '', signature_code(block))
@@ -313,12 +317,18 @@ def signature_markup(procedure):
                 if d.get('comments'):
                     block+='\n'+('Shared comment: ' if d.get('shared') else '')+'\n'.join(c['text'] for c in d['comments'])
                 blocks.append(block)
-            if detail.get('dummy'):blocks.insert(0,'Source dummy: '+detail['dummy'])
+            if detail.get('dummy'):
+                blocks.insert(0,'Source dummy: '+detail['dummy'])
+                declaration_blocks=[(index+1,length) for index,length in declaration_blocks]
+            for index,length in declaration_blocks:
+                first=sum(len(block)+2 for block in blocks[:index])
+                code_ranges.append([first,first+length])
             represented=(intent in {'in','out','inout'} and displayed_intents=={intent}) or (intent is None and bool(displayed_intents))
             description='\n\n'.join(blocks)+('' if represented else '\n\n'+description)
         label = escape(name+': '+description, quote=True)
         parts.append(f'<span class="argument-intent" data-argument-intent="{intent or "unspecified"}" '
                      f'data-intent-description="{escape(description,quote=True)}" '
+                     f'data-code-ranges="{escape(json.dumps(code_ranges),quote=True)}" data-argument-label="{escape(name,quote=True)}" '
                      f'tabindex="0" role="note" title="{label}" aria-label="{label}">{fragment(start,end)}</span>')
         previous = end
     parts.append(fragment(previous,len(signature)))
@@ -334,9 +344,9 @@ def argument_details_markup(procedure, source_url):
         if argument.get('implementation'):name+='; specific procedure '+argument['implementation']
         if argument.get('dummy'):name+=' (source dummy: '+argument['dummy']+')'
         if 'call_index' in argument:name+='; call '+str(argument['call_index']+1)
-        result+='<dt><code>'+escape(name)+'</code></dt><dd>'
+        result+='<dt><code class="declaration-code">'+escape(name)+'</code></dt><dd>'
         for declaration in argument['declarations']:
-            result+='<pre><code>'+escape(declaration['text'])+'</code></pre>'
+            result+='<pre><code class="declaration-code">'+escape(declaration['text'])+'</code></pre>'
             if declaration.get('shared'):result+='<p>Shared declaration; associated comments may describe several arguments.</p>'
             for comment in declaration.get('comments',[]):
                 result+='<p class="argument-comment">'+escape(comment['text'])+' '+source_link(comment,source_url)+'</p>'

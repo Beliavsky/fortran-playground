@@ -65,3 +65,8 @@ footer { border-top: 1px solid var(--line); padding: 24px 0 38px; color: var(--m
 .argument-comment { white-space:pre-wrap; }
 
 .optional-notation { color:var(--muted); font-size:.85rem; }
+
+.formatting-controls { display:flex; align-items:center; flex-wrap:wrap; gap:.3rem 1rem; padding-top:.8rem; color:var(--muted); font-size:.9rem; }
+.formatting-controls label { display:flex; align-items:center; gap:.4rem; }
+
+.formatting-controls input { flex:0 0 auto; min-width:0; width:auto; padding:0; }
