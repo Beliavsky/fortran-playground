@@ -60,8 +60,6 @@ footer { border-top: 1px solid var(--line); padding: 24px 0 38px; color: var(--m
 .argument-intent { position:relative; }
 .argument-intent:focus-visible { outline:2px solid var(--accent); }
 .argument-intent:hover::after,.argument-intent:focus::after { content:attr(data-intent-description); position:absolute; left:0; top:100%; z-index:5; padding:.4rem; border:1px solid var(--line); border-radius:.2rem; background:var(--paper); color:var(--ink); width:max-content; max-width:min(32rem,80vw); white-space:pre-wrap; max-height:20rem; overflow:auto; overflow-wrap:anywhere; font-size:.85rem; font-weight:400; font-style:normal; }
-.argument-details dt { font-weight:600; margin-top:.8rem; }
-.argument-details dd { margin-left:1rem; }
 .argument-comment { white-space:pre-wrap; }
 
 .optional-notation { color:var(--muted); font-size:.85rem; }

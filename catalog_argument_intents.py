@@ -336,26 +336,30 @@ def signature_markup(procedure):
 
 
 def argument_details_markup(procedure, source_url):
+    """A single copyable code block, ordered like the calling sequence.
+
+    Source navigation remains on the usage signature. Each declaration span
+    retains its original text for the formatting preference; comments stay
+    outside those spans so their spelling and capitalization are preserved.
+    """
     details=procedure.get('argument_details',[])
     if not details:return ''
-    result='<details class="argument-details"><summary><span class="show-declarations">Show declarations</span><span class="hide-declarations">Hide declarations</span></summary><dl>'
+    result='<details class="argument-details"><summary><span class="show-declarations">Show declarations</span><span class="hide-declarations">Hide declarations</span></summary><pre><code>'
     order={(index,name.casefold()):position for position,(index,_,_,name) in enumerate(usage_tokens(procedure))}
+    lines=[]
     for argument in sorted(details,key=lambda a:order.get((a.get('call_index',0),a['name'].casefold()),len(order))):
-        name=argument['name']
-        if argument.get('implementation'):name+='; specific procedure '+argument['implementation']
-        if argument.get('dummy'):name+=' (source dummy: '+argument['dummy']+')'
-        if 'call_index' in argument:name+='; call '+str(argument['call_index']+1)
-        result+='<dt><code class="declaration-code">'+escape(name)+'</code></dt><dd>'
         for declaration in argument['declarations']:
             projected=individual_declaration(declaration['text'],argument.get('dummy',argument['name']))
             normalized=' data-normalized-code="'+escape(projected,quote=True)+'"' if projected else ''
-            result+='<pre><code class="declaration-code"'+normalized+'>'+escape(declaration['text'])+'</code></pre>'
-            if declaration.get('shared'):result+='<p>Shared declaration; associated comments may describe several arguments.</p>'
-            for comment in declaration.get('comments',[]):
-                result+='<p class="argument-comment">'+escape(comment['text'])+' '+source_link(comment,source_url)+'</p>'
-            result+=source_link(declaration,source_url)
-        result+='</dd>'
-    return result+'</dl></details>'
+            line='<span class="declaration-code"'+normalized+'>'+escape(declaration['text'])+'</span>'
+            comments=[]
+            for comment in sorted(declaration.get('comments',[]),key=lambda c:c.get('line_start',0)):
+                text=' '.join(re.sub(r'^\s*!+[<>]?\s*','',part).strip()
+                              for part in comment['text'].splitlines()).strip()
+                if text and text not in comments:comments.append(text)
+            if comments:line+=' ! '+escape(' '.join(comments))
+            lines.append(line)
+    return result+'\n'.join(lines)+'</code></pre></details>'
 
 
 def source_link(record, source_url):

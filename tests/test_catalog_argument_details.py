@@ -53,10 +53,31 @@ class ArgumentDetailsTests(unittest.TestCase):
         self.assertIn('data-argument-intent="unspecified"',markup)
         self.assertNotIn('No explicit INTENT',markup)
         detail=argument_details_markup(procedure,'https://github.com/example/solver/blob/'+'a'*40+'/')
-        self.assertIn('#L12-L12',detail);self.assertIn('&lt;script&gt;',detail)
+        self.assertEqual(detail.count('<pre>'),1)
+        self.assertIn('</span> ! Allocated solution. &lt;script&gt;',detail)
+        self.assertNotIn('<dt>',detail)
+        self.assertNotIn('src/solver.f90:',detail)
         declaration['comments'][0]['path']='not-in-evidence'
         feed['snapshot_id']=digest(feed)
         with self.assertRaises(ValueError):validate_feed(feed)
 
+
+    def test_declarations_share_one_box_with_trailing_comments_in_call_order(self):
+        procedure={'signature':'call solve(n, x, l)', 'argument_details':[
+            {'name':'l','declarations':[{'text':'REAL(8) :: X(N), L(N)','shared':True}]},
+            {'name':'n','declarations':[{'text':'INTEGER :: N','comments':[
+                {'text':'!> Number of entries.\n!! Must be positive.'}]}]},
+            {'name':'x','declarations':[{'text':'REAL(8) :: X(N), L(N)','shared':True,
+                'comments':[{'text':'Input <values>.'}]}]}]}
+        rendered=argument_details_markup(procedure,'https://example.test/')
+        self.assertEqual(rendered.count('<pre>'),1)
+        self.assertEqual(rendered.count('<code>'),1)
+        self.assertNotIn('<dl>',rendered)
+        self.assertNotIn('Shared declaration',rendered)
+        self.assertNotIn('<a ',rendered)
+        self.assertIn('</span> ! Number of entries. Must be positive.',rendered)
+        self.assertIn('</span> ! Input &lt;values&gt;.',rendered)
+        self.assertLess(rendered.index('INTEGER :: N'),rendered.index('data-normalized-code="REAL(8) :: X(N)"'))
+        self.assertLess(rendered.index('data-normalized-code="REAL(8) :: X(N)"'),rendered.index('data-normalized-code="REAL(8) :: L(N)"'))
 
 if __name__=='__main__':unittest.main()
