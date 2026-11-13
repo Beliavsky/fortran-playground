@@ -335,6 +335,31 @@ def signature_markup(procedure):
     return ''.join(parts)
 
 
+def comment_preview(text, limit=100):
+    """A first-sentence preview, including its omission marker in the limit."""
+    text=' '.join(text.split())
+    if not text:return ''
+    sentence=re.split(r'(?<=[.!?])\s+',text,maxsplit=1)[0]
+    shortened=sentence!=text
+    if len(sentence)+(2 if shortened else 0)>limit:
+        candidate=sentence[:limit-2]
+        # Do not display a partial word; even an oversized first word is omitted.
+        if len(sentence)>len(candidate) and not sentence[len(candidate)].isspace():
+            candidate=candidate.rsplit(' ',1)[0] if ' ' in candidate else ''
+        sentence=candidate.rstrip();shortened=True
+    return sentence+(' …' if sentence and shortened else '…' if shortened else '')
+
+
+def declaration_comments(declaration):
+    """Clean comment markers while retaining source order and complete text."""
+    comments=[]
+    for comment in sorted(declaration.get('comments',[]),key=lambda c:c.get('line_start',0)):
+        text='\n'.join(re.sub(r'^\s*!+[<>]?\s*','',part).strip()
+                       for part in comment['text'].splitlines()).strip()
+        if text and text not in comments:comments.append(text)
+    return comments
+
+
 def argument_details_markup(procedure, source_url):
     """A single copyable code block, ordered like the calling sequence.
 
@@ -346,20 +371,31 @@ def argument_details_markup(procedure, source_url):
     if not details:return ''
     result='<details class="argument-details"><summary><span class="show-declarations">Show declarations</span><span class="hide-declarations">Hide declarations</span></summary><pre><code>'
     order={(index,name.casefold()):position for position,(index,_,_,name) in enumerate(usage_tokens(procedure))}
-    lines=[]
+    lines=[];documentation=[]
     for argument in sorted(details,key=lambda a:order.get((a.get('call_index',0),a['name'].casefold()),len(order))):
+        full_comments=[]
         for declaration in argument['declarations']:
             projected=individual_declaration(declaration['text'],argument.get('dummy',argument['name']))
             normalized=' data-normalized-code="'+escape(projected,quote=True)+'"' if projected else ''
             line='<span class="declaration-code"'+normalized+'>'+escape(declaration['text'])+'</span>'
-            comments=[]
-            for comment in sorted(declaration.get('comments',[]),key=lambda c:c.get('line_start',0)):
-                text=' '.join(re.sub(r'^\s*!+[<>]?\s*','',part).strip()
-                              for part in comment['text'].splitlines()).strip()
-                if text and text not in comments:comments.append(text)
-            if comments:line+=' ! '+escape(' '.join(comments))
+            comments=declaration_comments(declaration)
+            # Clearly labelled procedure introductions are not argument summaries.
+            specific=[text for text in comments if not re.match(
+                r'^(?:@(?:brief|details)\b|(?:this|the)\s+(?:routine|subroutine|function|procedure)\s+(?:is|does|computes|calculates|solves|performs|returns|provides|implements|evaluates)\b)',text,re.I)]
+            preview=comment_preview(' '.join(specific))
+            if preview:line+=' ! '+escape(preview)
+            for text in comments:
+                if text not in full_comments:full_comments.append(text)
             lines.append(line)
-    return result+'\n'.join(lines)+'</code></pre></details>'
+        if full_comments:
+            name=argument['name']
+            if argument.get('dummy'):name+=' (source dummy: '+argument['dummy']+')'
+            documentation.append('<div class="argument-documentation-entry"><p><strong>'+escape(name)+
+                                 '</strong></p><p class="argument-comment">'+escape('\n'.join(full_comments))+'</p></div>')
+    result+='\n'.join(lines)+'</code></pre>'
+    if documentation:
+        result+='<details class="argument-documentation"><summary>Full argument documentation</summary>'+''.join(documentation)+'</details>'
+    return result+'</details>'
 
 
 def source_link(record, source_url):

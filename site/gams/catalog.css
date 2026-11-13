@@ -76,3 +76,10 @@ footer { border-top: 1px solid var(--line); padding: 24px 0 38px; color: var(--m
 .argument-details > summary .hide-declarations {display:none;}
 .argument-details[open] > summary .show-declarations {display:none;}
 .argument-details[open] > summary .hide-declarations {display:inline;}
+
+/* Declarations and full comments wrap within the available page width. */
+.usage-heading > details {min-width:0; max-width:100%;}
+.usage-heading > .argument-details[open] {flex-basis:100%;}
+.argument-details > pre {white-space:pre-wrap; overflow-wrap:anywhere;}
+.argument-documentation {margin-top:.75rem;}
+.argument-documentation .argument-comment {white-space:pre-wrap; overflow-wrap:anywhere;}

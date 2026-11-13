@@ -54,7 +54,8 @@ class ArgumentDetailsTests(unittest.TestCase):
         self.assertNotIn('No explicit INTENT',markup)
         detail=argument_details_markup(procedure,'https://github.com/example/solver/blob/'+'a'*40+'/')
         self.assertEqual(detail.count('<pre>'),1)
-        self.assertIn('</span> ! Allocated solution. &lt;script&gt;',detail)
+        self.assertIn('</span> ! Allocated solution. …',detail)
+        self.assertIn('&lt;script&gt;bad&lt;/script&gt;',detail)
         self.assertNotIn('<dt>',detail)
         self.assertNotIn('src/solver.f90:',detail)
         declaration['comments'][0]['path']='not-in-evidence'
@@ -75,9 +76,37 @@ class ArgumentDetailsTests(unittest.TestCase):
         self.assertNotIn('<dl>',rendered)
         self.assertNotIn('Shared declaration',rendered)
         self.assertNotIn('<a ',rendered)
-        self.assertIn('</span> ! Number of entries. Must be positive.',rendered)
+        self.assertIn('</span> ! Number of entries. …',rendered)
+        self.assertIn('Full argument documentation',rendered)
+        self.assertIn('Must be positive.',rendered)
         self.assertIn('</span> ! Input &lt;values&gt;.',rendered)
         self.assertLess(rendered.index('INTEGER :: N'),rendered.index('data-normalized-code="REAL(8) :: X(N)"'))
         self.assertLess(rendered.index('data-normalized-code="REAL(8) :: X(N)"'),rendered.index('data-normalized-code="REAL(8) :: L(N)"'))
+
+    def test_long_comments_are_bounded_and_full_documentation_is_preserved(self):
+        from catalog_argument_intents import comment_preview
+        self.assertEqual(comment_preview('First sentence. Second sentence.'),'First sentence. …')
+        self.assertEqual(comment_preview('Value 3.14 is supported.'),'Value 3.14 is supported.')
+        self.assertEqual(comment_preview('Short comment.'),'Short comment.')
+        long=' '.join(['Long argument explanation']*20)
+        preview=comment_preview(long)
+        self.assertLessEqual(len(preview),100)
+        self.assertTrue(preview.endswith(' …'))
+        self.assertIn(preview[:-2].split()[-1],long.split())
+        self.assertEqual(comment_preview('X'*200),'…')
+        procedure={'signature':'call solve(x, y)', 'argument_details':[
+            {'name':'x','declarations':[{'text':'REAL :: X','comments':[{'text':long}]}]},
+            {'name':'y','declarations':[{'text':'REAL :: Y','comments':[
+                {'text':'This routine solves a general problem.'},
+                {'text':'Input vector. Further details follow.'}]}]}]}
+        markup=argument_details_markup(procedure,'https://example.test/')
+        code=markup.split('<pre><code>',1)[1].split('</code></pre>',1)[0]
+        self.assertIn(preview,code)
+        self.assertIn('! Input vector. …',code)
+        self.assertNotIn('This routine',code)
+        self.assertNotIn('Further details',code)
+        self.assertEqual(code.count('class="declaration-code"'),2)
+        self.assertIn(long,markup.split('Full argument documentation',1)[1])
+        self.assertIn('This routine solves a general problem.',markup)
 
 if __name__=='__main__':unittest.main()
