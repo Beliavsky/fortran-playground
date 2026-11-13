@@ -9,6 +9,19 @@ from test_catalog_reviews import fixture
 
 
 class ArgumentDetailsTests(unittest.TestCase):
+    def test_shared_declaration_is_individual_in_tooltip_and_original_in_details(self):
+        procedure={'signature':'CALL solve(A,B)', 'argument_details':[
+            {'name':'A','dummy':'x','declarations':[{'text':'real(wp), intent(in) :: x(n,m), y(n,m)',
+              'shared':True,'path':'src.f90','line_start':1,'line_end':1,
+              'comments':[{'text':'Both matrices use the same units.','path':'src.f90','line_start':1,'line_end':1}]}]}]}
+        markup=signature_markup(procedure)
+        self.assertIn('real(wp), intent(in) :: x(n,m)',markup)
+        self.assertNotIn('y(n,m)',markup)
+        self.assertNotIn('Shared declaration',markup)
+        self.assertIn('Shared comment: Both matrices',markup)
+        expanded=argument_details_markup(procedure,'https://example.test/')
+        self.assertIn('x(n,m), y(n,m)',expanded)
+
     def test_imported_declarations_comments_escaping_and_source_links(self):
         feed,_=fixture();procedure=feed['projects'][0]['classifications'][0]['procedures'][0]
         declaration={'path':'src/solver.f90','line_start':11,'line_end':11,

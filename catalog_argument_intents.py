@@ -149,6 +149,68 @@ def validate_arguments(procedure, evidence_paths):
             raise ValueError('Argument intents must link to recorded argument declarations.')
 
 
+def individual_declaration(text, name):
+    """Select one entity without splitting dimensions, selectors or literals.
+
+    Return None for unfamiliar syntax; the unchanged source stays in details.
+    This is a display projection, never a rewritten source/evidence record.
+    """
+    depth=0;quote=None;separator=None;i=0
+    while i<len(text):
+        char=text[i]
+        if quote:
+            if char==quote:
+                if i+1<len(text) and text[i+1]==quote:i+=2;continue
+                quote=None
+        elif char in "'\"":quote=char
+        elif char in '([':depth+=1
+        elif char in ')]':depth-=1
+        elif depth==0 and text[i:i+2]=='::':separator=i;break
+        i+=1
+    if separator is not None:
+        prefix=text[:separator+2].rstrip()+' '
+        entities=text[separator+2:]
+    else:
+        head=re.match(r'\s*(?:double\s*precision|double\s*complex|integer|real|complex|logical|character|type|class|procedure|external|dimension|allocatable|pointer|optional|target|value|contiguous|intent)\b',text,re.I)
+        if not head:return None
+        i=head.end()
+        while i<len(text) and text[i].isspace():i+=1
+        if i<len(text) and text[i]=='*':
+            i+=1
+            while i<len(text) and text[i].isspace():i+=1
+            if i<len(text) and text[i]!='(':
+                selector=re.match(r'(?:[0-9]+|[a-z][a-z0-9_]*)',text[i:],re.I)
+                if not selector:return None
+                i+=selector.end()
+                while i<len(text) and text[i].isspace():i+=1
+        if i<len(text) and text[i]=='(':
+            depth=1;i+=1
+            while i<len(text) and depth:
+                if text[i]=='(':depth+=1
+                elif text[i]==')':depth-=1
+                i+=1
+            if depth:return None
+        prefix=text[:i].rstrip()+' '
+        entities=text[i:]
+    parts=[];start=0;depth=0;quote=None;i=0
+    while i<len(entities):
+        char=entities[i]
+        if quote:
+            if char==quote:
+                if i+1<len(entities) and entities[i+1]==quote:i+=2;continue
+                quote=None
+        elif char in "'\"":quote=char
+        elif char in '([':depth+=1
+        elif char in ')]':depth-=1
+        elif char==',' and depth==0:
+            parts.append(entities[start:i].strip());start=i+1
+        i+=1
+    if depth or quote:return None
+    parts.append(entities[start:].strip())
+    matches=[entity for entity in parts if (m:=re.match(r'([a-z][a-z0-9_]*)\b',entity,re.I)) and m[1].casefold()==name.casefold()]
+    return prefix+matches[0] if len(matches)==1 else None
+
+
 def signature_markup(procedure):
     """Preserve literal signature text and escape every fragment independently."""
     signature = procedure['signature']
@@ -169,9 +231,11 @@ def signature_markup(procedure):
             blocks=[]
             if detail.get('implementation'):blocks.append('Specific procedure: '+detail['implementation'])
             for d in detail['declarations']:
-                block=d['text']
-                if d.get('shared'):block+='\n(Shared declaration; comments may describe several arguments.)'
-                block+=''.join('\n'+c['text'] for c in d.get('comments',[]))
+                block=(individual_declaration(d['text'],detail.get('dummy',detail['name']))
+                       if d.get('shared') else d['text'])
+                block=block or 'Declaration available in source details.'
+                if d.get('comments'):
+                    block+='\n'+('Shared comment: ' if d.get('shared') else '')+'\n'.join(c['text'] for c in d['comments'])
                 blocks.append(block)
             if detail.get('dummy'):blocks.insert(0,'Source dummy: '+detail['dummy'])
             description='\n\n'.join(blocks)+'\n\n'+description
