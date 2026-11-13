@@ -211,9 +211,80 @@ def individual_declaration(text, name):
     return prefix+matches[0] if len(matches)==1 else None
 
 
+def top_level_items(text):
+    """Offsets for comma-separated items; strings, shapes and arrays stay intact."""
+    start=0;depth=0;quote=None;i=0
+    while i<len(text):
+        char=text[i]
+        if quote:
+            if char==quote:
+                if i+1<len(text) and text[i+1]==quote:i+=2;continue
+                quote=None
+        elif char in "'\"":quote=char
+        elif char in '([':depth+=1
+        elif char in ')]':depth-=1
+        elif char==',' and depth==0:
+            yield start,i;start=i+1
+        i+=1
+    yield start,len(text)
+
+
+def declared_optional(detail):
+    """Only explicit OPTIONAL in declaration attributes, never prose or names."""
+    typed=[]
+    for declaration in detail.get('declarations',[]):
+        code=re.sub(r"'(?:[^']|'')*'|\"(?:[^\"]|\"\")*\"", '', signature_code(declaration['text']))
+        if re.match(r'^\s*optional\b',code,re.I):return True
+        if '::' not in code:continue
+        prefix=code.split('::',1)[0]
+        attributes=[prefix[a:b].strip().lower() for a,b in top_level_items(prefix)]
+        optional='optional' in attributes
+        if optional or re.match(r'^\s*(?:real|integer|complex|logical|character|double\s*precision|double\s*complex|type|class|procedure)\b',prefix,re.I):
+            typed.append(optional)
+    # Conflicting typed declarations may be preprocessing alternatives; do not
+    # turn an OPTIONAL in just one alternative into an unconditional promise.
+    return bool(typed) and all(typed)
+
+
+def optional_argument_ranges(procedure):
+    signature=procedure['signature'];code=signature_code(signature)
+    optional={(d.get('call_index',0),d['name'].casefold()) for d in procedure.get('argument_details',[]) if declared_optional(d)}
+    keywords={(d.get('call_index',0),d.get('dummy',d['name']).casefold()) for d in procedure.get('argument_details',[]) if declared_optional(d)}
+    result=[]
+    for index,call in enumerate(signature_calls(signature)):
+        for first,last in top_level_items(code[call['start']:call['end']]):
+            first+=call['start'];last+=call['start']
+            while first<last and code[first] in ' \t\r\n&':first+=1
+            while last>first and code[last-1] in ' \t\r\n&':last-=1
+            item=code[first:last]
+            keyword=re.match(r'^([a-z][a-z0-9_]*)\s*=(?!=|>)',item,re.I)
+            # Preserve existing documentation groups; keyword values may still
+            # contain an ordinary Fortran array constructor.
+            if item.startswith('[') or (not keyword and ('[' in item or ']' in item)):continue
+            plain=re.fullmatch(r'[a-z][a-z0-9_]*',item,re.I)
+            name=keyword[1] if keyword else plain[0] if plain else None
+            if name and (index,name.casefold()) in (keywords | optional if keyword else optional):result.append((first,last))
+    return result
+
+
+def optional_notation_markup(procedure):
+    if optional_argument_ranges(procedure):
+        return '<p class="optional-notation">Brackets added around optional arguments are documentation notation, not literal Fortran syntax.</p>'
+    return ''
+
+
 def signature_markup(procedure):
-    """Preserve literal signature text and escape every fragment independently."""
+    """Escape usage text and mark source-declared optional arguments for display."""
     signature = procedure['signature']
+    markers={}
+    for first,last in optional_argument_ranges(procedure):
+        markers[first]='[';markers[last]=']'
+    def fragment(first,last):
+        result=[];previous=first
+        for position in sorted(p for p in markers if first<=p<last):
+            result.extend([escape(signature[previous:position]),markers[position]]);previous=position
+        result.append(escape(signature[previous:last]))
+        return ''.join(result)
     intents = {(arg.get('call_index', 0), arg['name'].casefold()): arg
                for arg in procedure.get('arguments', [])}
     details = {(a.get('call_index',0),a['name'].casefold()):a for a in procedure.get('argument_details',[])}
@@ -224,7 +295,7 @@ def signature_markup(procedure):
         detail=details.get((index,name.casefold()))
         if intent not in INTENTS and not detail:
             continue
-        parts.append(escape(signature[previous:start]))
+        parts.append(fragment(previous,start))
         description=('; '.join('intent('+v['intent']+') when '+v['condition'] for v in argument['variants'])
                      if intent=='conditional' else 'intent('+intent+')' if intent else 'No explicit INTENT recorded')
         if detail:
@@ -248,9 +319,9 @@ def signature_markup(procedure):
         label = escape(name+': '+description, quote=True)
         parts.append(f'<span class="argument-intent" data-argument-intent="{intent or "unspecified"}" '
                      f'data-intent-description="{escape(description,quote=True)}" '
-                     f'tabindex="0" role="note" title="{label}" aria-label="{label}">{escape(name)}</span>')
+                     f'tabindex="0" role="note" title="{label}" aria-label="{label}">{fragment(start,end)}</span>')
         previous = end
-    parts.append(escape(signature[previous:]))
+    parts.append(fragment(previous,len(signature)))
     return ''.join(parts)
 
 

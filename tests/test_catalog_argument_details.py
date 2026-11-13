@@ -3,12 +3,26 @@ from html.parser import HTMLParser
 from pathlib import Path
 import tempfile
 import unittest
-from catalog_argument_intents import signature_markup, argument_details_markup
+from catalog_argument_intents import signature_markup, argument_details_markup, optional_notation_markup
 from catalog_reviews import digest, validate_feed
 from test_catalog_reviews import fixture
 
 
 class ArgumentDetailsTests(unittest.TestCase):
+    def test_imported_optional_arguments_use_documentation_brackets_only(self):
+        feed,_=fixture();procedure=feed['projects'][0]['classifications'][0]['procedures'][0]
+        procedure['usage']='call solve(a,b)'
+        procedure['argument_details']=[{'name':'A','declarations':[{'text':'real, optional :: a',
+            'path':'src/solver.f90','line_start':11,'line_end':11}]}]
+        original=copy.deepcopy(procedure)
+        class Text(HTMLParser):
+            def __init__(self):super().__init__();self.text=[]
+            def handle_data(self,text):self.text.append(text)
+        parsed=Text();parsed.feed(signature_markup(procedure))
+        self.assertEqual(''.join(parsed.text),'CALL solve([A],B)')
+        self.assertIn('not literal Fortran syntax',optional_notation_markup(procedure))
+        self.assertEqual(procedure,original)
+
     def test_shared_declaration_is_individual_in_tooltip_and_original_in_details(self):
         procedure={'signature':'CALL solve(A,B)', 'argument_details':[
             {'name':'A','dummy':'x','declarations':[{'text':'real(wp), intent(in) :: x(n,m), y(n,m)',
