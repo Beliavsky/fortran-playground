@@ -229,16 +229,22 @@ def signature_markup(procedure):
                      if intent=='conditional' else 'intent('+intent+')' if intent else 'No explicit INTENT recorded')
         if detail:
             blocks=[]
+            displayed_intents=set()
             if detail.get('implementation'):blocks.append('Specific procedure: '+detail['implementation'])
             for d in detail['declarations']:
                 block=(individual_declaration(d['text'],detail.get('dummy',detail['name']))
                        if d.get('shared') else d['text'])
                 block=block or 'Declaration available in source details.'
+                # Read only declaration code, not comments or quoted examples.
+                code=re.sub(r"'(?:[^']|'')*'|\"(?:[^\"]|\"\")*\"", '', signature_code(block))
+                displayed_intents.update(re.sub(r'\s+', '', value).lower() for value in
+                    re.findall(r'\bintent\s*\(\s*(in\s*out|out|in)\s*\)',code,re.I))
                 if d.get('comments'):
                     block+='\n'+('Shared comment: ' if d.get('shared') else '')+'\n'.join(c['text'] for c in d['comments'])
                 blocks.append(block)
             if detail.get('dummy'):blocks.insert(0,'Source dummy: '+detail['dummy'])
-            description='\n\n'.join(blocks)+'\n\n'+description
+            represented=(intent in {'in','out','inout'} and displayed_intents=={intent}) or (intent is None and bool(displayed_intents))
+            description='\n\n'.join(blocks)+('' if represented else '\n\n'+description)
         label = escape(name+': '+description, quote=True)
         parts.append(f'<span class="argument-intent" data-argument-intent="{intent or "unspecified"}" '
                      f'data-intent-description="{escape(description,quote=True)}" '
