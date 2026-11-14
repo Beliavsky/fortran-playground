@@ -360,6 +360,24 @@ def declaration_comments(declaration):
     return comments
 
 
+def declaration_output_marker(detail, annotation=None):
+    """Only mark explicit, unconditional output intent, never infer from names."""
+    if annotation is not None:
+        return {'out':'*','inout':'**'}.get(annotation.get('intent'),'')
+    intents=set()
+    for declaration in detail.get('declarations',[]):
+        code=re.sub(r"'(?:[^']|'')*'|\"(?:[^\"]|\"\")*\"", '', signature_code(declaration['text']))
+        # Separate INTENT statements can occur without a :: separator.
+        separate=re.match(r'^\s*intent\s*\(\s*(in\s*out|out|in)\s*\)',code,re.I)
+        if separate:intents.add(re.sub(r'\s+','',separate[1]).lower())
+        if '::' in code:
+            prefix=code.split('::',1)[0]
+            for a,b in top_level_items(prefix):
+                match=re.fullmatch(r'\s*intent\s*\(\s*(in\s*out|out|in)\s*\)\s*',prefix[a:b],re.I)
+                if match:intents.add(re.sub(r'\s+','',match[1]).lower())
+    return {'out':'*','inout':'**'}.get(next(iter(intents)),'') if len(intents)==1 else ''
+
+
 def argument_details_markup(procedure, source_url):
     """A single copyable code block, ordered like the calling sequence.
 
@@ -371,10 +389,13 @@ def argument_details_markup(procedure, source_url):
     if not details:return ''
     result='<details class="argument-details"><summary><span class="show-declarations">Show declarations</span><span class="hide-declarations">Hide declarations</span></summary><pre><code>'
     order={(index,name.casefold()):position for position,(index,_,_,name) in enumerate(usage_tokens(procedure))}
-    lines=[];documentation=[]
+    annotations={(a.get('call_index',0),a['name'].casefold()):a for a in procedure.get('arguments',[])}
+    lines=[];documentation=[];has_outputs=False
     for argument in sorted(details,key=lambda a:order.get((a.get('call_index',0),a['name'].casefold()),len(order))):
         full_comments=[]
-        for declaration in argument['declarations']:
+        marker=declaration_output_marker(argument,annotations.get((argument.get('call_index',0),argument['name'].casefold())))
+        has_outputs=has_outputs or bool(marker)
+        for row_index,declaration in enumerate(argument['declarations']):
             projected=individual_declaration(declaration['text'],argument.get('dummy',argument['name']))
             normalized=' data-normalized-code="'+escape(projected,quote=True)+'"' if projected else ''
             line='<span class="declaration-code"'+normalized+'>'+escape(declaration['text'])+'</span>'
@@ -386,13 +407,16 @@ def argument_details_markup(procedure, source_url):
             if preview:line+=' ! '+escape(preview)
             for text in comments:
                 if text not in full_comments:full_comments.append(text)
-            lines.append(line)
+            gutter=' data-output-marker="'+marker+'"' if marker and row_index==0 else ''
+            lines.append('<span class="declaration-row"'+gutter+'>'+line+'</span>')
         if full_comments:
             name=argument['name']
             if argument.get('dummy'):name+=' (source dummy: '+argument['dummy']+')'
             documentation.append('<div class="argument-documentation-entry"><p><strong>'+escape(name)+
                                  '</strong></p><p class="argument-comment">'+escape('\n'.join(full_comments))+'</p></div>')
     result+='\n'.join(lines)+'</code></pre>'
+    if has_outputs:
+        result+='<p class="declaration-legend">Markers: * intent(out); ** intent(inout). Input, unspecified and conditional intents are unmarked.</p>'
     if documentation:
         result+='<details class="argument-documentation"><summary>Full argument documentation</summary>'+''.join(documentation)+'</details>'
     return result+'</details>'

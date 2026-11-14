@@ -96,3 +96,11 @@ footer { border-top: 1px solid var(--line); padding: 24px 0 38px; color: var(--m
   .syntax-string {color:#9cdeb0;}
   .syntax-number {color:#ffc18e;}
 }
+
+/* Output markers sit in a gutter outside the code box. Generated markers do
+   not enter its DOM text or copied Fortran. Grid rows align after line wraps. */
+.argument-details > pre {margin:.75rem 0 .75rem 2.5rem; padding:.7rem; border:1px solid var(--line); border-radius:.3rem; overflow:visible;}
+.argument-details > pre > code {display:grid; white-space:normal;}
+.declaration-row {display:block; position:relative; min-width:0; white-space:pre-wrap; overflow-wrap:anywhere;}
+.declaration-row::before {content:attr(data-output-marker); position:absolute; left:-3.2rem; width:2rem; text-align:right; color:var(--ink); font-weight:700; user-select:none;}
+.declaration-legend {color:var(--muted); font-size:.85rem;}

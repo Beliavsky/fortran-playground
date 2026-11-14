@@ -109,4 +109,39 @@ class ArgumentDetailsTests(unittest.TestCase):
         self.assertIn(long,markup.split('Full argument documentation',1)[1])
         self.assertIn('This routine solves a general problem.',markup)
 
+    def test_output_markers_are_explicit_aligned_and_outside_copied_code(self):
+        procedure={'signature':'call solve(a, b, c, d, e, f, g, h)', 'argument_details':[
+            {'name':'a','declarations':[{'text':'REAL, INTENT(OUT) :: A'}]},
+            {'name':'b','declarations':[{'text':'REAL, INTENT(IN OUT) :: B'}]},
+            {'name':'c','declarations':[{'text':'REAL, INTENT(IN) :: C'}]},
+            {'name':'d','declarations':[{'text':"CHARACTER(*) :: D = 'intent(out)'",'comments':[{'text':'intent(out) in prose is not evidence.'}]}]},
+            {'name':'e','declarations':[{'text':'REAL :: E'},{'text':'INTENT(OUT) E'}]},
+            {'name':'f','declarations':[{'text':'REAL, INTENT(OUT) :: F'}]},
+            {'name':'g','declarations':[{'text':'REAL, INTENT(OUT) :: G'},{'text':'REAL, INTENT(INOUT) :: G'}]},
+            {'name':'h','declarations':[{'text':'REAL :: H'}]}],
+            'arguments':[{'name':'f','intent':'conditional'},{'name':'h','intent':'out'}]}
+        rendered=argument_details_markup(procedure,'https://example.test/')
+        class Rows(HTMLParser):
+            def __init__(self):super().__init__();self.markers=[];self.in_code=False;self.code=[]
+            def handle_starttag(self,tag,attrs):
+                attrs=dict(attrs)
+                if tag=='code':self.in_code=True
+                if attrs.get('class')=='declaration-row':self.markers.append(attrs.get('data-output-marker',''))
+            def handle_endtag(self,tag):
+                if tag=='code':self.in_code=False
+            def handle_data(self,text):
+                if self.in_code:self.code.append(text)
+        parser=Rows();parser.feed(rendered)
+        self.assertEqual(parser.markers,['*','**','','','*','','','','','*'])
+        code=''.join(parser.code)
+        self.assertEqual(len(code.splitlines()),10)
+        self.assertFalse(any(line.lstrip().startswith('*') for line in code.splitlines()))
+        self.assertNotIn('Markers:',code)
+        self.assertIn('Markers: * intent(out); ** intent(inout).',rendered)
+        # No legend or output marker for an input-only declaration.
+        only_input={'signature':'call solve(c)','argument_details':[procedure['argument_details'][2]]}
+        plain=argument_details_markup(only_input,'https://example.test/')
+        self.assertNotIn('data-output-marker=',plain)
+        self.assertNotIn('Markers:',plain)
+
 if __name__=='__main__':unittest.main()

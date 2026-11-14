@@ -114,10 +114,12 @@ argument.setAttribute('data-intent-description','REAL, INTENT(OUT) :: OUT(:,:)')
 argument.setAttribute('data-code-ranges',JSON.stringify([[0,'REAL, INTENT(OUT) :: OUT(:,:)'.length]]));
 anchor.appendChild(new DomNode('#text',", 'Keep"));
 anchor.appendChild(new DomNode('span')).textContent=",UPPER', 1.5e-2_wp)";
-const declarationRoot=new DomNode('code'), declaration=declarationRoot.appendChild(new DomNode('span'));
+const declarationRoot=new DomNode('code'), declarationRow=declarationRoot.appendChild(new DomNode('span'));
+declarationRow.className='declaration-row';declarationRow.setAttribute('data-output-marker','*');
+const declaration=declarationRow.appendChild(new DomNode('span'));
 declaration.className='declaration-code';declaration.textContent='REAL, ALLOCATABLE, INTENT(OUT)::OUT(:,:), OTHER';
 declaration.setAttribute('data-normalized-code','REAL, ALLOCATABLE, INTENT(OUT)::OUT(:,:)');
-declarationRoot.appendChild(new DomNode('#text',' ! Exact Comment <script>'));
+declarationRow.appendChild(new DomNode('#text',' ! Exact Comment <script>'));
 const originalCall=callRoot.textContent, originalDeclaration=declarationRoot.textContent;
 const toggle={checked:false,addEventListener(name,callback) {this[name]=callback;}};
 const dom={getElementById:()=>toggle,
@@ -146,6 +148,9 @@ for(let i=0;i<4;i++) {
   toggle.checked=false;toggle.change();
   assert.equal(syntaxCount(callRoot)+syntaxCount(declarationRoot),count);
   assert.equal(argument.parentNode,anchor);
+  assert.equal(declarationRow.getAttribute('data-output-marker'),'*');
+  assert.equal(declaration.parentNode,declarationRow);
+  assert.ok(!declarationRoot.textContent.startsWith('*'));
   assert.equal(anchor.getAttribute('href'),'https://example.test/src.f90#L1');
   assert.equal(argument.getAttribute('tabindex'),'0');
   assert.equal(argument.getAttribute('title'),argument.getAttribute('aria-label'));
