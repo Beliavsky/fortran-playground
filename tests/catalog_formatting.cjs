@@ -70,3 +70,90 @@ const restored=fixture(true);
 assert.equal(restored.nodes.map(n=>n.data).join(''),restored.original);
 assert.equal(restored.control.checked,true);
 console.log('Catalog formatting: default normalization, exact restoration, annotations, comments, Unicode, examples and storage passed.');
+
+
+const {fortranTokens, highlightCode} = context.FortranCatalogFormatting;
+function colored(source) {return Array.from(fortranTokens(source), t => [source.slice(t.start, t.end), t.kind]);}
+assert.deepEqual(colored('REAL(wp), INTENT(OUT) :: x = -1.25e-3_wp ! CALL NotCode'), [
+  ['REAL','type'], ['INTENT','keyword'], ['OUT','keyword'], ['1.25e-3_wp','number'], ['! CALL NotCode','comment']
+]);
+assert.deepEqual(colored(`CALL F('it''s ! REAL', Z'FF', .TRUE., 3_8)\n#define X 1`), [
+  ['CALL','keyword'], ["'it''s ! REAL'",'string'], ["Z'FF'",'string'], ['.TRUE.','number'], ['3_8','number'], ['#define X 1','comment']
+]);
+assert.deepEqual(colored('call REAL_solver(real_data)'), [['call','keyword']]);
+
+// Small DOM fixture exercising the actual tree-walking/replacement API. The
+// original semantic links/annotation elements and text nodes must survive.
+class DomNode {
+  constructor(tag, data='') {this.tagName=tag; this.data=data; this.childNodes=[]; this.parentNode=null; this.attrs={};}
+  appendChild(node) {this.childNodes.push(node);node.parentNode=this;return node;}
+  replaceChild(node, old) {
+    const i=this.childNodes.indexOf(old);assert.notEqual(i,-1);
+    this.childNodes[i]=node;node.parentNode=this;old.parentNode=null;return old;
+  }
+  set textContent(text) {this.childNodes=[];this.appendChild(new DomNode('#text',text));}
+  get textContent() {return this.tagName==='#text'?this.data:this.childNodes.map(n=>n.textContent).join('');}
+  get className() {return this.attrs.class || '';}
+  set className(text) {this.attrs.class=text;}
+  get classList() {return {contains:name=>this.className.split(/\s+/).includes(name)};}
+  getAttribute(name) {return this.attrs[name] ?? null;}
+  setAttribute(name,value) {this.attrs[name]=value;}
+}
+function textNodes(root) {
+  return root.childNodes.flatMap(n=>n.tagName==='#text'?[n]:textNodes(n));
+}
+function descendants(root) {return root.childNodes.flatMap(n=>[n,...descendants(n)]);}
+const callRoot=new DomNode('code'), anchor=callRoot.appendChild(new DomNode('a'));
+anchor.setAttribute('href','https://example.test/src.f90#L1');
+const callPrefix=anchor.appendChild(new DomNode('#text','CA'));
+anchor.appendChild(new DomNode('span')).textContent='LL solver%solve(';
+const argument=anchor.appendChild(new DomNode('span'));
+argument.className='argument-intent';argument.textContent='OUT';
+argument.setAttribute('tabindex','0');argument.setAttribute('data-argument-label','OUT');
+argument.setAttribute('data-intent-description','REAL, INTENT(OUT) :: OUT(:,:)');
+argument.setAttribute('data-code-ranges',JSON.stringify([[0,'REAL, INTENT(OUT) :: OUT(:,:)'.length]]));
+anchor.appendChild(new DomNode('#text',", 'Keep"));
+anchor.appendChild(new DomNode('span')).textContent=",UPPER', 1.5e-2_wp)";
+const declarationRoot=new DomNode('code'), declaration=declarationRoot.appendChild(new DomNode('span'));
+declaration.className='declaration-code';declaration.textContent='REAL, ALLOCATABLE, INTENT(OUT)::OUT(:,:), OTHER';
+declaration.setAttribute('data-normalized-code','REAL, ALLOCATABLE, INTENT(OUT)::OUT(:,:)');
+declarationRoot.appendChild(new DomNode('#text',' ! Exact Comment <script>'));
+const originalCall=callRoot.textContent, originalDeclaration=declarationRoot.textContent;
+const toggle={checked:false,addEventListener(name,callback) {this[name]=callback;}};
+const dom={getElementById:()=>toggle,
+  querySelectorAll(selector) {
+    if(selector==='.argument-intent')return [argument];
+    return selector.includes('pre > code')?[callRoot,declarationRoot]:[callRoot,declaration];
+  },
+  createTreeWalker(root) {const nodes=textNodes(root);let i=0;return {nextNode:()=>nodes[i++] || null};},
+  createElement:tag=>new DomNode(tag),createTextNode:text=>new DomNode('#text',text)};
+const win={localStorage:{getItem:()=>null,setItem() {}}};
+initializeFormatting(dom,win);
+assert.equal(callRoot.textContent,"call solver%solve(out, 'Keep,UPPER', 1.5e-2_wp)");
+assert.equal(declarationRoot.textContent,'real, allocatable, intent(out) :: out(:, :) ! Exact Comment <script>');
+assert.ok(descendants(callRoot).some(n=>n.className==='syntax-keyword'));
+assert.ok(descendants(callRoot).some(n=>n.className==='syntax-string'));
+assert.ok(descendants(callRoot).some(n=>n.className==='syntax-number'));
+assert.ok(descendants(declarationRoot).some(n=>n.className==='syntax-type'));
+assert.ok(descendants(declarationRoot).some(n=>n.className==='syntax-comment'));
+const syntaxCount=root=>descendants(root).filter(n=>n.className.startsWith('syntax-')).length;
+const count=syntaxCount(callRoot)+syntaxCount(declarationRoot);
+for(let i=0;i<4;i++) {
+  toggle.checked=true;toggle.change();
+  assert.equal(callRoot.textContent,originalCall);
+  assert.equal(declarationRoot.textContent,originalDeclaration);
+  assert.ok(syntaxCount(callRoot)>0); // Highlighting stays active in original mode.
+  toggle.checked=false;toggle.change();
+  assert.equal(syntaxCount(callRoot)+syntaxCount(declarationRoot),count);
+  assert.equal(argument.parentNode,anchor);
+  assert.equal(anchor.getAttribute('href'),'https://example.test/src.f90#L1');
+  assert.equal(argument.getAttribute('tabindex'),'0');
+  assert.equal(argument.getAttribute('title'),argument.getAttribute('aria-label'));
+}
+assert.ok(!descendants(declarationRoot).some(n=>n.tagName==='script'));
+const standalone=new DomNode('code'), originalNode=standalone.appendChild(new DomNode('#text','CALL F()'));
+const remove=highlightCode(dom,[standalone]);
+assert.equal(standalone.textContent,'CALL F()');remove();
+assert.equal(standalone.childNodes[0],originalNode);
+assert.equal(callPrefix.data,'ca');
+console.log('Fortran highlighting: tokens, split annotations, safe text, exact restoration, links and tooltips passed.');

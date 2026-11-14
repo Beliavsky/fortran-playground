@@ -83,3 +83,16 @@ footer { border-top: 1px solid var(--line); padding: 24px 0 38px; color: var(--m
 .argument-details > pre {white-space:pre-wrap; overflow-wrap:anywhere;}
 .argument-documentation {margin-top:.75rem;}
 .argument-documentation .argument-comment {white-space:pre-wrap; overflow-wrap:anywhere;}
+
+/* Foreground colors only: argument intent emphasis and source links stay intact. */
+.syntax-keyword {color:#6b2d91;}
+.syntax-type {color:#12559b;}
+.syntax-string {color:#17693b;}
+.syntax-number {color:#8c3b10;}
+.syntax-comment {color:var(--muted);}
+@media (prefers-color-scheme:dark) {
+  .syntax-keyword {color:#dfb6ff;}
+  .syntax-type {color:#a6d4ff;}
+  .syntax-string {color:#9cdeb0;}
+  .syntax-number {color:#ffc18e;}
+}
