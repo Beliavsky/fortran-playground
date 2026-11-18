@@ -16,6 +16,18 @@ for (const [source, expected] of [
   ['OPTIONAL X', 'optional :: x']
 ]) assert.equal(normalizeDeclaration(source), expected);
 assert.equal(normalizeFortran('CALL Solve(A,B,   C)'), 'call solve(a, b, c)');
+for (const [source, expected] of [
+  ['real ( kind = rk ), external :: fn', 'real(kind=rk), external :: fn'],
+  ['REAL ( KIND = RK ) START( N )', 'real(kind=rk) :: start(n)'],
+  ['CHARACTER ( LEN = 20 ), INTENT ( IN ) :: NAME', 'character(len=20), intent(in) :: name'],
+  ["character ( len = 8 ) :: s = '( Keep )' ! ( Keep )", "character(len=8) :: s = '( Keep )' ! ( Keep )"],
+  ['REAL ( KIND = SELECTED_REAL_KIND ( 15, 300 ) ) :: X', 'real(kind=selected_real_kind(15, 300)) :: x']
+]) assert.equal(normalizeDeclaration(source), expected);
+assert.equal(normalizeFortran('CALL F ( A( 1 ), VALUE = G ( B ) )'), 'call f(a(1), value = g(b))');
+assert.equal(normalizeFortran('CALL F ( &\n    A, &\n    )'), 'call f(&\n    a, &\n    )');
+assert.equal(normalizeFortran('#define F( X ) ( X )\n! Keep ( A )'), '#define F( X ) ( X )\n! Keep ( A )');
+assert.equal(normalizeFortran(`CALL F ( "Keep ( A )", 'it''s ( B )' )`), `call f("Keep ( A )", 'it''s ( B )')`);
+
 assert.equal(normalizeFortran('REAL(WP),ALLOCATABLE,INTENT(OUT) :: X(:,:)'), 'real(wp), allocatable, intent(out) :: x(:, :)');
 assert.equal(normalizeFortran(`CALL F('Keep,UPPER','it''s,Exact', "A,""B") ! Keep,COMMENT`),
   `call f('Keep,UPPER', 'it''s,Exact', "A,""B") ! Keep,COMMENT`);
@@ -31,7 +43,7 @@ function fixture(stored, denied=false) {
   const control={checked:false, addEventListener(name,handler) {this[name]=handler;}};
   // A comma and its whitespace straddle annotation nodes; strings and comments
   // also cross nodes, so formatting each span separately would corrupt them.
-  const nodes=["CALL F(", "[X]", ",", "  Y, 'Keep,UP", "PER') ! Exact, COMMENT 😀"].map(data=>({data}));
+  const nodes=["CALL F ", "(  [X]", ",", "  Y, 'Keep,UP", "PER'  ) ! Exact, COMMENT 😀"].map(data=>({data}));
   const declarations=[{data:'REAL(WP), INTENT(OUT)::X(:,:), Y'}];
   declarations.classList={contains(name) {return name==='declaration-code';}};
   declarations.getAttribute=()=> 'REAL(WP), INTENT(OUT)::X(:,:)';

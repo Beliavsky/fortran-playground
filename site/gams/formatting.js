@@ -5,7 +5,19 @@
 
   function normalizedPieces(text) {
     const chars = Array.from(text), pieces = chars.slice();
-    let quote = '', comment = false, lineStart = true;
+    let quote = '', comment = false, lineStart = true, depth = 0;
+    const horizontal = c => c === ' ' || c === '\t';
+    function trimBefore(i) {
+      let j = i - 1;
+      while (horizontal(chars[j])) j--;
+      // Keep indentation when a closing parenthesis starts a new line.
+      if (j >= 0 && chars[j] !== '\n' && chars[j] !== '\r') {
+        for (let k = j + 1; k < i; k++) pieces[k] = '';
+      }
+    }
+    function trimAfter(i) {
+      while (horizontal(chars[++i])) pieces[i] = '';
+    }
     for (let i = 0; i < chars.length; i++) {
       const char = chars[i];
       if (char === '\n' || char === '\r') {comment = false; lineStart = true; continue;}
@@ -23,6 +35,20 @@
       if (char === '!') {comment = true; continue;}
       if (char === "'" || char === '"') {quote = char; continue;}
       if (char >= 'A' && char <= 'Z') pieces[i] = char.toLowerCase();
+      // Keep one output piece per source code point so argument spans retain
+      // their boundaries even when whitespace straddles DOM text nodes.
+      if (char === '(') {
+        depth++;
+        const previous = chars.slice(0, i).join('').replace(/[ \t]+$/, '');
+        if (/[a-z0-9_)%]$/i.test(previous)) trimBefore(i);
+        trimAfter(i);
+      }
+      if (char === ')') {depth = Math.max(0, depth - 1); trimBefore(i);}
+      // Compact type selectors without changing general keyword assignments.
+      if (char === '=' && depth > 0 && /\b(?:kind|len)[ \t]*$/i.test(chars.slice(0, i).join(''))) {
+        trimBefore(i); trimAfter(i);
+      }
+
       if (char === ',') {
         let next = i + 1;
         while (chars[next] === ' ' || chars[next] === '\t') next++;
